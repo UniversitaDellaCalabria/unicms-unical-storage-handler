@@ -241,7 +241,7 @@ msgstr "Ciclo"
 
 #: templates/blocks/unical_storage_laboratory_info.html:78
 msgid "Erc 1"
-msgstr ""
+msgstr "Erc1"
 
 #: templates/blocks/unical_storage_laboratory_info.html:112
 msgid "Research Personnel"
@@ -257,11 +257,11 @@ msgstr "Servizi offerti"
 
 #: templates/blocks/unical_storage_laboratory_info.html:192
 msgid "Location"
-msgstr ""
+msgstr "Ubicazione"
 
 #: templates/blocks/unical_storage_laboratory_list.html:56
 msgid "Area"
-msgstr ""
+msgstr "Ambito"
 
 #: templates/blocks/unical_storage_teacherslist.html:44
 msgid "Course of study"
