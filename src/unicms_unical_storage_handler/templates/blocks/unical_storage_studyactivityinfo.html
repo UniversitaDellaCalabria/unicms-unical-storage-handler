@@ -21,101 +21,99 @@
     </loading-icon>
 
     <div v-else>
-        <template v-model="item">
-            <h1 class="lighter">[[ item.StudyActivityName ]]</h1>
-            <h3 class="lighter">[[ item.StudyActivityCdSName ]]</h3>
-            <hr class="my-4 bordeaux-unical-bg">
-            <div class="table-responsive">
-                <table class="table table-sm">
-                    <tbody>
-                        <tr v-for="(value, name) in item" v-if="value && !fields_to_not_show.includes(name) && value != ''">
-                            <td class="col-3">[[ labels[name] ]]</td>
+        <h1 class="lighter">[[ item.StudyActivityName ]]</h1>
+        <h3 class="lighter">[[ item.StudyActivityCdSName ]]</h3>
+        <hr class="my-4 bordeaux-unical-bg">
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <tbody>
+                    <tr v-for="(value, name) in item" v-if="value && !fields_to_not_show.includes(name) && value != ''">
+                        <td class="col-3">[[ labels[name] ]]</td>
 
-                            <!-- Root activity -->
-                            <td v-if="name === 'StudyActivityRoot' && item.StudyActivityRoot">
-                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.StudyActivityRegDidId ]] +'/{{ activity_prefix }}/' + [[ item.StudyActivityRoot.StudyActivityID ]] +'/'">
-                                    [[ item.StudyActivityRoot.StudyActivityName ]]
-                                </a>
-                            </td>
+                        <!-- Root activity -->
+                        <td v-if="name === 'StudyActivityRoot' && item.StudyActivityRoot">
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.StudyActivityRegDidId ]] +'/{{ activity_prefix }}/' + [[ item.StudyActivityRoot.StudyActivityID ]] +'/'">
+                                [[ item.StudyActivityRoot.StudyActivityName ]]
+                            </a>
+                        </td>
 
-                            <!-- Modules activities -->
-                            <td v-else-if="name === 'StudyActivitiesModules' && item.StudyActivitiesModules">
-                                <ul v-for="(valueProfile, nameProfile) in value">
-                                    <li>
-                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.StudyActivityRegDidId ]] +'/{{ activity_prefix }}/' + [[ valueProfile.StudyActivityID ]] +'/'">
-                                            [[ valueProfile.StudyActivityName ]]
-                                        </a>
-                                    </li>
-                                </ul>
-                            </td>
+                        <!-- Modules activities -->
+                        <td v-else-if="name === 'StudyActivitiesModules' && item.StudyActivitiesModules">
+                            <ul v-for="(valueProfile, nameProfile) in value">
+                                <li>
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.StudyActivityRegDidId ]] +'/{{ activity_prefix }}/' + [[ valueProfile.StudyActivityID ]] +'/'">
+                                        [[ valueProfile.StudyActivityName ]]
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
 
-                            <!-- StudyActivitiesBorrowedFromThis activity -->
-                            <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom">
-                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.StudyActivityBorrowedFrom.StudyActivityRegDidId ]] +'/{{ activity_prefix }}/' + [[ item.StudyActivityBorrowedFrom.StudyActivityID ]] +'/'">
-                                    [[ item.StudyActivityBorrowedFrom.StudyActivityName ]]
-                                </a>
-                            </td>
+                        <!-- StudyActivitiesBorrowedFromThis activity -->
+                        <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom">
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.StudyActivityBorrowedFrom.StudyActivityRegDidId ]] +'/{{ activity_prefix }}/' + [[ item.StudyActivityBorrowedFrom.StudyActivityID ]] +'/'">
+                                [[ item.StudyActivityBorrowedFrom.StudyActivityName ]]
+                            </a>
+                        </td>
 
-                            <!-- Modules activities -->
-                            <td v-else-if="name === 'StudyActivitiesBorrowedFromThis' && item.StudyActivitiesBorrowedFromThis">
-                                <ul>
-                                    <li v-for="borrow in item.StudyActivitiesBorrowedFromThis">
-                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ borrow.StudyActivityRegDidId ]] +'/{{ activity_prefix }}/' + [[ borrow.StudyActivityID ]] +'/'">
-                                            [[ borrow.StudyActivityName ]]
-                                        </a>
-                                    </li>
-                                </ul>
-                            </td>
+                        <!-- Modules activities -->
+                        <td v-else-if="name === 'StudyActivitiesBorrowedFromThis' && item.StudyActivitiesBorrowedFromThis">
+                            <ul>
+                                <li v-for="borrow in item.StudyActivitiesBorrowedFromThis">
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ borrow.StudyActivityRegDidId ]] +'/{{ activity_prefix }}/' + [[ borrow.StudyActivityID ]] +'/'">
+                                        [[ borrow.StudyActivityName ]]
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
 
-                            <td v-else-if="typeof value === 'object'" class="col-9">
-                                <ul v-for="(valueProfile, nameProfile) in value">
-                                    <div v-if="typeof valueProfile === 'object'">
-                                        <ul v-for="(valueProfileInstance, nameProfileInstance) in valueProfile">
-                                            <li>
-                                                [[ nameProfileInstance ]] :
-                                                <span style="white-space: pre-line;">
-                                                    [[ valueProfileInstance ]]
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <li v-else>
-                                        <span v-if="nameProfile in labels">
-                                            [[ labels[nameProfile] ]]
-                                        </span>
-                                        <span v-else>
-                                            [[ nameProfile ]]
-                                        </span>
-                                        :
-                                        <span style="white-space: pre-line;">
-                                            [[ valueProfile ]]
-                                        </span>
-                                    </li>
-                                </ul>
-                            </td>
-                            <td v-else-if="typeof value === 'array'" class="col-9">
-                                <ul>
-                                    <li v-for="subvalue in value">
-                                        [[ subvalue ]]
-                                    </li>
-                                </ul>
-                            </td>
-                            <td v-else class="col-9">
-                                <a v-if="name === 'StudyActivityTeacherName'"
-                                   :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + [[ item.StudyActivityTeacherID ]] +'/'">
-                                    [[ item[name] ]]
-                                </a>
-                                <span v-else style="white-space: pre-line;">
-                                    [[ value ]]
-                                </span>
-                            </td>
+                        <td v-else-if="typeof value === 'object'" class="col-9">
+                            <ul v-for="(valueProfile, nameProfile) in value">
+                                <div v-if="typeof valueProfile === 'object'">
+                                    <ul v-for="(valueProfileInstance, nameProfileInstance) in valueProfile">
+                                        <li>
+                                            [[ nameProfileInstance ]] :
+                                            <span style="white-space: pre-line;">
+                                                [[ valueProfileInstance ]]
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <li v-else>
+                                    <span v-if="nameProfile in labels">
+                                        [[ labels[nameProfile] ]]
+                                    </span>
+                                    <span v-else>
+                                        [[ nameProfile ]]
+                                    </span>
+                                    :
+                                    <span style="white-space: pre-line;">
+                                        [[ valueProfile ]]
+                                    </span>
+                                </li>
+                            </ul>
+                        </td>
+                        <td v-else-if="typeof value === 'array'" class="col-9">
+                            <ul>
+                                <li v-for="subvalue in value">
+                                    [[ subvalue ]]
+                                </li>
+                            </ul>
+                        </td>
+                        <td v-else class="col-9">
+                            <a v-if="name === 'StudyActivityTeacherName'"
+                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + [[ item.StudyActivityTeacherID ]] +'/'">
+                                [[ item[name] ]]
+                            </a>
+                            <span v-else style="white-space: pre-line;">
+                                [[ value ]]
+                            </span>
+                        </td>
 
 
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </template>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <script>

@@ -24,117 +24,115 @@
     </loading-icon>
 
     <div v-else>
-        <template v-model="item">
-            <h1 class="lighter">[[ item.CdSName ]]</h1>
-            <div class="my-3">
-                <h3 class="lighter" style="display: inline">[[ item.CourseTypeDescription ]]</h3>
-                <h3 class="lighter"
-                    v-for="joint in joint_degree_filter"
-                    v-if="item.JointDegree == joint.COD && item.JointDegree != 'N'"
-                    style="display: inline">
-                    &nbsp;- [[ joint.name ]]
-                </h3>
-            </div>
-            <p>
-                {% trans "Degree class" %} [[ item.CourseClassId ]]
-                <br>
-                [[ item.CourseClassName ]]
-            </p>
-            <div class="card-wrapper pb-0">
-                <div class="card no-after" style="border:1px solid #b71918">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-md-auto">
-                                <small>
-                                    [[ labels['AcademicYear'] ]] >
-                                    <b>[[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]</b>
-                                </small>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <small>
-                                    [[ labels['CdSDuration'] ]] >
-                                    <b>[[ item.CdSDuration ]] {% trans "years" %}</b>
-                                </small>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <small>
-                                    [[ labels['CdSLanguage'] ]] >
-                                    <b>[[ item.CdSLanguage.join(', ') ]] </b>
-                                </small>
-                            </div>
+        <h1 class="lighter">[[ item.CdSName ]]</h1>
+        <div class="my-3">
+            <h3 class="lighter" style="display: inline">[[ item.CourseTypeDescription ]]</h3>
+            <h3 class="lighter"
+                v-for="joint in joint_degree_filter"
+                v-if="item.JointDegree == joint.COD && item.JointDegree != 'N'"
+                style="display: inline">
+                &nbsp;- [[ joint.name ]]
+            </h3>
+        </div>
+        <p>
+            {% trans "Degree class" %} [[ item.CourseClassId ]]
+            <br>
+            [[ item.CourseClassName ]]
+        </p>
+        <div class="card-wrapper pb-0">
+            <div class="card no-after" style="border:1px solid #b71918">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-auto">
+                            <small>
+                                [[ labels['AcademicYear'] ]] >
+                                <b>[[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]</b>
+                            </small>
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <small>
+                                [[ labels['CdSDuration'] ]] >
+                                <b>[[ item.CdSDuration ]] {% trans "years" %}</b>
+                            </small>
+                        </div>
+                        <div class="col-12 col-md-auto">
+                            <small>
+                                [[ labels['CdSLanguage'] ]] >
+                                <b>[[ item.CdSLanguage.join(', ') ]] </b>
+                            </small>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="my-4">
-                {% include "blocks/italia_link_iframe.html" with ratio="21by9" url="https://www.youtube.com/embed/KkxtyJKKyfI" %}
-            </div>
+        <div class="my-4">
+            {% include "blocks/italia_link_iframe.html" with ratio="21by9" url="https://www.youtube.com/embed/KkxtyJKKyfI" %}
+        </div>
 
-            <p>
-                <span style="white-space: pre-line;">
-                    [[ item.CdSIntro ]]
-                </span>
-            </p>
+        <p>
+            <span style="white-space: pre-line;">
+                [[ item.CdSIntro ]]
+            </span>
+        </p>
 
-            <p>
-                <span style="white-space: pre-line;">
-                    <a href="https://drive.google.com/file/d/1VVOJarXB30mPhwV7CPbPHrR6FVeOZKrT/view">Brochure</a>
-                </span>
-            </p>
+        <p>
+            <span style="white-space: pre-line;">
+                <a href="https://drive.google.com/file/d/1VVOJarXB30mPhwV7CPbPHrR6FVeOZKrT/view">Brochure</a>
+            </span>
+        </p>
 
-            <div id="collapseDiv1-lft"
-                 class="collapse-div collapse-left-icon"
-                 style="border-bottom: 0"
-                 role="tablist">
-                <div v-for="name in fields_to_show" v-if="item[name] != null">
-                    <div class="collapse-header" :id="'heading-' + name +'-lft'">
-                        <button data-toggle="collapse" :data-target="'#collapse-' + name +'-lft'" aria-expanded="false" :aria-controls="'collapse-' + name +'-lft'">
-                            [[ labels[name] ]]
-                        </button>
-                    </div>
-                    <div :id="'collapse-' + name +'-lft'" class="collapse" role="tabpanel" :aria-labelledby="'heading-' + name +'-lft'">
-                        <div class="collapse-body">
-                            <span v-if="typeof item[name] === 'object'" class="col-9">
-                                <ul v-for="(valueProfile, nameProfile) in item[name]">
-                                    <li>
-                                        [[ nameProfile ]]
-                                        <ul v-for="(valueProfileInstance, nameProfileInstance) in valueProfile">
-                                            <li>
-                                                <span v-if="nameProfile in labels && nameProfileInstance in labels[nameProfile]"
-                                                      style="white-space: pre-line;">
-                                                    [[ labels[nameProfile][nameProfileInstance] ]]
-                                                </span>
-                                                <span v-else>
-                                                    [[ nameProfileInstance ]]
-                                                </span> :
-                                                <span style="white-space: pre-line;">
-                                                    [[ valueProfileInstance ]]
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
+        <div id="collapseDiv1-lft"
+             class="collapse-div collapse-left-icon"
+             style="border-bottom: 0"
+             role="tablist">
+            <div v-for="name in fields_to_show" v-if="item[name] != null">
+                <div class="collapse-header" :id="'heading-' + name +'-lft'">
+                    <button data-toggle="collapse" :data-target="'#collapse-' + name +'-lft'" aria-expanded="false" :aria-controls="'collapse-' + name +'-lft'">
+                        [[ labels[name] ]]
+                    </button>
+                </div>
+                <div :id="'collapse-' + name +'-lft'" class="collapse" role="tabpanel" :aria-labelledby="'heading-' + name +'-lft'">
+                    <div class="collapse-body">
+                        <span v-if="typeof item[name] === 'object'" class="col-9">
+                            <ul v-for="(valueProfile, nameProfile) in item[name]">
+                                <li>
+                                    [[ nameProfile ]]
+                                    <ul v-for="(valueProfileInstance, nameProfileInstance) in valueProfile">
+                                        <li>
+                                            <span v-if="nameProfile in labels && nameProfileInstance in labels[nameProfile]"
+                                                  style="white-space: pre-line;">
+                                                [[ labels[nameProfile][nameProfileInstance] ]]
+                                            </span>
+                                            <span v-else>
+                                                [[ nameProfileInstance ]]
+                                            </span> :
+                                            <span style="white-space: pre-line;">
+                                                [[ valueProfileInstance ]]
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </span>
+                        <span v-else-if="typeof item[name] === 'array'" class="col-9">
+                            <ul>
+                                <li v-for="subvalue in item[name]">
+                                    [[ subvalue ]]
+                                </li>
+                            </ul>
+                        </span>
+                        <span v-else>
+                            <span style="white-space: pre-line;">
+                                <a v-if="name == 'CdSSatisfactionSurvey'" v-bind:href="link_almalaurea + item[name]">[[ link_almalaurea ]][[ item[name] ]]</a>
+                                <a v-else-if="name == 'CdSDoc'" v-bind:href="item[name]">[[ item[name] ]]</a>
+                                <span v-else>[[ item[name] ]]</span>
                             </span>
-                            <span v-else-if="typeof item[name] === 'array'" class="col-9">
-                                <ul>
-                                    <li v-for="subvalue in item[name]">
-                                        [[ subvalue ]]
-                                    </li>
-                                </ul>
-                            </span>
-                            <span v-else>
-                                <span style="white-space: pre-line;">
-                                    <a v-if="name == 'CdSSatisfactionSurvey'" v-bind:href="link_almalaurea + item[name]">[[ link_almalaurea ]][[ item[name] ]]</a>
-                                    <a v-else-if="name == 'CdSDoc'" v-bind:href="item[name]">[[ item[name] ]]</a>
-                                    <span v-else>[[ item[name] ]]</span>
-                                </span>
-                            </span>
-                        </div>
+                        </span>
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
     </div>
 </div>
 

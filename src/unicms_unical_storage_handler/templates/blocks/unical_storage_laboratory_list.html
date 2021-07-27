@@ -166,8 +166,9 @@ function {{ id }}_get_form_paramenters(dict={}, keyword=null, value=null) {
 </script>
 {% endblock pagination_extra_scripts %}
 
-
 {% block extra_data %}
+{% settings_value "CMS_STORAGE_BASE_API" as base_api %}
+
 search_dict: {},
 departments: [],
 areas: [],
@@ -175,8 +176,8 @@ areas: [],
 is_loading_departments: true,
 is_loading_areas: true,
 
-loader_source_departments: 'https://storage.portale.unical.it/api/ricerca/departmentsfilter/?lang={{ LANGUAGE_CODE }}',
-loader_source_areas: 'https://storage.portale.unical.it/api/ricerca/laboratoriesareas/?lang={{ LANGUAGE_CODE }}',
+loader_source_departments: '{{ base_api }}departmentsfilter/?lang={{ LANGUAGE_CODE }}',
+loader_source_areas: '{{ base_api }}laboratoriesareas/?lang={{ LANGUAGE_CODE }}',
 {% endblock extra_data %}
 
 {% block pagination_extra_mounted %}

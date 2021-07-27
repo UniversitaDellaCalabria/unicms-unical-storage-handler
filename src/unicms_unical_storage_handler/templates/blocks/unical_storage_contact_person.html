@@ -1,0 +1,117 @@
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+{% random_id as id %}
+
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<div id="{{ id }}">
+
+    <loading-icon
+        v-if="is_loading"
+        :loader_source="loader_source">
+    </loading-icon>
+
+    <div v-else class="row">
+        <div class="col-auto">
+            <svg class="icon icon-lg icon-muted">
+                <use xlink:href="{% static 'svg/sprite.svg' %}#it-user"></use>
+            </svg>
+        </div>
+        <div class="col-auto align-left">
+            <small>
+                <b>[[ item.Name ]]</b>
+                <br>
+                <span>[[ item.Structure ]]</span>
+                <br>
+                <span>- [[ item.RoleDescription ]]</span>
+                <br>
+                <div>
+                    <span>
+                        <svg class="icon icon-sm icon-muted mr-2">
+                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-map-marker-circle"></use>
+                        </svg>
+                        <a href="#">-</a>
+                    </span>
+                    <br>
+                </div>
+                <div v-for="office_email in item.OfficeReference">
+                    <span>
+                        <svg class="icon icon-sm icon-muted mr-2">
+                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                        </svg>
+                        <a href="mailto: [[ office_email ]]">[[ office_email ]]</a>
+                    </span>
+                    <br>
+                </div>
+                <div v-for="email in item.Email">
+                    <span>
+                        <svg class="icon icon-sm icon-muted mr-2">
+                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                        </svg>
+                        <a href="mailto: [[ email ]]">[[ email ]]</a>
+                    </span>
+                    <br>
+                </div>
+                <div v-for="pec in item.PEC">
+                    <span>
+                        <svg class="icon icon-sm icon-muted mr-2">
+                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                        </svg>
+                        <a href="mailto: [[ pec ]]">[[ pec ]]</a>
+                    </span>
+                    <br>
+                </div>
+                <div v-for="teloffice in item.TelOffice">
+                    <span>
+                        <svg class="icon icon-sm icon-muted mr-2">
+                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
+                        </svg> [[ teloffice ]]
+                    </span>
+                    <br>
+                </div>
+                <div v-for="telceloffice in item.TelCelOffice">
+                    <span>
+                        <svg class="icon icon-sm icon-muted mr-2">
+                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
+                        </svg> [[ telceloffice ]]
+                    </span>
+                    <br>
+                </div>
+            </small>
+        </div>
+    </div>
+</div>
+
+<script>
+var {{ id }} = new Vue({
+    el: '#{{ id }}',
+    data() {
+        return {
+            item: {},
+            url: '{{ url }}',
+            is_loading: true,
+            loader_source: '{{ url }}',
+        }
+    },
+    mounted() {
+        this.CallURL();
+    },
+    methods: {
+        CallURL() {
+            axios
+                .get(this.url)
+                .then(response => {
+                    this.item = response.data.results;
+                    this.is_loading = false
+                });
+        }
+    }
+})
+</script>
