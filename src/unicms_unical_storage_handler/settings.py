@@ -96,7 +96,7 @@ ALLOWED_ADDRESSBOOK_STRUCTURE_ID = []
 # CDSINFO FIELDS TO SHOW
 CDS_INFO_FIELDS = ['CdSGoals', 'CdSAccess', 'CdSAdmission',
                    'CdSProfiles', 'CdSFinalTest', 'CdSFinalTestMode',
-                   'CdSSatisfactionSurvey', 'CdSDoc']
+                   'CdSSatisfactionSurvey']
 
 # FIELDS TO HIDE IN BLOCKS
 ADDRESSBOOK_INFO_NOT_SHOW = ['ID', 'Name', 'Role',

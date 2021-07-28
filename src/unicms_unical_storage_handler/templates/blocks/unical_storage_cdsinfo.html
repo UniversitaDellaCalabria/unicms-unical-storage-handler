@@ -15,6 +15,7 @@
 
 {% include "includes/unical_storage_loading.html" %}
 
+<script src="{% static 'js/vue-markdown.js' %}"></script>
 
 <div id="{{ id }}">
 
@@ -66,21 +67,35 @@
             </div>
         </div>
 
-        <div class="my-4">
-            {% include "blocks/italia_link_iframe.html" with ratio="21by9" url="https://www.youtube.com/embed/KkxtyJKKyfI" %}
+        <div class="mt-4" v-if="item.CdSVideo">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe :title="item.CdSVideo"
+                        class="embed-responsive-item"
+                        :src="item.CdSVideo" allowfullscreen></iframe>
+            </div>
         </div>
 
-        <p>
-            <span style="white-space: pre-line;">
+        <div class="mt-4">
+            <vue-markdown :emoji=false>
                 [[ item.CdSIntro ]]
-            </span>
-        </p>
+            </vue-markdown>
+        </div>
 
-        <p>
-            <span style="white-space: pre-line;">
-                <a href="https://drive.google.com/file/d/1VVOJarXB30mPhwV7CPbPHrR6FVeOZKrT/view">Brochure</a>
-            </span>
-        </p>
+        <div class="card-wrapper pb-0 mb-4" v-if="item.CdSDoc">
+            <div class="card no-after" style="border:1px solid #b71918">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-auto">
+                            <a :href="item.CdSDoc" target="_blank">
+                                <svg class="m-auto icon icon-muted">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-clip"></use>
+                                </svg> <b>{% trans "Download brochure" %}</b>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div id="collapseDiv1-lft"
              class="collapse-div collapse-left-icon"
@@ -137,7 +152,9 @@
 </div>
 
 <!-- studyplans block import -->
-<div id="collapseDiv2-lft" class="collapse-div collapse-left-icon" role="tablist">
+<div id="collapseDiv2-lft"
+     class="collapse-div collapse-left-icon"
+     role="tablist">
     <div class="collapse-header" id="heading-studyplans-lft">
         <button data-toggle="collapse"
                 data-target="#collapse-studyplans-lft"
@@ -160,7 +177,9 @@
 </div>
 
 <!-- teachers block import -->
-<div id="collapseDiv3-lft" class="collapse-div collapse-left-icon" role="tablist">
+<div id="collapseDiv3-lft"
+     class="collapse-div collapse-left-icon"
+     role="tablist">
     <div class="collapse-header" id="heading-teachers-lft">
         <button data-toggle="collapse"
                 data-target="#collapse-teachers-lft"
@@ -183,6 +202,8 @@
 </div>
 
 <script>
+Vue.use(VueMarkdown);
+
 var {{ id }} = new Vue({
     el: '#{{ id }}',
     data() {
