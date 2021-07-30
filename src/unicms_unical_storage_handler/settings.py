@@ -112,10 +112,15 @@ LABORATORY_INFO_NOT_SHOW = ['LaboratoryId', 'CompletionReferentId',
                             'LaboratoryErc1Cod', 'LaboratoryErc0Cod',
                             'ResearchPersonnelID', 'TechPersonnelID',
                             'LaboratoryName', 'LaboratoryAcronym',
-                            'LaboratoryScope',
+                            'LaboratoryScope', 'LaboratoryLogo',
                             'LaboratoryErc1', 'LaboratoryResearchPersonnel',
                             'LaboratoryTechPersonnel', 'LaboratoryOfferedServices',
-                            'LaboratoryLocation']
+                            'LaboratoryLocation', 'LaboratoryErc0Description',
+                            'LaboratoryServicesScope', 'LaboratoryTeachingScope',
+                            'LaboratoryResearchScope', 'LaboratoryActivities',
+                            'CompletionReferentName', 'TechPersonnelRole']
+
+INITIAL_STRUCTURE_FATHER = ''
 
 # ALMALAUREA Link
 ALMALAUREA_LINK = 'http://statistiche.almalaurea.it/universita/statistiche/trasparenza?codicione='

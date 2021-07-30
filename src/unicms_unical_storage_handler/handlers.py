@@ -27,6 +27,9 @@ ALLOWED_UNICMS_SITES = getattr(settings, 'ALLOWED_UNICMS_SITES',
 
 ALLOWED_CDS_COURSETYPES = getattr(settings, 'ALLOWED_CDS_COURSETYPES',
                                   ALLOWED_CDS_COURSETYPES)
+
+INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER',
+                                  INITIAL_STRUCTURE_FATHER)
 # end settings params
 
 class BaseStorageHandler(BaseContentHandler):
@@ -262,7 +265,13 @@ class StructureListViewHandler(BaseStorageHandler):
         super(StructureListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_STRUCTURE_API}?lang={self.lang}'
+        data = {'lang': self.lang}
+
+        if INITIAL_STRUCTURE_FATHER != '':
+            data['father'] = INITIAL_STRUCTURE_FATHER
+
+        params = urllib.parse.urlencode(data)
+        self.data['url'] = f'{settings.CMS_STORAGE_STRUCTURE_API}?{params}'
         return super().as_view()
 
     @property
@@ -281,7 +290,8 @@ class StructureInfoViewHandler(BaseStorageHandler):
 
     def as_view(self):
         self.data['url'] = f'{settings.CMS_STORAGE_STRUCTURE_API}{self.code}/?lang={self.lang}'
-        print(self.data['url'])
+        self.data['url_child_structures'] = f'{settings.CMS_STORAGE_STRUCTURE_API}/?lang={self.lang}&father={self.code}'
+        self.data['url_personnel'] = f'{settings.CMS_STORAGE_ADDRESSBOOK_API}/?lang={self.lang}&structuretree={self.code}'
         return super().as_view()
 
     @property

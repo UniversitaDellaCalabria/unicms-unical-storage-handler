@@ -28,6 +28,46 @@
                         <div class="row">
                             <div class="col-12 col-md-8">
                                 {% include "blocks/unical_storage_structure_info.html" with url=url %}
+
+                                <!-- Personnel -->
+                                <div id="collapse-1-lft" class="collapse-div collapse-left-icon" role="tablist">
+                                    <div class="collapse-header" id="heading-personnel-lft">
+                                        <button data-toggle="collapse"
+                                                data-target="#collapse-personnel-lft"
+                                                aria-expanded="false"
+                                                aria-controls="collapse-personnel-lft">
+                                            {% trans "Personnel" %}
+                                        </button>
+                                    </div>
+                                    <div id="collapse-personnel-lft"
+                                         class="collapse"
+                                         role="tabpanel"
+                                         aria-labelledby="heading-personnel-lft">
+                                        <div class="mt-3">
+                                            {% include "blocks/unical_storage_addressbook.html" with url=url_personnel %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Child Structures -->
+                                <div id="collapse-2-lft" class="collapse-div collapse-left-icon" role="tablist">
+                                    <div class="collapse-header" id="heading-childstructures-lft">
+                                        <button data-toggle="collapse"
+                                                data-target="#collapse-childstructures-lft"
+                                                aria-expanded="false"
+                                                aria-controls="collapse-childstructures-lft">
+                                            {% trans "Child Structures" %}
+                                        </button>
+                                    </div>
+                                    <div id="collapse-childstructures-lft"
+                                         class="collapse"
+                                         role="tabpanel"
+                                         aria-labelledby="heading-childstructures-lft">
+                                        <div class="mt-3">
+                                            {% include "blocks/unical_storage_structure_list.html" with url=url_child_structures %}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 col-md-3 offset-md-1">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

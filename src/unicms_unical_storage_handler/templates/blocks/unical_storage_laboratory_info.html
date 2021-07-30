@@ -24,6 +24,9 @@
 
     <div v-else>
         <div class="row">
+            <div class="col-12 col-lg-2 d-flex" style="background: #d3d2cf">
+                <img v-bind:src="item.LaboratoryLogo" style="width: 100%; height: 100%;">
+            </div>
             <div class="col-12 col-lg-9 my-3 my-lg-0">
                 <h1 class="lighter">
                     [[ item.LaboratoryName ]]
@@ -68,14 +71,94 @@
         </div>
     </div>
 
-    <!-- Erc1 -->
-    <div id="collapseDiv2-lft" class="collapse-div collapse-left-icon" role="tablist">
+    <!-- Scopes  -->
+    <div id="collapseDiv-scopes-lft" class="collapse-div collapse-left-icon" role="tablist">
+        <div class="collapse-header" id="heading-scopes-lft">
+            <button data-toggle="collapse"
+                    data-target="#collapse-scopes-lft"
+                    aria-expanded="false"
+                    aria-controls="collapse-scopes-lft">
+                {% trans 'Scopes' %}
+            </button>
+        </div>
+        <div id="collapse-scopes-lft"
+             class="collapse"
+             role="tabpanel"
+             aria-labelledby="heading-scopes-lft">
+            <div class="collapse-body">
+                <!-- LaboratoryServicesScope  -->
+                <div id="collapseDiv-servicesscope-lft" class="collapse-div collapse-left-icon" role="tablist" v-if="item.LaboratoryServicesScope && item.LaboratoryServicesScope != ''">
+                    <div class="collapse-header" id="heading-servicesscope-lft">
+                        <button data-toggle="collapse"
+                                data-target="#collapse-servicesscope-lft"
+                                aria-expanded="false"
+                                aria-controls="collapse-servicesscope-lft">
+                            {% trans 'Services Scope' %}
+                        </button>
+                    </div>
+                    <div id="collapse-servicesscope-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="heading-servicesscope-lft">
+                        <div class="collapse-body">
+                            [[ item.LaboratoryServicesScope ]]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LaboratoryResearchScope  -->
+                <div id="collapseDiv-researchscope-lft" class="collapse-div collapse-left-icon" role="tablist" v-if="item.LaboratoryResearchScope && item.LaboratoryResearchScope != ''">
+                    <div class="collapse-header" id="heading-researchscope-lft">
+                        <button data-toggle="collapse"
+                                data-target="#collapse-researchscope-lft"
+                                aria-expanded="false"
+                                aria-controls="collapse-researchscope-lft">
+                            {% trans 'Research Scope' %}
+                        </button>
+                    </div>
+                    <div id="collapse-researchscope-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="heading-researchscope-lft">
+                        <div class="collapse-body">
+                            [[ item.LaboratoryResearchScope ]]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LaboratoryTeachingScope  -->
+                <div id="collapseDiv-teachingscope-lft" class="collapse-div collapse-left-icon" role="tablist" v-if="item.LaboratoryTeachingScope && item.LaboratoryTeachingScope != ''">
+                    <div class="collapse-header" id="heading-teachingscope-lft">
+                        <button data-toggle="collapse"
+                                data-target="#collapse-teachingscope-lft"
+                                aria-expanded="false"
+                                aria-controls="collapse-teachingscope-lft">
+                            {% trans 'Teaching Scope' %}
+                        </button>
+                    </div>
+                    <div id="collapse-teachingscope-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="heading-teachingscope-lft">
+                        <div class="collapse-body">
+                            [[ item.LaboratoryTeachingScope ]]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Erc 0 -->
+    <div id="collapseDiv-erc1-lft" class="collapse-div collapse-left-icon" role="tablist" v-if="item.LaboratoryErc1.length > 0">
         <div class="collapse-header" id="heading-erc1-lft">
             <button data-toggle="collapse"
                     data-target="#collapse-erc1-lft"
                     aria-expanded="false"
                     aria-controls="collapse-erc1-lft">
-                {% trans "Erc 1" %}
+                [[ item.LaboratoryErc1[0].LaboratoryErc0Description ]]
             </button>
         </div>
         <div id="collapse-erc1-lft"
@@ -85,16 +168,9 @@
             <div class="mt-3">
                 <ul>
                     <li v-for="subvalue in item.LaboratoryErc1">
-                        <div class="table-responsive">
-                            <table class="table table-sm">
-                                <tbody>
-                                    <tr v-for="(value, name) in subvalue" v-if="value && value != '' && !fields_to_not_show.includes(name)">
-                                        <td>[[ labels[name] ]]</td>
-                                        <td>[[ value ]]</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <template v-for="(value, name) in subvalue" v-if="value && value != '' && !fields_to_not_show.includes(name)">
+                            [[ value ]]
+                        </template>
                     </li>
                 </ul>
 
@@ -103,7 +179,7 @@
     </div>
 
     <!-- ResearchPersonnel -->
-    <div id="collapseDiv3-lft" class="collapse-div collapse-left-icon" role="tablist">
+    <div id="collapseDiv-researchpersonnel-lft" class="collapse-div collapse-left-icon" role="tablist">
         <div class="collapse-header" id="heading-researchpersonnel-lft">
             <button data-toggle="collapse"
                     data-target="#collapse-researchpersonnel-lft"
@@ -129,7 +205,7 @@
     </div>
 
     <!-- TechPersonnel -->
-    <div id="collapseDiv4-lft" class="collapse-div collapse-left-icon" role="tablist">
+    <div id="collapseDiv-techpersonnel-lft" class="collapse-div collapse-left-icon" role="tablist">
         <div class="collapse-header" id="heading-techpersonnel-lft">
             <button data-toggle="collapse"
                     data-target="#collapse-techpersonnel-lft"
@@ -144,9 +220,9 @@
              aria-labelledby="heading-techpersonnel-lft">
             <div class="mt-3">
                 <ul>
-                    <li v-for="subvalue in item.LaboratoryTechPersonnel" v-if="subvalue.ResearchTechName && subvalue.ResearchTechName != ''">
-                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ subvalue.ResearchTechID ]] +'/'">
-                            [[ subvalue.ResearchTechName ]]
+                    <li v-for="subvalue in item.LaboratoryTechPersonnel" v-if="subvalue.TechPersonnelName && subvalue.TechPersonnelName != ''">
+                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ subvalue.TechPersonnelID ]] +'/'">
+                            [[ subvalue.TechPersonnelName ]]
                         </a>
                     </li>
                 </ul>
@@ -155,7 +231,7 @@
     </div>
 
     <!-- OfferedServices -->
-    <div id="collapseDiv5-lft" class="collapse-div collapse-left-icon" role="tablist">
+    <div id="collapseDiv-offeredservices-lft" class="collapse-div collapse-left-icon" role="tablist">
         <div class="collapse-header" id="heading-offeredservices-lft">
             <button data-toggle="collapse"
                     data-target="#collapse-offeredservices-lft"
@@ -183,7 +259,7 @@
     </div>
 
     <!-- Location -->
-    <div id="collapseDiv6-lft" class="collapse-div collapse-left-icon" role="tablist">
+    <div id="collapseDiv-location-lft" class="collapse-div collapse-left-icon" role="tablist">
         <div class="collapse-header" id="heading-location-lft">
             <button data-toggle="collapse"
                     data-target="#collapse-location-lft"

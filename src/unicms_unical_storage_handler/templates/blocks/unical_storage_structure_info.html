@@ -1,5 +1,7 @@
 {% load static %}
 
+{% load i18n %}
+
 {% load unicms_storage_handler %}
 {% load unicms_templates %}
 
@@ -13,6 +15,7 @@
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+{% settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 
 <div id="{{ id }}">
 
@@ -77,6 +80,7 @@
             return {
                 item: {},
                 labels: {},
+                personnel: [],
                 url: '{{ url }}',
                 is_loading: true,
                 loader_source: '{{ url }}',
@@ -92,7 +96,6 @@
                     .get(this.url)
                     .then(response => {
                         this.item = response.data.results;
-                        console.log(this.item);
                         this.labels = response.data.labels;
                         this.is_loading = false
                     })
