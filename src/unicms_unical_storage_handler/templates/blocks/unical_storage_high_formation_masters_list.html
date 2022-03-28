@@ -1,0 +1,400 @@
+{% extends "bases/unical_storage_list.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+
+{% block content %}
+
+{% get_allowed_website request.get_host as host %}
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% settings_value "CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH" as masters_prefix %}
+
+<div id="{{ id }}">
+
+    <div v-if="(initial_items && initial_items.length) || parameters">
+
+        {% comment %}
+        <hr class="my-4 bordeaux-unical-bg">
+        {% endcomment %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card-wrapper card-space">
+                    <div class="card card-bg no-after">
+                        <div class="card-body">
+                            {% block filters_search %}
+                            {% include "includes/unical_storage_search_input.html" with id=id %}
+                            {% endblock filters_search %}
+
+                            {% block filters_masterslist %}
+                            <div class="form-group mb-0">
+
+                                <!-- Academic year & language -->
+                                <div class="row">
+                                    <loading-icon
+                                        v-if="is_loading_years"
+                                        :loader_source="loader_source_years">
+                                    </loading-icon>
+
+                                    <div class="col-sm" v-else>
+                                        <div>
+                                            <label for="{{ id }}_year_input">
+                                                {% trans "Survey Year" %}
+                                            </label>
+                                            <div class="w-30 mt-5">
+                                                <select id="{{ id }}_year_input"
+                                                        title="{% trans 'Choose an option' %}"
+                                                        name="{{ id }}_year_input"
+                                                        class="form-control"
+                                                        @change="{{ id }}.search()">
+                                                  <option value="" v-if="initial_year==''">
+                                                      - {% trans 'Choose an option' %} -
+                                                  </option>
+                                                  <option v-for="item in years_filter"
+                                                          :value="item.AcademicYear"
+                                                          :selected="item.AcademicYear == selected_year">
+                                                      [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]
+                                                  </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% block filters_language %}
+                                    <div class="col-sm">
+                                        <div>
+                                            <label for="{{ id }}_master_language_input">
+                                                {% trans "Master language" %}
+                                            </label>
+                                            <div class="w-30 mt-5">
+                                                <select id="{{ id }}_master_language_input"
+                                                        title="{% trans 'Choose an option' %}"
+                                                        name="{{ id }}_master_language_input"
+                                                        class="form-control"
+                                                        @change="{{ id }}.search()">
+                                                    <option value="">- {% trans 'Choose an option' %} -</option>
+                                                    <option v-for="item in masters_languages_filter"
+                                                            :value="item"
+                                                            :selected="item == selected_language">
+                                                        [[ item ]]
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endblock filters_language %}
+                                </div>
+
+                                <!-- Master department -->
+                                <div class="row">
+
+                                    {% block filters_department %}
+                                    <loading-icon
+                                        v-if="is_loading_departments"
+                                        :loader_source="loader_source_departments">
+                                    </loading-icon>
+
+                                    <div class="col-sm" v-else>
+                                        <div>
+                                            <label for="{{ id }}_department_input">
+                                                {% trans "Department" %}
+                                            </label>
+                                            <div class="w-30 mt-5">
+                                                <select id="{{ id }}_department_input"
+                                                        title="{% trans 'Choose an option' %}"
+                                                        name="{{ id }}_department_input"
+                                                        class="form-control"
+                                                        @change="{{ id }}.search()">
+                                                    <option value="">- {% trans 'Choose an option' %} -</option>
+                                                    <option v-for="item in departments_filter"
+                                                            :value="item.DepartmentCod"
+                                                            :selected="item.DepartmentCod == selected_department_id">
+                                                        [[ item.DepartmentName ]]
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endblock filters_department %}
+                                {% block filters_erogation_modes %}
+                                    <loading-icon
+                                        v-if="is_loading_erogation_modes"
+                                        :loader_source="loader_source_erogation_modes">
+                                    </loading-icon>
+
+                                    <div class="col-sm" v-else>
+                                        <div>
+                                            <label for="{{ id }}_erogation_modes_input">
+                                                {% trans "Erogation Modes" %}
+                                            </label>
+                                            <div class="w-30 mt-5">
+                                                <select id="{{ id }}_erogation_modes_input"
+                                                        title="{% trans 'Choose an option' %}"
+                                                        name="{{ id }}_erogation_modes_input"
+                                                        class="form-control"
+                                                        @change="{{ id }}.search()">
+                                                    <option value="">- {% trans 'Choose an option' %} -</option>
+                                                    <option v-for="item in erogation_modes_filter"
+                                                            :value="item.ID"
+                                                            :selected="item.ID == selected_erogation_modes_id">
+                                                        [[ item.Description ]]
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endblock filters_erogation_modes %}
+                                {% block filters_course_type %}
+                                    <loading-icon
+                                        v-if="is_loading_course_type"
+                                        :loader_source="loader_source_course_type">
+                                    </loading-icon>
+
+                                    <div class="col-sm" v-else>
+                                        <div>
+                                            <label for="{{ id }}_course_type_input">
+                                                {% trans "Course Type" %}
+                                            </label>
+                                            <div class="w-30 mt-5">
+                                                <select id="{{ id }}_course_type_input"
+                                                        title="{% trans 'Choose an option' %}"
+                                                        name="{{ id }}_course_type_input"
+                                                        class="form-control"
+                                                        @change="{{ id }}.search()">
+                                                    <option value="">- {% trans 'Choose an option' %} -</option>
+                                                    <option v-for="item in course_type_filter"
+                                                            :value="item.ID"
+                                                            :selected="item.ID == selected_course_type_id">
+                                                        [[ item.Description ]]
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endblock filters_course_type %}
+                                </div>
+                            </div>
+                            {% endblock filters_masterslist %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
+
+        <loading-icon
+            v-if="is_loading"
+            :loader_source="loader_source">
+        </loading-icon>
+
+        <div v-else>
+            <div class="row mb-3" v-for="item in items.results">
+                <div class="col-12">
+                    <!--start card-->
+                    <div class="card-wrapper pb-0">
+                        <div class="card no-after" style="border-top:1px solid #b71918">
+                            <div class="card-body p-3">
+                                <h5>
+                                    <a class="no-color"
+                                       :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ masters_prefix }}/' + [[ item.ID ]] +'/'"
+                                       {% if request.get_host != host %}target="_blank"{% endif %}>
+                                        <b>[[ item.MasterTitle ]]</b>
+                                    </a>
+
+                                </h5>
+                                <div class="row">
+                                    <div class="col-12 col-md-auto" v-if="item.HighFormationMasterYear">
+                                        <small>
+                                            {% trans "A.Y." %} >
+                                            <b>[[ item.HighFormationMasterYear ]]/[[ item.HighFormationMasterYear + 1]]</b>
+                                        </small>
+                                    </div>
+                                    <div class="col-12 col-md-auto" v-if="item.HighFormationErogationModeDescription">
+                                        <small>
+                                            [[ labels['HighFormationErogationModeDescription'] ]] >
+                                            <b>[[ item.HighFormationErogationModeDescription ]]</b>
+                                        </small>
+                                    </div>
+                                    <div class="col-12 col-md-auto mr-md-4" v-if="item.HighFormationLanguage.length > 0">
+                                        <small>
+                                            [[ labels['HighFormationLanguage'] ]] >
+                                            <b>[[ item.HighFormationLanguage ]] </b>
+                                        </small>
+                                    </div>
+                                    <div class="col-12 col-md-auto" v-if="item.ScientificDirectorName">
+                                        <small>
+                                            [[ labels['ScientificDirectorName'] ]] >
+                                            <b>[[ item.ScientificDirectorName ]]</b>
+                                        </small>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end card-->
+                </div>
+            </div>
+        </div>
+
+        <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
+    </div>
+
+    <div v-else>
+        {% trans "No items here" %}
+    </div>
+
+</div>
+{% endblock content %}
+{% block extra_scripts %}
+<script>
+function {{ id }}_get_form_paramenters(keyword=null, value=null) {
+
+    let dict = {}
+
+    if (keyword)
+        dict[keyword] = value
+
+    // search
+    let search = document.getElementById('{{ id }}_search')
+    if (search && search.value) dict['search'] = search.value
+
+    // coursetype
+    let coursetype = document.getElementById('{{ id }}_course_type_input')
+    if (coursetype && coursetype.value) dict['coursetype'] = coursetype.value
+
+    // erogation modes
+    let erogation_modes = document.getElementById('{{ id }}_erogation_modes_input')
+    if (erogation_modes && erogation_modes.value) dict['erogation'] = erogation_modes.value
+
+    // academic year
+    let year = document.getElementById('{{ id }}_year_input')
+    if (year && year.value) dict['year'] = year.value
+
+    // department name
+    let department = document.getElementById('{{ id }}_department_input')
+    if (department && department.value) dict['department'] = department.value
+
+    // master language
+    {% block filters_language_script %}
+    let master_language = document.getElementById('{{ id }}_master_language_input')
+    if (master_language && master_language.value) dict['language'] = master_language.value
+    {% endblock filters_language_script %}
+
+    setItemInSession("{{ id }}", dict)
+
+    return dict
+}
+</script>
+{% endblock extra_scripts %}
+
+{% block extra_data %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+{% settings_value "ALLOWED_HIGH_FORMATION_MASTERS_LANGUAGES" as allowed_languages %}
+
+{% settings_value "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
+{% settings_value "CMS_STORAGE_ACADEMICYEARS_API" as years_api %}
+{% settings_value "CMS_STORAGE_COURSETYPES_API" as course_type_api %}
+{% settings_value "CMS_STORAGE_EROGATIONMODES_API" as erogation_modes_api %}
+
+
+initial_year: {{ id }}_get_param('year') || '',
+
+selected_course_type_id: this.getItemFromSession("{{ id }}", 'coursetype'),
+selected_erogation_modes_id: this.getItemFromSession("{{ id }}", 'erogation'),
+selected_year: this.getItemFromSession("{{ id }}", 'year') || {{ id }}_get_param('year'),
+selected_department_id: this.getItemFromSession("{{ id }}", 'department'),
+selected_language: this.getItemFromSession("{{ id }}", 'language'),
+selected_search: this.getItemFromSession("{{ id }}", 'search'),
+
+{#allowed_course_types: [],#}
+{#course_types: [],#}
+
+is_loading_years: true,
+is_loading_departments: true,
+is_loading_course_type: true,
+is_loading_erogation_modes: true,
+
+loader_source_years: '{{ years_api }}?lang={{ LANGUAGE_CODE }}',
+loader_source_departments: '{{ departments_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
+loader_source_course_type: '{{ course_type_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
+loader_source_erogation_modes: '{{ erogation_modes_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
+
+years_filter: [],
+departments_filter: [],
+erogation_modes_filter: [],
+course_type_filter: [],
+
+masters_languages_filter: {{ allowed_languages|safe }},
+{% endblock extra_data %}
+
+{% block extra_mounted %}
+
+{#// if url is pre-filtered with preferred coursetypes#}
+{#// get them, else show all#}
+{#let params = new URLSearchParams(this.url.split('?')[1]);#}
+{#let get_coursetype = params.get("coursetype")#}
+{#let get_structuretype = params.get("structuretype")#}
+{#if (get_coursetype != null){#}
+{#    let get_coursetypes_list = get_coursetype.split(',')#}
+{#    this.allowed_course_types = get_coursetypes_list#}
+
+
+this.callYears();
+this.callDepartments();
+this.callErogationModes();
+this.callCourseType();
+
+
+this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
+{% endblock extra_mounted %}
+
+{% block method_search %}
+search(keyword=null, value=null) {
+    if (value) this.parameters = {{ id }}_encodeQueryData({{ id }}_get_form_paramenters(keyword, value));
+    else this.parameters = {{ id }}_encodeQueryData({{ id }}_get_form_paramenters());
+    this.CallURL(this.url + this.parameters);
+},
+{% endblock method_search %}
+
+{% block extra_methods %}
+callYears() {
+    axios
+        .get(this.loader_source_years)
+        .then(response => {
+            this.years_filter = response.data.results;
+            this.is_loading_years = false
+        })
+},
+callDepartments() {
+    axios
+        .get(this.loader_source_departments)
+        .then(response => {
+            this.departments_filter = response.data.results;
+            this.is_loading_departments = false
+        })
+},
+callErogationModes() {
+    axios
+        .get(this.loader_source_erogation_modes)
+        .then(response => {
+            this.erogation_modes_filter = response.data.results;
+            this.is_loading_erogation_modes = false
+        })
+},
+callCourseType() {
+    axios
+        .get(this.loader_source_course_type)
+        .then(response => {
+            this.course_type_filter = response.data.results;
+            this.is_loading_course_type = false
+        })
+},
+{% endblock extra_methods %}
+</script>

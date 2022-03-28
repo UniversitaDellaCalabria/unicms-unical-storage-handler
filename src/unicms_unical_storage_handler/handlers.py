@@ -574,3 +574,51 @@ class ProjectsInfoViewHandler(BaseStorageHandler):
         parent = (self.parent_url, settings.CMS_STORAGE_PROJECTS_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
+
+
+class HighFormationMastersListViewHandler(BaseStorageHandler):
+    template = "storage_high_formation_masters_list.html"
+
+    def __init__(self, **kwargs):
+        super(HighFormationMastersListViewHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        url_data = {}
+
+        if settings.CURRENT_YEAR:
+            url_data['year'] = settings.CURRENT_YEAR
+
+        params = urllib.parse.urlencode(url_data)
+        self.data['url'] = f'{settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_API}'
+        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
+        return (root, leaf)
+
+
+class HighFormationMastersInfoViewHandler(BaseStorageHandler):
+    template = "storage_high_formation_master_info.html"
+
+    def __init__(self, **kwargs):
+        super(HighFormationMastersInfoViewHandler, self).__init__(**kwargs)
+        self.code = self.match_dict.get('code', '')
+
+    def as_view(self):
+        self.data['url'] = f'{settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_API}{self.code}/'
+        return super().as_view()
+
+    @property
+    def parent_url(self):
+        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH}/'
+        return sanitize_path(url)
+
+    @property
+    def breadcrumbs(self):
+        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
+        leaf = ('#', self.code)
+        return (root, parent, leaf)
