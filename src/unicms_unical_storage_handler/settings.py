@@ -27,6 +27,8 @@ CMS_STORAGE_RESEARCH_GROUP_VIEW_PREFIX_PATH = 'research-groups'
 CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH = 'companies'
 CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH = 'structures'
 CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH = 'teachers'
+CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH = 'high-formation-masters'
+
 
 
 # regexps
@@ -55,6 +57,8 @@ CMS_STORAGE_STRUCTURE_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*
 CMS_STORAGE_STRUCTURE_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH})/(?P<code>[a-z0-9\-]+)(/)?$' # noqa
 CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
+CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
 
 
 CMS_STORAGE_HANDLERS_PATHS = [
@@ -82,6 +86,8 @@ CMS_STORAGE_HANDLERS_PATHS = [
                               CMS_STORAGE_STRUCTURE_INFO_URL_VIEW_REGEXP,
                               CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP,
                               CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP,
+                              CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP,
+                              CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP
                               ]
 
 
@@ -110,6 +116,8 @@ CMS_STORAGE_APP_REGEXP_URLPATHS = {
     'unicms_unical_storage_handler.handlers.StructureInfoViewHandler' : CMS_STORAGE_STRUCTURE_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.TeacherListViewHandler' : CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.TeacherInfoViewHandler' : CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP,
+    'unicms_unical_storage_handler.handlers.HighFormationMastersListViewHandler': CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP,
+    'unicms_unical_storage_handler.handlers.HighFormationMastersInfoViewHandler': CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP,
 }
 
 
@@ -149,6 +157,9 @@ CMS_STORAGE_STRUCTUREFUNCTIONS_API = f'{CMS_STORAGE_BASE_API}functions/'
 CMS_STORAGE_STRUCTURETYPES_API = f'{CMS_STORAGE_BASE_API}structuretypes/'
 CMS_STORAGE_TEACHER_API = f'{CMS_STORAGE_BASE_API}teachers/'
 CMS_STORAGE_TECHAREAS_API = f'{CMS_STORAGE_BASE_API}tech-areas/'
+CMS_STORAGE_HIGH_FORMATION_MASTERS_API = f'{CMS_STORAGE_BASE_API}high-formation-masters/'
+CMS_STORAGE_EROGATIONMODES_API = f'{CMS_STORAGE_BASE_API}erogation-modes/'
+CMS_STORAGE_COURSETYPES_API = f'{CMS_STORAGE_BASE_API}course-types/'
 
 
 # labels (for breadcrumbs and page title)
@@ -167,11 +178,13 @@ CMS_STORAGE_ROOT_LABEL = _("Open data")
 CMS_STORAGE_SPINOFF_LABEL = _("Companies")
 CMS_STORAGE_STRUCTURE_LABEL = _("Structures")
 CMS_STORAGE_TEACHERS_LABEL = _("Teachers")
+CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL = _("High Formation Masters")
 
 
 # API filters
 ALLOWED_CDS_COURSETYPES = []
 ALLOWED_CDS_LANGUAGES = ['ita', 'eng']
+ALLOWED_HIGH_FORMATION_MASTERS_LANGUAGES = ['italiano', 'inglese']
 ALLOWED_CDS_JOINT_DEGREES = [
     {'COD': 'N', 'name': _("No")},
     {'COD': 'S', 'name': _("Joint title")},
@@ -267,6 +280,10 @@ SPINOFF_INFO_NOT_SHOW = ['SpinoffId', 'SpinoffImage', 'SpinoffTechAreaId',
                          'IsSpinoff', 'IsStartup', 'SpinoffAgencyName',
                          'SpinoffUnicalReferentId', 'SpinoffDescription',
                          'TechAreaId']
+
+HIGH_FORMATION_MASTERS_INFO_NOT_SHOW = ['ID', 'HighFormationTypeId', 'HighFormationErogationMode'
+                                        ]
+
 
 EXCLUDE_STUDY_ACTIVITIES_CODES = []
 

@@ -1,0 +1,678 @@
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% get_allowed_website request.get_host as host %}
+{% get_cdsid_from_url url as cdsid %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% random_id uid as id %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% settings_value "CMS_STORAGE_ROOT_API" as api_root %}
+{% settings_value "CDS_INFO_FIELDS" as fields_to_show %}
+{% settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+{% settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
+{% settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+<script src="{% static 'js/vue-markdown.js' %}"></script>
+
+{% if full_page %}
+<div class="row">
+    <div class="col-12 col-lg-8">
+{% endif %}
+        <div id="{{ id }}">
+
+            <loading-icon
+                v-if="is_loading"
+                :loader_source="loader_source">
+            </loading-icon>
+
+            <div v-else-if="Object.keys(item).length">
+                <h1 class="lighter">[[ item.MasterTitle ]]</h1>
+                <div class="my-3">
+                    <h3 class="lighter" style="display: inline">[[ item.HighFormationTypeDescription ]]</h3>
+                </div>
+                <p>
+                    <span v-if="item.DepartmentName">
+                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + [[ item.DepartmentCod ]] +'/'">
+                            [[ item.DepartmentName ]]
+                        </a>
+                    </span>
+                </p>
+                <div class="card-wrapper pb-0">
+                    <div class="card no-after" style="border:1px solid #b71918">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-auto" v-if="item.HighFormationMasterYear">
+                                    <small>
+                                        [[ labels['HighFormationMasterYear'] ]] >
+                                        <b>[[ item.HighFormationMasterYear ]]/[[ item.HighFormationMasterYear + 1 ]]</b>
+                                    </small>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.HighFormationErogationModeDescription">
+                                    <small>
+                                        [[ labels['HighFormationErogationModeDescription'] ]] >
+                                        <b>[[ item.HighFormationErogationModeDescription ]]</b>
+                                    </small>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.HighFormationLanguage.length > 0 && item.HighFormationLanguage[0]">
+                                    <small>
+                                        [[ labels['HighFormationLanguage'] ]] >
+                                        <b>[[ item.HighFormationLanguage ]] </b>
+                                    </small>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.HighFormationCourseStructure">
+                                    <small>
+                                        [[ labels['HighFormationCourseStructure'] ]] >
+                                        <b>[[ item.HighFormationCourseStructure ]]</b>
+                                    </small>
+                                </div>
+                            </div>
+                                {% comment %}
+                                <div class="col-12 col-md-auto" v-if="item.HighFormationMinParticipants">
+                                    <small>
+                                    [[ labels['HighFormationMinParticipants'] ]]
+                                    <span>
+                                        <b>[[ item.HighFormationMinParticipants ]]</b>
+                                    </span>
+                                    </small>
+                                </div>
+
+                                <div class="col-12 col-md-auto" v-if="item.HighFormationMaxParticipants">
+                                    <small>
+                                    [[ labels['HighFormationMaxParticipants'] ]]
+                                    <span>
+                                        <b>[[ item.HighFormationMaxParticipants ]]</b>
+                                    </span>
+                                    </small>
+                                </div>
+
+                                <div class="col-12" v-if="item.ScientificDirectorName && item.ScientificDirectorName.trim().length>0">
+                                    <hr>
+                                    <small>
+                                    [[ labels['ScientificDirectorName'] ]]
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ item.ScientificDirectorId ]] +'/'" v-if="item.ScientificDirectorId">
+                                        <b>[[ item.ScientificDirectorName ]]</b>
+                                    </a>
+                                    <span v-else>
+                                        <b>[[ item.ScientificDirectorName ]]</b>
+                                    </span>
+                                    </small>
+                                </div>
+                            </div>
+                            {% endcomment %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <vue-markdown :emoji=false>
+                        [[ item.CourseObjectives ]]
+                    </vue-markdown>
+                </div>
+
+                <!-- Admission Requirements -->
+                <div v-if="item.AdmissionRequirements && item.AdmissionRequirements.length" id="collapse_admission_requirements{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-admission-requirements-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-admission-requirements-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-admission-requirements-lft">
+                            {% trans 'Admission Requirements' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-admission-requirements-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-admission-requirements-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.AdmissionRequirements && item.AdmissionRequirements != ''">
+                                    [[ item.AdmissionRequirements ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage -->
+                <div v-if="item.Internship" id="collapse_internship{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-stage-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-stage-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-stage-lft">
+                            {% trans 'Stage' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-stage-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-stage-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.Internship && item.Internship != '' && item.Internship !='Non previsto'">
+                                    <b>[[labels.Internship ]]</b>
+                                    <br>
+                                    [[ item.Internship ]]
+                                </li>
+                                <li v-else>
+                                    {% trans 'Not Expected' %}
+                                </li>
+                                <li v-if="item.InternshipHours && item.InternshipHours != ''">
+                                    <b>[[labels.InternshipHours ]]</b>
+                                    <br>
+                                    [[ item.InternshipHours ]]
+                                </li>
+                                <li v-if="item.InternshipMonths && item.InternshipMonths != ''">
+                                    <b>[[labels.InternshipMonths ]]</b>
+                                    <br>
+                                    [[ item.InternshipMonths ]]
+                                </li>
+                                <li v-if="item.InternshipCFU && item.InternshipCFU != ''">
+                                    <b>[[labels.InternshipCFU ]]</b>
+                                    <br>
+                                    [[ item.InternshipCFU ]]
+                                </li>
+                                <li v-if="item.TypeCompaniesInternship && item.TypeCompaniesInternship != ''">
+                                    <b>[[labels.TypeCompaniesInternship ]]</b>
+                                    <br>
+                                    [[ item.TypeCompaniesInternship ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Participants -->
+                <div v-if="item.HighFormationMinParticipants && item.HighFormationMinParticipants.length && item.HighFormationMaxParticipants && item.HighFormationMaxParticipants" id="collapse_title_issued{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-participants-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-participants-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-participants-lft">
+                            {% trans 'Participants' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-participants-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-participants-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.HighFormationMinParticipants && item.HighFormationMinParticipants != ''">
+                                    <b>[[ labels.HighFormationMinParticipants ]]</b>
+                                    <br>
+                                    [[ item.HighFormationMinParticipants ]]
+                                </li>
+                                <li v-if="item.HighFormationMaxParticipants && item.HighFormationMaxParticipants != ''">
+                                    <b>[[ labels.HighFormationMaxParticipants ]]</b>
+                                    <br>
+                                    [[ item.HighFormationMaxParticipants ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Title Issued -->
+                <div v-if="item.TitleIssued && item.TitleIssued.length" id="collapse_title_issued{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-title-issued-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-title-issued-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-title-issued-lft">
+                            {% trans 'Title Issued' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-title-issued-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-title-issued-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.TitleIssued && item.TitleIssued != ''">
+                                    [[ item.TitleIssued ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Work Function -->
+                <div v-if="item.WorkFunction && item.WorkFunction.length" id="collapse_work_function{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-work-function-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-work-function-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-work-function-lft">
+                            {% trans 'Work Function' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-work-function-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-work-function-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.WorkFunction && item.WorkFunction != ''">
+                                    [[ item.WorkFunction ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formation Objectives Summer School -->
+                <div v-if="item.FormationObjectivesSummerSchool && item.FormationObjectivesSummerSchool.length" id="collapse_formation_objectives_summer_school{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-formation-objectives-summer-school-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-formation-objectives-summer-school-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-formation-objectives-summer-school-lft">
+                            {% trans 'Formation Objectives Summer School' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-formation-objectives-summer-school-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-formation-objectives-summer-school-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.FormationObjectivesSummerSchool && item.FormationObjectivesSummerSchool != ''">
+                                    [[ item.FormationObjectivesSummerSchool ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Skills -->
+                <div v-if="item.Skills && item.Skills.length" id="collapse_skills{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-skills-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-skills-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-skills-lft">
+                            {% trans 'Skills' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-skills-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-skills-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.Skills && item.Skills != ''">
+                                    [[ item.Skills ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Job Opportunities -->
+                <div v-if="item.JobOpportunities && item.JobOpportunities.length" id="collapse_job_opprtunities{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-job-opportunities-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-job-opportunities-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-job-opportunities-lft">
+                            {% trans 'Job Opportunities' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-job-opportunities-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-job-opportunities-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.JobOpportunities && item.JobOpportunities != ''">
+                                    [[ item.JobOpportunities ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Objectives -->
+                <div v-if="item.CourseObjectives && item.CourseObjectives.length" id="collapse_final_test_mode{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-course-objectives-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-course-objectives-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-course-objectives-lft">
+                            {% trans 'Course Objectives' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-course-objectives-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-course-objectives-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.CourseObjectives && item.CourseObjectives != ''">
+                                    [[ item.CourseObjectives ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Final Test Mode -->
+                <div v-if="item.FinalTestMode && item.FinalTestMode.length" id="collapse_final_test_mode{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-final-test-mode-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-final-test-mode-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-final-test-mode-lft">
+                            {% trans 'Final Test Mode' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-final-test-mode-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-final-test-mode-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.FinalTestMode && item.FinalTestMode != ''">
+                                    [[ item.FinalTestMode ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Times Criteria CFU -->
+                <div v-if="item.ContentTimesCriteriaCFU && item.ContentTimesCriteriaCFU.length" id="collapse_content_cfu{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-content-times-criteria-cfu-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-content-times-criteria-cfu-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-content-times-criteria-cfu-lft">
+                            {% trans 'Content Times Criteria CFU' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-content-times-criteria-cfu-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-content-times-criteria-cfu-lft">
+
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-if="item.ContentTimesCriteriaCFU && item.ContentTimesCriteriaCFU != ''">
+                                    [[ item.ContentTimesCriteriaCFU ]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- High Formation Master Partners -->
+                <div v-if="item.HighFormationMasterPartners && item.HighFormationMasterPartners.length" id="collapse_master_partners{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-master-partners-lft">
+                        <button data-toggle="collapse"
+                                    data-target="#{{ id }}_collapse-master-partners-lft"
+                                    aria-expanded="false"
+                                    aria-controls="{{ id }}_collapse-master-partners-lft"
+                                    role="tab">
+                                {% trans 'High Formation Master Partners' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-master-partners-lft"
+                             class="collapse"
+                             role="tabpanel"
+                             aria-labelledby="{{ id }}_heading-master-partners-lft">
+                            <div class="collapse-body">
+                                <div class="it-list-wrapper">
+                                    <div class="table-responsive">
+                                        <small>
+                                            <table class="table table-sm table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">[[ labels.PartnerDenomination ]]</th>
+                                                        <th scope="col">[[ labels.PartnerType ]]</th>
+                                                        <th scope="col">[[ labels.PartnerURL ]]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="partner in item.HighFormationMasterPartners">
+                                                        <td>[[ partner.PartnerDenomination ]]</td>
+                                                        <td>[[ partner.PartnerType ]]</td>
+                                                        <td><a :href="partner.PartnerURL" target="_blank">[[ partner.PartnerURL ]]</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <!-- Teaching Plan -->
+                <div v-if="item.HighFormationMasterTeachingPlans && item.HighFormationMasterTeachingPlans.length" id="collapse_teaching_plan{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-teaching-plan-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-teaching-plan-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-teaching-plan-lft">
+                            {% trans 'Teaching Plan' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-teaching-plan-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-teaching-plan-lft">
+                        <div class="collapse-body">
+                                <div class="table-responsive">
+                                    <small>
+                                        <table class="table table-sm table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">[[ labels.TeachingPlanModule ]]</th>
+                                                    <th scope="col">[[ labels.TeachingPlanSSD ]]</th>
+                                                    <th scope="col">[[ labels.TeachingPlanHours ]]</th>
+                                                    <th scope="col">[[ labels.TeachingPlanCFU ]]</th>
+{#                                                    <th scope="col">[[ labels.TeachingPlanFinalTest ]]</th>#}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="plan in item.HighFormationMasterTeachingPlans">
+                                                    <td>[[ plan.TeachingPlanModule ]]</td>
+                                                    <td>[[ plan.TeachingPlanSSD ]]</td>
+                                                    <td>[[ plan.TeachingPlanHours ]]</td>
+                                                    <td>[[ plan.TeachingPlanCFU ]]</td>
+{#                                                    <td>[[ plan.TeachingPlanFinalTest ]]</td>#}
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </small>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Teaching Assignments -->
+            <div v-if="item.HighFormationMasterTeachingAssignments && item.HighFormationMasterTeachingAssignments.length" id="collapse_teaching_assignments{{ id }}" class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-teaching-assignments-lft">
+                    <button data-toggle="collapse"
+                            data-target="#{{ id }}_collapse-teaching-assignments-lft"
+                            aria-expanded="false"
+                            aria-controls="{{ id }}_collapse-teaching-assignments-lft">
+                        {% trans 'Teaching Assignments' %}
+                    </button>
+                </div>
+                <div id="{{ id }}_collapse-teaching-assignments-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-teaching-assignments-lft">
+                        <div class="collapse-body">
+                                <div class="table-responsive">
+                                    <small>
+                                        <table class="table table-sm table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">[[ labels.TeachingAssignmentsModule ]]</th>
+                                                    <th scope="col">[[ labels.TeachingAssignmentsHours ]]</th>
+                                                    <th scope="col">[[ labels.TeachingAssignmentsTeachers ]]</th>
+                                                    <th scope="col">[[ labels.TeachingAssignmentsQualification ]]</th>
+                                                    <th scope="col">[[ labels.TeachingAssignmentsInstitution ]]</th>
+                                                    <th scope="col">[[ labels.TeachingAssignmentsType ]]</th>
+{#                                                    <th scope="col">[[ labels.TeachingPlanFinalTest ]]</th>#}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="assignment in item.HighFormationMasterTeachingAssignments">
+                                                    <td>[[ assignment.TeachingAssignmentsModule ]]</td>
+                                                    <td>[[ assignment.TeachingAssignmentsHours ]]</td>
+                                                    <td>[[ assignment.TeachingAssignmentsTeachers ]]</td>
+                                                    <td>
+                                                        <div v-if="assignment.TeachingAssignmentsQualification">
+                                                            [[ assignment.TeachingAssignmentsQualification ]]
+                                                        </div>
+                                                        <div v-else>
+                                                            -
+                                                        </div>
+
+                                                    </td>
+                                                    <td>[[ assignment.TeachingAssignmentsInstitution ]]</td>
+                                                    <td>[[ assignment.TeachingAssignmentsType ]]</td>
+{#                                                    <td>[[ plan.TeachingPlanFinalTest ]]</td>#}
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </small>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+            <!-- Internal Council -->
+            <div v-if="item.HighFormationMasterInternalCouncil && item.HighFormationMasterInternalCouncil.length" id="collapse_internal_council{{ id }}" class="collapse-div collapse-left-icon">
+                <div class="collapse-header" id="{{ id }}_heading-internal-council-lft">
+                    <button data-toggle="collapse"
+                            data-target="#{{ id }}_collapse-internal-council-lft"
+                            aria-expanded="false"
+                            role="tab"
+                            aria-controls="{{ id }}_collapse-internal-council-lft">
+                        {% trans "Internal Council" %}
+                    </button>
+                </div>
+                <div id="{{ id }}_collapse-internal-council-lft"
+                     class="collapse"
+                     role="tabpanel"
+                     aria-labelledby="{{ id }}_heading-internal-council-lft">
+                    <div class="collapse-body">
+                        <ul>
+                            <li v-for="subvalue in item.HighFormationMasterInternalCouncil" v-if="subvalue.PersonName && subvalue.PersonName != ''">
+                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ subvalue.PersonId ]] +'/'" v-if="subvalue.PersonId">
+                                    [[ subvalue.PersonName ]]
+                                </a>
+                                <span v-else>
+                                    [[ subvalue.PersonName ]]
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- External Council-->
+            <div v-if="item.HighFormationMasterExternalCouncil && item.HighFormationMasterExternalCouncil.length" id="collapse_external_council{{ id }}" class="collapse-div collapse-left-icon">
+                <div class="collapse-header" id="{{ id }}_heading-external-council-lft">
+                    <button data-toggle="collapse"
+                            data-target="#{{ id }}_collapse-external-council-lft"
+                            aria-expanded="false"
+                            aria-controls="{{ id }}_collapse-external-council-lft">
+                        {% trans 'External Council' %}
+                    </button>
+                </div>
+                <div id="{{ id }}_collapse-external-council-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-external-council-lft">
+                        <div class="collapse-body">
+                                <div class="table-responsive">
+                                    <small>
+                                        <table class="table table-sm table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">[[ labels.PersonName ]]</th>
+                                                    <th scope="col">[[ labels.Role ]]</th>
+                                                    <th scope="col">[[ labels.Institution ]]</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="person in item.HighFormationMasterExternalCouncil">
+                                                    <td>[[ person.PersonName ]]</td>
+                                                    <td>[[ person.Role ]]</td>
+                                                    <td>[[ person.Institution ]]</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </small>
+                                </div>
+                        </div>
+            </div>
+
+            <div v-else>
+                {% include "includes/unical_storage_empty.html" with url=url %}
+            </div>
+        </div>
+
+{% if full_page %}
+    </div>
+</div>
+{% endif %}
+
+<script>
+
+Vue.use(VueMarkdown);
+
+var {{ id }} = new Vue({
+        el: '[id="{{ id }}"]',
+        data() {
+            return {
+                item: {},
+                labels: {},
+                url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
+                is_loading: true,
+                loader_source: '{{ url }}',
+                {#fields_to_not_show: {{ fields_to_hide|safe }},#}
+            }
+        },
+        mounted() {
+            this.CallURL();
+        },
+        methods: {
+            CallURL() {
+                axios
+                    .get(this.url)
+                    .then(response => {
+                        this.item = response.data.results;
+                        this.labels = response.data.labels;
+                        this.is_loading = false
+                        {% if change_breadcrumb %}
+                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.MasterTitle
+                        document.title = this.item.MasterTitle
+                        {% endif %}
+                    })
+            }
+        }
+    })
+</script>
