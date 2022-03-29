@@ -67,7 +67,7 @@
                                         [[ subvalue.TeacherRole]]
                                     </span>
                                     <br>
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + [[ subvalue.StructureId ]] +'/'">
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.StructureId +'/'">
                                         [[ subvalue.StructureName]]
                                     </a>
                                 </li>
@@ -88,7 +88,7 @@
                         </td>
                         <td v-else>
                             <a v-if="name == 'TeacherDepartmentName'"
-                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + [[ item.TeacherDepartmentCod ]] +'/'">
+                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.TeacherDepartmentCod +'/'">
                                 [[ item.TeacherDepartmentName ]]
                             </a>
                             <span v-else>

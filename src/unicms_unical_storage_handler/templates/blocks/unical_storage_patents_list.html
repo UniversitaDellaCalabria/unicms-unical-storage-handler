@@ -93,7 +93,7 @@
                                         <p v-if="item.PatentInventors.length">
                                             <small>
                                                 <span v-for="(inventor, index) in item.PatentInventors">
-                                                    <a v-if="inventor.AuthorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + [[ inventor.AuthorId ]] +'/'">
+                                                    <a v-if="inventor.AuthorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + inventor.AuthorId +'/'">
                                                         [[ inventor.AuthorName ]]
                                                     </a>
                                                     <span v-else>[[ inventor.AuthorName ]]</span>

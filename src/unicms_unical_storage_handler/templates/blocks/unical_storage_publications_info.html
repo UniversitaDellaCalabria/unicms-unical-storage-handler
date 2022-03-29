@@ -54,7 +54,7 @@
                         <td v-if="typeof value === 'object'">
                             <ul v-if="name == 'PublicationAuthors'">
                                 <li v-for="subvalue in value">
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ subvalue.AuthorId ]] +'/'">
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.AuthorId +'/'">
                                         [[ subvalue.AuthorName]]
                                     </a>
                                 </li>

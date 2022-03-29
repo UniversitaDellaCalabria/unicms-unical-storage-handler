@@ -17,18 +17,17 @@ CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH = 'activities'
 CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH = 'addressbook'
 CMS_STORAGE_APPLIED_RESEARCH_LINE_VIEW_PREFIX_PATH = 'applied-research-lines'
 CMS_STORAGE_BASE_RESEARCH_LINE_VIEW_PREFIX_PATH = 'base-research-lines'
-CMS_STORAGE_RESEARCH_LINE_VIEW_PREFIX_PATH = 'research-lines'
 CMS_STORAGE_CDS_VIEW_PREFIX_PATH = 'cds'
+CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH = 'high-formation-masters'
 CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH = 'laboratories'
 CMS_STORAGE_PATENTS_VIEW_PREFIX_PATH = 'patents'
 CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH = 'projects'
 CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH = 'publications'
 CMS_STORAGE_RESEARCH_GROUP_VIEW_PREFIX_PATH = 'research-groups'
+CMS_STORAGE_RESEARCH_LINE_VIEW_PREFIX_PATH = 'research-lines'
 CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH = 'companies'
 CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH = 'structures'
 CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH = 'teachers'
-CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH = 'high-formation-masters'
-
 
 
 # regexps
@@ -237,6 +236,7 @@ ADDRESSBOOK_INFO_NOT_SHOW = ['ID', 'Name', 'Role',
                              'StructureCod', 'StructureTypeName',
                              'StructureCod', 'ProfileId', 'ProfileDescription',
                              'ProfileShortDescription']
+
 TEACHER_INFO_NOT_SHOW = ['TeacherID', 'TeacherDepartmentID',
                          'TeacherLastName', 'TeacherFirstName',
                          'TeacherRole', 'TeacherRoleDescription',
@@ -281,9 +281,8 @@ SPINOFF_INFO_NOT_SHOW = ['SpinoffId', 'SpinoffImage', 'SpinoffTechAreaId',
                          'SpinoffUnicalReferentId', 'SpinoffDescription',
                          'TechAreaId']
 
-HIGH_FORMATION_MASTERS_INFO_NOT_SHOW = ['ID', 'HighFormationTypeId', 'HighFormationErogationMode'
-                                        ]
-
+HIGH_FORMATION_MASTERS_INFO_NOT_SHOW = ['ID', 'HighFormationTypeId',
+                                        'HighFormationErogationMode']
 
 EXCLUDE_STUDY_ACTIVITIES_CODES = []
 

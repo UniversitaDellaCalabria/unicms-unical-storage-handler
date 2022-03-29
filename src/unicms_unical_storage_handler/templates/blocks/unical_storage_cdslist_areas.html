@@ -191,7 +191,7 @@
                     <ul class="list-unstyled mt-3">
                         <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds && item.AcademicYear != '{{ cds_exclude_year }}'">
                             <a class="no-color"
-                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.RegDidId ]] +'/'"
+                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"
                                {% if request.get_host != host %}target="_blank"{% endif %}>
                                 <small>
                                 <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>

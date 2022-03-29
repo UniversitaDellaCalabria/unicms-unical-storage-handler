@@ -100,15 +100,15 @@
 
                         <td v-else>
                             <a v-if="name == 'CompletionReferentName' "
-                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ item.CompletionReferentId ]] +'/'">
+                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.CompletionReferentId +'/'">
                                 [[ item.CompletionReferentName ]]
                             </a>
                             <a v-else-if="name == 'ScientificDirectorName' "
-                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ item.ScientificDirectorId ]] +'/'">
+                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ScientificDirectorId +'/'">
                                 [[ item.ScientificDirectorName ]]
                             </a>
                             <a v-else-if="name == 'DepartmentReferentName' "
-                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + [[ item.DepartmentReferentCod ]] +'/'">
+                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.DepartmentReferentCod +'/'">
                                 [[ item.DepartmentReferentName ]]
                             </a>
                             <a target="_blank"
@@ -151,7 +151,7 @@
             <div class="collapse-body">
                 <ul>
                     <li v-for="subvalue in item.ExtraDepartments" v-if="subvalue.DepartmentName && subvalue.DepartmentName != ''">
-                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + [[ subvalue.DepartmentCod ]] +'/'">
+                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.DepartmentCod +'/'">
                             [[ subvalue.DepartmentName ]]
                         </a>
                     </li>
@@ -256,7 +256,7 @@
                 <div class="collapse-body">
                     <ul>
                         <li v-for="subvalue in item.LaboratoryResearchPersonnel" v-if="subvalue.ResearchPersonnelName && subvalue.ResearchPersonnelName != ''">
-                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ subvalue.ResearchPersonnelID ]] +'/'">
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.ResearchPersonnelID +'/'">
                                 [[ subvalue.ResearchPersonnelName ]]
                             </a>
                         </li>
@@ -283,7 +283,7 @@
                 <div class="collapse-body">
                     <ul>
                         <li v-for="subvalue in item.LaboratoryTechPersonnel" v-if="subvalue.TechPersonnelName && subvalue.TechPersonnelName != ''">
-                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ subvalue.TechPersonnelID ]] +'/'">
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.TechPersonnelID +'/'">
                                 [[ subvalue.TechPersonnelName ]]
                             </a>
                         </li>

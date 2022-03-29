@@ -3,13 +3,13 @@
 {% load i18n %}
 {% load static %}
 
-<!-- load custom template tags -->
-{% load unicms_carousels %}
 {% load unicms_contexts %}
 
 
 <!-- SEO  -->
-{% block page_title %}High Formation Masters{% endblock page_title %}
+{% block page_title %}
+{% trans "High Formation Masters" %}
+{% endblock page_title %}
 
 {% block container %}
 {% breadcrumbs webpath=webpath leaf=handler %}

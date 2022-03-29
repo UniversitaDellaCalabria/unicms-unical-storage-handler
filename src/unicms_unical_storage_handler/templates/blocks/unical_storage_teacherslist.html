@@ -130,7 +130,7 @@
                 <tbody>
                     <tr v-for="item in items.results">
                         <td>
-                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + [[ item.TeacherID ]] +'/'">
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + item.TeacherID +'/'">
                                 [[ item.TeacherName ]]
                             </a>
                         </td>

@@ -59,7 +59,7 @@
                         <td v-if="name == 'ScientificDirectors' ">
                             <ul>
                                 <li v-for="v in value">
-                                    <a v-if="v.ScientificDirectorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ v.ScientificDirectorId ]] +'/'">
+                                    <a v-if="v.ScientificDirectorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + v.ScientificDirectorId +'/'">
                                         [[ v.ScientificDirectorName ]]
                                     </a>
                                     <span v-else>
@@ -71,7 +71,7 @@
                         <td v-else-if="name == 'Researchers' ">
                             <ul>
                                 <li v-for="v in value">
-                                    <a v-if="v.ResearcherId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + [[ v.ResearcherId ]] +'/'">
+                                    <a v-if="v.ResearcherId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + v.ResearcherId +'/'">
                                         [[ v.ResearcherName ]]
                                     </a>
                                     <span v-else>
@@ -98,7 +98,7 @@
                             </ul>
                         </td>
                         <td v-else>
-                            <a v-if="name == 'InfrastructureDescription'" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structure_prefix }}/' + [[ item.InfrastructureId ]] +'/'">
+                            <a v-if="name == 'InfrastructureDescription'" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structure_prefix }}/' + item.InfrastructureId +'/'">
                                 [[ item.InfrastructureDescription ]]
                             </a>
                             <span v-else style="white-space: pre-line;">

@@ -12,14 +12,13 @@
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% settings_value "CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH" as masters_prefix %}
+{% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
+{% settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+
 
 <div id="{{ id }}">
 
     <div v-if="(initial_items && initial_items.length) || parameters">
-
-        {% comment %}
-        <hr class="my-4 bordeaux-unical-bg">
-        {% endcomment %}
 
         <div class="row">
             <div class="col-12">
@@ -55,6 +54,7 @@
                                                       - {% trans 'Choose an option' %} -
                                                   </option>
                                                   <option v-for="item in years_filter"
+                                                          v-if="item.AcademicYear != '{{ cds_exclude_year }}'"
                                                           :value="item.AcademicYear"
                                                           :selected="item.AcademicYear == selected_year">
                                                       [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]
@@ -63,6 +63,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     {% block filters_language %}
                                     <div class="col-sm">
                                         <div>
@@ -119,7 +120,8 @@
                                         </div>
                                     </div>
                                     {% endblock filters_department %}
-                                {% block filters_erogation_modes %}
+
+                                    {% block filters_erogation_modes %}
                                     <loading-icon
                                         v-if="is_loading_erogation_modes"
                                         :loader_source="loader_source_erogation_modes">
@@ -147,7 +149,8 @@
                                         </div>
                                     </div>
                                     {% endblock filters_erogation_modes %}
-                                {% block filters_course_type %}
+
+                                    {% block filters_course_type %}
                                     <loading-icon
                                         v-if="is_loading_course_type"
                                         :loader_source="loader_source_course_type">
@@ -156,7 +159,7 @@
                                     <div class="col-sm" v-else>
                                         <div>
                                             <label for="{{ id }}_course_type_input">
-                                                {% trans "Course Type" %}
+                                                {% trans "Course type" %}
                                             </label>
                                             <div class="w-30 mt-5">
                                                 <select id="{{ id }}_course_type_input"
@@ -200,7 +203,7 @@
                             <div class="card-body p-3">
                                 <h5>
                                     <a class="no-color"
-                                       :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ masters_prefix }}/' + [[ item.ID ]] +'/'"
+                                       :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ masters_prefix }}/' + item.ID +'/'"
                                        {% if request.get_host != host %}target="_blank"{% endif %}>
                                         <b>[[ item.MasterTitle ]]</b>
                                     </a>
@@ -219,16 +222,19 @@
                                             <b>[[ item.HighFormationErogationModeDescription ]]</b>
                                         </small>
                                     </div>
-                                    <div class="col-12 col-md-auto mr-md-4" v-if="item.HighFormationLanguage.length > 0">
+                                    <div class="col-12 col-md-auto" v-if="item.HighFormationLanguage.length > 0">
                                         <small>
                                             [[ labels['HighFormationLanguage'] ]] >
                                             <b>[[ item.HighFormationLanguage ]] </b>
                                         </small>
                                     </div>
-                                    <div class="col-12 col-md-auto" v-if="item.ScientificDirectorName">
+                                    <div class="col-12" v-if="item.ScientificDirectorName">
                                         <small>
                                             [[ labels['ScientificDirectorName'] ]] >
-                                            <b>[[ item.ScientificDirectorName ]]</b>
+                                            <a :href="'/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.ScientificDirectorId + '/'" v-if="item.ScientificDirectorId">
+                                                <b>[[ item.ScientificDirectorName ]]</b>
+                                            </a>
+                                            <b v-else>[[ item.ScientificDirectorName ]]</b>
                                         </small>
                                     </div>
 
@@ -250,6 +256,7 @@
 
 </div>
 {% endblock content %}
+
 {% block extra_scripts %}
 <script>
 function {{ id }}_get_form_paramenters(keyword=null, value=null) {
@@ -313,9 +320,6 @@ selected_department_id: this.getItemFromSession("{{ id }}", 'department'),
 selected_language: this.getItemFromSession("{{ id }}", 'language'),
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 
-{#allowed_course_types: [],#}
-{#course_types: [],#}
-
 is_loading_years: true,
 is_loading_departments: true,
 is_loading_course_type: true,
@@ -330,27 +334,14 @@ years_filter: [],
 departments_filter: [],
 erogation_modes_filter: [],
 course_type_filter: [],
-
 masters_languages_filter: {{ allowed_languages|safe }},
 {% endblock extra_data %}
 
 {% block extra_mounted %}
-
-{#// if url is pre-filtered with preferred coursetypes#}
-{#// get them, else show all#}
-{#let params = new URLSearchParams(this.url.split('?')[1]);#}
-{#let get_coursetype = params.get("coursetype")#}
-{#let get_structuretype = params.get("structuretype")#}
-{#if (get_coursetype != null){#}
-{#    let get_coursetypes_list = get_coursetype.split(',')#}
-{#    this.allowed_course_types = get_coursetypes_list#}
-
-
 this.callYears();
 this.callDepartments();
 this.callErogationModes();
 this.callCourseType();
-
 
 this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
 {% endblock extra_mounted %}

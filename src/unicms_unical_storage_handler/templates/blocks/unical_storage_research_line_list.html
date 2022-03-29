@@ -191,7 +191,7 @@
                                         <small>
                                             [[ labels['Teachers'] ]] >
                                             <b v-for="(teacher, index) in item.Teachers">
-                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + [[ teacher.TeacherID ]] +'/'">
+                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + teacher.TeacherID +'/'">
                                                     [[ teacher.TeacherName ]]
                                                 </a>
                                                 <span v-if="index != item.Teachers.length -1">,&nbsp;</span>

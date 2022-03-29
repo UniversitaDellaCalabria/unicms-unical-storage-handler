@@ -112,14 +112,14 @@
                         {% settings_value "CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH" as activity_prefix %}
                         <tr v-for="item in items.results">
                             <td>
-                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.StudyActivityRegDidId ]] + '/{{ activity_prefix }}/' + [[ item.StudyActivityID ]] +'/'">
+                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/{{ activity_prefix }}/' + item.StudyActivityID +'/'">
                                     [[ item.StudyActivityName ]]
                                     <span v-if="item.StudyActivityCompulsory == 1">*</span>
                                 </a>
                             </td>
                             <td>[[ item.StudyActivityAA ]]</td>
                             <td>
-                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + [[ item.StudyActivityRegDidId ]] + '/'">
+                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/'">
                                     [[ item.StudyActivityCdSName ]]
                                 </a>
                             </td>
