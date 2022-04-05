@@ -10,10 +10,10 @@
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_ROOT_API" as api_root %}
-{% settings_value "CMS_STORAGE_PATENTS_VIEW_PREFIX_PATH" as patents_prefix %}
-{% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_api_root "CMS_STORAGE_ROOT_API" as api_root %}
+{% storage_settings_value "CMS_STORAGE_PATENTS_VIEW_PREFIX_PATH" as patents_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
 
 {% block storage_block_top %}
 {% include "blocks/includes/unical_storage_check.html" %}
@@ -174,7 +174,7 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% get_current_language as LANGUAGE_CODE %}
 
-{% settings_value "CMS_STORAGE_TECHAREAS_API" as techareas_api %}
+{% storage_api_root "CMS_STORAGE_TECHAREAS_API" as techareas_api %}
 
 search_dict: {},
 techareas: [],

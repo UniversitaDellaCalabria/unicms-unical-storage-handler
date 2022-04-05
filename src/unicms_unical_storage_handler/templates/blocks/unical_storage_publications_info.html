@@ -10,11 +10,11 @@
 {% get_allowed_website request.get_host as host %}
 {% get_current_language as LANGUAGE_CODE %}
 
-{% settings_value "PUBLICATIONS_INFO_NOT_SHOW" as fields_to_hide %}
+{% storage_settings_value "PUBLICATIONS_INFO_NOT_SHOW" as fields_to_hide %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
-{% settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
+{% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 
 <div id="{{ id }}">
 

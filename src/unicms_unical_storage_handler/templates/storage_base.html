@@ -16,7 +16,7 @@
 
 {% get_allowed_website request.get_host as host %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 
 <div class="container">
     <div class="col-12 py-5 bd-content">
@@ -33,7 +33,7 @@
                                 <h5 class="card-title">
                                     {% trans "Areas and Offices" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -51,7 +51,7 @@
                                 <h5 class="card-title">
                                     {% trans "Study courses" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -69,7 +69,7 @@
                                 <h5 class="card-title">
                                     {% trans "High Formation Masters" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH" as masters_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH" as masters_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ masters_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -87,7 +87,7 @@
                                 <h5 class="card-title">
                                     {% trans "People" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -105,7 +105,7 @@
                                 <h5 class="card-title">
                                     {% trans "Teachers" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -125,7 +125,7 @@
                                 <h5 class="card-title">
                                     {% trans "Laboratories" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH" as laboratories_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH" as laboratories_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ laboratories_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -143,7 +143,7 @@
                                 <h5 class="card-title">
                                     {% trans "Publications" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH" as publications_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH" as publications_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ publications_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -161,7 +161,7 @@
                                 <h5 class="card-title">
                                     {% trans "Patents" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_PATENTS_VIEW_PREFIX_PATH" as patents_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_PATENTS_VIEW_PREFIX_PATH" as patents_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ patents_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -179,7 +179,7 @@
                                 <h5 class="card-title">
                                     {% trans "Companies" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH" as spinoff_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH" as spinoff_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ spinoff_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -197,7 +197,7 @@
                                 <h5 class="card-title">
                                     {% trans "Projects" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH" as projects_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH" as projects_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ projects_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -215,7 +215,7 @@
                                 <h5 class="card-title">
                                     {% trans "Research groups" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_RESEARCH_GROUP_VIEW_PREFIX_PATH" as research_groups_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_RESEARCH_GROUP_VIEW_PREFIX_PATH" as research_groups_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ research_groups_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -233,7 +233,7 @@
                                 <h5 class="card-title">
                                     {% trans "Research lines" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_RESEARCH_LINE_VIEW_PREFIX_PATH" as research_lines_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_RESEARCH_LINE_VIEW_PREFIX_PATH" as research_lines_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ research_lines_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
@@ -252,7 +252,7 @@
                                 <h5 class="card-title">
                                     {% trans "Applied research lines" %}
                                 </h5>
-                                {% settings_value "CMS_STORAGE_APPLIED_RESEARCH_LINE_VIEW_PREFIX_PATH" as applied_research_lines_prefix %}
+                                {% storage_settings_value "CMS_STORAGE_APPLIED_RESEARCH_LINE_VIEW_PREFIX_PATH" as applied_research_lines_prefix %}
                                 <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ applied_research_lines_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>

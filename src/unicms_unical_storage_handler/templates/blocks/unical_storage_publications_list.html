@@ -10,9 +10,9 @@
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH" as publications_prefix %}
-{% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH" as publications_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
 
 {% block storage_block_top %}
 {% include "blocks/includes/unical_storage_check.html" %}
@@ -208,7 +208,7 @@ selected_year: this.getItemFromSession("{{ id }}", 'year') || {{ id }}_get_param
 
 is_loading_types: true,
 
-{% settings_value "CMS_STORAGE_COMMUNITYTYPES_API" as types_api %}
+{% storage_api_root "CMS_STORAGE_COMMUNITYTYPES_API" as types_api %}
 {% get_current_language as LANGUAGE_CODE %}
 loader_source_types: '{{ types_api }}?lang={{ LANGUAGE_CODE }}',
 

@@ -10,10 +10,10 @@
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_ROOT_API" as api_root %}
-{% settings_value "CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH" as laboratory_prefix %}
-{% settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_api_root "CMS_STORAGE_ROOT_API" as api_root %}
+{% storage_settings_value "CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH" as laboratory_prefix %}
+{% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
 
 {% block storage_block_top %}
 {% include "blocks/includes/unical_storage_check.html" %}
@@ -329,11 +329,11 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% block extra_data %}
 
 {% get_current_language as LANGUAGE_CODE %}
-{% settings_value "CMS_STORAGE_DEPARTMENTS_API" as departmentsfilter_api %}
-{% settings_value "CMS_STORAGE_LABORATORIES_AREAS_API" as laboratories_areas_api %}
-{% settings_value "CMS_STORAGE_LABORATORIES_SCOPES_API" as laboratories_scopes_api %}
-{% settings_value "CMS_STORAGE_INFRASTRUCTURES_API" as infrastructures_api %}
-{% settings_value "CMS_STORAGE_ERC1LIST_API" as erc1list_api %}
+{% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departmentsfilter_api %}
+{% storage_api_root "CMS_STORAGE_LABORATORIES_AREAS_API" as laboratories_areas_api %}
+{% storage_api_root "CMS_STORAGE_LABORATORIES_SCOPES_API" as laboratories_scopes_api %}
+{% storage_api_root "CMS_STORAGE_INFRASTRUCTURES_API" as infrastructures_api %}
+{% storage_api_root "CMS_STORAGE_ERC1LIST_API" as erc1list_api %}
 
 search_dict: {},
 departments: [],

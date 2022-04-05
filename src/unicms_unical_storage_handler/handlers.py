@@ -11,6 +11,61 @@ from cms.contexts.models import WebPath
 from cms.contexts.utils import contextualize_template, sanitize_path
 from cms.pages.models import Page
 
+from . settings import *
+
+
+# local or global settings
+CMS_STORAGE_BASE_API = getattr(settings, 'CMS_STORAGE_BASE_API', CMS_STORAGE_BASE_API)
+
+ALLOWED_ADDRESSBOOK_ROLES = getattr(settings, 'ALLOWED_ADDRESSBOOK_ROLES', ALLOWED_ADDRESSBOOK_ROLES)
+ALLOWED_ADDRESSBOOK_STRUCTURE_ID = getattr(settings, 'ALLOWED_ADDRESSBOOK_STRUCTURE_ID', ALLOWED_ADDRESSBOOK_STRUCTURE_ID)
+ALLOWED_STRUCTURE_TYPES = getattr(settings, 'ALLOWED_STRUCTURE_TYPES', ALLOWED_STRUCTURE_TYPES)
+ALLOWED_CDS_COURSETYPES = getattr(settings, 'ALLOWED_CDS_COURSETYPES', ALLOWED_CDS_COURSETYPES)
+ALLOWED_TEACHER_ROLES = getattr(settings, 'ALLOWED_TEACHER_ROLES', ALLOWED_TEACHER_ROLES)
+CMS_STORAGE_ACTIVITY_API = getattr(settings, 'CMS_STORAGE_ACTIVITY_API', CMS_STORAGE_ACTIVITY_API)
+CMS_STORAGE_ACTIVITIES_LABEL = getattr(settings, 'CMS_STORAGE_ACTIVITIES_LABEL', CMS_STORAGE_ACTIVITIES_LABEL)
+CMS_STORAGE_ADDRESSBOOK_API = getattr(settings, 'CMS_STORAGE_ADDRESSBOOK_API', CMS_STORAGE_ADDRESSBOOK_API)
+CMS_STORAGE_ADDRESSBOOK_LABEL = getattr(settings, 'CMS_STORAGE_ADDRESSBOOK_LABEL', CMS_STORAGE_ADDRESSBOOK_LABEL)
+CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH', CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH)
+CMS_STORAGE_APPLIED_RESEARCH_LINE_API = getattr(settings, 'CMS_STORAGE_APPLIED_RESEARCH_LINE_API', CMS_STORAGE_APPLIED_RESEARCH_LINE_API)
+CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL = getattr(settings, 'CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL', CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL)
+CMS_STORAGE_BASE_PATH = getattr(settings, 'CMS_STORAGE_BASE_PATH', CMS_STORAGE_BASE_PATH)
+CMS_STORAGE_BASE_RESEARCH_LINE_API = getattr(settings, 'CMS_STORAGE_BASE_RESEARCH_LINE_API', CMS_STORAGE_BASE_RESEARCH_LINE_API)
+CMS_STORAGE_BASE_RESEARCH_LINE_LABEL = getattr(settings, 'CMS_STORAGE_BASE_RESEARCH_LINE_LABEL', CMS_STORAGE_BASE_RESEARCH_LINE_LABEL)
+CMS_STORAGE_CDS_API = getattr(settings, 'CMS_STORAGE_CDS_API', CMS_STORAGE_CDS_API)
+CMS_STORAGE_CDS_LIST_LABEL = getattr(settings, 'CMS_STORAGE_CDS_LIST_LABEL', CMS_STORAGE_CDS_LIST_LABEL)
+CMS_STORAGE_CDS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_CDS_VIEW_PREFIX_PATH', CMS_STORAGE_CDS_VIEW_PREFIX_PATH)
+CMS_STORAGE_HIGH_FORMATION_MASTERS_API = getattr(settings, 'CMS_STORAGE_HIGH_FORMATION_MASTERS_API', CMS_STORAGE_HIGH_FORMATION_MASTERS_API)
+CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL = getattr(settings, 'CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL', CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
+CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH', CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH)
+CMS_STORAGE_LABORATORY_API = getattr(settings, 'CMS_STORAGE_LABORATORY_API', CMS_STORAGE_LABORATORY_API)
+CMS_STORAGE_LABORATORY_LABEL = getattr(settings, 'CMS_STORAGE_LABORATORY_LABEL', CMS_STORAGE_LABORATORY_LABEL)
+CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH', CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH)
+CMS_STORAGE_PATENTS_API = getattr(settings, 'CMS_STORAGE_PATENTS_API', CMS_STORAGE_PATENTS_API)
+CMS_STORAGE_PATENTS_LABEL = getattr(settings, 'CMS_STORAGE_PATENTS_LABEL', CMS_STORAGE_PATENTS_LABEL)
+CMS_STORAGE_PROJECTS_API = getattr(settings, 'CMS_STORAGE_PROJECTS_API', CMS_STORAGE_PROJECTS_API)
+CMS_STORAGE_PROJECTS_LABEL = getattr(settings, 'CMS_STORAGE_PROJECTS_LABEL', CMS_STORAGE_PROJECTS_LABEL)
+CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH', CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH)
+CMS_STORAGE_PUBLICATIONS_API = getattr(settings, 'CMS_STORAGE_PUBLICATIONS_API', CMS_STORAGE_PUBLICATIONS_API)
+CMS_STORAGE_PUBLICATIONS_LABEL = getattr(settings, 'CMS_STORAGE_PUBLICATIONS_LABEL', CMS_STORAGE_PUBLICATIONS_LABEL)
+CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH', CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH)
+CMS_STORAGE_RESEARCH_GROUP_API = getattr(settings, 'CMS_STORAGE_RESEARCH_GROUP_API', CMS_STORAGE_RESEARCH_GROUP_API)
+CMS_STORAGE_RESEARCH_GROUP_LABEL = getattr(settings, 'CMS_STORAGE_RESEARCH_GROUP_LABEL', CMS_STORAGE_RESEARCH_GROUP_LABEL)
+CMS_STORAGE_RESEARCH_LINE_API = getattr(settings, 'CMS_STORAGE_RESEARCH_LINE_API', CMS_STORAGE_RESEARCH_LINE_API)
+CMS_STORAGE_RESEARCH_LINE_LABEL = getattr(settings, 'CMS_STORAGE_RESEARCH_LINE_LABEL', CMS_STORAGE_RESEARCH_LINE_LABEL)
+CMS_STORAGE_ROOT_LABEL = getattr(settings, 'CMS_STORAGE_ROOT_LABEL', CMS_STORAGE_ROOT_LABEL)
+CMS_STORAGE_SPINOFF_API = getattr(settings, 'CMS_STORAGE_SPINOFF_API', CMS_STORAGE_SPINOFF_API)
+CMS_STORAGE_SPINOFF_LABEL = getattr(settings, 'CMS_STORAGE_SPINOFF_LABEL', CMS_STORAGE_SPINOFF_LABEL)
+CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH', CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH)
+CMS_STORAGE_STRUCTURE_API = getattr(settings, 'CMS_STORAGE_STRUCTURE_API', CMS_STORAGE_STRUCTURE_API)
+CMS_STORAGE_STRUCTURE_LABEL = getattr(settings, 'CMS_STORAGE_STRUCTURE_LABEL', CMS_STORAGE_STRUCTURE_LABEL)
+CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH', CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH)
+CMS_STORAGE_TEACHER_API = getattr(settings, 'CMS_STORAGE_TEACHER_API', CMS_STORAGE_TEACHER_API)
+CMS_STORAGE_TEACHERS_LABEL = getattr(settings, 'CMS_STORAGE_TEACHERS_LABEL', CMS_STORAGE_TEACHERS_LABEL)
+CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH', CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH)
+CURRENT_YEAR = getattr(settings, 'CURRENT_YEAR', CURRENT_YEAR)
+INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
+
 
 class BaseStorageHandler(BaseContentHandler):
     template = "storage_base.html"
@@ -50,12 +105,12 @@ class BaseStorageHandler(BaseContentHandler):
 
     @property
     def get_base_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        leaf = ('#', settings.CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_ROOT_LABEL)
         return (leaf,)
 
 
@@ -66,22 +121,21 @@ class CdSListViewHandler(BaseStorageHandler):
 
         url_data = {}
 
-        if settings.ALLOWED_CDS_COURSETYPES:
-            url_data['coursetype'] = ",".join(settings.ALLOWED_CDS_COURSETYPES)
-        if settings.CURRENT_YEAR:
-            url_data['academicyear'] = settings.CURRENT_YEAR
+        if ALLOWED_CDS_COURSETYPES:
+            url_data['coursetype'] = ",".join(ALLOWED_CDS_COURSETYPES)
+        if CURRENT_YEAR:
+            url_data['academicyear'] = CURRENT_YEAR
 
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{settings.CMS_STORAGE_CDS_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_API}'
         if params: self.data['url'] = f"{self.data['url']}?{params}"
-
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         # leaf = (self.pub_context.url, getattr(self.pub_context.publication, 'title'))
-        leaf = ('#', settings.CMS_STORAGE_CDS_LIST_LABEL)
-        parent = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_CDS_LIST_LABEL)
+        parent = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         return (parent, leaf)
 
 
@@ -93,19 +147,19 @@ class CdSInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_CDS_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_API}{self.code}/'
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         # leaf = (self.pub_context.url, getattr(self.pub_context.publication, 'title'))
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_CDS_LIST_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_CDS_LIST_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
 
@@ -119,25 +173,25 @@ class ActivityViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
         return super().as_view()
 
     @property
     def cdslist_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def cdsid_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/{self.cdsid}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/{self.cdsid}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        cdslist = (self.cdslist_url, settings.CMS_STORAGE_CDS_LIST_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        cdslist = (self.cdslist_url, CMS_STORAGE_CDS_LIST_LABEL)
         cdsid = (self.cdsid_url, self.cdsid)
-        activities = (self.cdsid_url, settings.CMS_STORAGE_ACTIVITIES_LABEL)
+        activities = (self.cdsid_url, CMS_STORAGE_ACTIVITIES_LABEL)
         leaf = ('#', self.code)
         return (root, cdslist, cdsid, activities, leaf)
 
@@ -150,13 +204,13 @@ class SingleActivityViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        activities = ('#', settings.CMS_STORAGE_ACTIVITIES_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        activities = ('#', CMS_STORAGE_ACTIVITIES_LABEL)
         leaf = ('#', self.code)
         return (root, activities, leaf)
 
@@ -171,18 +225,18 @@ class TeacherListViewHandler(BaseStorageHandler):
 
         url_data = {}
 
-        if settings.ALLOWED_TEACHER_ROLES:
-            url_data['role'] = ",".join(settings.ALLOWED_TEACHER_ROLES)
+        if ALLOWED_TEACHER_ROLES:
+            url_data['role'] = ",".join(ALLOWED_TEACHER_ROLES)
 
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{settings.CMS_STORAGE_TEACHER_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}'
         if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_TEACHERS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_TEACHERS_LABEL)
         return (root, leaf)
 
 
@@ -194,19 +248,19 @@ class TeacherInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_TEACHER_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/'
         self.data['code'] = self.code
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_TEACHERS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_TEACHERS_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
 
@@ -221,24 +275,24 @@ class AddressbookListViewHandler(BaseStorageHandler):
 
         url_data = {}
 
-        if settings.ALLOWED_ADDRESSBOOK_ROLES:
-            url_data['role'] = ",".join(settings.ALLOWED_ADDRESSBOOK_ROLES)
-        if settings.ALLOWED_ADDRESSBOOK_STRUCTURE_ID:
-            url_data['structure'] = ",".join(settings.ALLOWED_ADDRESSBOOK_STRUCTURE_ID)
-        if settings.ALLOWED_STRUCTURE_TYPES:
-            url_data['structuretypes'] = ",".join(settings.ALLOWED_STRUCTURE_TYPES)
+        if ALLOWED_ADDRESSBOOK_ROLES:
+            url_data['role'] = ",".join(ALLOWED_ADDRESSBOOK_ROLES)
+        if ALLOWED_ADDRESSBOOK_STRUCTURE_ID:
+            url_data['structure'] = ",".join(ALLOWED_ADDRESSBOOK_STRUCTURE_ID)
+        if ALLOWED_STRUCTURE_TYPES:
+            url_data['structuretypes'] = ",".join(ALLOWED_STRUCTURE_TYPES)
             # 000 = Non assegnato
             url_data['structuretypes'] += ",000"
 
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{settings.CMS_STORAGE_ADDRESSBOOK_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}'
         if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_ADDRESSBOOK_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_ADDRESSBOOK_LABEL)
         return (root, leaf)
 
 
@@ -250,18 +304,18 @@ class AddressbookInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_ADDRESSBOOK_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}{self.code}/'
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_ADDRESSBOOK_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_ADDRESSBOOK_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
 
@@ -275,20 +329,20 @@ class StructureListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
 
-        if settings.INITIAL_STRUCTURE_FATHER != '':
-            url_data['father'] = settings.INITIAL_STRUCTURE_FATHER
-        if settings.ALLOWED_STRUCTURE_TYPES:
-            url_data['type'] = ",".join(settings.ALLOWED_STRUCTURE_TYPES)
+        if INITIAL_STRUCTURE_FATHER != '':
+            url_data['father'] = INITIAL_STRUCTURE_FATHER
+        if ALLOWED_STRUCTURE_TYPES:
+            url_data['type'] = ",".join(ALLOWED_STRUCTURE_TYPES)
 
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{settings.CMS_STORAGE_STRUCTURE_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_STRUCTURE_API}'
         if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_STRUCTURE_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_STRUCTURE_LABEL)
         return (root, leaf)
 
 
@@ -301,18 +355,18 @@ class StructureInfoViewHandler(BaseStorageHandler):
 
     def as_view(self):
         self.data['code'] = self.code
-        self.data['url'] = f'{settings.CMS_STORAGE_STRUCTURE_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_STRUCTURE_API}{self.code}/'
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_STRUCTURE_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_STRUCTURE_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
 
@@ -324,13 +378,13 @@ class LaboratoryListViewHandler(BaseStorageHandler):
         super(LaboratoryListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_LABORATORY_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}'
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_LABORATORY_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_LABORATORY_LABEL)
         return (root, leaf)
 
 
@@ -342,18 +396,18 @@ class LaboratoryInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_LABORATORY_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}{self.code}/'
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_LABORATORY_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_LABORATORY_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
 
@@ -365,13 +419,13 @@ class ResearchGroupListViewHandler(BaseStorageHandler):
         super(ResearchGroupListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_RESEARCH_GROUP_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_RESEARCH_GROUP_API}'
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_RESEARCH_GROUP_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_RESEARCH_GROUP_LABEL)
         return (root, leaf)
 
 
@@ -382,13 +436,13 @@ class BaseResearchLineListViewHandler(BaseStorageHandler):
         super(BaseResearchLineListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_BASE_RESEARCH_LINE_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_BASE_RESEARCH_LINE_API}'
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_BASE_RESEARCH_LINE_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_BASE_RESEARCH_LINE_LABEL)
         return (root, leaf)
 
 
@@ -399,13 +453,13 @@ class ResearchLineListViewHandler(BaseStorageHandler):
         super(ResearchLineListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_RESEARCH_LINE_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_RESEARCH_LINE_API}'
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_RESEARCH_LINE_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_RESEARCH_LINE_LABEL)
         return (root, leaf)
 
 
@@ -416,13 +470,13 @@ class AppliedResearchLineListViewHandler(BaseStorageHandler):
         super(AppliedResearchLineListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_APPLIED_RESEARCH_LINE_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_APPLIED_RESEARCH_LINE_API}'
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL)
         return (root, leaf)
 
 
@@ -435,14 +489,15 @@ class PublicationsListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{settings.CMS_STORAGE_PUBLICATIONS_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PUBLICATIONS_API}'
+        print(self.data)
         if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_PUBLICATIONS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', f'{CMS_STORAGE_PUBLICATIONS_LABEL}')
         return (root, leaf)
 
 
@@ -454,18 +509,18 @@ class PublicationsInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_PUBLICATIONS_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PUBLICATIONS_API}{self.code}/'
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_PUBLICATIONS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_PUBLICATIONS_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
 
@@ -477,13 +532,13 @@ class PatentsListViewHandler(BaseStorageHandler):
         super(PatentsListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_PATENTS_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PATENTS_API}'
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_PATENTS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_PATENTS_LABEL)
         return (root, leaf)
 
 
@@ -496,14 +551,14 @@ class SpinoffListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{settings.CMS_STORAGE_SPINOFF_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_SPINOFF_API}'
         if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_SPINOFF_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_SPINOFF_LABEL)
         return (root, leaf)
 
 
@@ -516,18 +571,18 @@ class SpinoffInfoViewHandler(BaseStorageHandler):
 
     def as_view(self):
         self.data['code'] = self.code
-        self.data['url'] = f'{settings.CMS_STORAGE_SPINOFF_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_SPINOFF_API}{self.code}/'
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_SPINOFF_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_SPINOFF_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
 
@@ -541,14 +596,14 @@ class ProjectsListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{settings.CMS_STORAGE_PROJECTS_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PROJECTS_API}'
         if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_PROJECTS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_PROJECTS_LABEL)
         return (root, leaf)
 
 
@@ -560,18 +615,18 @@ class ProjectsInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_PROJECTS_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PROJECTS_API}{self.code}/'
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_PROJECTS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_PROJECTS_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
 
@@ -585,18 +640,18 @@ class HighFormationMastersListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
 
-        if settings.CURRENT_YEAR:
-            url_data['year'] = settings.CURRENT_YEAR
+        if CURRENT_YEAR:
+            url_data['year'] = CURRENT_YEAR
 
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_API}'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}'
         if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
         return (root, leaf)
 
 
@@ -608,17 +663,17 @@ class HighFormationMastersInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_API}{self.code}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}{self.code}/'
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{settings.CMS_STORAGE_BASE_PATH}/{settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH}/'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        root = (self.get_base_url, settings.CMS_STORAGE_ROOT_LABEL)
-        parent = (self.parent_url, settings.CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)

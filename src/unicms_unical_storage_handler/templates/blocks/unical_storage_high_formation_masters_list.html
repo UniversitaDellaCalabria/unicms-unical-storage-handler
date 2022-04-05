@@ -10,10 +10,10 @@
 
 {% get_allowed_website request.get_host as host %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH" as masters_prefix %}
-{% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
-{% settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH" as masters_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
+{% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
 
 
 <div id="{{ id }}">
@@ -303,12 +303,12 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% get_current_language as LANGUAGE_CODE %}
 
-{% settings_value "ALLOWED_HIGH_FORMATION_MASTERS_LANGUAGES" as allowed_languages %}
+{% storage_settings_value "ALLOWED_HIGH_FORMATION_MASTERS_LANGUAGES" as allowed_languages %}
 
-{% settings_value "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
-{% settings_value "CMS_STORAGE_ACADEMICYEARS_API" as years_api %}
-{% settings_value "CMS_STORAGE_COURSETYPES_API" as course_type_api %}
-{% settings_value "CMS_STORAGE_EROGATIONMODES_API" as erogation_modes_api %}
+{% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
+{% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as years_api %}
+{% storage_api_root "CMS_STORAGE_COURSETYPES_API" as course_type_api %}
+{% storage_api_root "CMS_STORAGE_EROGATIONMODES_API" as erogation_modes_api %}
 
 
 initial_year: {{ id }}_get_param('year') || '',

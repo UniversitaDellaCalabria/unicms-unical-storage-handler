@@ -9,9 +9,9 @@
 
 {% get_allowed_website request.get_host as host %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
-{% settings_value "CONTRACT_TEACHER_ROLES" as contract_teacher_roles %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
+{% storage_settings_value "CONTRACT_TEACHER_ROLES" as contract_teacher_roles %}
 
 
 <div id="{{ id }}">
@@ -203,9 +203,9 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% get_current_language as LANGUAGE_CODE %}
 
-{% settings_value "CMS_STORAGE_DEPARTMENTS_API" as departmentsfilter_api %}
-{% settings_value "CMS_STORAGE_ROLES_API" as roles_api %}
-{% settings_value "CONTRACT_TEACHER_ROLES" as contract_teacher_roles %}
+{% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departmentsfilter_api %}
+{% storage_api_root "CMS_STORAGE_ROLES_API" as roles_api %}
+{% storage_settings_value "CONTRACT_TEACHER_ROLES" as contract_teacher_roles %}
 
 contract_teacher_roles: {{ contract_teacher_roles|safe }},
 

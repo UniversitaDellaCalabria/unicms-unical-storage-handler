@@ -10,8 +10,8 @@
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_DEPARTMENTS_VIEW_PREFIX_PATH" as departments_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_DEPARTMENTS_VIEW_PREFIX_PATH" as departments_prefix %}
 
 {% block storage_block_top %}
 {% include "blocks/includes/unical_storage_check.html" %}

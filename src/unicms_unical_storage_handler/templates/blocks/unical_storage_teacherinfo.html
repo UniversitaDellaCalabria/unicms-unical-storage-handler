@@ -13,14 +13,14 @@
 {% random_id uid as id %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
-{% settings_value "CMS_STORAGE_LABORATORY_API" as laboratories_api %}
-{% settings_value "CMS_STORAGE_RESEARCH_GROUP_API" as research_groups_api %}
-{% settings_value "CMS_STORAGE_BASE_RESEARCH_LINE_API" as base_research_lines_api %}
-{% settings_value "CMS_STORAGE_APPLIED_RESEARCH_LINE_API" as applied_research_lines_api %}
-{% settings_value "TEACHER_INFO_NOT_SHOW" as fields_to_hide %}
-{% settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+{% storage_api_root "CMS_STORAGE_LABORATORY_API" as laboratories_api %}
+{% storage_api_root "CMS_STORAGE_RESEARCH_GROUP_API" as research_groups_api %}
+{% storage_api_root "CMS_STORAGE_BASE_RESEARCH_LINE_API" as base_research_lines_api %}
+{% storage_api_root "CMS_STORAGE_APPLIED_RESEARCH_LINE_API" as applied_research_lines_api %}
+{% storage_settings_value "TEACHER_INFO_NOT_SHOW" as fields_to_hide %}
+{% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 
 
 <div id="{{ id }}">
@@ -152,7 +152,7 @@
          role="tabpanel"
          aria-labelledby="{{ id }}_heading-activities-lft">
         <div class="mt-3">
-            {% settings_value "CURRENT_YEAR" as current_year %}
+            {% storage_settings_value "CURRENT_YEAR" as current_year %}
             {% clean_url url as cleaned_url %}
             {% with cleaned_url|add:"/studyactivities/?year="|add:current_year as studyactivities_url %}
             {% include "blocks/unical_storage_teacherstudyactivities.html" with url=studyactivities_url uid=id|add:"_2" %}

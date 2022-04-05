@@ -9,9 +9,9 @@
 
 {% get_allowed_website request.get_host as host %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
-{% settings_value "CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH" as activity_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
+{% storage_settings_value "CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH" as activity_prefix %}
 
 
 <div id="{{ id }}">
@@ -196,7 +196,7 @@
 {% endblock component %}
 
 {% block extra_data %}
-{% settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
+{% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
 
 exclude_studyactivity_codes: {{ exclude_studyactivity_codes|safe }},
 
@@ -226,9 +226,9 @@ CallURL(url, initial=false) {
 
 {% block extra_methods %}
 
-{% settings_value "CMS_STORAGE_CDS_API" as cds_api %}
-{% settings_value "CMS_STORAGE_TEACHER_API" as teachers_api %}
-{% settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+{% storage_api_root "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
+{% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 {% get_current_language as LANGUAGE_CODE %}
 
 CallCdS() {

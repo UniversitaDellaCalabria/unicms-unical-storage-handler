@@ -10,10 +10,10 @@
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
-{% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
-{% settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
+{% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
 
 {% block storage_block_top %}
 {% include "blocks/includes/unical_storage_check.html" %}
@@ -346,11 +346,11 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% block extra_data %}
 
 {% get_current_language as LANGUAGE_CODE %}
-{% settings_value "CMS_STORAGE_STRUCTURE_API" as structuresfilter_api %}
-{% settings_value "CMS_STORAGE_STRUCTURETYPES_API" as structuretypes_api %}
-{% settings_value "CMS_STORAGE_ROLES_API" as roles_api %}
-{% settings_value "INITIAL_STRUCTURE_FATHER" as root_structure %}
-{% settings_value "ADDRESSBOOK_INFO_NOT_SHOW" as fields_to_hide %}
+{% storage_api_root "CMS_STORAGE_STRUCTURE_API" as structuresfilter_api %}
+{% storage_api_root "CMS_STORAGE_STRUCTURETYPES_API" as structuretypes_api %}
+{% storage_api_root "CMS_STORAGE_ROLES_API" as roles_api %}
+{% storage_settings_value "INITIAL_STRUCTURE_FATHER" as root_structure %}
+{% storage_settings_value "ADDRESSBOOK_INFO_NOT_SHOW" as fields_to_hide %}
 
 search_dict: {},
 

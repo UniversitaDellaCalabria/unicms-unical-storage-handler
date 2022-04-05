@@ -10,12 +10,11 @@
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_ROOT_API" as api_root %}
-{% settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
-{% settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
-{% settings_value "CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH" as activity_prefix %}
-{% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+{% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
+{% storage_settings_value "CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH" as activity_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
 
 {% block storage_block_top %}
 {% include "blocks/includes/unical_storage_check.html" %}
@@ -401,10 +400,10 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% block extra_data %}
 
 {% get_current_language as LANGUAGE_CODE %}
-{% settings_value "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
-{% settings_value "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
-{% settings_value "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
-{% settings_value "CURRENT_YEAR" as current_year %}
+{% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
+{% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
+{% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
 
 initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
 

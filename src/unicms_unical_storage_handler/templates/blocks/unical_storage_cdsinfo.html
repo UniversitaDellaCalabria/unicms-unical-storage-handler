@@ -10,16 +10,16 @@
 {% random_id uid as id %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_ROOT_API" as api_root %}
-{% settings_value "CMS_STORAGE_TEACHER_API" as teachers_api %}
-{% settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
-{% settings_value "ALMALAUREA_LINK" as almalaurea_link %}
-{% settings_value "CDS_INFO_FIELDS" as fields_to_show %}
-{% settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
-{% settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
-{% settings_value "CMS_STORAGE_THEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
-{% settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_api_root "CMS_STORAGE_ROOT_API" as api_root %}
+{% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
+{% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
+{% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
+{% storage_settings_value "CDS_INFO_FIELDS" as fields_to_show %}
+{% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
+{% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 
 {% include "includes/unical_storage_loading.html" %}
 

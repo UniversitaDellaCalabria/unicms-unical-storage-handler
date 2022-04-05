@@ -5,7 +5,7 @@ from django.conf import settings
 
 from cms.contexts.models import WebSite
 
-from .. settings import ALLOWED_UNICMS_SITES
+import unicms_unical_storage_handler.settings as app_settings
 
 
 logger = logging.getLogger(__name__)
@@ -13,7 +13,7 @@ register = template.Library()
 
 
 ALLOWED_UNICMS_SITES = getattr(settings, 'ALLOWED_UNICMS_SITES',
-                               ALLOWED_UNICMS_SITES)
+                               app_settings.ALLOWED_UNICMS_SITES)
 
 @register.simple_tag
 def clean_url(url):
@@ -52,3 +52,20 @@ def get_father_from_url(url):
     import re
     father = re.match('.*father=(.*)', url)
     return None if father is None else father.group(1)
+
+
+@register.simple_tag
+def storage_settings_value(value):
+    app_value = getattr(app_settings, value, None)
+    return  getattr(settings, value, app_value)
+
+
+@register.simple_tag
+def storage_api_root(value):
+    app_root = getattr(app_settings, 'CMS_STORAGE_BASE_API', '')
+    settings_root = getattr(settings, 'CMS_STORAGE_BASE_API', app_root)
+
+    app_value = getattr(app_settings, value, '')
+    settings_value = getattr(settings, value, app_value)
+
+    return f'{settings_root}{settings_value}'

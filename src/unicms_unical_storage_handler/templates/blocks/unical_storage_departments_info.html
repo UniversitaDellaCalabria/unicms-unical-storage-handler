@@ -8,24 +8,24 @@
 {% random_id uid as id %}
 {% include "includes/unical_storage_loading.html" %}
 
-{% settings_value "STRUCTURE_INFO_NOT_SHOW" as fields_to_hide %}
+{% storage_settings_value "STRUCTURE_INFO_NOT_SHOW" as fields_to_hide %}
 
 {% get_allowed_website request.get_host as host %}
 {% get_current_language as LANGUAGE_CODE %}
 
-{% settings_value "ALLOWED_ADDRESSBOOK_ROLES" as allowed_addressbook_roles %}
+{% storage_settings_value "ALLOWED_ADDRESSBOOK_ROLES" as allowed_addressbook_roles %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_DEPARTMENTS_VIEW_PREFIX_PATH" as departments_prefix %}
-{% settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
-{% settings_value "CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH" as laboratories_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_DEPARTMENTS_VIEW_PREFIX_PATH" as departments_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
+{% storage_settings_value "CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH" as laboratories_prefix %}
 
-{% settings_value "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
-{% settings_value "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
-{% settings_value "CMS_STORAGE_LABORATORY_API" as laboratories_api %}
-{% settings_value "CMS_STORAGE_STRUCTUREFUNCTIONS_API" as functions_api %}
-{% settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+{% storage_api_root "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
+{% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
+{% storage_api_root "CMS_STORAGE_LABORATORY_API" as laboratories_api %}
+{% storage_api_root "CMS_STORAGE_STRUCTUREFUNCTIONS_API" as functions_api %}
+{% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 
 
 <div id="{{ id }}">

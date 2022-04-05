@@ -11,9 +11,9 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% get_allowed_website request.get_host as host %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
-{% settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
+{% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
 
 <div id="{{ id }}">
 
@@ -270,13 +270,13 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% get_current_language as LANGUAGE_CODE %}
 
-{% settings_value "ALLOWED_CDS_LANGUAGES" as allowed_languages %}
-{% settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
+{% storage_settings_value "ALLOWED_CDS_LANGUAGES" as allowed_languages %}
+{% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 
-{% settings_value "CMS_STORAGE_DEGREETYPES_API" as degreetypes_api %}
-{% settings_value "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
-{% settings_value "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
-{% settings_value "CMS_STORAGE_CDS_AREAS_API" as cds_areas_api %}
+{% storage_api_root "CMS_STORAGE_DEGREETYPES_API" as degreetypes_api %}
+{% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
+{% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
+{% storage_api_root "CMS_STORAGE_CDS_AREAS_API" as cds_areas_api %}
 
 initial_academic_year: {{ id }}_get_param('academicyear') || '',
 
