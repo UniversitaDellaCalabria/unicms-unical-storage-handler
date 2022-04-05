@@ -14,11 +14,12 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% storage_api_root "CMS_STORAGE_ROOT_API" as api_root %}
+{% storage_settings_value "CMS_STORAGE_ROOT_API" as api_root %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH" as spinoff_prefix %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+
 
 <div id="{{ id }}">
 
