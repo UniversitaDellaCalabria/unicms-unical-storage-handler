@@ -1,0 +1,244 @@
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% get_allowed_website request.get_host as host %}
+{% get_cdsid_from_url url as cdsid %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% random_id uid as id %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CDS_INFO_FIELDS" as fields_to_show %}
+{% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
+{% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+<script src="{% static 'js/vue-markdown.js' %}"></script>
+
+{% if full_page %}
+<div class="row">
+    <div class="col-12 col-lg-8">
+{% endif %}
+        <div id="{{ id }}">
+
+            <loading-icon
+                v-if="is_loading"
+                :loader_source="loader_source">
+            </loading-icon>
+
+            <div v-else-if="Object.keys(item).length">
+                <h1 class="lighter">[[ item.MasterTitle ]]</h1>
+                <div class="my-3">
+                    <h3 class="lighter" style="display: inline">[[ item.ActivityName ]]</h3>
+                </div>
+                <p>
+                    <span v-if="item.ReferentStructureName">
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.ReferentStructureId +'/'" v-if="item.ReferentStructureId">
+                                [[ item.ReferentStructureName ]]
+                            </a>
+                            <span v-else>
+                                [[ item.ReferentStructureName ]]
+                            </span>
+                    </span>
+                </p>
+                <div class="card-wrapper pb-0">
+                    <div class="card no-after" style="border:1px solid #b71918">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-auto" v-if="item.SSD">
+                                    <small>
+                                        [[ labels['SSD'] ]] >
+                                        <b>[[ item.SSD ]]</b>
+                                    </small>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.Hours">
+                                    <small>
+                                        [[ labels['Hours'] ]] >
+                                        <b>[[ item.Hours ]]</b>
+                                    </small>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.CFU">
+                                    <small>
+                                        [[ labels['CFU'] ]] >
+                                        <b>[[ item.CFU ]] </b>
+                                    </small>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.ActivityType">
+                                    <small>
+                                        [[ labels['ActivityType'] ]] >
+                                        <b>[[ item.ActivityType ]]</b>
+                                    </small>
+                                </div>
+
+                                <div class="col-12 col-md-auto" v-if="item.MinStudents">
+                                    <small>
+                                        [[ labels['MinStudents'] ]] >
+                                        <b>[[ item.MinStudents ]] </b>
+                                    </small>
+                                </div>
+
+                                <div class="col-12 col-md-auto" v-if="item.MaxStudents">
+                                    <small>
+                                        [[ labels['MaxStudents'] ]] >
+                                        <b>[[ item.MaxStudents ]] </b>
+                                    </small>
+                                </div>
+
+                                <div class="col-12 col-md-auto" v-if="item.FinalTest">
+                                    <small>
+                                        [[ labels['FinalTest'] ]] >
+                                        <b>[[ item.FinalTest ]] </b>
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <vue-markdown :emoji=false>
+                        [[ item.ActivityContents ]]
+                    </vue-markdown>
+                </div>
+
+                <!-- Final Test Mode -->
+                <div v-if="item.FinalTestMode && item.FinalTestMode.length"
+                     id="collapse_final_test_mode_{{ id }}"
+                     class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-final-test-mode-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-final-test-mode-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-final-test-mode-lft">
+                            {% trans 'Final Test Mode' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-final-test-mode-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-final-test-mode-lft">
+
+                        <div class="collapse-body">
+                            [[ item.FinalTestMode ]]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Teachers -->
+                <div v-if="item.MainTeachers && item.MainTeachers.length"
+                     id="collapse_main_teachers_{{ id }}"
+                     class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-main-teachers-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-main-teachers-lft"
+                                aria-expanded="false"
+                                role="tab"
+                                aria-controls="{{ id }}_collapse-main-teachers-lft">
+                            {% trans "Main Teachers" %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-main-teachers-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-main-teachers-lft">
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-for="subvalue in item.MainTeachers" v-if="subvalue.PersonName && subvalue.PersonName != ''">
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.PersonId +'/'" v-if="subvalue.PersonId">
+                                        [[ subvalue.PersonName ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ subvalue.PersonName ]]
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Teachers -->
+                <div v-if="item.OtherTeachers && item.OtherTeachers.length"
+                     id="collapse_other_teachers_{{ id }}"
+                     class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-other-teachers-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-other-teachers-lft"
+                                aria-expanded="false"
+                                role="tab"
+                                aria-controls="{{ id }}_collapse-other-teachers-lft">
+                            {% trans "Other Teachers" %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-other-teachers-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-other-teachers-lft">
+                        <div class="collapse-body">
+                            <ul>
+                                <li v-for="subvalue in item.OtherTeachers" v-if="subvalue.PersonName && subvalue.PersonName != ''">
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.PersonId +'/'" v-if="subvalue.PersonId">
+                                        [[ subvalue.PersonName ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ subvalue.PersonName ]]
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-else>
+                {% include "includes/unical_storage_empty.html" with url=url %}
+            </div>
+        </div>
+
+{% if full_page %}
+    </div>
+</div>
+{% endif %}
+
+<script>
+
+Vue.use(VueMarkdown);
+
+var {{ id }} = new Vue({
+        el: '[id="{{ id }}"]',
+        data() {
+            return {
+                item: {},
+                labels: {},
+                url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
+                is_loading: true,
+                loader_source: '{{ url }}',
+                {#fields_to_not_show: {{ fields_to_hide|safe }},#}
+            }
+        },
+        mounted() {
+            this.CallURL();
+        },
+        methods: {
+            CallURL() {
+                axios
+                    .get(this.url)
+                    .then(response => {
+                        this.item = response.data.results;
+                        this.labels = response.data.labels;
+                        this.is_loading = false
+                        {% if change_breadcrumb %}
+                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.ActivityName
+                        document.title = this.item.ActivityName
+                        {% endif %}
+                    })
+            }
+        }
+    })
+</script>

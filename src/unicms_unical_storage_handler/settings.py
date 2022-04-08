@@ -29,6 +29,8 @@ CMS_STORAGE_RESEARCH_LINE_VIEW_PREFIX_PATH = 'research-lines'
 CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH = 'companies'
 CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH = 'structures'
 CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = 'teachers'
+CMS_STORAGE_DOCTORATES_ACTIVITIES_VIEW_PREFIX_PATH = 'doctorates-activities'
+
 
 
 # regexps
@@ -59,6 +61,8 @@ CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)(
 CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
 CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
+CMS_STORAGE_DOCTORATES_ACTIVITES_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_DOCTORATES_ACTIVITIES_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_DOCTORATES_ACTIVITES_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_DOCTORATES_ACTIVITIES_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
 
 
 CMS_STORAGE_HANDLERS_PATHS = [
@@ -87,7 +91,9 @@ CMS_STORAGE_HANDLERS_PATHS = [
                               CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP,
                               CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP,
                               CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP,
-                              CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP
+                              CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP,
+                              CMS_STORAGE_DOCTORATES_ACTIVITES_LIST_URL_VIEW_REGEXP,
+                              CMS_STORAGE_DOCTORATES_ACTIVITES_INFO_URL_VIEW_REGEXP,
                               ]
 
 
@@ -118,6 +124,9 @@ CMS_STORAGE_APP_REGEXP_URLPATHS = {
     'unicms_unical_storage_handler.handlers.TeacherInfoViewHandler' : CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.HighFormationMastersListViewHandler': CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.HighFormationMastersInfoViewHandler': CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP,
+    'unicms_unical_storage_handler.handlers.DoctoratesActivitiesListViewHandler': CMS_STORAGE_DOCTORATES_ACTIVITES_LIST_URL_VIEW_REGEXP,
+    'unicms_unical_storage_handler.handlers.DoctoratesActivitiesInfoViewHandler': CMS_STORAGE_DOCTORATES_ACTIVITES_INFO_URL_VIEW_REGEXP,
+
 }
 
 
@@ -160,6 +169,10 @@ CMS_STORAGE_TECHAREAS_API = 'tech-areas/'
 CMS_STORAGE_HIGH_FORMATION_MASTERS_API = 'high-formation-masters/'
 CMS_STORAGE_EROGATIONMODES_API = 'erogation-modes/'
 CMS_STORAGE_COURSETYPES_API = 'course-types/'
+CMS_STORAGE_DOCTORATES_ACTIVITIES_API = 'doctorates-activities-list/'
+CMS_STORAGE_REF_DOCTORATES_API = 'ref-doctorates/'
+CMS_STORAGE_REF_STRUCTURES_API = 'ref-structures/'
+
 
 
 # labels (for breadcrumbs and page title)
@@ -179,6 +192,8 @@ CMS_STORAGE_SPINOFF_LABEL = _("Companies")
 CMS_STORAGE_STRUCTURE_LABEL = _("Structures")
 CMS_STORAGE_TEACHERS_LABEL = _("Teachers")
 CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL = _("High Formation Masters")
+CMS_STORAGE_DOCTORATES_ACTIVITIES_LABEL = _("Doctorates Activities")
+
 
 
 # API filters
@@ -284,6 +299,8 @@ SPINOFF_INFO_NOT_SHOW = ['SpinoffId', 'SpinoffImage', 'SpinoffTechAreaId',
 
 HIGH_FORMATION_MASTERS_INFO_NOT_SHOW = ['ID', 'HighFormationTypeId',
                                         'HighFormationErogationMode']
+
+DOCTORATES_ACTIVITIES_INFO_NOT_SHOW = ['ID']
 
 EXCLUDE_STUDY_ACTIVITIES_CODES = []
 
