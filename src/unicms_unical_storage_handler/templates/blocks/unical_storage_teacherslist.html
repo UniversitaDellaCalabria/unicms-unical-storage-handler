@@ -206,6 +206,7 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departmentsfilter_api %}
 {% storage_api_root "CMS_STORAGE_ROLES_API" as roles_api %}
 {% storage_settings_value "CONTRACT_TEACHER_ROLES" as contract_teacher_roles %}
+{% storage_settings_value "ALLOWED_TEACHER_ROLES" as allowed_teacher_roles %}
 
 contract_teacher_roles: {{ contract_teacher_roles|safe }},
 
@@ -223,7 +224,7 @@ selected_role: this.getItemFromSession("{{ id }}", 'role'),
 selected_department_id: this.getItemFromSession("{{ id }}", 'department'),
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 
-allowed_roles: [],
+allowed_roles: {{ allowed_teacher_roles|safe }},
 
 {% endblock extra_data %}
 
