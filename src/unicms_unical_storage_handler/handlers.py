@@ -273,20 +273,20 @@ class AddressbookListViewHandler(BaseStorageHandler):
 
     def as_view(self):
 
-        url_data = {}
+        # url_data = {}
 
         # if ALLOWED_ADDRESSBOOK_ROLES:
             # url_data['role'] = ",".join(ALLOWED_ADDRESSBOOK_ROLES)
-        if ALLOWED_ADDRESSBOOK_STRUCTURE_ID:
-            url_data['structure'] = ",".join(ALLOWED_ADDRESSBOOK_STRUCTURE_ID)
+        # if ALLOWED_ADDRESSBOOK_STRUCTURE_ID:
+            # url_data['structure'] = ",".join(ALLOWED_ADDRESSBOOK_STRUCTURE_ID)
         # if ALLOWED_STRUCTURE_TYPES:
             # url_data['structuretypes'] = ",".join(ALLOWED_STRUCTURE_TYPES)
             # #000 = Non assegnato
             # url_data['structuretypes'] += ",000"
 
-        params = urllib.parse.urlencode(url_data)
+        # params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}'
-        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property

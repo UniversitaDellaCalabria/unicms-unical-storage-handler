@@ -243,7 +243,15 @@ if (get_roles != null){
 this.callDepartments();
 this.callRoles();
 
-this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
+// parameters dictionary with settings/URL filters
+let params_dict = {}
+if (this.allowed_roles.length > 0) params_dict["role"] = this.allowed_roles
+
+let session_params = this.getItemsFromSession("{{ id }}")
+for(const param in session_params){
+    params_dict[param] = session_params[param]
+}
+this.parameters = {{ id }}_encodeQueryData(params_dict)
 {% endblock extra_mounted %}
 
 {% comment %}

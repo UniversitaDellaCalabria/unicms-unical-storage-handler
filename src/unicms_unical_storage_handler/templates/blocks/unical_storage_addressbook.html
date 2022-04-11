@@ -352,6 +352,7 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_settings_value "INITIAL_STRUCTURE_FATHER" as root_structure %}
 {% storage_settings_value "ADDRESSBOOK_INFO_NOT_SHOW" as fields_to_hide %}
 {% storage_settings_value "ALLOWED_ADDRESSBOOK_ROLES" as allowed_roles %}
+{% storage_settings_value "ALLOWED_ADDRESSBOOK_STRUCTURE_ID" as allowed_structure_id %}
 {% storage_settings_value "ALLOWED_STRUCTURE_TYPES" as allowed_structure_types %}
 
 search_dict: {},
@@ -370,7 +371,7 @@ loader_source_structures: '{{ structuresfilter_api }}?lang={{ LANGUAGE_CODE }}&p
 loader_source_structure_types: '{{ structuretypes_api }}?lang={{ LANGUAGE_CODE }}',
 loader_source_roles: '{{ roles_api }}?lang={{ LANGUAGE_CODE }}',
 
-allowed_structure_id: [],
+allowed_structure_id: {{ allowed_structure_id|safe }},
 allowed_structure_types: {{ allowed_structure_types|safe }},
 allowed_roles: {{ allowed_roles|safe }},
 
@@ -385,9 +386,8 @@ fields_to_not_show: {{ fields_to_hide|safe }}
 {% endblock extra_data %}
 
 {% block extra_mounted %}
-
-    // 000 - Non assegnato in structure_types
-    allowed_structure_types.push(000);
+    // "000 - Non assegnato" in structure_types
+    this.allowed_structure_types.push('000');
 
     // if url if pre-filtered resize select field
     // this allows to auto generate select options according to URL get filters!
@@ -423,7 +423,18 @@ fields_to_not_show: {{ fields_to_hide|safe }}
 
     this.callRoles();
 
-    this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
+    // parameters dictionary with settings/URL filters
+    let params_dict = {}
+    if (this.allowed_roles.length > 0) params_dict["role"] = this.allowed_roles
+    if (this.allowed_structure_id.length > 0) params_dict["structure"] = this.allowed_structure_id
+    if (this.allowed_structure_types.length > 0) params_dict["structuretypes"] = this.allowed_structure_types
+
+    let session_params = this.getItemsFromSession("{{ id }}")
+    for(const param in session_params){
+        params_dict[param] = session_params[param]
+    }
+    this.parameters = {{ id }}_encodeQueryData(params_dict)
+
 {% endblock extra_mounted %}
 
 {% block extra_methods %}
