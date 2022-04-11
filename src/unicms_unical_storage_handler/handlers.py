@@ -677,3 +677,51 @@ class HighFormationMastersInfoViewHandler(BaseStorageHandler):
         parent = (self.parent_url, CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
         leaf = ('#', self.code)
         return (root, parent, leaf)
+
+
+class DoctoratesActivitiesListViewHandler(BaseStorageHandler):
+    template = "doctorates_activities_list.html"
+
+    def __init__(self, **kwargs):
+        super(DoctoratesActivitiesListViewHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        url_data = {}
+
+        if CURRENT_YEAR:
+            url_data['year'] = CURRENT_YEAR
+
+        params = urllib.parse.urlencode(url_data)
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_DOCTORATES_ACTIVITIES_API}'
+        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_DOCTORATES_ACTIVITIES_LABEL)
+        return (root, leaf)
+
+
+class DoctoratesActivitiesInfoViewHandler(BaseStorageHandler):
+    template = "doctorates_activities_info.html"
+
+    def __init__(self, **kwargs):
+        super(DoctoratesActivitiesInfoViewHandler, self).__init__(**kwargs)
+        self.code = self.match_dict.get('code', '')
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_DOCTORATES_ACTIVITIES_API}{self.code}/'
+        return super().as_view()
+
+    @property
+    def parent_url(self):
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_DOCTORATES_ACTIVITIES_VIEW_PREFIX_PATH}/'
+        return sanitize_path(url)
+
+    @property
+    def breadcrumbs(self):
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        parent = (self.parent_url, CMS_STORAGE_DOCTORATES_ACTIVITIES_LABEL)
+        leaf = ('#', self.code)
+        return (root, parent, leaf)
