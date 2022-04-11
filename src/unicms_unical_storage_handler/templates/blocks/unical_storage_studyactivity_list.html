@@ -122,18 +122,18 @@
                                                         class="form-control"
                                                         @change="{{ id }}.search()">
                                                     <option value="">- {% trans 'Choose an option' %} -</option>
-                                                    <option value="Annualità" :selected="selected_period == 'Annualità'">Annualità</option>
-                                                    <option value="Primo Periodo" :selected="selected_period == 'Primo Periodo'">Primo Periodo</option>
-                                                    <option value="Secondo Periodo" :selected="selected_period == 'Secondo Periodo'">Secondo Periodo</option>
-                                                    <option value="Terzo Periodo" :selected="selected_period == 'Terzo Periodo'">Terzo Periodo</option>
-                                                    <option value="Quarto Periodo" :selected="selected_period == 'Quarto Periodo'">Quarto Periodo</option>
-                                                    <option value="Primo Semestre" :selected="selected_period == 'Primo Semestre'">Primo Semestre</option>
-                                                    <option value="Secondo Semestre" :selected="selected_period == 'Secondo Semestre'">Secondo Semestre</option>
-                                                    <option value="Primo Trimestre" :selected="selected_period == 'Primo Trimestre'">Primo Trimestre</option>
-                                                    <option value="Secondo Trimestre" :selected="selected_period == 'Secondo Trimestre'">Secondo Trimestre</option>
-                                                    <option value="Terzo Trimestre" :selected="selected_course_year == 'Terzo Trimestre'">Terzo Trimestre</option>
-                                                    <option value="Quarto Trimestre" :selected="selected_period == 'Quarto Trimestre'">Quarto Trimestre</option>
-                                                    <option value="Semestre" :selected="selected_period == 'Semestre'">Semestre</option>
+                                                    <option value="Annualità" :selected="selected_period == 'Annualità'">{% trans "Annuity" %}</option>
+                                                    <option value="Primo Periodo" :selected="selected_period == 'Primo Periodo'">{% trans "First period" %}</option>
+                                                    <option value="Secondo Periodo" :selected="selected_period == 'Secondo Periodo'">{% trans "Second period" %}</option>
+                                                    <option value="Terzo Periodo" :selected="selected_period == 'Terzo Periodo'">{% trans "Third period" %}</option>
+                                                    <option value="Quarto Periodo" :selected="selected_period == 'Quarto Periodo'">{% trans "Fourth period" %}</option>
+                                                    <option value="Primo Semestre" :selected="selected_period == 'Primo Semestre'">{% trans "First semester" %}</option>
+                                                    <option value="Secondo Semestre" :selected="selected_period == 'Secondo Semestre'">{% trans "Second semester" %}</option>
+                                                    <option value="Primo Trimestre" :selected="selected_period == 'Primo Trimestre'">{% trans "First quarter" %}</option>
+                                                    <option value="Secondo Trimestre" :selected="selected_period == 'Secondo Trimestre'">{% trans "Second quarter" %}</option>
+                                                    <option value="Terzo Trimestre" :selected="selected_course_year == 'Terzo Trimestre'">{% trans "Third quarter" %}</option>
+                                                    <option value="Quarto Trimestre" :selected="selected_period == 'Quarto Trimestre'">{% trans "Fourth quarter" %}</option>
+                                                    <option value="Semestre" :selected="selected_period == 'Semestre'">{% trans "Semester" %}</option>
                                                 </select>
                                             </div>
                                         </div>
