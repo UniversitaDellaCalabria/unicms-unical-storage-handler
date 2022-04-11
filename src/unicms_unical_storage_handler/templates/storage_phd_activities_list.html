@@ -8,7 +8,7 @@
 
 <!-- SEO  -->
 {% block page_title %}
-{% trans "Doctorates Activities" %}
+{% trans "PhD Activities" %}
 {% endblock page_title %}
 
 {% block container %}
@@ -18,9 +18,9 @@
     <div class="col-12 py-5 bd-content">
         {% block centered_container %}
             {% include "includes/unical_storage_api_buttons.html" %}
-            <h1 class="lighter mb-4">{% trans "Doctorates Activities" %}</h1>
+            <h1 class="lighter mb-4">{% trans "PhD Activities" %}</h1>
             <hr class="my-4 bordeaux-unical-bg">
-            {% include "blocks/unical_storage_doctorates_activities_list.html" with url=url uid="id_1" %}
+            {% include "blocks/unical_storage_phd_activities_list.html" with url=url uid="id_1" %}
         {% endblock %}
     </div>
 </div>

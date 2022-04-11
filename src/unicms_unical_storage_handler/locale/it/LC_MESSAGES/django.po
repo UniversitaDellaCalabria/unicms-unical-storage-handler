@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 13:14+0200\n"
-"PO-Revision-Date: 2022-04-11 13:15+0200\n"
+"POT-Creation-Date: 2022-04-11 13:39+0200\n"
+"PO-Revision-Date: 2022-04-11 13:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -43,17 +43,16 @@ msgid "Base research lines"
 msgstr "Linee di ricerca di base"
 
 #: unicms_unical_storage_handler/settings.py:180
-#: unicms_unical_storage_handler/templates/blocks/collapse/unical_storage_collapse_research_line_list.html:7
-#: unicms_unical_storage_handler/templates/storage_base.html:252
-#: unicms_unical_storage_handler/templates/storage_research_line_list.html:11
-#: unicms_unical_storage_handler/templates/storage_research_line_list.html:20
-msgid "Research lines"
-msgstr "Linee di ricerca"
-
-#: unicms_unical_storage_handler/settings.py:181
 #: unicms_unical_storage_handler/templates/storage_base.html:52
 msgid "Study courses"
 msgstr "Corsi di studio"
+
+#: unicms_unical_storage_handler/settings.py:181
+#: unicms_unical_storage_handler/templates/storage_base.html:70
+#: unicms_unical_storage_handler/templates/storage_high_formation_masters_list.html:11
+#: unicms_unical_storage_handler/templates/storage_high_formation_masters_list.html:21
+msgid "High Formation Masters"
+msgstr "Master Alta Formazione"
 
 #: unicms_unical_storage_handler/settings.py:182
 #: unicms_unical_storage_handler/templates/blocks/collapse/unical_storage_collapse_laboratory_list.html:7
@@ -71,13 +70,22 @@ msgid "Patents"
 msgstr "Brevetti"
 
 #: unicms_unical_storage_handler/settings.py:184
+#: unicms_unical_storage_handler/templates/storage_base.html:88
+#: unicms_unical_storage_handler/templates/storage_phd_activities_list.html:11
+#: unicms_unical_storage_handler/templates/storage_phd_activities_list.html:21
+#, fuzzy
+#| msgid "Doctorates Activities"
+msgid "PhD Activities"
+msgstr "Attività Dottorati"
+
+#: unicms_unical_storage_handler/settings.py:185
 #: unicms_unical_storage_handler/templates/storage_base.html:216
 #: unicms_unical_storage_handler/templates/storage_projects_list.html:11
 #: unicms_unical_storage_handler/templates/storage_projects_list.html:20
 msgid "Projects"
 msgstr "Progetti"
 
-#: unicms_unical_storage_handler/settings.py:185
+#: unicms_unical_storage_handler/settings.py:186
 #: unicms_unical_storage_handler/templates/blocks/collapse/unical_storage_collapse_publications_list.html:7
 #: unicms_unical_storage_handler/templates/storage_base.html:162
 #: unicms_unical_storage_handler/templates/storage_publications_list.html:11
@@ -85,7 +93,7 @@ msgstr "Progetti"
 msgid "Publications"
 msgstr "Pubblicazioni"
 
-#: unicms_unical_storage_handler/settings.py:186
+#: unicms_unical_storage_handler/settings.py:187
 #: unicms_unical_storage_handler/templates/blocks/collapse/unical_storage_collapse_research_group_list.html:7
 #: unicms_unical_storage_handler/templates/storage_base.html:234
 #: unicms_unical_storage_handler/templates/storage_research_group_list.html:11
@@ -93,44 +101,38 @@ msgstr "Pubblicazioni"
 msgid "Research groups"
 msgstr "Gruppi di ricerca"
 
-#: unicms_unical_storage_handler/settings.py:187
+#: unicms_unical_storage_handler/settings.py:188
+#: unicms_unical_storage_handler/templates/blocks/collapse/unical_storage_collapse_research_line_list.html:7
+#: unicms_unical_storage_handler/templates/storage_base.html:252
+#: unicms_unical_storage_handler/templates/storage_research_line_list.html:11
+#: unicms_unical_storage_handler/templates/storage_research_line_list.html:20
+msgid "Research lines"
+msgstr "Linee di ricerca"
+
+#: unicms_unical_storage_handler/settings.py:189
 #: unicms_unical_storage_handler/templates/storage_base.html:12
 #: unicms_unical_storage_handler/templates/storage_base.html:24
 msgid "Open data"
 msgstr ""
 
-#: unicms_unical_storage_handler/settings.py:188
+#: unicms_unical_storage_handler/settings.py:190
 #: unicms_unical_storage_handler/templates/storage_base.html:198
 #: unicms_unical_storage_handler/templates/storage_spinoff_list.html:11
 #: unicms_unical_storage_handler/templates/storage_spinoff_list.html:20
 msgid "Companies"
 msgstr "Imprese"
 
-#: unicms_unical_storage_handler/settings.py:189
+#: unicms_unical_storage_handler/settings.py:191
 msgid "Structures"
 msgstr "Strutture"
 
-#: unicms_unical_storage_handler/settings.py:190
+#: unicms_unical_storage_handler/settings.py:192
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_cdsinfo.html:383
 #: unicms_unical_storage_handler/templates/storage_base.html:124
 #: unicms_unical_storage_handler/templates/storage_teachers_list.html:11
 #: unicms_unical_storage_handler/templates/storage_teachers_list.html:20
 msgid "Teachers"
 msgstr "Docenti"
-
-#: unicms_unical_storage_handler/settings.py:191
-#: unicms_unical_storage_handler/templates/storage_base.html:70
-#: unicms_unical_storage_handler/templates/storage_high_formation_masters_list.html:11
-#: unicms_unical_storage_handler/templates/storage_high_formation_masters_list.html:21
-msgid "High Formation Masters"
-msgstr "Master Alta Formazione"
-
-#: unicms_unical_storage_handler/settings.py:192
-#: unicms_unical_storage_handler/templates/doctorates_activities_list.html:11
-#: unicms_unical_storage_handler/templates/doctorates_activities_list.html:21
-#: unicms_unical_storage_handler/templates/storage_base.html:88
-msgid "Doctorates Activities"
-msgstr "Attività Dottorati"
 
 #: unicms_unical_storage_handler/settings.py:200
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_spinoff_list.html:72
@@ -176,11 +178,11 @@ msgstr "prossimo"
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_cdsstudyplans_v2.html:99
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_cdsstudyplans_v3.html:189
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_departments_list.html:69
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_list.html:158
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:184
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_masters_list.html:254
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_laboratory_list.html:264
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_patents_list.html:140
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_list.html:158
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:184
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_projects_list.html:253
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_publications_list.html:165
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_research_group_list.html:180
@@ -241,10 +243,6 @@ msgstr "Tipo struttura"
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_cdslist.html:203
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_cdslist_areas.html:36
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_cdslist_areas.html:41
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_list.html:50
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_list.html:54
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_list.html:80
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_list.html:84
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_masters_list.html:49
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_masters_list.html:54
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_masters_list.html:75
@@ -264,6 +262,10 @@ msgstr "Tipo struttura"
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_laboratory_list.html:155
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_patents_list.html:46
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_patents_list.html:50
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_list.html:50
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_list.html:54
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_list.html:80
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_list.html:84
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_projects_list.html:63
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_projects_list.html:67
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_projects_list.html:89
@@ -410,7 +412,7 @@ msgid "year"
 msgstr "anno"
 
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_cdsstudyplans_v2.html:58
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:34
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:34
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_projects_list.html:39
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_publications_list.html:38
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_teacherstudyactivities.html:29
@@ -426,65 +428,6 @@ msgstr "Percorsi di studio"
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_structure_info.html:103
 msgid "Manager"
 msgstr "Responsabile"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_info.html:120
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_master_info.html:378
-msgid "Final Test Mode"
-msgstr "Modalità test finale"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_info.html:144
-msgid "Main Teachers"
-msgstr "Docenti Principali"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_info.html:176
-msgid "Other Teachers"
-msgstr "Altri Docenti"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_list.html:46
-msgid "Referent Doctorate"
-msgstr "Dottorato di riferimento"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorates_activities_list.html:76
-msgid "Referent Structure"
-msgstr "Struttura di riferimento"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:24
-msgid "Filters"
-msgstr "Filtro"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:45
-msgid "From"
-msgstr "Da"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:56
-msgid "To"
-msgstr "A"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:73
-msgid "Course of study ID"
-msgstr "ID corso di studio"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:85
-msgid "Course of study code"
-msgstr "Codice corso di studio"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:96
-msgid "Department ID"
-msgstr "ID dipartimento"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:113
-msgid "Study plan code"
-msgstr "Codice piano di studio"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:124
-msgid "Cycle"
-msgstr "Ciclo"
-
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_doctorateslist.html:142
-#: unicms_unical_storage_handler/templates/blocks/unical_storage_teacherstudyactivities.html:44
-#: unicms_unical_storage_handler/templates/includes/unical_storage_search_button.html:7
-msgid "Search"
-msgstr "Cerca"
 
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_master_info.html:130
 msgid "Admission Requirements"
@@ -525,6 +468,11 @@ msgstr "Opportunità di lavoro"
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_master_info.html:355
 msgid "Course Objectives"
 msgstr "Obiettivi del corso"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_master_info.html:378
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_info.html:120
+msgid "Final Test Mode"
+msgstr "Modalità test finale"
 
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_high_formation_master_info.html:401
 msgid "Content Times Criteria CFU"
@@ -634,6 +582,60 @@ msgstr ""
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_spinoff_list.html:158
 msgid "Tech Area"
 msgstr "Area tecnologica"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_info.html:144
+msgid "Main Teachers"
+msgstr "Docenti Principali"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_info.html:176
+msgid "Other Teachers"
+msgstr "Altri Docenti"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_list.html:46
+msgid "Referent PhD"
+msgstr "Dottorato di riferimento"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_activities_list.html:76
+msgid "Referent Structure"
+msgstr "Struttura di riferimento"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:24
+msgid "Filters"
+msgstr "Filtro"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:45
+msgid "From"
+msgstr "Da"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:56
+msgid "To"
+msgstr "A"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:73
+msgid "Course of study ID"
+msgstr "ID corso di studio"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:85
+msgid "Course of study code"
+msgstr "Codice corso di studio"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:96
+msgid "Department ID"
+msgstr "ID dipartimento"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:113
+msgid "Study plan code"
+msgstr "Codice piano di studio"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:124
+msgid "Cycle"
+msgstr "Ciclo"
+
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_phd_list.html:142
+#: unicms_unical_storage_handler/templates/blocks/unical_storage_teacherstudyactivities.html:44
+#: unicms_unical_storage_handler/templates/includes/unical_storage_search_button.html:7
+msgid "Search"
+msgstr "Cerca"
 
 #: unicms_unical_storage_handler/templates/blocks/unical_storage_projects_list.html:85
 msgid "Territorial Scope"
@@ -796,10 +798,6 @@ msgstr "Corso di studio"
 msgid "Contract teacher"
 msgstr "Docente a contratto"
 
-#: unicms_unical_storage_handler/templates/doctorates_activities_info.html:10
-msgid "Doctorate Activity"
-msgstr "Attività Dottorato"
-
 #: unicms_unical_storage_handler/templates/includes/unical_storage_empty.html:5
 msgid "Alert"
 msgstr "Attenzione"
@@ -884,6 +882,10 @@ msgstr "Master Alta Formazione"
 msgid "Laboratory detail"
 msgstr "Dettaglio del laboratorio"
 
+#: unicms_unical_storage_handler/templates/storage_phd_activities_info.html:10
+msgid "PhD Activity"
+msgstr "Attività"
+
 #: unicms_unical_storage_handler/templates/storage_projects_info.html:11
 msgid "Project detail"
 msgstr "Dettaglio del progetto"
@@ -903,6 +905,9 @@ msgstr "Dettaglio della struttura"
 #: unicms_unical_storage_handler/templates/storage_teachers_info.html:12
 msgid "Teacher detail"
 msgstr "Dettaglio docente"
+
+#~ msgid "Doctorate Activity"
+#~ msgstr "Attività Dottorato"
 
 #~ msgid "Primo Periodo"
 #~ msgstr "First period"

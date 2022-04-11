@@ -85,10 +85,10 @@
                         <div class="card card-bg card-big no-after">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    {% trans "Doctorates Activities" %}
+                                    {% trans "PhD Activities" %}
                                 </h5>
-                                {% storage_settings_value "CMS_STORAGE_DOCTORATES_ACTIVITIES_VIEW_PREFIX_PATH" as doctorates_activities_prefix %}
-                                <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ doctorates_activities_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
+                                {% storage_settings_value "CMS_STORAGE_PHD_ACTIVITIES_VIEW_PREFIX_PATH" as phd_activities_prefix %}
+                                <a href="//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ phd_activities_prefix }}/" role="button" class="btn btn-outline-primary btn-sm">
                                     {% trans "See the list" %}
                                 </a>
                             </div>

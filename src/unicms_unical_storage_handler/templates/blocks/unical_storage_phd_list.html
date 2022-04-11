@@ -7,7 +7,7 @@
 
     <div v-if="(initial_items && initial_items.length) || parameters">
 
-        {% block filters_doctorateslist %}
+        {% block filters_phdlist %}
         <div class="row">
             <div class="col-12">
                 <div class="card-wrapper card-space">
@@ -148,7 +148,7 @@
                 </div>
             </div>
         </div>
-        {% endblock filters_doctorateslist %}
+        {% endblock filters_phdlist %}
 
 
         <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
@@ -164,7 +164,7 @@
                 <div class="card-wrapper card-space">
                     <div class="card card-bg">
                         <div class="card-body">
-                            <h5 class="card-title">[[ item.DoctorateCdsName ]]</h5>
+                            <h5 class="card-title">[[ item.PhdCdsName ]]</h5>
                             <ul v-for="(value, name) in item">
                                 <li>
                                     [[ labels[name] ]]: [[ value ]]

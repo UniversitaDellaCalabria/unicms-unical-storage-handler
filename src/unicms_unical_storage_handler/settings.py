@@ -19,10 +19,10 @@ CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH = 'addressbook'
 CMS_STORAGE_APPLIED_RESEARCH_LINE_VIEW_PREFIX_PATH = 'applied-research-lines'
 CMS_STORAGE_BASE_RESEARCH_LINE_VIEW_PREFIX_PATH = 'base-research-lines'
 CMS_STORAGE_CDS_VIEW_PREFIX_PATH = 'cds'
-CMS_STORAGE_DOCTORATES_ACTIVITIES_VIEW_PREFIX_PATH = 'phd-activities'
 CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH = 'higher-edu-training'
 CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH = 'laboratories'
 CMS_STORAGE_PATENTS_VIEW_PREFIX_PATH = 'patents'
+CMS_STORAGE_PHD_ACTIVITIES_VIEW_PREFIX_PATH = 'phd-activities'
 CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH = 'projects'
 CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH = 'publications'
 CMS_STORAGE_RESEARCH_GROUP_VIEW_PREFIX_PATH = 'research-groups'
@@ -42,13 +42,13 @@ CMS_STORAGE_ADDRESSBOOK_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_
 CMS_STORAGE_ADDRESSBOOK_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
 CMS_STORAGE_CDS_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_CDS_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_CDS_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_CDS_VIEW_PREFIX_PATH})/(?P<code>[a-z0-9\-]+)(/)?$' # noqa
-CMS_STORAGE_DOCTORATES_ACTIVITES_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_DOCTORATES_ACTIVITIES_VIEW_PREFIX_PATH})(/)?$' # noqa
-CMS_STORAGE_DOCTORATES_ACTIVITES_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_DOCTORATES_ACTIVITIES_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
 CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
 CMS_STORAGE_LABORATORY_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_LABORATORY_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH})/(?P<code>[a-z0-9\-]+)(/)?$' # noqa
 CMS_STORAGE_PATENTS_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_PATENTS_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_PHD_ACTIVITES_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_PHD_ACTIVITIES_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_PHD_ACTIVITES_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_PHD_ACTIVITIES_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
 CMS_STORAGE_PROJECTS_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_PROJECTS_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/{CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH}/(?P<code>[a-z0-9\-]+)(/)?$' # noqa
 CMS_STORAGE_PUBLICATIONS_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH})(/)?$' # noqa
@@ -91,8 +91,8 @@ CMS_STORAGE_HANDLERS_PATHS = [
                               CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP,
                               CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP,
                               CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP,
-                              CMS_STORAGE_DOCTORATES_ACTIVITES_LIST_URL_VIEW_REGEXP,
-                              CMS_STORAGE_DOCTORATES_ACTIVITES_INFO_URL_VIEW_REGEXP,
+                              CMS_STORAGE_PHD_ACTIVITES_LIST_URL_VIEW_REGEXP,
+                              CMS_STORAGE_PHD_ACTIVITES_INFO_URL_VIEW_REGEXP,
                               ]
 
 
@@ -105,13 +105,13 @@ CMS_STORAGE_APP_REGEXP_URLPATHS = {
     'unicms_unical_storage_handler.handlers.BaseResearchLineListViewHandler': CMS_STORAGE_BASE_RESEARCH_LINE_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.CdSListViewHandler' : CMS_STORAGE_CDS_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.CdSInfoViewHandler' : CMS_STORAGE_CDS_INFO_URL_VIEW_REGEXP,
-    'unicms_unical_storage_handler.handlers.DoctoratesActivitiesListViewHandler': CMS_STORAGE_DOCTORATES_ACTIVITES_LIST_URL_VIEW_REGEXP,
-    'unicms_unical_storage_handler.handlers.DoctoratesActivitiesInfoViewHandler': CMS_STORAGE_DOCTORATES_ACTIVITES_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.HighFormationMastersListViewHandler': CMS_STORAGE_HIGH_FORMATION_MASTERS_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.HighFormationMastersInfoViewHandler': CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.LaboratoryListViewHandler': CMS_STORAGE_LABORATORY_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.LaboratoryInfoViewHandler' : CMS_STORAGE_LABORATORY_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.PatentsListViewHandler' : CMS_STORAGE_PATENTS_LIST_URL_VIEW_REGEXP,
+    'unicms_unical_storage_handler.handlers.PhdActivitiesListViewHandler': CMS_STORAGE_PHD_ACTIVITES_LIST_URL_VIEW_REGEXP,
+    'unicms_unical_storage_handler.handlers.PhdActivitiesInfoViewHandler': CMS_STORAGE_PHD_ACTIVITES_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.ProjectsListViewHandler': CMS_STORAGE_PROJECTS_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.ProjectsInfoViewHandler': CMS_STORAGE_PROJECTS_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.PublicationsListViewHandler': CMS_STORAGE_PUBLICATIONS_LIST_URL_VIEW_REGEXP,
@@ -136,27 +136,32 @@ CMS_STORAGE_ACADEMICYEARS_API = 'academicyears/'
 CMS_STORAGE_ACTIVITY_API = 'activities/'
 CMS_STORAGE_ADDRESSBOOK_API = 'addressbook/'
 CMS_STORAGE_APPLIED_RESEARCH_LINE_API = 'appliedresearchlines/'
+CMS_STORAGE_ASTER1LIST_API = 'aster1list/'
 CMS_STORAGE_BASE_RESEARCH_LINE_API = 'baseresearchlines/'
 CMS_STORAGE_RESEARCH_LINE_API = 'allresearchlines/'
 CMS_STORAGE_CDS_API = 'cds/'
 CMS_STORAGE_CDS_AREAS_API = 'cds-areas/'
 CMS_STORAGE_COMMUNITYTYPES_API = 'publicationscommunitytypes/'
+CMS_STORAGE_COURSETYPES_API = 'course-types/'
 CMS_STORAGE_DEGREETYPES_API = 'degreetypes/'
 CMS_STORAGE_DEPARTMENTS_API = 'departments/'
-CMS_STORAGE_DOCTORATES_ACTIVITIES_API = 'phd-activities-list/'
 CMS_STORAGE_ERC0LIST_API = 'erc0list/'
 CMS_STORAGE_ERC1LIST_API = 'erc1list/'
-CMS_STORAGE_ASTER1LIST_API = 'aster1list/'
+CMS_STORAGE_EROGATIONMODES_API = 'erogation-modes/'
+CMS_STORAGE_HIGH_FORMATION_MASTERS_API = 'high-formation-masters/'
 CMS_STORAGE_INFRASTRUCTURES_API = 'infrastructures/'
 CMS_STORAGE_LABORATORY_API = 'laboratories/'
 CMS_STORAGE_LABORATORIES_AREAS_API = 'laboratoriesareas/'
 CMS_STORAGE_LABORATORIES_SCOPES_API = 'laboratories-scopes/'
 CMS_STORAGE_PATENTS_API = 'patents/'
+CMS_STORAGE_PHD_ACTIVITIES_API = 'phd-activities-list/'
 CMS_STORAGE_PROJECTS_API = 'projects/'
 CMS_STORAGE_PROJECTS_PROGRAMS_TYPES_API = 'projects-program-types/'
 CMS_STORAGE_PROJECTS_INFRASTRUCTURES_API = 'projects-infrastructures/'
 CMS_STORAGE_PROJECTS_TERRITORIAL_SCOPES_API = 'projects-territorial-scopes/'
 CMS_STORAGE_PUBLICATIONS_API = 'publications/'
+CMS_STORAGE_REF_PHD_API = 'ref-phd/'
+CMS_STORAGE_REF_STRUCTURES_API = 'ref-structures/'
 CMS_STORAGE_RESEARCH_GROUP_API = 'researchgroups/'
 CMS_STORAGE_ROLES_API = 'roles/'
 CMS_STORAGE_SPINOFF_API = 'companies/'
@@ -165,11 +170,6 @@ CMS_STORAGE_STRUCTUREFUNCTIONS_API = 'functions/'
 CMS_STORAGE_STRUCTURETYPES_API = 'structuretypes/'
 CMS_STORAGE_TEACHER_API = 'teachers/'
 CMS_STORAGE_TECHAREAS_API = 'tech-areas/'
-CMS_STORAGE_HIGH_FORMATION_MASTERS_API = 'high-formation-masters/'
-CMS_STORAGE_EROGATIONMODES_API = 'erogation-modes/'
-CMS_STORAGE_COURSETYPES_API = 'course-types/'
-CMS_STORAGE_REF_DOCTORATES_API = 'ref-doctorates/'
-CMS_STORAGE_REF_STRUCTURES_API = 'ref-structures/'
 
 
 # labels (for breadcrumbs and page title)
@@ -177,19 +177,19 @@ CMS_STORAGE_ACTIVITIES_LABEL = _("Teachings")
 CMS_STORAGE_ADDRESSBOOK_LABEL = _("Persons")
 CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL = _("Applied research lines")
 CMS_STORAGE_BASE_RESEARCH_LINE_LABEL = _("Base research lines")
-CMS_STORAGE_RESEARCH_LINE_LABEL = _("Research lines")
 CMS_STORAGE_CDS_LIST_LABEL = _("Study courses")
+CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL = _("High Formation Masters")
 CMS_STORAGE_LABORATORY_LABEL = _("Laboratories")
 CMS_STORAGE_PATENTS_LABEL = _("Patents")
+CMS_STORAGE_PHD_ACTIVITIES_LABEL = _("PhD Activities")
 CMS_STORAGE_PROJECTS_LABEL = _("Projects")
 CMS_STORAGE_PUBLICATIONS_LABEL = _("Publications")
 CMS_STORAGE_RESEARCH_GROUP_LABEL = _("Research groups")
+CMS_STORAGE_RESEARCH_LINE_LABEL = _("Research lines")
 CMS_STORAGE_ROOT_LABEL = _("Open data")
 CMS_STORAGE_SPINOFF_LABEL = _("Companies")
 CMS_STORAGE_STRUCTURE_LABEL = _("Structures")
 CMS_STORAGE_TEACHERS_LABEL = _("Teachers")
-CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL = _("High Formation Masters")
-CMS_STORAGE_DOCTORATES_ACTIVITIES_LABEL = _("Doctorates Activities")
 
 
 # API filters
@@ -296,7 +296,7 @@ SPINOFF_INFO_NOT_SHOW = ['SpinoffId', 'SpinoffImage', 'SpinoffTechAreaId',
 HIGH_FORMATION_MASTERS_INFO_NOT_SHOW = ['ID', 'HighFormationTypeId',
                                         'HighFormationErogationMode']
 
-DOCTORATES_ACTIVITIES_INFO_NOT_SHOW = ['ID']
+PHD_ACTIVITIES_INFO_NOT_SHOW = ['ID']
 
 EXCLUDE_STUDY_ACTIVITIES_CODES = []
 
