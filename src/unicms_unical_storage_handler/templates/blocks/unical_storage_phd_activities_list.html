@@ -54,8 +54,8 @@
                                                     <option value="">- {% trans 'Choose an option' %} -</option>
                                                   </option>
                                                   <option v-for="item in phd_filter"
-                                                            :value="item"
-                                                            :selected="item == selected_phd_id">
+                                                            :value="item.ReferentPhd"
+                                                            :selected="item.ReferentPhd == selected_phd_id">
                                                         [[ item.ReferentPhd ]]
                                                     </option>
                                                 </select>
@@ -83,8 +83,8 @@
                                                         @change="{{ id }}.search()">
                                                     <option value="">- {% trans 'Choose an option' %} -</option>
                                                     <option v-for="item in structures_filter"
-                                                            :value="item"
-                                                            :selected="item == selected_structure_id">
+                                                            :value="item.ReferentStructureName"
+                                                            :selected="item.ReferentStructureName == selected_structure_id">
                                                         [[ item.ReferentStructureName ]]
                                                     </option>
                                                 </select>

@@ -682,7 +682,7 @@ class HighFormationMastersInfoViewHandler(BaseStorageHandler):
 
 
 class PhdActivitiesListViewHandler(BaseStorageHandler):
-    template = "phd_activities_list.html"
+    template = "storage_phd_activities_list.html"
 
     def __init__(self, **kwargs):
         super(PhdActivitiesListViewHandler, self).__init__(**kwargs)
@@ -706,7 +706,7 @@ class PhdActivitiesListViewHandler(BaseStorageHandler):
 
 
 class PhdActivitiesInfoViewHandler(BaseStorageHandler):
-    template = "phd_activities_info.html"
+    template = "storage_phd_activities_info.html"
 
     def __init__(self, **kwargs):
         super(PhdActivitiesInfoViewHandler, self).__init__(**kwargs)
