@@ -688,14 +688,14 @@ class PhdActivitiesListViewHandler(BaseStorageHandler):
         super(PhdActivitiesListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        url_data = {}
+        # url_data = {}
 
-        if CURRENT_YEAR:
-            url_data['year'] = CURRENT_YEAR
+        # if CURRENT_YEAR:
+            # url_data['year'] = CURRENT_YEAR
 
-        params = urllib.parse.urlencode(url_data)
+        # params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PHD_ACTIVITIES_API}'
-        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
