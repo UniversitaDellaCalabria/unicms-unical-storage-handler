@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-12 10:06+0200\n"
-"PO-Revision-Date: 2022-04-12 10:06+0200\n"
+"POT-Creation-Date: 2022-04-14 16:16+0200\n"
+"PO-Revision-Date: 2022-04-14 16:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #: settings.py:176 templates/blocks/unical_storage_cdsstudyplans_v3.html:27
 #: templates/blocks/unical_storage_teacherinfo.html:147
@@ -187,6 +187,7 @@ msgid "Personnel"
 msgstr "Personale"
 
 #: templates/blocks/collapse/unical_storage_collapse_structure_list.html:7
+#: templates/blocks/unical_storage_high_formation_master_info.html:490
 msgid "Organization"
 msgstr "Organizzazione"
 
@@ -413,72 +414,80 @@ msgstr "Percorsi di studio"
 msgid "Manager"
 msgstr "Responsabile"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:130
-msgid "Admission Requirements"
-msgstr "Requisiti di ammissione"
-
-#: templates/blocks/unical_storage_high_formation_master_info.html:155
-msgid "Stage"
-msgstr "Tirocinio"
-
-#: templates/blocks/unical_storage_high_formation_master_info.html:171
-msgid "Not Expected"
-msgstr "Inatteso"
-
-#: templates/blocks/unical_storage_high_formation_master_info.html:207
-msgid "Participants"
-msgstr "Partecipanti"
-
-#: templates/blocks/unical_storage_high_formation_master_info.html:241
+#: templates/blocks/unical_storage_high_formation_master_info.html:140
 msgid "Title Issued"
 msgstr "Titolo rilasciato"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:263
-msgid "Work Function"
-msgstr "Funzione di lavoro"
+#: templates/blocks/unical_storage_high_formation_master_info.html:162
+msgid "Course Objectives"
+msgstr "Obiettivi e breve descrizione"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:286
+#: templates/blocks/unical_storage_high_formation_master_info.html:185
+msgid "Admission Requirements"
+msgstr "Requisiti di ammissione"
+
+#: templates/blocks/unical_storage_high_formation_master_info.html:202
+msgid "Training Project"
+msgstr "Progetto Formativo"
+
+#: templates/blocks/unical_storage_high_formation_master_info.html:212
+msgid "Work Function"
+msgstr "Funzioni Svolte"
+
+#: templates/blocks/unical_storage_high_formation_master_info.html:235
 msgid "Formation Objectives Summer School"
 msgstr "Obiettivi Formativi Summer School"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:309
+#: templates/blocks/unical_storage_high_formation_master_info.html:258
 msgid "Skills"
-msgstr "Abilità"
+msgstr "Competenze"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:332
+#: templates/blocks/unical_storage_high_formation_master_info.html:281
 msgid "Job Opportunities"
 msgstr "Opportunità di lavoro"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:355
-msgid "Course Objectives"
-msgstr "Obiettivi del corso"
+#: templates/blocks/unical_storage_high_formation_master_info.html:296
+msgid "Teaching Activities"
+msgstr "Attività Didattiche"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:378
+#: templates/blocks/unical_storage_high_formation_master_info.html:306
+msgid "Teaching Plan"
+msgstr "Piano didattico"
+
+#: templates/blocks/unical_storage_high_formation_master_info.html:349
+msgid "Teaching Assignments"
+msgstr "Incarichi didattici"
+
+#: templates/blocks/unical_storage_high_formation_master_info.html:403
+msgid "Content Times Criteria CFU"
+msgstr "Contenuto Tempi Criteri CFU"
+
+#: templates/blocks/unical_storage_high_formation_master_info.html:424
+msgid "Stage"
+msgstr "Stage/Tirocinio"
+
+#: templates/blocks/unical_storage_high_formation_master_info.html:440
+msgid "Not Expected"
+msgstr "Inatteso"
+
+#: templates/blocks/unical_storage_high_formation_master_info.html:476
 #: templates/blocks/unical_storage_phd_activities_info.html:120
 msgid "Final Test Mode"
 msgstr "Modalità test finale"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:401
-msgid "Content Times Criteria CFU"
-msgstr "Contenuto Tempi Criteri CFU"
-
-#: templates/blocks/unical_storage_high_formation_master_info.html:425
+#: templates/blocks/unical_storage_high_formation_master_info.html:530
 msgid "High Formation Master Partners"
 msgstr "Partner"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:472
-msgid "Teaching Plan"
-msgstr "Piano didattico"
+#: templates/blocks/unical_storage_high_formation_master_info.html:577
+msgid "Council"
+msgstr "Consiglio"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:515
-msgid "Teaching Assignments"
-msgstr "Incarichi didattici"
-
-#: templates/blocks/unical_storage_high_formation_master_info.html:570
+#: templates/blocks/unical_storage_high_formation_master_info.html:585
 msgid "Internal Council"
 msgstr "Consiglio interno"
 
-#: templates/blocks/unical_storage_high_formation_master_info.html:601
+#: templates/blocks/unical_storage_high_formation_master_info.html:597
 msgid "External Council"
 msgstr "Consiglio esterno"
 
@@ -881,6 +890,9 @@ msgstr "Dettaglio della struttura"
 #: templates/storage_teachers_info.html:12
 msgid "Teacher detail"
 msgstr "Dettaglio docente"
+
+#~ msgid "Participants"
+#~ msgstr "Partecipanti"
 
 #~ msgid "Doctorate Activity"
 #~ msgstr "Attività Dottorato"
