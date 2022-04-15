@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-14 16:16+0200\n"
-"PO-Revision-Date: 2022-04-14 16:18+0200\n"
+"POT-Creation-Date: 2022-04-15 16:34+0200\n"
+"PO-Revision-Date: 2022-04-15 16:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -18,72 +18,72 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0\n"
 
-#: settings.py:176 templates/blocks/unical_storage_cdsstudyplans_v3.html:27
+#: settings.py:177 templates/blocks/unical_storage_cdsstudyplans_v3.html:27
 #: templates/blocks/unical_storage_teacherinfo.html:147
 msgid "Teachings"
 msgstr "Insegnamenti"
 
-#: settings.py:177
+#: settings.py:178
 msgid "Persons"
 msgstr "Persone"
 
-#: settings.py:178
+#: settings.py:179
 #: templates/blocks/collapse/unical_storage_collapse_research_line_applied_list.html:7
 #: templates/storage_applied_research_line_list.html:11
 #: templates/storage_applied_research_line_list.html:20
 msgid "Applied research lines"
 msgstr "Linee di ricerca applicata"
 
-#: settings.py:179
+#: settings.py:180
 #: templates/blocks/collapse/unical_storage_collapse_research_line_base_list.html:7
 #: templates/storage_base_research_line_list.html:11
 #: templates/storage_base_research_line_list.html:20
 msgid "Base research lines"
 msgstr "Linee di ricerca di base"
 
-#: settings.py:180 templates/storage_base.html:52
+#: settings.py:181 templates/storage_base.html:52
 msgid "Study courses"
 msgstr "Corsi di studio"
 
-#: settings.py:181 templates/storage_base.html:70
+#: settings.py:182 templates/storage_base.html:70
 #: templates/storage_high_formation_masters_list.html:11
 #: templates/storage_high_formation_masters_list.html:21
 msgid "High Formation Masters"
 msgstr "Master Alta Formazione"
 
-#: settings.py:182
+#: settings.py:183
 #: templates/blocks/collapse/unical_storage_collapse_laboratory_list.html:7
 #: templates/storage_base.html:144 templates/storage_laboratory_list.html:11
 #: templates/storage_laboratory_list.html:20
 msgid "Laboratories"
 msgstr "Laboratori"
 
-#: settings.py:183 templates/storage_base.html:180
+#: settings.py:184 templates/storage_base.html:180
 #: templates/storage_patents_list.html:11
 #: templates/storage_patents_list.html:20
 msgid "Patents"
 msgstr "Brevetti"
 
-#: settings.py:184 templates/storage_base.html:88
+#: settings.py:185 templates/storage_base.html:88
 #: templates/storage_phd_activities_list.html:11
 #: templates/storage_phd_activities_list.html:21
 msgid "PhD Activities"
 msgstr "Attività dei Dottorati"
 
-#: settings.py:185 templates/storage_base.html:216
+#: settings.py:186 templates/storage_base.html:216
 #: templates/storage_projects_list.html:11
 #: templates/storage_projects_list.html:20
 msgid "Projects"
 msgstr "Progetti"
 
-#: settings.py:186
+#: settings.py:187
 #: templates/blocks/collapse/unical_storage_collapse_publications_list.html:7
 #: templates/storage_base.html:162 templates/storage_publications_list.html:11
 #: templates/storage_publications_list.html:20
 msgid "Publications"
 msgstr "Pubblicazioni"
 
-#: settings.py:187
+#: settings.py:188
 #: templates/blocks/collapse/unical_storage_collapse_research_group_list.html:7
 #: templates/storage_base.html:234
 #: templates/storage_research_group_list.html:11
@@ -91,44 +91,44 @@ msgstr "Pubblicazioni"
 msgid "Research groups"
 msgstr "Gruppi di ricerca"
 
-#: settings.py:188
+#: settings.py:189
 #: templates/blocks/collapse/unical_storage_collapse_research_line_list.html:7
 #: templates/storage_base.html:252 templates/storage_research_line_list.html:11
 #: templates/storage_research_line_list.html:20
 msgid "Research lines"
 msgstr "Linee di ricerca"
 
-#: settings.py:189 templates/storage_base.html:12
+#: settings.py:190 templates/storage_base.html:12
 #: templates/storage_base.html:24
 msgid "Open data"
 msgstr ""
 
-#: settings.py:190 templates/storage_base.html:198
+#: settings.py:191 templates/storage_base.html:198
 #: templates/storage_spinoff_list.html:11
 #: templates/storage_spinoff_list.html:20
 msgid "Companies"
 msgstr "Imprese"
 
-#: settings.py:191
+#: settings.py:192
 msgid "Structures"
 msgstr "Strutture"
 
-#: settings.py:192 templates/blocks/unical_storage_cdsinfo.html:383
+#: settings.py:193 templates/blocks/unical_storage_cdsinfo.html:383
 #: templates/storage_base.html:124 templates/storage_teachers_list.html:11
 #: templates/storage_teachers_list.html:20
 msgid "Teachers"
 msgstr "Docenti"
 
-#: settings.py:200 templates/blocks/unical_storage_spinoff_list.html:72
+#: settings.py:201 templates/blocks/unical_storage_spinoff_list.html:72
 #: templates/blocks/unical_storage_spinoff_list.html:96
 msgid "No"
 msgstr "No"
 
-#: settings.py:201
+#: settings.py:202
 msgid "Joint title"
 msgstr "Titolo congiunto"
 
-#: settings.py:202
+#: settings.py:203
 msgid "Double title"
 msgstr "Doppio titolo"
 
@@ -165,7 +165,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_high_formation_masters_list.html:254
 #: templates/blocks/unical_storage_laboratory_list.html:264
 #: templates/blocks/unical_storage_patents_list.html:140
-#: templates/blocks/unical_storage_phd_activities_list.html:158
+#: templates/blocks/unical_storage_phd_activities_list.html:233
 #: templates/blocks/unical_storage_phd_list.html:184
 #: templates/blocks/unical_storage_projects_list.html:253
 #: templates/blocks/unical_storage_publications_list.html:165
@@ -247,10 +247,12 @@ msgstr "Tipo struttura"
 #: templates/blocks/unical_storage_laboratory_list.html:155
 #: templates/blocks/unical_storage_patents_list.html:46
 #: templates/blocks/unical_storage_patents_list.html:50
-#: templates/blocks/unical_storage_phd_activities_list.html:50
-#: templates/blocks/unical_storage_phd_activities_list.html:54
-#: templates/blocks/unical_storage_phd_activities_list.html:80
-#: templates/blocks/unical_storage_phd_activities_list.html:84
+#: templates/blocks/unical_storage_phd_activities_list.html:92
+#: templates/blocks/unical_storage_phd_activities_list.html:96
+#: templates/blocks/unical_storage_phd_activities_list.html:122
+#: templates/blocks/unical_storage_phd_activities_list.html:126
+#: templates/blocks/unical_storage_phd_activities_list.html:149
+#: templates/blocks/unical_storage_phd_activities_list.html:153
 #: templates/blocks/unical_storage_projects_list.html:63
 #: templates/blocks/unical_storage_projects_list.html:67
 #: templates/blocks/unical_storage_projects_list.html:89
@@ -471,7 +473,7 @@ msgid "Not Expected"
 msgstr "Inatteso"
 
 #: templates/blocks/unical_storage_high_formation_master_info.html:476
-#: templates/blocks/unical_storage_phd_activities_info.html:120
+#: templates/blocks/unical_storage_phd_activities_info.html:195
 msgid "Final Test Mode"
 msgstr "Modalità test finale"
 
@@ -576,21 +578,32 @@ msgstr ""
 msgid "Tech Area"
 msgstr "Area tecnologica"
 
-#: templates/blocks/unical_storage_phd_activities_info.html:144
+#: templates/blocks/unical_storage_phd_activities_info.html:132
 msgid "Main Teachers"
 msgstr "Docenti Principali"
 
-#: templates/blocks/unical_storage_phd_activities_info.html:176
+#: templates/blocks/unical_storage_phd_activities_info.html:164
 msgid "Other Teachers"
 msgstr "Altri Docenti"
 
-#: templates/blocks/unical_storage_phd_activities_list.html:46
+#: templates/blocks/unical_storage_phd_activities_list.html:57
+#: templates/blocks/unical_storage_studyactivity_list.html:193
+msgid "Teacher"
+msgstr "Docente"
+
+#: templates/blocks/unical_storage_phd_activities_list.html:88
 msgid "Referent PhD"
 msgstr "Dottorato di riferimento"
 
-#: templates/blocks/unical_storage_phd_activities_list.html:76
-msgid "Referent Structure"
-msgstr "Struttura di riferimento"
+#: templates/blocks/unical_storage_phd_activities_list.html:118
+msgid "University Activities"
+msgstr "Attività di ateneo"
+
+#: templates/blocks/unical_storage_phd_activities_list.html:145
+#: templates/blocks/unical_storage_studyactivity_list.html:248
+#: templates/blocks/unical_storage_studyactivity_list.html:278
+msgid "SSD"
+msgstr ""
 
 #: templates/blocks/unical_storage_phd_list.html:24
 msgid "Filters"
@@ -762,18 +775,9 @@ msgstr "Semestre"
 msgid "Teaching"
 msgstr "Insegnamento"
 
-#: templates/blocks/unical_storage_studyactivity_list.html:193
-msgid "Teacher"
-msgstr "Docente"
-
 #: templates/blocks/unical_storage_studyactivity_list.html:221
 msgid "Study course"
 msgstr "Corso di studio"
-
-#: templates/blocks/unical_storage_studyactivity_list.html:248
-#: templates/blocks/unical_storage_studyactivity_list.html:278
-msgid "SSD"
-msgstr ""
 
 #: templates/blocks/unical_storage_studyactivity_list.html:276
 msgid "Code"
@@ -890,6 +894,9 @@ msgstr "Dettaglio della struttura"
 #: templates/storage_teachers_info.html:12
 msgid "Teacher detail"
 msgstr "Dettaglio docente"
+
+#~ msgid "Referent Structure"
+#~ msgstr "Struttura di riferimento"
 
 #~ msgid "Participants"
 #~ msgstr "Partecipanti"
