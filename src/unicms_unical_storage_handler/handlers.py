@@ -642,8 +642,8 @@ class HighFormationMastersListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
 
-        if CURRENT_YEAR:
-            url_data['year'] = CURRENT_YEAR
+        # if CURRENT_YEAR:
+            # url_data['year'] = CURRENT_YEAR
 
         params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}'
