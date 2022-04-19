@@ -37,6 +37,25 @@
                     <h3 class="lighter" style="display: inline">[[ item.HighFormationTypeDescription ]]</h3>
                 </div>
 
+                <ul class="list-unstyled">
+                    <li>
+                        [[labels.ScientificDirectorName ]] -
+                        <a v-if="item.ScientificDirectorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ScientificDirectorId +'/'">
+                            [[ item.ScientificDirectorName ]]
+                        </a>
+                        <span v-else>
+                            [[ item.ScientificDirectorName ]]
+                        </span>
+                    <li>
+                        <a v-if="item.DepartmentCod" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.DepartmentCod +'/'">
+                            [[ item.DepartmentName ]]
+                        </a>
+                        <span v-else>
+                            [[ item.DepartmentName ]]
+                        </span>
+                    </li>
+                </ul>
+
                 <div class="card-wrapper pb-0">
                     <div class="card no-after" style="border:1px solid #b71918">
                         <div class="card-body">
@@ -166,7 +185,7 @@
                          role="tabpanel"
                          aria-labelledby="{{ id }}_heading-course-objectives-lft">
 
-                        <div class="collapse-body">
+                        <div class="collapse-body" style="white-space: break-spaces">
                             [[ item.CourseObjectives ]]
                         </div>
                     </div>
@@ -189,7 +208,7 @@
                          role="tabpanel"
                          aria-labelledby="{{ id }}_heading-admission-requirements-lft">
 
-                        <div class="collapse-body">
+                        <div class="collapse-body" style="white-space: break-spaces">
                             <ul>
                                 <li v-if="item.AdmissionRequirements && item.AdmissionRequirements != ''">
                                     [[ item.AdmissionRequirements ]]
@@ -216,7 +235,7 @@
                          role="tabpanel"
                          aria-labelledby="{{ id }}_heading-work-function-lft">
 
-                        <div class="collapse-body">
+                        <div class="collapse-body" style="white-space: break-spaces">
                             [[ item.WorkFunction ]]
                         </div>
                     </div>
@@ -239,7 +258,7 @@
                          role="tabpanel"
                          aria-labelledby="{{ id }}_heading-formation-objectives-summer-school-lft">
 
-                        <div class="collapse-body">
+                        <div class="collapse-body" style="white-space: break-spaces">
                             [[ item.FormationObjectivesSummerSchool ]]
                         </div>
                     </div>
@@ -262,7 +281,7 @@
                          role="tabpanel"
                          aria-labelledby="{{ id }}_heading-skills-lft">
 
-                        <div class="collapse-body">
+                        <div class="collapse-body" style="white-space: break-spaces">
                             [[ item.Skills ]]
                         </div>
                     </div>
@@ -285,7 +304,7 @@
                          role="tabpanel"
                          aria-labelledby="{{ id }}_heading-job-opportunities-lft">
 
-                        <div class="collapse-body">
+                        <div class="collapse-body" style="white-space: break-spaces">
                             [[ item.JobOpportunities ]]
                         </div>
                     </div>
@@ -480,41 +499,13 @@
                          role="tabpanel"
                          aria-labelledby="{{ id }}_heading-final-test-mode-lft">
 
-                        <div class="collapse-body">
+                        <div class="collapse-body" style="white-space: break-spaces">
                             [[ item.FinalTestMode ]]
                         </div>
                     </div>
                 </div>
 
                 <h5 class="mt-4 mb-3">{% trans "Organization" %}</h5>
-                 <div class="table-responsive">
-                    <table class="table table-sm table-hover table-striped">
-                        <tbody>
-                            <td>[[labels.ScientificDirectorName ]]</td>
-                            <td v-if="item.ScientificDirectorName">
-                                <ul>
-                                    <a v-if="item.ScientificDirectorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ScientificDirectorId +'/'">
-                                        [[ item.ScientificDirectorName ]]
-                                    </a>
-                                    <span v-else>
-                                        [[ item.ScientificDirectorName ]]
-                                    </span>
-                                </ul>
-                            </td>
-                            <td>[[labels.DepartmentName ]]</td>
-                            <td v-if="item.DepartmentName">
-                                <ul>
-                                    <a v-if="item.DepartmentCod" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.DepartmentCod +'/'">
-                                        [[ item.DepartmentName ]]
-                                    </a>
-                                    <span v-else>
-                                        [[ item.DepartmentName ]]
-                                    </span>
-                                </ul>
-                            </td>
-                        </tbody>
-                    </table>
-        </div>
 
                 <!-- High Formation Master Partners -->
                 <div v-if="item.HighFormationMasterPartners && item.HighFormationMasterPartners.length"
