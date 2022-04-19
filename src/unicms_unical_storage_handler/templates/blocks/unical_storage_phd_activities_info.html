@@ -50,6 +50,20 @@
                     <div class="card no-after" style="border:1px solid #b71918">
                         <div class="card-body">
                             <div class="row">
+                                <div class="col-12 col-md-auto" v-if="item.ReferentPhd">
+                                    <small>
+                                        [[ labels['ReferentPhd'] ]] >
+                                        <b>[[ item.ReferentPhd ]]</b>
+                                    </small>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.ReferentStructureName">
+                                    <small>
+                                        [[ labels['ReferentStructureName'] ]] >
+                                        <b>[[ item.ReferentStructureName ]]</b>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-12 col-md-auto" v-if="item.SSD">
                                     <small>
                                         [[ labels['SSD'] ]] >
@@ -68,13 +82,6 @@
                                         <b>[[ item.CFU ]] </b>
                                     </small>
                                 </div>
-                                <div class="col-12 col-md-auto" v-if="item.ActivityType">
-                                    <small>
-                                        [[ labels['ActivityType'] ]] >
-                                        <b>[[ item.ActivityType ]]</b>
-                                    </small>
-                                </div>
-
                                 <div class="col-12 col-md-auto" v-if="item.MinStudents">
                                     <small>
                                         [[ labels['MinStudents'] ]] >
@@ -106,29 +113,6 @@
                     <vue-markdown :emoji=false>
                         [[ item.ActivityContents ]]
                     </vue-markdown>
-                </div>
-
-                <!-- Final Test Mode -->
-                <div v-if="item.FinalTestMode && item.FinalTestMode.length"
-                     id="collapse_final_test_mode_{{ id }}"
-                     class="collapse-div collapse-left-icon">
-                    <div class="collapse-header" id="{{ id }}_heading-final-test-mode-lft">
-                        <button data-toggle="collapse"
-                                data-target="#{{ id }}_collapse-final-test-mode-lft"
-                                aria-expanded="false"
-                                aria-controls="{{ id }}_collapse-final-test-mode-lft">
-                            {% trans 'Final Test Mode' %}
-                        </button>
-                    </div>
-                    <div id="{{ id }}_collapse-final-test-mode-lft"
-                         class="collapse"
-                         role="tabpanel"
-                         aria-labelledby="{{ id }}_heading-final-test-mode-lft">
-
-                        <div class="collapse-body">
-                            [[ item.FinalTestMode ]]
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Main Teachers -->
@@ -194,6 +178,30 @@
                         </div>
                     </div>
                 </div>
+
+            <!-- Final Test Mode -->
+                <div v-if="item.FinalTestMode && item.FinalTestMode.length"
+                     id="collapse_final_test_mode_{{ id }}"
+                     class="collapse-div collapse-left-icon">
+                    <div class="collapse-header" id="{{ id }}_heading-final-test-mode-lft">
+                        <button data-toggle="collapse"
+                                data-target="#{{ id }}_collapse-final-test-mode-lft"
+                                aria-expanded="false"
+                                aria-controls="{{ id }}_collapse-final-test-mode-lft">
+                            {% trans 'Final Test Mode' %}
+                        </button>
+                    </div>
+                    <div id="{{ id }}_collapse-final-test-mode-lft"
+                         class="collapse"
+                         role="tabpanel"
+                         aria-labelledby="{{ id }}_heading-final-test-mode-lft">
+
+                        <div class="collapse-body">
+                            [[ item.FinalTestMode ]]
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div v-else>
