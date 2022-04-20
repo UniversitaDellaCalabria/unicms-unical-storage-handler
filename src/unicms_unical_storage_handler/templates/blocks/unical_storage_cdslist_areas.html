@@ -198,7 +198,7 @@
                                 <span>
                                     - [[ item.CourseType ]]
                                 </span>
-                                <span v-if="item.ErogationMode != 'Convenzionale'">
+                                <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
                                     ([[ item.ErogationMode ]])
                                 </span>
                                 <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">

@@ -164,6 +164,12 @@
                                                             v-if="allowed_roles.length==0 || allowed_roles.includes(item.Role)">
                                                         [[ item.RoleDescription ]]
                                                     </option>
+                                                    <option value="XPE" :selected="'XPE' == selected_roles">
+                                                        {% trans "Professori Emeriti" %}
+                                                    </option>
+                                                    <option value="XPO" :selected="'XPO' == selected_roles">
+                                                        {% trans "Professori Onorari" %}
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -209,12 +215,15 @@
                                                 <b>[[ item.Name ]]</b>
                                             </a>
                                             {% block structure %}
-                                            <br>
-                                            <span>[[ item.Structure ]]</span>
+                                            <span v-if="item.StructureTypeCOD != '000'">
+                                                <br>
+                                                <span>[[ item.Structure ]]</span>
+                                            </span>
                                             {% endblock structure %}
                                             {% block role %}
                                             <br>
-                                            <span>[[ item.RoleDescription ]]</span>
+                                            <span v-if="special_roles.includes(item.ProfileId)">[[ item.ProfileDescription ]]</span>
+                                            <span v-else>[[ item.RoleDescription ]]</span>
                                             {% endblock role %}
 
                                             {% block location %}
@@ -283,12 +292,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
             </div>
         </div>
 
@@ -354,6 +357,7 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_settings_value "ALLOWED_ADDRESSBOOK_ROLES" as allowed_roles %}
 {% storage_settings_value "ALLOWED_ADDRESSBOOK_STRUCTURE_ID" as allowed_structure_id %}
 {% storage_settings_value "ALLOWED_STRUCTURE_TYPES" as allowed_structure_types %}
+{% storage_settings_value "ADDRESSBOOK_SPECIAL_ROLES" as addressbook_special_roles %}
 
 search_dict: {},
 
@@ -374,6 +378,7 @@ loader_source_roles: '{{ roles_api }}?lang={{ LANGUAGE_CODE }}',
 allowed_structure_id: {{ allowed_structure_id|safe }},
 allowed_structure_types: {{ allowed_structure_types|safe }},
 allowed_roles: {{ allowed_roles|safe }},
+special_roles: {{ addressbook_special_roles|safe }},
 
 roles_filter: [],
 structure_id_filter: [],
@@ -428,6 +433,8 @@ fields_to_not_show: {{ fields_to_hide|safe }}
     if (this.allowed_roles.length > 0) params_dict["role"] = this.allowed_roles
     if (this.allowed_structure_id.length > 0) params_dict["structure"] = this.allowed_structure_id
     if (this.allowed_structure_types.length > 0) params_dict["structuretypes"] = this.allowed_structure_types
+
+    this.initial_parameters = {{ id }}_encodeQueryData(params_dict)
 
     let session_params = this.getItemsFromSession("{{ id }}")
     for(const param in session_params){

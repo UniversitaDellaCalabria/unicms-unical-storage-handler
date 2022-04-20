@@ -246,7 +246,7 @@
 
                                         <b>
                                             [[ item.CourseTypeDescription ]]
-                                            <span v-if="item.ErogationMode != 'Convenzionale'">
+                                            <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
                                                 ([[ item.ErogationMode ]])
                                             </span>
                                         </b>

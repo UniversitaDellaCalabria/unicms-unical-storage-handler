@@ -84,7 +84,6 @@ var {{ id }} = new Vue({
     data() {
         return {
             parameters: {{ id }}_encodeQueryData(),
-            initial_clean_parameters: '',
             initial_parameters: '',
             items: [],
             initial_items: [],
@@ -108,12 +107,9 @@ var {{ id }} = new Vue({
         {% endblock extra_before_mount %}
     },
     mounted() {
-        this.initial_clean_parameters = this.parameters
 
         {% block extra_mounted %}
         {% endblock extra_mounted %}
-
-        this.initial_parameters = this.parameters
 
         this.loader_source = this.url + this.parameters
 
@@ -136,7 +132,10 @@ var {{ id }} = new Vue({
 
         {% block method_search %}
         search(keyword=null, value=null) {
-            this.parameters = {{ id }}_encodeQueryData({{ id }}_get_form_paramenters(keyword, value));
+            if(this.initial_parameters)
+                this.parameters = this.initial_parameters + {{ id }}_encodeQueryData({{ id }}_get_form_paramenters(keyword, value)).replace('?','&');
+            else
+                this.parameters = {{ id }}_encodeQueryData({{ id }}_get_form_paramenters(keyword, value));
             this.CallURL(this.url + this.parameters);
         },
         {% endblock method_search %}

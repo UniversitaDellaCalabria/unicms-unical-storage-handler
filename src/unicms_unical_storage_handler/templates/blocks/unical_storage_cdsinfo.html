@@ -41,7 +41,7 @@
                 <div class="my-3">
                     <h3 class="lighter" style="display: inline">
                         [[ item.CourseTypeDescription ]]
-                        <span v-if="item.ErogationMode != 'Convenzionale'">
+                        <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
                             ([[ item.ErogationMode ]])
                         </span>
                     </h3>

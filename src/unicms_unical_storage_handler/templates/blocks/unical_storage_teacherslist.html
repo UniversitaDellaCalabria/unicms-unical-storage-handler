@@ -247,6 +247,8 @@ this.callRoles();
 let params_dict = {}
 if (this.allowed_roles.length > 0) params_dict["role"] = this.allowed_roles
 
+this.initial_parameters = {{ id }}_encodeQueryData(params_dict)
+
 let session_params = this.getItemsFromSession("{{ id }}")
 for(const param in session_params){
     params_dict[param] = session_params[param]

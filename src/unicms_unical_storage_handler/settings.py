@@ -301,6 +301,8 @@ PHD_ACTIVITIES_INFO_NOT_SHOW = ['ID']
 
 EXCLUDE_STUDY_ACTIVITIES_CODES = []
 
+ADDRESSBOOK_SPECIAL_ROLES = []
+
 # ALMALAUREA Link
 ALMALAUREA_LINK = 'http://statistiche.almalaurea.it/universita/statistiche/trasparenza?codicione='
 
