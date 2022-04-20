@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-19 15:29+0200\n"
-"PO-Revision-Date: 2022-04-19 15:30+0200\n"
+"POT-Creation-Date: 2022-04-20 14:18+0200\n"
+"PO-Revision-Date: 2022-04-20 14:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -113,7 +113,7 @@ msgstr "Imprese"
 msgid "Structures"
 msgstr "Strutture"
 
-#: settings.py:193 templates/blocks/unical_storage_cdsinfo.html:383
+#: settings.py:193 templates/blocks/unical_storage_cdsinfo.html:388
 #: templates/storage_base.html:124 templates/storage_teachers_list.html:11
 #: templates/storage_teachers_list.html:20
 msgid "Teachers"
@@ -154,10 +154,10 @@ msgid "next"
 msgstr "prossimo"
 
 #: templates/blocks/collapse/includes/unical_storage_collapse_bottom.html:5
-#: templates/blocks/unical_storage_addressbook.html:302
+#: templates/blocks/unical_storage_addressbook.html:305
 #: templates/blocks/unical_storage_addressbook_v2.html:183
-#: templates/blocks/unical_storage_cdslist.html:287
-#: templates/blocks/unical_storage_cdslist_areas.html:238
+#: templates/blocks/unical_storage_cdslist.html:292
+#: templates/blocks/unical_storage_cdslist_areas.html:241
 #: templates/blocks/unical_storage_cdsstudyplans.html:101
 #: templates/blocks/unical_storage_cdsstudyplans_v2.html:99
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:189
@@ -304,46 +304,54 @@ msgstr "Struttura"
 msgid "Role"
 msgstr "Ruolo"
 
-#: templates/blocks/unical_storage_addressbook_info.html:81
+#: templates/blocks/unical_storage_addressbook.html:168
+msgid "Emeritus Professors"
+msgstr "Professori Emeriti"
+
+#: templates/blocks/unical_storage_addressbook.html:171
+msgid "Honorary Professors"
+msgstr "Professori Onorari"
+
+#: templates/blocks/unical_storage_addressbook_info.html:87
 #: templates/blocks/unical_storage_laboratory_info.html:117
 #: templates/blocks/unical_storage_publications_info.html:85
 #: templates/blocks/unical_storage_studyactivityinfo.html:48
 msgid "Link"
 msgstr ""
 
-#: templates/blocks/unical_storage_cdsinfo.html:60
+#: templates/blocks/unical_storage_cdsinfo.html:65
 msgid "Interclass degree"
 msgstr "Corso di laurea interclasse"
 
-#: templates/blocks/unical_storage_cdsinfo.html:91
-#: templates/blocks/unical_storage_cdslist.html:264
+#: templates/blocks/unical_storage_cdsinfo.html:96
+#: templates/blocks/unical_storage_cdslist.html:269
 msgid "years"
 msgstr "anni"
 
-#: templates/blocks/unical_storage_cdsinfo.html:104
+#: templates/blocks/unical_storage_cdsinfo.html:109
 #: templates/blocks/unical_storage_structure_list.html:103
 msgid "Website"
 msgstr "Sito web"
 
-#: templates/blocks/unical_storage_cdsinfo.html:251
 #: templates/blocks/unical_storage_cdsinfo.html:256
+#: templates/blocks/unical_storage_cdsinfo.html:261
 msgid "Download brochure"
 msgstr "Scarica la brochure"
 
-#: templates/blocks/unical_storage_cdsinfo.html:394
+#: templates/blocks/unical_storage_cdsinfo.html:399
 msgid "Teachings year"
 msgstr "Docenze anno"
 
-#: templates/blocks/unical_storage_cdsinfo.html:551
+#: templates/blocks/unical_storage_cdsinfo.html:556
 msgid "Documents"
 msgstr "Documenti"
 
-#: templates/blocks/unical_storage_cdsinfo.html:560
-#: templates/blocks/unical_storage_cdsinfo.html:563
+#: templates/blocks/unical_storage_cdsinfo.html:565
+#: templates/blocks/unical_storage_cdsinfo.html:568
 msgid "Study course brochure"
 msgstr "Brochure del corso"
 
-#: templates/blocks/unical_storage_cdsinfo.html:576
+#: templates/blocks/unical_storage_cdsinfo.html:581
 msgid "Digital services"
 msgstr "Servizi digitali"
 
@@ -375,7 +383,7 @@ msgstr "Dipartimento"
 msgid "Joint degree"
 msgstr "Titolo congiunto"
 
-#: templates/blocks/unical_storage_cdslist.html:257
+#: templates/blocks/unical_storage_cdslist.html:262
 #: templates/blocks/unical_storage_high_formation_masters_list.html:215
 msgid "A.Y."
 msgstr "A.A."
@@ -384,38 +392,38 @@ msgstr "A.A."
 msgid "Course Area"
 msgstr "Area"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:204
-#: templates/blocks/unical_storage_cdslist_areas.html:228
+#: templates/blocks/unical_storage_cdslist_areas.html:207
+#: templates/blocks/unical_storage_cdslist_areas.html:231
 msgid "Italian"
 msgstr "Italiano"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:206
-#: templates/blocks/unical_storage_cdslist_areas.html:225
-#: templates/blocks/unical_storage_cdslist_areas.html:229
+#: templates/blocks/unical_storage_cdslist_areas.html:209
+#: templates/blocks/unical_storage_cdslist_areas.html:228
+#: templates/blocks/unical_storage_cdslist_areas.html:232
 msgid "English"
 msgstr "Inglese"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:220
+#: templates/blocks/unical_storage_cdslist_areas.html:223
 msgid "Bachelor's degree"
 msgstr "Laurea Triennale"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:221
+#: templates/blocks/unical_storage_cdslist_areas.html:224
 msgid "Master's degree (2 years)"
 msgstr "Laurea Magistrale (2 anni)"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:222
+#: templates/blocks/unical_storage_cdslist_areas.html:225
 msgid "Single-cycle master's degree (5 years)"
 msgstr "Laurea Magistrale a ciclo unico (5 anni)"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:223
+#: templates/blocks/unical_storage_cdslist_areas.html:226
 msgid "Single-cycle master's degree (6 years)"
 msgstr "Laurea Magistrale a ciclo unico (6 anni)"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:226
+#: templates/blocks/unical_storage_cdslist_areas.html:229
 msgid "Course delivered in English"
 msgstr "Corso erogato in lingua inglese"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:230
+#: templates/blocks/unical_storage_cdslist_areas.html:233
 msgid "Course with curriculum delivered in English"
 msgstr "Corso con curriculum erogato in lingua inglese"
 
