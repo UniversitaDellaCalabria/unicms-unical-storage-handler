@@ -198,6 +198,9 @@
                                 <span>
                                     - [[ item.CourseType ]]
                                 </span>
+                                <span v-if="item.ErogationMode != 'Convenzionale'">
+                                    ([[ item.ErogationMode ]])
+                                </span>
                                 <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
                                     <span class="mr-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
                                         <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>

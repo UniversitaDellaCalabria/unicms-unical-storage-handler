@@ -39,7 +39,12 @@
             <div v-else-if="Object.keys(item).length">
                 <h1 class="lighter">[[ item.CdSName ]]</h1>
                 <div class="my-3">
-                    <h3 class="lighter" style="display: inline">[[ item.CourseTypeDescription ]]</h3>
+                    <h3 class="lighter" style="display: inline">
+                        [[ item.CourseTypeDescription ]]
+                        <span v-if="item.ErogationMode != 'Convenzionale'">
+                            ([[ item.ErogationMode ]])
+                        </span>
+                    </h3>
                     <h3 class="lighter"
                         v-for="joint in joint_degree_filter"
                         v-if="item.JointDegree == joint.COD && item.JointDegree != 'N'"

@@ -244,7 +244,12 @@
                                 <div class="row">
                                     <div class="col-12 col-md-auto mr-md-4">
 
-                                        <b>[[ item.CourseTypeDescription ]]</b>
+                                        <b>
+                                            [[ item.CourseTypeDescription ]]
+                                            <span v-if="item.ErogationMode != 'Convenzionale'">
+                                                ([[ item.ErogationMode ]])
+                                            </span>
+                                        </b>
                                         <b v-for="joint in joint_degree_filter"
                                             v-if="item.JointDegree == joint.COD && item.JointDegree != 'N'"
                                             style="display: inline">
