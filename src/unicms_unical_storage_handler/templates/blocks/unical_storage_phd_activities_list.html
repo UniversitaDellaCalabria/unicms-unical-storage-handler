@@ -193,10 +193,16 @@
 
                                 </h5>
                                 <div class="row">
-                                    <div class="col-12 col-md-auto" v-if="item.ReferentStructureName">
+                                    <div class="col-12 col-md-auto" v-if="item.ReferentStructureName && item.ActivityType=='Ateneo'">
                                         <small>
                                             [[ labels['ReferentStructureName'] ]] >
                                             <b>[[ item.ReferentStructureName ]]</b>
+                                        </small>
+                                    </div>
+                                    <div v-else>
+                                        <small>
+                                            [[ labels['ReferentPhd'] ]] >
+                                            <b>[[ item.ReferentPhd ]]</b>
                                         </small>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.SSD">
