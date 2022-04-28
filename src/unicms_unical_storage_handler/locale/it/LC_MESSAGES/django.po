@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-21 16:35+0200\n"
-"PO-Revision-Date: 2022-04-21 16:36+0200\n"
+"POT-Creation-Date: 2022-04-28 22:48+0200\n"
+"PO-Revision-Date: 2022-04-28 22:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -170,7 +170,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_projects_list.html:253
 #: templates/blocks/unical_storage_publications_list.html:165
 #: templates/blocks/unical_storage_research_group_list.html:180
-#: templates/blocks/unical_storage_research_line_list.html:227
+#: templates/blocks/unical_storage_research_line_list.html:230
 #: templates/blocks/unical_storage_spinoff_list.html:178
 #: templates/blocks/unical_storage_structure_list.html:120
 #: templates/blocks/unical_storage_studyactivity_list.html:340
@@ -469,7 +469,7 @@ msgstr "Progetto Formativo"
 
 #: templates/blocks/unical_storage_high_formation_master_info.html:229
 msgid "Work Function"
-msgstr "Funzioni Svolte"
+msgstr "Funzione lavorativa"
 
 #: templates/blocks/unical_storage_high_formation_master_info.html:252
 msgid "Formation Objectives Summer School"
@@ -528,8 +528,9 @@ msgid "High Formation Master Partners"
 msgstr "Partner"
 
 #: templates/blocks/unical_storage_high_formation_masters_list.html:45
-msgid "Survey Year"
-msgstr "Anno del sondaggio"
+#: templates/blocks/unical_storage_studyactivity_list.html:42
+msgid "Academic Year"
+msgstr "Anno accademico"
 
 #: templates/blocks/unical_storage_high_formation_masters_list.html:71
 msgid "Master language"
@@ -699,7 +700,7 @@ msgid "Types"
 msgstr "Tipologie"
 
 #: templates/blocks/unical_storage_research_group_list.html:74
-#: templates/blocks/unical_storage_research_line_list.html:203
+#: templates/blocks/unical_storage_research_line_list.html:206
 msgid "Ref. ERC"
 msgstr "Rif. ERC"
 
@@ -727,7 +728,7 @@ msgstr "Ricerca di base (Rif. ERC)"
 msgid "Applied research (Ref. ASTER)"
 msgstr "Ricerca applicata (Rif. ASTER)"
 
-#: templates/blocks/unical_storage_research_line_list.html:209
+#: templates/blocks/unical_storage_research_line_list.html:212
 msgid "Ref. ASTER"
 msgstr "Rif. ASTER"
 
@@ -747,10 +748,6 @@ msgstr ""
 #: templates/blocks/unical_storage_spinoff_list.html:92
 msgid "Yes"
 msgstr "Si"
-
-#: templates/blocks/unical_storage_studyactivity_list.html:42
-msgid "Academic Year"
-msgstr "Anno accademico"
 
 #: templates/blocks/unical_storage_studyactivity_list.html:94
 msgid "Course year"
@@ -932,6 +929,9 @@ msgstr "Dettaglio della struttura"
 #: templates/storage_teachers_info.html:12
 msgid "Teacher detail"
 msgstr "Dettaglio docente"
+
+#~ msgid "Survey Year"
+#~ msgstr "Anno del sondaggio"
 
 #~ msgid "Content Times Criteria CFU"
 #~ msgstr "Contenuto Tempi Criteri CFU"
