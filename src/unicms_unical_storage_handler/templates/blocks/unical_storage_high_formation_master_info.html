@@ -37,6 +37,8 @@
                     <h3 class="lighter" style="display: inline">[[ item.HighFormationTypeDescription ]]</h3>
                 </div>
 
+                {% comment %}
+
                 <ul class="list-unstyled">
                     <li>
                         [[labels.ScientificDirectorName ]] -
@@ -47,7 +49,7 @@
                             [[ item.ScientificDirectorName ]]
                         </span>
                     <li>
-                        <a v-if="item.DepartmentCod" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.DepartmentCod +'/'">
+                        <a v-if="item.DepartmentCod" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.DepartmentCod +'/'">
                             [[ item.DepartmentName ]]
                         </a>
                         <span v-else>
@@ -55,6 +57,7 @@
                         </span>
                     </li>
                 </ul>
+            {% endcomment %}
 
                 <div class="card-wrapper pb-0">
                     <div class="card no-after" style="border:1px solid #b71918">
@@ -138,12 +141,6 @@
 
                         </div>
                     </div>
-                </div>
-
-                <div class="mt-4">
-                    <vue-markdown :emoji=false>
-                        [[ item.CourseObjectives ]]
-                    </vue-markdown>
                 </div>
 
                 <!-- Title Issued -->
@@ -409,7 +406,7 @@
                     </div>
                 </div>
 
-                <!-- Content Times Criteria CFU -->
+                <!-- Project Work -->
                 <div v-if="item.ContentTimesCriteriaCFU && item.ContentTimesCriteriaCFU.length"
                      id="collapse_content_cfu_{{ id }}"
                      class="collapse-div collapse-left-icon">
@@ -418,7 +415,7 @@
                                 data-target="#{{ id }}_collapse-content-times-criteria-cfu-lft"
                                 aria-expanded="false"
                                 aria-controls="{{ id }}_collapse-content-times-criteria-cfu-lft">
-                            {% trans 'Content Times Criteria CFU' %}
+                            {% trans 'Project Work' %}
                         </button>
                     </div>
                     <div id="{{ id }}_collapse-content-times-criteria-cfu-lft"
@@ -450,32 +447,22 @@
                         <div class="collapse-body">
                             <ul>
                                 <li v-if="item.Internship && item.Internship != '' && item.Internship !='Non previsto'">
-                                    <b>[[labels.Internship ]]</b>
-                                    <br>
-                                    [[ item.Internship ]]
+                                    <b>[[labels.Internship ]]</b> : [[ item.Internship ]]
                                 </li>
                                 <li v-else>
                                     {% trans 'Not Expected' %}
                                 </li>
                                 <li v-if="item.InternshipHours && item.InternshipHours != ''">
-                                    <b>[[labels.InternshipHours ]]</b>
-                                    <br>
-                                    [[ item.InternshipHours ]]
+                                    <b>[[labels.InternshipHours ]]</b> : [[ item.InternshipHours ]]
                                 </li>
                                 <li v-if="item.InternshipMonths && item.InternshipMonths != ''">
-                                    <b>[[labels.InternshipMonths ]]</b>
-                                    <br>
-                                    [[ item.InternshipMonths ]]
+                                    <b>[[labels.InternshipMonths ]]</b> : [[ item.InternshipMonths ]]
                                 </li>
                                 <li v-if="item.InternshipCFU && item.InternshipCFU != ''">
-                                    <b>[[labels.InternshipCFU ]]</b>
-                                    <br>
-                                    [[ item.InternshipCFU ]]
+                                    <b>[[labels.InternshipCFU ]]</b> : [[ item.InternshipCFU ]]
                                 </li>
                                 <li v-if="item.TypeCompaniesInternship && item.TypeCompaniesInternship != ''">
-                                    <b>[[labels.TypeCompaniesInternship ]]</b>
-                                    <br>
-                                    [[ item.TypeCompaniesInternship ]]
+                                    <b>[[labels.TypeCompaniesInternship ]]</b> : [[ item.TypeCompaniesInternship ]]
                                 </li>
                             </ul>
                         </div>
@@ -491,7 +478,7 @@
                                 data-target="#{{ id }}_collapse-final-test-mode-lft"
                                 aria-expanded="false"
                                 aria-controls="{{ id }}_collapse-final-test-mode-lft">
-                            {% trans 'Final Test Mode' %}
+                            {% trans 'Final Test' %}
                         </button>
                     </div>
                     <div id="{{ id }}_collapse-final-test-mode-lft"
@@ -504,47 +491,71 @@
                         </div>
                     </div>
                 </div>
+                <div v-if="item.ScientificDirectorName || item.DepartmentName || item.HighFormationMasterExternalCouncil || item.HighFormationMasterInternalCouncil || item.HighFormationMasterPartners">
+                    <h5 class="mt-4 mb-3">{% trans "Organization"%}</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            [[labels.ScientificDirectorName ]] -
+                            <a v-if="item.ScientificDirectorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ScientificDirectorId +'/'">
+                                [[ item.ScientificDirectorName ]]
+                            </a>
+                            <span v-else>
+                                [[ item.ScientificDirectorName ]]
+                            </span>
+                        <li>
+                            <a v-if="item.DepartmentCod" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.DepartmentCod +'/'">
+                                [[ item.DepartmentName ]]
+                            </a>
+                            <span v-else>
+                                [[ item.DepartmentName ]]
+                            </span>
+                        </li>
+                    </ul>
 
-                <h5 class="mt-4 mb-3">{% trans "Organization" %}</h5>
-
-                <!-- High Formation Master Partners -->
-                <div v-if="item.HighFormationMasterPartners && item.HighFormationMasterPartners.length"
-                     id="collapse_master_partners_{{ id }}"
-                     class="collapse-div collapse-left-icon">
-                    <div class="collapse-header" id="{{ id }}_heading-master-partners-lft">
-                        <button data-toggle="collapse"
-                                    data-target="#{{ id }}_collapse-master-partners-lft"
+                    <!--Council-->
+                    <div v-if="item.HighFormationMasterExternalCouncil && item.HighFormationMasterExternalCouncil.length || item.HighFormationMasterInternalCouncil && item.HighFormationMasterInternalCouncil.length"
+                         id="collapse_council_{{ id }}"
+                         class="collapse-div collapse-left-icon">
+                        <div class="collapse-header" id="{{ id }}_heading-council-lft">
+                            <button data-toggle="collapse"
+                                    data-target="#{{ id }}_collapse-council-lft"
                                     aria-expanded="false"
-                                    aria-controls="{{ id }}_collapse-master-partners-lft"
-                                    role="tab">
-                                {% trans 'High Formation Master Partners' %}
-                        </button>
-                    </div>
-                    <div id="{{ id }}_collapse-master-partners-lft"
-                         class="collapse"
-                         role="tabpanel"
-                         aria-labelledby="{{ id }}_heading-master-partners-lft">
-                        <div class="collapse-body">
-                            <div class="it-list-wrapper">
-                                <div class="table-responsive">
+                                    aria-controls="{{ id }}_collapse-council-lft">
+                                {% trans 'Scientific Council' %}
+                            </button>
+                        </div>
+                        <div id="{{ id }}_collapse-council-lft"
+                             class="collapse"
+                             role="tabpanel"
+                             aria-labelledby="{{ id }}_heading-council-lft">
+                            <div class="collapse-body" v-if="item.HighFormationMasterInternalCouncil.length">
+                                <h6 class="mt-4 mb-3">{% trans "Internal Teachers" %}</h6>
+                                <ul>
+                                    <li v-for="subvalue in item.HighFormationMasterInternalCouncil" v-if="subvalue.PersonName && subvalue.PersonName != ''">
+                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.PersonId +'/'" v-if="subvalue.PersonId">
+                                            [[ subvalue.PersonName ]]
+                                        </a>
+                                        <span v-else>
+                                            [[ subvalue.PersonName ]]
+                                        </span>
+                                    </li>
+                                </ul>
+                                <div class="table-responsive" v-if="item.HighFormationMasterExternalCouncil.length">
+                                    <h6 class="mt-4 mb-3">{% trans "External Teachers" %}</h6>
                                     <small>
                                         <table class="table table-sm table-hover table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">[[ labels.PartnerDenomination ]]</th>
-                                                    <th scope="col">[[ labels.PartnerType ]]</th>
-                                                    <th scope="col">[[ labels.PartnerURL ]]</th>
+                                                    <th scope="col">[[ labels.PersonName ]]</th>
+                                                    <th scope="col">[[ labels.Role ]]</th>
+                                                    <th scope="col">[[ labels.Institution ]]</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="partner in item.HighFormationMasterPartners">
-                                                    <td>[[ partner.PartnerDenomination ]]</td>
-                                                    <td>[[ partner.PartnerType ]]</td>
-                                                    <td>
-                                                        <a :href="partner.PartnerURL" target="_blank">
-                                                            [[ partner.PartnerURL ]]
-                                                        </a>
-                                                    </td>
+                                                <tr v-for="person in item.HighFormationMasterExternalCouncil">
+                                                    <td>[[ person.PersonName ]]</td>
+                                                    <td>[[ person.Role ]]</td>
+                                                    <td>[[ person.Institution ]]</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -553,56 +564,51 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!--Council-->
-                <div v-if="item.HighFormationMasterExternalCouncil && item.HighFormationMasterExternalCouncil.length || item.HighFormationMasterInternalCouncil && item.HighFormationMasterInternalCouncil.length"
-                     id="collapse_council_{{ id }}"
-                     class="collapse-div collapse-left-icon">
-                    <div class="collapse-header" id="{{ id }}_heading-council-lft">
-                        <button data-toggle="collapse"
-                                data-target="#{{ id }}_collapse-council-lft"
-                                aria-expanded="false"
-                                aria-controls="{{ id }}_collapse-council-lft">
-                            {% trans 'Council' %}
-                        </button>
-                    </div>
-                    <div id="{{ id }}_collapse-council-lft"
-                         class="collapse"
-                         role="tabpanel"
-                         aria-labelledby="{{ id }}_heading-council-lft">
-                        <div class="collapse-body">
-                            <h6 class="mt-4 mb-3">{% trans "Internal Council" %}</h6>
-                            <ul>
-                                <li v-for="subvalue in item.HighFormationMasterInternalCouncil" v-if="subvalue.PersonName && subvalue.PersonName != ''">
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.PersonId +'/'" v-if="subvalue.PersonId">
-                                        [[ subvalue.PersonName ]]
-                                    </a>
-                                    <span v-else>
-                                        [[ subvalue.PersonName ]]
-                                    </span>
-                                </li>
-                            </ul>
-                            <div class="table-responsive">
-                                <h6 class="mt-4 mb-3">{% trans "External Council" %}</h6>
-                                <small>
-                                    <table class="table table-sm table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">[[ labels.PersonName ]]</th>
-                                                <th scope="col">[[ labels.Role ]]</th>
-                                                <th scope="col">[[ labels.Institution ]]</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="person in item.HighFormationMasterExternalCouncil">
-                                                <td>[[ person.PersonName ]]</td>
-                                                <td>[[ person.Role ]]</td>
-                                                <td>[[ person.Institution ]]</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </small>
+                <!-- High Formation Master Partners -->
+                    <div v-if="item.HighFormationMasterPartners && item.HighFormationMasterPartners.length"
+                         id="collapse_master_partners_{{ id }}"
+                         class="collapse-div collapse-left-icon">
+                        <div class="collapse-header" id="{{ id }}_heading-master-partners-lft">
+                            <button data-toggle="collapse"
+                                        data-target="#{{ id }}_collapse-master-partners-lft"
+                                        aria-expanded="false"
+                                        aria-controls="{{ id }}_collapse-master-partners-lft"
+                                        role="tab">
+                                    {% trans 'High Formation Master Partners' %}
+                            </button>
+                        </div>
+                        <div id="{{ id }}_collapse-master-partners-lft"
+                             class="collapse"
+                             role="tabpanel"
+                             aria-labelledby="{{ id }}_heading-master-partners-lft">
+                            <div class="collapse-body">
+                                <div class="it-list-wrapper">
+                                    <div class="table-responsive">
+                                        <small>
+                                            <table class="table table-sm table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">[[ labels.PartnerDenomination ]]</th>
+                                                        <th scope="col">[[ labels.PartnerType ]]</th>
+                                                        <th scope="col">[[ labels.PartnerURL ]]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="partner in item.HighFormationMasterPartners">
+                                                        <td>[[ partner.PartnerDenomination ]]</td>
+                                                        <td>[[ partner.PartnerType ]]</td>
+                                                        <td>
+                                                            <a :href="partner.PartnerURL" target="_blank">
+                                                                [[ partner.PartnerURL ]]
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
