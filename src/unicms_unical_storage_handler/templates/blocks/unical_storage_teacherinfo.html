@@ -164,7 +164,7 @@
 <!-- Publications -->
 {% clean_url url as cleaned_url %}
 {% with cleaned_url|add:"/publications/" as publications_url %}
-{% include "blocks/collapse/unical_storage_collapse_publications_list.html" with url=publications_url uid=id|add:"_3" %}
+{% include "blocks/collapse/unical_storage_collapse_publications_list.html" with url=publications_url uid=id|add:"_3" all_years=1 %}
 {% endwith %}
 
 <!-- Research groups -->

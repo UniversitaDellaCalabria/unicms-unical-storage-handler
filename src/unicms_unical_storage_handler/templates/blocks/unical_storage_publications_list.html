@@ -203,8 +203,13 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 selected_types: this.getItemFromSession("{{ id }}", 'type'),
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
+{% if all_years %}
+initial_year: {{ id }}_get_param('year'),
+selected_year: this.getItemFromSession("{{ id }}", 'year') || {{ id }}_get_param('year'),
+{% else %}
 initial_year: {{ id }}_get_param('year') || '{% now "Y" %}',
 selected_year: this.getItemFromSession("{{ id }}", 'year') || {{ id }}_get_param('year') || '{% now "Y" %}',
+{% endif %}
 
 is_loading_types: true,
 
