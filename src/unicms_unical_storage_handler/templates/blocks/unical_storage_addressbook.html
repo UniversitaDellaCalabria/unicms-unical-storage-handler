@@ -240,12 +240,12 @@
                                             {% endcomment %}
                                             {% endblock location %}
 
-                                            <div v-for="office_email in item.OfficeReference">
+                                            <div v-for="office in item.OfficeReference">
                                                 <span>
                                                     <svg class="icon icon-sm icon-muted mr-2">
-                                                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                                                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-map-marker"></use>
                                                     </svg>
-                                                    <a href="mailto: [[ office_email ]]">[[ office_email ]]</a>
+                                                    [[ office ]]
                                                 </span>
                                                 <br>
                                             </div>
