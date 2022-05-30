@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-28 22:48+0200\n"
-"PO-Revision-Date: 2022-04-28 22:50+0200\n"
+"POT-Creation-Date: 2022-05-30 14:17+0200\n"
+"PO-Revision-Date: 2022-05-30 14:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -46,8 +46,8 @@ msgid "Study courses"
 msgstr "Corsi di studio"
 
 #: settings.py:182 templates/storage_base.html:70
-#: templates/storage_high_formation_masters_list.html:11
-#: templates/storage_high_formation_masters_list.html:21
+#: templates/storage_high_formation_masters_list.html:12
+#: templates/storage_high_formation_masters_list.html:25
 msgid "High Formation Masters"
 msgstr "Master Alta Formazione"
 
@@ -319,14 +319,52 @@ msgstr "Professori Onorari"
 msgid "Link"
 msgstr ""
 
-#: templates/blocks/unical_storage_cdsinfo.html:65
-msgid "Interclass degree"
-msgstr "Corso di laurea interclasse"
+#: templates/blocks/unical_storage_cds_main_info.html:70
+#, fuzzy
+#| msgid "Location"
+msgid "Duration"
+msgstr "Ubicazione"
 
+#: templates/blocks/unical_storage_cds_main_info.html:73
 #: templates/blocks/unical_storage_cdsinfo.html:96
 #: templates/blocks/unical_storage_cdslist.html:269
 msgid "years"
 msgstr "anni"
+
+#: templates/blocks/unical_storage_cds_main_info.html:78
+#, fuzzy
+#| msgid "Master language"
+msgid "Language"
+msgstr "Lingua"
+
+#: templates/blocks/unical_storage_cds_main_info.html:88
+#, fuzzy
+#| msgid "Erogation Modes"
+msgid "Erogation mode"
+msgstr "Modalità di erogazione"
+
+#: templates/blocks/unical_storage_cds_main_info.html:96
+msgid "Class"
+msgstr ""
+
+#: templates/blocks/unical_storage_cds_main_info.html:104
+#: templates/blocks/unical_storage_cdslist.html:171
+#: templates/blocks/unical_storage_high_formation_masters_list.html:104
+#: templates/blocks/unical_storage_laboratory_list.html:70
+#: templates/blocks/unical_storage_research_group_list.html:44
+#: templates/blocks/unical_storage_research_line_list.html:43
+#: templates/blocks/unical_storage_studyactivity_list.html:71
+#: templates/blocks/unical_storage_teacherslist.html:58
+msgid "Department"
+msgstr "Dipartimento"
+
+#: templates/blocks/unical_storage_cds_main_info.html:112
+msgid "Coordinator"
+msgstr ""
+
+#: templates/blocks/unical_storage_cdsinfo.html:65
+msgid "Interclass degree"
+msgstr "Corso di laurea interclasse"
 
 #: templates/blocks/unical_storage_cdsinfo.html:109
 #: templates/blocks/unical_storage_structure_list.html:103
@@ -352,6 +390,8 @@ msgid "Study course brochure"
 msgstr "Brochure del corso"
 
 #: templates/blocks/unical_storage_cdsinfo.html:581
+#: templates/storage_high_formation_master_info.html:36
+#: templates/storage_high_formation_masters_list.html:36
 msgid "Digital services"
 msgstr "Servizi digitali"
 
@@ -369,22 +409,11 @@ msgstr "Anno di immatricolazione"
 msgid "Course of study language"
 msgstr "Lingua del corso di studio"
 
-#: templates/blocks/unical_storage_cdslist.html:171
-#: templates/blocks/unical_storage_high_formation_masters_list.html:104
-#: templates/blocks/unical_storage_laboratory_list.html:70
-#: templates/blocks/unical_storage_research_group_list.html:44
-#: templates/blocks/unical_storage_research_line_list.html:43
-#: templates/blocks/unical_storage_studyactivity_list.html:71
-#: templates/blocks/unical_storage_teacherslist.html:58
-msgid "Department"
-msgstr "Dipartimento"
-
 #: templates/blocks/unical_storage_cdslist.html:195
 msgid "Joint degree"
 msgstr "Titolo congiunto"
 
 #: templates/blocks/unical_storage_cdslist.html:262
-#: templates/blocks/unical_storage_high_formation_masters_list.html:215
 msgid "A.Y."
 msgstr "A.A."
 
@@ -528,6 +557,7 @@ msgid "High Formation Master Partners"
 msgstr "Partner"
 
 #: templates/blocks/unical_storage_high_formation_masters_list.html:45
+#: templates/blocks/unical_storage_high_formation_masters_list.html:215
 #: templates/blocks/unical_storage_studyactivity_list.html:42
 msgid "Academic Year"
 msgstr "Anno accademico"
@@ -898,9 +928,24 @@ msgstr "Dettaglio dipartimento"
 msgid "Departments"
 msgstr "Dipartimenti"
 
-#: templates/storage_high_formation_master_info.html:10
+#: templates/storage_high_formation_master_info.html:11
 msgid "High Formation Master"
 msgstr "Master Alta Formazione"
+
+#: templates/storage_high_formation_master_info.html:32
+#: templates/storage_high_formation_masters_list.html:32
+msgid "Announcements"
+msgstr "Bandi"
+
+#: templates/storage_high_formation_master_info.html:44
+#: templates/storage_high_formation_masters_list.html:44
+msgid "Master's degrees"
+msgstr "Master"
+
+#: templates/storage_high_formation_master_info.html:49
+#: templates/storage_high_formation_masters_list.html:49
+msgid "Courses"
+msgstr "Alta formazione"
 
 #: templates/storage_laboratory_info.html:11
 msgid "Laboratory detail"
@@ -1018,9 +1063,6 @@ msgstr "Dettaglio docente"
 
 #~ msgid "Click here"
 #~ msgstr "Clicca qui"
-
-#~ msgid "Location"
-#~ msgstr "Ubicazione"
 
 #~ msgid "Erc 1"
 #~ msgstr "Erc1"

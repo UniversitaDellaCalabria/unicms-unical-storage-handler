@@ -4,6 +4,7 @@
 {% load static %}
 
 {% load unicms_contexts %}
+{% load unicms_storage_handler %}
 
 
 <!-- SEO  -->
@@ -14,13 +15,46 @@
 {% block container %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
+{% storage_settings_value 'HIGH_FORMATION_MASTERS_LINK' as high_formation_masters_link %}
+{% storage_settings_value 'HIGH_FORMATION_COURSES_LINK' as high_formation_courses_link %}
+
 <div class="container">
     <div class="col-12 py-5 bd-content">
         {% block centered_container %}
             {% include "includes/unical_storage_api_buttons.html" %}
             <h1 class="lighter mb-4">{% trans "High Formation Masters" %}</h1>
             <hr class="my-4 bordeaux-unical-bg">
-            {% include "blocks/unical_storage_high_formation_masters_list.html" with url=url uid="id_1" %}
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    {% include "blocks/unical_storage_high_formation_masters_list.html" with url=url uid="id_1" %}
+                </div>
+                <div class="col-12 col-lg-3 offset-lg-1">
+                    <h4>{% trans "Announcements" %}</h4>
+                    <div class="background-light-grey px-2 py-3 mb-2 w-100">
+                        <div class="row">
+                            <div class="col-2" style="font-size: x-large">
+                                <span class="pl-1" style="font-weight: 400" title="{% trans 'Digital services' %}">
+                                    @
+                                </span>
+                            </div>
+                            <div class="col m-auto align-middle">
+                                <ul class="mb-0 pl-0 list-unstyled">
+                                    <li>
+                                        <a class="no-color" href="{{ high_formation_masters_link }}">
+                                            <small><b>- {% trans "Master's degrees" %}</b></small>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="no-color" href="{{ high_formation_courses_link }}">
+                                            <small><b>- {% trans 'Courses' %}</b></small>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endblock %}
     </div>
 </div>

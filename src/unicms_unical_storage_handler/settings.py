@@ -312,3 +312,7 @@ CURRENT_YEAR = ""
 # breadcrumb last item class
 BREADCRUMB_ITEM = "breadcrumb-item"
 BREADCRUMB_LAST = f"{BREADCRUMB_ITEM} active"
+
+# HIGH FORMATION LINKS
+HIGH_FORMATION_MASTERS_LINK = 'https://unical.portaleamministrazionetrasparente.it/pagina874_tc-9_master.html'
+HIGH_FORMATION_COURSES_LINK = 'https://unical.portaleamministrazionetrasparente.it/pagina874_tc-6_corsi-di-formazioneperfezionamento.html'
