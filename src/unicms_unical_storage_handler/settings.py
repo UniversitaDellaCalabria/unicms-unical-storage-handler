@@ -309,6 +309,9 @@ ALMALAUREA_LINK = 'http://statistiche.almalaurea.it/universita/statistiche/trasp
 # CURRENT ACADEMIC YEAR
 CURRENT_YEAR = ""
 
+# HIGH FORMATION ACADEMIC YEAR
+HIGH_FORMATION_YEAR = ""
+
 # breadcrumb last item class
 BREADCRUMB_ITEM = "breadcrumb-item"
 BREADCRUMB_LAST = f"{BREADCRUMB_ITEM} active"

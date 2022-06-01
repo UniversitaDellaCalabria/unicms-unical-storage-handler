@@ -66,6 +66,7 @@ CMS_STORAGE_TEACHER_API = getattr(settings, 'CMS_STORAGE_TEACHER_API', CMS_STORA
 CMS_STORAGE_TEACHERS_LABEL = getattr(settings, 'CMS_STORAGE_TEACHERS_LABEL', CMS_STORAGE_TEACHERS_LABEL)
 CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH', CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH)
 CURRENT_YEAR = getattr(settings, 'CURRENT_YEAR', CURRENT_YEAR)
+HIGH_FORMATION_YEAR = getattr(settings, 'HIGH_FORMATION_YEAR', HIGH_FORMATION_YEAR)
 INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
 
 
@@ -642,9 +643,8 @@ class HighFormationMastersListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
 
-        # if CURRENT_YEAR:
-            # url_data['year'] = CURRENT_YEAR
-
+        if HIGH_FORMATION_YEAR:
+            url_data['year'] = HIGH_FORMATION_YEAR
         params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}'
         if params: self.data['url'] = f"{self.data['url']}?{params}"

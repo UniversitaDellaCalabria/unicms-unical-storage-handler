@@ -32,8 +32,10 @@
                             {% block filters_masterslist %}
                             <div class="form-group mb-0">
 
-                                <!-- Academic year & language -->
+                                <!-- (Academic year) - Erogation mode & language -->
                                 <div class="row">
+
+                                    {% comment %}
                                     <loading-icon
                                         v-if="is_loading_years"
                                         :loader_source="loader_source_years">
@@ -63,6 +65,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% endcomment %}
 
                                     {% block filters_language %}
                                     <div class="col-sm">
@@ -87,6 +90,35 @@
                                         </div>
                                     </div>
                                     {% endblock filters_language %}
+
+                                    {% block filters_erogation_modes %}
+                                    <loading-icon
+                                        v-if="is_loading_erogation_modes"
+                                        :loader_source="loader_source_erogation_modes">
+                                    </loading-icon>
+
+                                    <div class="col-sm" v-else>
+                                        <div>
+                                            <label for="{{ id }}_erogation_modes_input">
+                                                {% trans "Erogation Modes" %}
+                                            </label>
+                                            <div class="w-30 mt-5">
+                                                <select id="{{ id }}_erogation_modes_input"
+                                                        title="{% trans 'Choose an option' %}"
+                                                        name="{{ id }}_erogation_modes_input"
+                                                        class="form-control"
+                                                        @change="{{ id }}.search()">
+                                                    <option value="">- {% trans 'Choose an option' %} -</option>
+                                                    <option v-for="item in erogation_modes_filter"
+                                                            :value="item.ID"
+                                                            :selected="item.ID == selected_erogation_modes_id">
+                                                        [[ item.Description ]]
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endblock filters_erogation_modes %}
                                 </div>
 
                                 <!-- Master department -->
@@ -120,35 +152,6 @@
                                         </div>
                                     </div>
                                     {% endblock filters_department %}
-
-                                    {% block filters_erogation_modes %}
-                                    <loading-icon
-                                        v-if="is_loading_erogation_modes"
-                                        :loader_source="loader_source_erogation_modes">
-                                    </loading-icon>
-
-                                    <div class="col-sm" v-else>
-                                        <div>
-                                            <label for="{{ id }}_erogation_modes_input">
-                                                {% trans "Erogation Modes" %}
-                                            </label>
-                                            <div class="w-30 mt-5">
-                                                <select id="{{ id }}_erogation_modes_input"
-                                                        title="{% trans 'Choose an option' %}"
-                                                        name="{{ id }}_erogation_modes_input"
-                                                        class="form-control"
-                                                        @change="{{ id }}.search()">
-                                                    <option value="">- {% trans 'Choose an option' %} -</option>
-                                                    <option v-for="item in erogation_modes_filter"
-                                                            :value="item.ID"
-                                                            :selected="item.ID == selected_erogation_modes_id">
-                                                        [[ item.Description ]]
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endblock filters_erogation_modes %}
 
                                     {% block filters_course_type %}
                                     <loading-icon
@@ -278,9 +281,11 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
     let erogation_modes = document.getElementById('{{ id }}_erogation_modes_input')
     if (erogation_modes && erogation_modes.value) dict['erogation'] = erogation_modes.value
 
+    {% comment %}
     // academic year
     let year = document.getElementById('{{ id }}_year_input')
     if (year && year.value) dict['year'] = year.value
+    {% endcomment %}
 
     // department name
     let department = document.getElementById('{{ id }}_department_input')
@@ -310,27 +315,41 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_api_root "CMS_STORAGE_COURSETYPES_API" as course_type_api %}
 {% storage_api_root "CMS_STORAGE_EROGATIONMODES_API" as erogation_modes_api %}
 
-
+{% comment %}
 initial_year: {{ id }}_get_param('year') || '',
+{% endcomment %}
 
 selected_course_type_id: this.getItemFromSession("{{ id }}", 'coursetype'),
 selected_erogation_modes_id: this.getItemFromSession("{{ id }}", 'erogation'),
+
+{% comment %}
 selected_year: this.getItemFromSession("{{ id }}", 'year') || {{ id }}_get_param('year'),
+{% endcomment %}
+
 selected_department_id: this.getItemFromSession("{{ id }}", 'department'),
 selected_language: this.getItemFromSession("{{ id }}", 'language'),
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 
+{% comment %}
 is_loading_years: true,
+{% endcomment %}
+
 is_loading_departments: true,
 is_loading_course_type: true,
 is_loading_erogation_modes: true,
 
+{% comment %}
 loader_source_years: '{{ years_api }}?lang={{ LANGUAGE_CODE }}',
+{% endcomment %}
+
 loader_source_departments: '{{ departments_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 loader_source_course_type: '{{ course_type_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 loader_source_erogation_modes: '{{ erogation_modes_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 
+{% comment %}
 years_filter: [],
+{% endcomment %}
+
 departments_filter: [],
 erogation_modes_filter: [],
 course_type_filter: [],
@@ -338,7 +357,10 @@ masters_languages_filter: {{ allowed_languages|safe }},
 {% endblock extra_data %}
 
 {% block extra_mounted %}
+{% comment %}
 this.callYears();
+{% endcomment %}
+
 this.callDepartments();
 this.callErogationModes();
 this.callCourseType();
@@ -355,6 +377,8 @@ search(keyword=null, value=null) {
 {% endblock method_search %}
 
 {% block extra_methods %}
+
+{% comment %}
 callYears() {
     axios
         .get(this.loader_source_years)
@@ -363,6 +387,8 @@ callYears() {
             this.is_loading_years = false
         })
 },
+{% endcomment %}
+
 callDepartments() {
     axios
         .get(this.loader_source_departments)
