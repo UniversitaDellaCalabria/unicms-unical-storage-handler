@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-30 14:17+0200\n"
-"PO-Revision-Date: 2022-05-30 14:17+0200\n"
+"POT-Creation-Date: 2022-06-01 10:14+0200\n"
+"PO-Revision-Date: 2022-06-01 10:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -47,7 +47,6 @@ msgstr "Corsi di studio"
 
 #: settings.py:182 templates/storage_base.html:70
 #: templates/storage_high_formation_masters_list.html:12
-#: templates/storage_high_formation_masters_list.html:25
 msgid "High Formation Masters"
 msgstr "Master Alta Formazione"
 
@@ -162,7 +161,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_cdsstudyplans_v2.html:99
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:189
 #: templates/blocks/unical_storage_departments_list.html:69
-#: templates/blocks/unical_storage_high_formation_masters_list.html:254
+#: templates/blocks/unical_storage_high_formation_masters_list.html:258
 #: templates/blocks/unical_storage_laboratory_list.html:264
 #: templates/blocks/unical_storage_patents_list.html:140
 #: templates/blocks/unical_storage_phd_activities_list.html:239
@@ -228,16 +227,14 @@ msgstr "Tipo struttura"
 #: templates/blocks/unical_storage_cdslist.html:203
 #: templates/blocks/unical_storage_cdslist_areas.html:36
 #: templates/blocks/unical_storage_cdslist_areas.html:41
-#: templates/blocks/unical_storage_high_formation_masters_list.html:49
-#: templates/blocks/unical_storage_high_formation_masters_list.html:54
-#: templates/blocks/unical_storage_high_formation_masters_list.html:75
 #: templates/blocks/unical_storage_high_formation_masters_list.html:79
+#: templates/blocks/unical_storage_high_formation_masters_list.html:83
 #: templates/blocks/unical_storage_high_formation_masters_list.html:108
 #: templates/blocks/unical_storage_high_formation_masters_list.html:112
-#: templates/blocks/unical_storage_high_formation_masters_list.html:137
 #: templates/blocks/unical_storage_high_formation_masters_list.html:141
-#: templates/blocks/unical_storage_high_formation_masters_list.html:166
+#: templates/blocks/unical_storage_high_formation_masters_list.html:145
 #: templates/blocks/unical_storage_high_formation_masters_list.html:170
+#: templates/blocks/unical_storage_high_formation_masters_list.html:174
 #: templates/blocks/unical_storage_laboratory_list.html:48
 #: templates/blocks/unical_storage_laboratory_list.html:52
 #: templates/blocks/unical_storage_laboratory_list.html:74
@@ -320,10 +317,8 @@ msgid "Link"
 msgstr ""
 
 #: templates/blocks/unical_storage_cds_main_info.html:70
-#, fuzzy
-#| msgid "Location"
 msgid "Duration"
-msgstr "Ubicazione"
+msgstr "Durata"
 
 #: templates/blocks/unical_storage_cds_main_info.html:73
 #: templates/blocks/unical_storage_cdsinfo.html:96
@@ -332,24 +327,20 @@ msgid "years"
 msgstr "anni"
 
 #: templates/blocks/unical_storage_cds_main_info.html:78
-#, fuzzy
-#| msgid "Master language"
 msgid "Language"
 msgstr "Lingua"
 
 #: templates/blocks/unical_storage_cds_main_info.html:88
-#, fuzzy
-#| msgid "Erogation Modes"
 msgid "Erogation mode"
 msgstr "Modalità di erogazione"
 
 #: templates/blocks/unical_storage_cds_main_info.html:96
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: templates/blocks/unical_storage_cds_main_info.html:104
 #: templates/blocks/unical_storage_cdslist.html:171
-#: templates/blocks/unical_storage_high_formation_masters_list.html:104
+#: templates/blocks/unical_storage_high_formation_masters_list.html:137
 #: templates/blocks/unical_storage_laboratory_list.html:70
 #: templates/blocks/unical_storage_research_group_list.html:44
 #: templates/blocks/unical_storage_research_line_list.html:43
@@ -360,7 +351,7 @@ msgstr "Dipartimento"
 
 #: templates/blocks/unical_storage_cds_main_info.html:112
 msgid "Coordinator"
-msgstr ""
+msgstr "Coordinatore"
 
 #: templates/blocks/unical_storage_cdsinfo.html:65
 msgid "Interclass degree"
@@ -391,12 +382,12 @@ msgstr "Brochure del corso"
 
 #: templates/blocks/unical_storage_cdsinfo.html:581
 #: templates/storage_high_formation_master_info.html:36
-#: templates/storage_high_formation_masters_list.html:36
+#: templates/storage_high_formation_masters_list.html:35
 msgid "Digital services"
 msgstr "Servizi digitali"
 
 #: templates/blocks/unical_storage_cdslist.html:80
-#: templates/blocks/unical_storage_high_formation_masters_list.html:162
+#: templates/blocks/unical_storage_high_formation_masters_list.html:166
 msgid "Course type"
 msgstr "Tipologia corso"
 
@@ -556,19 +547,18 @@ msgstr "Docenti Esterni"
 msgid "High Formation Master Partners"
 msgstr "Partner"
 
-#: templates/blocks/unical_storage_high_formation_masters_list.html:45
-#: templates/blocks/unical_storage_high_formation_masters_list.html:215
-#: templates/blocks/unical_storage_studyactivity_list.html:42
-msgid "Academic Year"
-msgstr "Anno accademico"
-
-#: templates/blocks/unical_storage_high_formation_masters_list.html:71
+#: templates/blocks/unical_storage_high_formation_masters_list.html:75
 msgid "Master language"
 msgstr "Lingua"
 
-#: templates/blocks/unical_storage_high_formation_masters_list.html:133
+#: templates/blocks/unical_storage_high_formation_masters_list.html:104
 msgid "Erogation Modes"
 msgstr "Modalità di erogazione"
+
+#: templates/blocks/unical_storage_high_formation_masters_list.html:219
+#: templates/blocks/unical_storage_studyactivity_list.html:42
+msgid "Academic Year"
+msgstr "Anno accademico"
 
 #: templates/blocks/unical_storage_laboratory_info.html:60
 msgid "European Research Council Classification"
@@ -933,19 +923,28 @@ msgid "High Formation Master"
 msgstr "Master Alta Formazione"
 
 #: templates/storage_high_formation_master_info.html:32
-#: templates/storage_high_formation_masters_list.html:32
 msgid "Announcements"
 msgstr "Bandi"
 
 #: templates/storage_high_formation_master_info.html:44
-#: templates/storage_high_formation_masters_list.html:44
 msgid "Master's degrees"
 msgstr "Master"
 
 #: templates/storage_high_formation_master_info.html:49
-#: templates/storage_high_formation_masters_list.html:49
 msgid "Courses"
 msgstr "Alta formazione"
+
+#: templates/storage_high_formation_masters_list.html:25
+msgid "Masters and Advanced training courses"
+msgstr "Master e Corsi alta formazione"
+
+#: templates/storage_high_formation_masters_list.html:43
+msgid "Master's degrees announcements"
+msgstr "Bandi master"
+
+#: templates/storage_high_formation_masters_list.html:48
+msgid "Advanced training courses announcements"
+msgstr "Bandi corsi alta formazione"
 
 #: templates/storage_laboratory_info.html:11
 msgid "Laboratory detail"
