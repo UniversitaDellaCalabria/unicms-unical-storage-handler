@@ -227,7 +227,7 @@
         </loading-icon>
 
         <div v-else>
-            <div class="row mb-3" v-for="item in items.results" v-if="item.AcademicYear != '{{ cds_exclude_year }}'">
+            <div class="row mb-3" v-for="item in items.results">
                 <div class="col-12">
                     <!--start card-->
                     <div class="card-wrapper pb-0">
@@ -344,12 +344,14 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% storage_settings_value "ALLOWED_CDS_LANGUAGES" as allowed_languages %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% storage_settings_value "ALLOWED_CDS_COURSETYPES" as allowed_cds_coursetypes %}
 
 {% storage_api_root "CMS_STORAGE_DEGREETYPES_API" as degreetypes_api %}
 {% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
 {% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
 
-initial_academic_year: {{ id }}_get_param('academicyear') || '',
+initial_academic_year: {{ id }}_get_param('academicyear')  || '{{ current_year }}',
 
 selected_coursetype: this.getItemFromSession("{{ id }}", 'coursetype'),
 selected_academic_year: this.getItemFromSession("{{ id }}", 'academicyear') || {{ id }}_get_param('academicyear'),
@@ -358,7 +360,7 @@ selected_language: this.getItemFromSession("{{ id }}", 'cdslanguage'),
 selected_jointdegree: this.getItemFromSession("{{ id }}", 'jointdegree'),
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 
-allowed_course_types: [],
+allowed_course_types: {{ allowed_cds_coursetypes|safe }} || [],
 course_types: [],
 
 is_loading_degreetypes: true,
@@ -376,7 +378,6 @@ joint_degree_filter: {{ allowed_joint_degrees|safe }}
 {% endblock extra_data %}
 
 {% block extra_mounted %}
-
 // if url is pre-filtered with preferred coursetypes
 // get them, else show all
 let params = new URLSearchParams(this.url.split('?')[1]);
@@ -401,6 +402,27 @@ search(keyword=null, value=null) {
     this.CallURL(this.url + this.parameters);
 },
 {% endblock method_search %}
+
+{% block method_callurl %}
+CallURL(url, initial=false) {
+    this.is_loading = true
+    this.loader_source = url
+    if (!url.includes("academicyear") && this.initial_academic_year)
+        url = url + '&academicyear=' + this.initial_academic_year
+    if (!url.includes("coursetype") && this.allowed_course_types.length > 0)
+        url = url + '&coursetype=' + this.allowed_course_types.toString()
+    axios
+        .get(url)
+        .then(response => {
+            if(initial) this.initial_items = response.data.results;
+            this.items = response.data;
+            this.next_page = response.data.next;
+            this.previous_page = response.data.previous;
+            this.labels = response.data.labels;
+            this.is_loading = false;
+        })
+},
+{% endblock method_callurl %}
 
 {% block extra_methods %}
 callDegreeTypes() {

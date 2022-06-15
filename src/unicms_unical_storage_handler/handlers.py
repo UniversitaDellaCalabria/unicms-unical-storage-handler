@@ -122,16 +122,16 @@ class CdSListViewHandler(BaseStorageHandler):
 
     def as_view(self):
 
-        url_data = {}
+        # url_data = {}
 
-        if ALLOWED_CDS_COURSETYPES:
-            url_data['coursetype'] = ",".join(ALLOWED_CDS_COURSETYPES)
-        if CURRENT_YEAR:
-            url_data['academicyear'] = CURRENT_YEAR
+        # if ALLOWED_CDS_COURSETYPES:
+            # url_data['coursetype'] = ",".join(ALLOWED_CDS_COURSETYPES)
+        # if CURRENT_YEAR:
+            # url_data['academicyear'] = CURRENT_YEAR
 
-        params = urllib.parse.urlencode(url_data)
+        # params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_API}'
-        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
@@ -490,11 +490,10 @@ class PublicationsListViewHandler(BaseStorageHandler):
         super(PublicationsListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        url_data = {}
-        params = urllib.parse.urlencode(url_data)
+        # url_data = {}
+        # params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PUBLICATIONS_API}'
-        print(self.data)
-        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
@@ -552,10 +551,10 @@ class SpinoffListViewHandler(BaseStorageHandler):
         super(SpinoffListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        url_data = {}
-        params = urllib.parse.urlencode(url_data)
+        # url_data = {}
+        # params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_SPINOFF_API}'
-        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
@@ -597,10 +596,10 @@ class ProjectsListViewHandler(BaseStorageHandler):
         super(ProjectsListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        url_data = {}
-        params = urllib.parse.urlencode(url_data)
+        # url_data = {}
+        # params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PROJECTS_API}'
-        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
@@ -642,7 +641,6 @@ class HighFormationMastersListViewHandler(BaseStorageHandler):
 
     def as_view(self):
         url_data = {}
-
         if HIGH_FORMATION_YEAR:
             url_data['year'] = HIGH_FORMATION_YEAR
         params = urllib.parse.urlencode(url_data)

@@ -189,7 +189,7 @@
                         {% endif %}
                     </b>
                     <ul class="list-unstyled mt-3">
-                        <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds && item.AcademicYear != '{{ cds_exclude_year }}'">
+                        <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
                             <a class="no-color"
                                :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"
                                {% if request.get_host != host %}target="_blank"{% endif %}>
@@ -293,13 +293,15 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% storage_settings_value "ALLOWED_CDS_LANGUAGES" as allowed_languages %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% storage_settings_value "ALLOWED_CDS_COURSETYPES" as allowed_cds_coursetypes %}
 
 {% storage_api_root "CMS_STORAGE_DEGREETYPES_API" as degreetypes_api %}
 {% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
 {% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
 {% storage_api_root "CMS_STORAGE_CDS_AREAS_API" as cds_areas_api %}
 
-initial_academic_year: {{ id }}_get_param('academicyear') || '',
+initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
 
 selected_coursetype: this.getItemFromSession("{{ id }}", 'coursetype'),
 selected_academic_year: this.getItemFromSession("{{ id }}", 'academicyear') || {{ id }}_get_param('academicyear'),
@@ -308,7 +310,7 @@ selected_language: this.getItemFromSession("{{ id }}", 'cdslanguage'),
 selected_jointdegree: this.getItemFromSession("{{ id }}", 'jointdegree'),
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 
-allowed_course_types: [],
+allowed_course_types: {{ allowed_cds_coursetypes|safe }} || [],
 course_types: [],
 cds_areas: [],
 
@@ -356,6 +358,27 @@ search(keyword=null, value=null) {
     this.CallURL(this.url + this.parameters);
 },
 {% endblock method_search %}
+
+{% block method_callurl %}
+CallURL(url, initial=false) {
+    this.is_loading = true
+    this.loader_source = url
+    if (!url.includes("academicyear") && this.initial_academic_year)
+        url = url + '&academicyear=' + this.initial_academic_year
+    if (!url.includes("coursetype") && this.allowed_course_types.length > 0)
+        url = url + '&coursetype=' + this.allowed_course_types.toString()
+    axios
+        .get(url)
+        .then(response => {
+            if(initial) this.initial_items = response.data.results;
+            this.items = response.data;
+            this.next_page = response.data.next;
+            this.previous_page = response.data.previous;
+            this.labels = response.data.labels;
+            this.is_loading = false;
+        })
+},
+{% endblock method_callurl %}
 
 {% block extra_methods %}
 callDegreeTypes() {
