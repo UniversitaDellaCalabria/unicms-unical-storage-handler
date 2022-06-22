@@ -287,9 +287,11 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
     if (year && year.value) dict['year'] = year.value
     {% endcomment %}
 
+    {% block filters_department_script %}
     // department name
     let department = document.getElementById('{{ id }}_department_input')
     if (department && department.value) dict['department'] = department.value
+    {% endblock filters_department_script %}
 
     // master language
     {% block filters_language_script %}
@@ -309,15 +311,14 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% get_current_language as LANGUAGE_CODE %}
 
 {% storage_settings_value "ALLOWED_HIGH_FORMATION_MASTERS_LANGUAGES" as allowed_languages %}
+{% storage_settings_value "HIGH_FORMATION_YEAR" as high_formation_year %}
 
 {% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
 {% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as years_api %}
 {% storage_api_root "CMS_STORAGE_COURSETYPES_API" as course_type_api %}
 {% storage_api_root "CMS_STORAGE_EROGATIONMODES_API" as erogation_modes_api %}
 
-{% comment %}
-initial_year: {{ id }}_get_param('year') || '',
-{% endcomment %}
+initial_year: {{ id }}_get_param('year') || '{{ high_formation_year }}',
 
 selected_course_type_id: this.getItemFromSession("{{ id }}", 'coursetype'),
 selected_erogation_modes_id: this.getItemFromSession("{{ id }}", 'erogation'),
@@ -375,6 +376,25 @@ search(keyword=null, value=null) {
     this.CallURL(this.url + this.parameters);
 },
 {% endblock method_search %}
+
+{% block method_callurl %}
+CallURL(url, initial=false) {
+    this.is_loading = true
+    this.loader_source = url
+    if (!url.includes("year") && this.initial_year)
+        url = url + '&year=' + this.initial_year
+    axios
+        .get(url)
+        .then(response => {
+            if(initial) this.initial_items = response.data.results;
+            this.items = response.data;
+            this.next_page = response.data.next;
+            this.previous_page = response.data.previous;
+            this.labels = response.data.labels;
+            this.is_loading = false;
+        })
+},
+{% endblock method_callurl %}
 
 {% block extra_methods %}
 

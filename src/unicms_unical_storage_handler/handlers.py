@@ -641,11 +641,11 @@ class HighFormationMastersListViewHandler(BaseStorageHandler):
 
     def as_view(self):
         url_data = {}
-        if HIGH_FORMATION_YEAR:
-            url_data['year'] = HIGH_FORMATION_YEAR
-        params = urllib.parse.urlencode(url_data)
+        # if HIGH_FORMATION_YEAR:
+            # url_data['year'] = HIGH_FORMATION_YEAR
+        # params = urllib.parse.urlencode(url_data)
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}'
-        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
