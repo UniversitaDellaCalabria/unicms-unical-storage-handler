@@ -40,9 +40,6 @@
                 <h3 class="lighter" v-if="special_roles.includes(item.ProfileId)">
                     [[ item.ProfileDescription ]]
                 </h3>
-                <h3 class="lighter" v-else>
-                    [[ item.RoleDescription ]]
-                </h3>
             </div>
         </div>
         <hr class="my-4 bordeaux-unical-bg">
@@ -54,7 +51,14 @@
                             [[ labels[name] ]]
                         </td>
                         <td v-if="typeof value === 'object'">
-                            <ul v-if="name == 'PersonFunctions'">
+                            <ul v-if="name == 'Roles'">
+                                <li v-for="subvalue in value">
+                                    <span style="white-space: pre-line;">
+                                        [[ subvalue.RoleDescription]]
+                                    </span>
+                                </li>
+                            </ul>
+                            <ul v-else-if="name == 'PersonFunctions'">
                                 <li v-for="subvalue in value">
                                     <span style="white-space: pre-line;">
                                         [[ subvalue.TeacherRole]]
