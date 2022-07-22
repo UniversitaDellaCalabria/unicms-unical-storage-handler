@@ -214,16 +214,32 @@
                                             <a class="no-color" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ID +'/'">
                                                 <b>[[ item.Name ]]</b>
                                             </a>
+
+                                            {% comment %}
                                             {% block structure %}
                                             <span v-if="item.StructureTypeCOD != '000'">
                                                 <br>
                                                 <span>[[ item.Structure ]]</span>
                                             </span>
                                             {% endblock structure %}
+                                            {% endcomment %}
+
                                             {% block role %}
                                             <br>
-                                            <span v-if="special_roles.includes(item.ProfileId)">[[ item.ProfileDescription ]]</span>
-                                            <span v-else>[[ item.RoleDescription ]]</span>
+                                            <ul class="mt-2 mb-1 pl-0" style="list-style: none">
+                                                <li v-for="role in item.Roles" v-if="((allowed_roles.length==0 || allowed_roles.includes(role.Role)) && (allowed_structure_types.length==0 || allowed_structure_types.includes(role.StructureTypeCOD))) || special_roles.includes(item.ProfileId)">
+                                                    <span v-if="role.StructureTypeCOD != '000'">
+                                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + role.StructureCod +'/'">
+                                                            [[ role.Structure ]]
+                                                        </a>
+                                                        <br>
+                                                    </span>
+                                                    <span v-if="special_roles.includes(item.ProfileId)">[[ item.ProfileDescription ]]</span>
+                                                    <span v-else>[[ role.RoleDescription ]]</span>
+                                                    <hr>
+                                                </li>
+                                            </ul>
+
                                             {% endblock role %}
 
                                             {% block location %}

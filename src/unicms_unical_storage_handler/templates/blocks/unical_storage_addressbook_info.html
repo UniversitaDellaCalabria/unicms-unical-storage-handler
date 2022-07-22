@@ -11,6 +11,9 @@
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "ALLOWED_ADDRESSBOOK_ROLES" as allowed_roles %}
+{% storage_settings_value "ALLOWED_STRUCTURE_TYPES" as allowed_structure_types %}
+{% storage_settings_value "ADDRESSBOOK_SPECIAL_ROLES" as addressbook_special_roles %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
 {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
@@ -46,16 +49,22 @@
         <div class="table-responsive">
             <table class="table table-sm table-hover table-striped">
                 <tbody>
-                    <tr v-for="(value, name) in item" v-if="value && !fields_to_not_show.includes(name) && value != '' && (name != 'Structure' || (name == 'Structure' && item.StructureTypeCOD != '000'))">
+                    <tr v-for="(value, name) in item" v-if="value && !fields_to_not_show.includes(name) && value != ''">
                         <td>
                             [[ labels[name] ]]
                         </td>
                         <td v-if="typeof value === 'object'">
-                            <ul v-if="name == 'Roles'">
-                                <li v-for="subvalue in value">
-                                    <span style="white-space: pre-line;">
-                                        [[ subvalue.RoleDescription]]
+                            <ul v-if="name == 'Roles'" style="list-style: none" class="pl-0">
+                                <li v-for="(subvalue, index) in value" v-if="((allowed_roles.length==0 || allowed_roles.includes(subvalue.Role)) && (allowed_structure_types.length==0 || allowed_structure_types.includes(subvalue.StructureTypeCOD))) || special_roles.includes(item.ProfileId)">
+                                    <hr v-if="index > 0">
+                                    <span v-if="subvalue.StructureTypeCOD != '000'">
+                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.StructureCod +'/'">
+                                            [[ subvalue.Structure ]]
+                                        </a>
+                                        <br>
                                     </span>
+                                    <span v-if="special_roles.includes(item.ProfileId)">[[ item.ProfileDescription ]]</span>
+                                    <span v-else>[[ subvalue.RoleDescription ]]</span>
                                 </li>
                             </ul>
                             <ul v-else-if="name == 'PersonFunctions'">
@@ -116,6 +125,9 @@
         el: '[id="{{ id }}"]',
         data() {
             return {
+                allowed_roles: {{ allowed_roles|safe }},
+                allowed_structure_types: {{ allowed_structure_types|safe }},
+                addressbook_special_roles: {{ addressbook_special_roles|safe }},
                 item: {},
                 errors: {},
                 labels: {},
