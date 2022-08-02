@@ -136,7 +136,7 @@
                                 <div class="col-12" v-if="item.OtherData[0].DeputyDirectorName && item.OtherData[0].DeputyDirectorName.trim().length>0">
                                     <small>
                                     [[ labels['DeputyDirectorName'] ]]
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DeputyDirectorId +'/'" v-if="item.OtherData[0].DirectorId">
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DeputyDirectorId +'/'" v-if="item.OtherData[0].DeputyDirectorId">
                                         <b>[[ item.OtherData[0].DeputyDirectorName ]]</b>
                                     </a>
                                     <span v-else>
