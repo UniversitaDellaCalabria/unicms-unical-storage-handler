@@ -33,7 +33,7 @@
                                     {% block filters %}
 
                                     {% block structure_type_filter %}
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
 
                                         <loading-icon
                                             v-if="is_loading_structure_type"
@@ -64,7 +64,7 @@
                                     </div>
                                     {% endblock structure_type_filter %}
 
-                                    <div class="col-sm" v-if="structure_id_filter.length">
+                                    <div class="col-sm form-group mb-0" v-if="structure_id_filter.length">
 
                                         <loading-icon
                                             v-if="is_loading_structure_id"
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
 
                                         <loading-icon
                                             v-if="is_loading_roles"

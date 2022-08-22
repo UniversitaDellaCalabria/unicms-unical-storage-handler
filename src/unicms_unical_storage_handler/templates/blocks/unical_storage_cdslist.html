@@ -24,7 +24,7 @@
             <div class="col">
                 <span v-for="degree in course_types"
                       :class="{ selected: degree.CourseType == selected_coursetype }"
-                      class="badge badge-grey-unical square-corners my-1 mr-3 ml-0 pr-5 p-2">
+                      class="badge badge-grey-unical square-corners my-1 me-3 ms-0 pe-5 p-2">
                     <div v-if="allowed_course_types.length==0 || allowed_course_types.includes(degree.CourseType)">
                         <a class="no-color" href="javascript:void(0)" @click="{{ id }}.search('coursetype', degree.CourseType)">
                             <h5>
@@ -38,7 +38,7 @@
                         </a>
                     </div>
                 </span>
-                <span class="badge badge-grey-unical square-corners my-1 mr-3 ml-0 pr-5 p-2"
+                <span class="badge badge-grey-unical square-corners my-1 me-3 ms-0 pe-5 p-2"
                       style="font-size: 100%">
                     <a class="no-color" href="javascript:void(0)" @click="{{ id }}.search('coursetype', allowed_course_types)">
                         <h5>
@@ -61,7 +61,7 @@
                             {% endblock filters_search %}
 
                             {% block filters_cdslist %}
-                            <div class="form-group mb-0">
+                            <div class="mb-0">
 
                                 <!-- type & Academic year & language -->
                                 <div class="row">
@@ -73,7 +73,7 @@
                                         :loader_source="loader_source_degreetypes">
                                     </loading-icon>
 
-                                    <div class="col-sm" v-else>
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_cds_type">
                                                 {% trans "Course type" %}
@@ -105,7 +105,7 @@
                                         :loader_source="loader_source_academicyears">
                                     </loading-icon>
 
-                                    <div class="col-sm" v-else>
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_academic_year_input">
                                                 {% trans "Year of registration" %}
@@ -131,7 +131,7 @@
                                     </div>
 
                                     {% block filters_language %}
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                         <div>
                                             <label for="{{ id }}_cds_language_input">
                                                 {% trans "Course of study language" %}
@@ -164,7 +164,7 @@
                                         :loader_source="loader_source_departments">
                                     </loading-icon>
 
-                                    <div class="col-sm" v-else>
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_department_input">
                                                 {% trans "Department" %}
@@ -188,7 +188,7 @@
                                     {% endblock filters_department %}
 
                                     {% block filters_jointdegree %}
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                         <div>
                                             <label for="{{ id }}_joint_degree_input">
                                                 {% trans "Joint degree" %}
@@ -242,7 +242,7 @@
 
                                 </h5>
                                 <div class="row">
-                                    <div class="col-12 col-md-auto mr-md-4">
+                                    <div class="col-12 col-md-auto me-md-4">
 
                                         <b>
                                             [[ item.CourseTypeDescription ]]
@@ -268,7 +268,7 @@
                                             <b>[[ item.CdSDuration ]] {% trans "years" %}</b>
                                         </small>
                                     </div>
-                                    <div class="col-12 col-md-auto mr-md-4" v-if="item.CdSLanguage.length > 0">
+                                    <div class="col-12 col-md-auto me-md-4" v-if="item.CdSLanguage.length > 0">
                                         <small>
                                             [[ labels['CdSLanguage'] ]] >
                                             <b>[[ item.CdSLanguage.join(', ') ]] </b>

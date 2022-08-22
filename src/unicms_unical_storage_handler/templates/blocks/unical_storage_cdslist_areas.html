@@ -71,7 +71,7 @@
                                         :loader_source="loader_source_degreetypes">
                                     </loading-icon>
 
-                                    <div class="col-sm" v-else>
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_cds_type">
                                                 {% trans "Course type" %}
@@ -100,7 +100,7 @@
                                         :loader_source="loader_source_academicyears">
                                     </loading-icon>
 
-                                    <div class="col-sm" v-else>
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_academic_year_input">
                                                 {% trans "Academic Year" %}
@@ -125,7 +125,7 @@
                                     </div>
 
                                     {% block filters_language %}
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                         <div>
                                             <label for="{{ id }}_cds_language_input">
                                                 {% trans "Course of study language" %}
@@ -202,7 +202,7 @@
                                     ([[ item.ErogationMode ]])
                                 </span>
                                 <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
-                                    <span class="mr-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                    <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
                                         <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
                                     </span>
                                     <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
@@ -224,11 +224,11 @@
                     <li>LM5 – {% trans "Single-cycle master's degree (5 years)" %}</li>
                     <li>LM6 – {% trans "Single-cycle master's degree (6 years)" %}</li>
                     <li>
-                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="mr-2"/>
+                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="me-2"/>
                         {% trans "Course delivered in English" %}</li>
                     <li>
-                        <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}" class="mr-1"/>
-                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="mr-2"/>
+                        <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}" class="me-1"/>
+                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="me-2"/>
                         {% trans "Course with curriculum delivered in English" %}</li>
                 </ul>
             </small>

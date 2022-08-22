@@ -29,7 +29,7 @@
                             {% block structure_type_filter %}
                             <div class="form-group mb-0">
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                          <loading-icon
                                                  v-if="is_loading_types"
                                                  :loader_source="loader_source_types">
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                                 {% endcomment %}
-                                <div class="col-12 col-md-auto text-right" v-if="item.StructureURL">
+                                <div class="col-12 col-md-auto text-end" v-if="item.StructureURL">
                                     <small>
                                         <a :href="[[ item.StructureURL ]]" target="_blank" rel="noopener noreferrer">
                                             <b>{% trans "Website" %} >></b>

@@ -23,7 +23,7 @@
                 <use xlink:href="{% static 'svg/sprite.svg' %}#it-info-circle"></use>
             </svg>
         </div>
-        <div class="col-9 pl-3 align-left">
+        <div class="col-9 ps-3 align-left">
             <small>
                 <b>[[ item.StructureName ]]</b>
                 <br>
@@ -33,7 +33,7 @@
                 </div>
                 <div>
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-map-marker-circle"></use>
                         </svg>
                         <a href="#">-</a>
@@ -42,7 +42,7 @@
                 </div>
                 <div v-for="email in item.StructureEmail">
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
                         </svg>
                         <a href="mailto: [[ email ]]">[[ email ]]</a>
@@ -51,7 +51,7 @@
                 </div>
                 <div v-for="pec in item.StructurePec">
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
                         </svg>
                         <a href="mailto: [[ pec ]]">[[ pec ]]</a>
@@ -60,7 +60,7 @@
                 </div>
                 <div v-for="tel in item.StructureTfr">
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
                         </svg> [[ tel ]]
                     </span>

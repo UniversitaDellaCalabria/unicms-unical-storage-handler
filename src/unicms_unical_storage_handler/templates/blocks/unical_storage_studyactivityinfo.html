@@ -165,28 +165,31 @@
                 </tbody>
             </table>
 
-            <div id="collapseDiv1-lft"
-                 class="collapse-div collapse-left-icon"
-                 role="tablist">
+            <div id="collapseDiv1-lft" class="accordion accordion-left-icon">
                 <div v-for="name in fields_to_collapse" v-if="item[name] != null">
-                    <div class="collapse-header"
-                         :id="'heading-' + name +'-lft'">
-                        <button data-toggle="collapse"
-                                :data-target="'#collapse-' + name +'-lft'"
-                                aria-expanded="false"
-                                role="tab"
-                                :aria-controls="'collapse-' + name +'-lft'">
-                            [[ labels[name] ]]
-                        </button>
-                    </div>
-                    <div :id="'collapse-' + name +'-lft'"
-                         class="collapse"
-                         role="tabpanel"
-                         :aria-labelledby="'heading-' + name +'-lft'">
-                        <div class="collapse-body">
-                            <span style="white-space: pre-line;">
-                                <span>[[ item[name] ]]</span>
-                            </span>
+                    <div class="accordion-item">
+                        <div class="accordion-header"
+                             :id="'heading-' + name +'-lft'">
+                             <button class="accordion-button"
+                                     type="button"
+                                     data-bs-toggle="collapse"
+                                     :data-bs-target="'#collapse-' + name +'-lft'"
+                                     aria-expanded="false"
+                                     role="tab"
+                                     :aria-controls="'collapse-' + name +'-lft'">
+                                [[ labels[name] ]]
+                            </button>
+                        </div>
+                        <div :id="'collapse-' + name +'-lft'"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#collapseDiv1-lft"
+                             role="region"
+                             :aria-labelledby="'heading-' + name +'-lft'">
+                            <div class="accordion-body">
+                                <span style="white-space: pre-line;">
+                                    <span>[[ item[name] ]]</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

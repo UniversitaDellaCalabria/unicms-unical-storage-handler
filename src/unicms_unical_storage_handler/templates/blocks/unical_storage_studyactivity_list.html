@@ -154,12 +154,13 @@
                                                v-model="selected_teaching"
                                                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                         <div class="input-group-append">
+                                            {% comment %}
                                             <div class="input-group-text">
                                                 <svg class="icon icon-sm icon-muted">
                                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
                                                 </svg>
                                             </div>
-
+                                            {% endcomment %}
                                             <button class="btn btn-primary"
                                                     type="button"
                                                     id="search-button"
@@ -180,11 +181,13 @@
                                                v-model="selected_teacher"
                                                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                         <div class="input-group-append">
+                                            {% comment %}
                                             <div class="input-group-text">
                                                 <svg class="icon icon-sm icon-muted">
                                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
                                                 </svg>
                                             </div>
+                                            {% endcomment %}
 
                                             <button class="btn btn-primary"
                                                     type="button"
@@ -208,11 +211,13 @@
                                                v-model="selected_cds"
                                                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                         <div class="input-group-append">
+                                            {% comment %}
                                             <div class="input-group-text">
                                                 <svg class="icon icon-sm icon-muted">
                                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
                                                 </svg>
                                             </div>
+                                            {% endcomment %}
 
                                             <button class="btn btn-primary"
                                                     type="button"
@@ -235,11 +240,13 @@
                                                v-model="selected_ssd"
                                                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                         <div class="input-group-append">
+                                            {% comment %}
                                             <div class="input-group-text">
                                                 <svg class="icon icon-sm icon-muted">
                                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
                                                 </svg>
                                             </div>
+                                            {% endcomment %}
 
                                             <button class="btn btn-primary"
                                                     type="button"

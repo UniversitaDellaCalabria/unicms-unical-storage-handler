@@ -36,11 +36,13 @@
                                                v-model="selected_search"
                                                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                         <div class="input-group-append">
+                                            {% comment %}
                                             <div class="input-group-text">
                                                 <svg class="icon icon-sm icon-muted">
                                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
                                                 </svg>
                                             </div>
+                                            {% endcomment %}
 
                                             {% include "includes/unical_storage_search_button.html" with id=id %}
 
@@ -58,11 +60,13 @@
                                                        v-model="selected_teacher"
                                                        v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                                 <div class="input-group-append">
+                                                    {% comment %}
                                                     <div class="input-group-text">
                                                         <svg class="icon icon-sm icon-muted">
                                                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
                                                         </svg>
                                                     </div>
+                                                    {% endcomment %}
 
                                                     {% include "includes/unical_storage_search_button.html" with id=id %}
 
@@ -82,7 +86,7 @@
                                         :loader_source="loader_source_phd">
                                     </loading-icon>
 
-                                    <div class="col-sm" v-else>
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_phd_input">
                                                 {% trans "Referent PhD" %}
@@ -112,7 +116,7 @@
                                         v-if="is_loading_structures"
                                         :loader_source="loader_source_structures">
                                     </loading-icon>
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                         <div>
                                             <label for="{{ id }}_structures_input">
                                                 {% trans "University Activities" %}
@@ -139,7 +143,7 @@
                                         v-if="is_loading_ssd"
                                         :loader_source="loader_source_ssd">
                                     </loading-icon>
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                         <div>
                                             <label for="{{ id }}_ssd_input">
                                                 {% trans "SSD" %}

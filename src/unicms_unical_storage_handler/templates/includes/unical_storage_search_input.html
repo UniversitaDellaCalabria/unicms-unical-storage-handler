@@ -10,12 +10,13 @@
                v-model="selected_search"
                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
         <div class="input-group-append">
+            {% comment %}
             <div class="input-group-text">
                 <svg class="icon icon-sm icon-muted">
                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
                 </svg>
             </div>
-
+            {% endcomment %}
             {% include "includes/unical_storage_search_button.html" with id=id %}
 
         </div>

@@ -130,130 +130,148 @@
     </div>
 
 
-    <div id="{{ id }}_collapseDiv-lft" class="collapse-div collapse-left-icon" role="tablist">
+    <div id="{{ id }}_collapseDiv-lft" class="accordion accordion-left-icon">
 
         <!-- ExtraDepartments -->
-        <div class="collapse-header"
-             id="{{ id }}_heading-extradepartments-lft"
-             v-if="item.Interdepartmental != 'NO'">
-            <button data-toggle="collapse"
-                    data-target="#{{ id }}_collapse-extradepartments-lft"
-                    aria-expanded="false"
-                    role="tab"
-                    aria-controls="{{ id }}_collapse-extradepartments-lft">
-                {% trans "Laboratory Extra Departments" %}
-            </button>
-        </div>
-        <div id="{{ id }}_collapse-extradepartments-lft"
-             class="collapse"
-             role="tabpanel"
-             aria-labelledby="{{ id }}_heading-extradepartments-lft">
-            <div class="collapse-body">
-                <ul>
-                    <li v-for="subvalue in item.ExtraDepartments" v-if="subvalue.DepartmentName && subvalue.DepartmentName != ''">
-                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.DepartmentCod +'/'">
-                            [[ subvalue.DepartmentName ]]
-                        </a>
-                    </li>
-                </ul>
+        <div class="accordion-item">
+            <div class="accordion-header"
+                 id="{{ id }}_heading-extradepartments-lft"
+                 v-if="item.Interdepartmental != 'NO'">
+                <button class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ id }}_collapse-extradepartments-lft"
+                        aria-expanded="false"
+                        aria-controls="{{ id }}_collapse-extradepartments-lft">
+                    {% trans "Laboratory Extra Departments" %}
+                </button>
+            </div>
+            <div id="{{ id }}_collapse-extradepartments-lft"
+                 class="accordion-collapse collapse"
+                 role="region"
+                 data-bs-parent="#{{ id }}_collapseDiv-lft"
+                 aria-labelledby="{{ id }}_heading-extradepartments-lft">
+                <div class="accordion-body">
+                    <ul>
+                        <li v-for="subvalue in item.ExtraDepartments" v-if="subvalue.DepartmentName && subvalue.DepartmentName != ''">
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.DepartmentCod +'/'">
+                                [[ subvalue.DepartmentName ]]
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <!-- Scope -->
-        <div class="collapse-header" id="{{ id }}_heading-scopes-lft">
-            <button data-toggle="collapse"
-                    data-target="#{{ id }}_collapse-scopes-lft"
-                    aria-expanded="false"
-                    aria-controls="{{ id }}_collapse-scopes-lft">
-                {% trans 'Scope' %}
-            </button>
-        </div>
-        <div id="{{ id }}_collapse-scopes-lft"
-             class="collapse"
-             role="tabpanel"
-             aria-labelledby="{{ id }}_heading-scopes-lft">
-
-            <div class="collapse-body">
-                <ul>
-                    <li v-if="item.LaboratoryServicesScope && item.LaboratoryServicesScope != ''">
-                        <b>{% trans 'Services Scope' %}</b>
-                        <br>
-                        [[ item.LaboratoryServicesScope ]]
-                    </li>
-                    <li v-if="item.LaboratoryResearchScope && item.LaboratoryResearchScope != ''">
-                        <b>{% trans 'Research Scope' %}</b>
-                        <br>
-                        [[ item.LaboratoryResearchScope ]]
-                    </li>
-                    <li v-if="item.LaboratoryTeachingScope && item.LaboratoryTeachingScope != ''">
-                        <b>{% trans 'Teaching Scope' %}</b>
-                        <br>
-                        [[ item.LaboratoryTeachingScope ]]
-                    </li>
-                </ul>
+        <div class="accordion-item">
+            <div class="accordion-header" id="{{ id }}_heading-scopes-lft">
+                <button class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ id }}_collapse-scopes-lft"
+                        aria-expanded="false"
+                        aria-controls="{{ id }}_collapse-scopes-lft">
+                    {% trans 'Scope' %}
+                </button>
+            </div>
+            <div id="{{ id }}_collapse-scopes-lft"
+                 class="accordion-collapse collapse"
+                 role="region"
+                 data-bs-parent="#{{ id }}_collapseDiv-lft"
+                 aria-labelledby="{{ id }}_heading-scopes-lft">
+                <div class="accordion-body">
+                    <ul>
+                        <li v-if="item.LaboratoryServicesScope && item.LaboratoryServicesScope != ''">
+                            <b>{% trans 'Services Scope' %}</b>
+                            <br>
+                            [[ item.LaboratoryServicesScope ]]
+                        </li>
+                        <li v-if="item.LaboratoryResearchScope && item.LaboratoryResearchScope != ''">
+                            <b>{% trans 'Research Scope' %}</b>
+                            <br>
+                            [[ item.LaboratoryResearchScope ]]
+                        </li>
+                        <li v-if="item.LaboratoryTeachingScope && item.LaboratoryTeachingScope != ''">
+                            <b>{% trans 'Teaching Scope' %}</b>
+                            <br>
+                            [[ item.LaboratoryTeachingScope ]]
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <!-- OfferedServices -->
-        <div class="collapse-header" id="{{ id }}_heading-offeredservices-lft">
-            <button data-toggle="collapse"
-                    data-target="#{{ id }}_collapse-offeredservices-lft"
-                    aria-expanded="false"
-                    role="tab"
-                    aria-controls="{{ id }}_collapse-offeredservices-lft">
-                {% trans "Offered Services" %}
-            </button>
-        </div>
-        <div id="{{ id }}_collapse-offeredservices-lft"
-             class="collapse"
-             role="tabpanel"
-             aria-labelledby="{{ id }}_heading-offeredservices-lft">
-            <div class="collapse-body">
-                <ul>
-                    <li v-for="subvalue in item.LaboratoryOfferedServices">
-                        <b> [[ subvalue.ServiceName ]] </b>
-                        <br>
-                        [[ subvalue.ServiceDescription ]]
-                    </li>
-                </ul>
+        <div class="accordion-item">
+            <div class="accordion-header" id="{{ id }}_heading-offeredservices-lft">
+                <button class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ id }}_collapse-offeredservices-lft"
+                        aria-expanded="false"
+                        aria-controls="{{ id }}_collapse-offeredservices-lft">
+                    {% trans "Offered Services" %}
+                </button>
+            </div>
+            <div id="{{ id }}_collapse-offeredservices-lft"
+                 class="accordion-collapse collapse"
+                 role="region"
+                 data-bs-parent="#{{ id }}_collapseDiv-lft"
+                 aria-labelledby="{{ id }}_heading-offeredservices-lft">
+                <div class="accordion-body">
+                    <ul>
+                        <li v-for="subvalue in item.LaboratoryOfferedServices">
+                            <b> [[ subvalue.ServiceName ]] </b>
+                            <br>
+                            [[ subvalue.ServiceDescription ]]
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <!-- LaboratoryEquipment -->
-        <div class="collapse-header" id="{{ id }}_heading-laboratoryequipment-lft">
-            <button data-toggle="collapse"
-                    data-target="#{{ id }}_collapse-laboratoryequipment-lft"
-                    aria-expanded="false"
-                    role="tab"
-                    aria-controls="{{ id }}_collapse-laboratoryequipment-lft">
-                {% trans "Laboratory Equipment" %}
-            </button>
-        </div>
-        <div id="{{ id }}_collapse-laboratoryequipment-lft"
-             class="collapse"
-             role="tabpanel"
-             aria-labelledby="{{ id }}_heading-laboratoryequipment-lft">
-            <div class="collapse-body">
-                [[ item.LaboratoryEquipment ]]
+        <div class="accordion-item">
+            <div class="accordion-header" id="{{ id }}_heading-laboratoryequipment-lft">
+                <button class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ id }}_collapse-laboratoryequipment-lft"
+                        aria-expanded="false"
+                        aria-controls="{{ id }}_collapse-laboratoryequipment-lft">
+                    {% trans "Laboratory Equipment" %}
+                </button>
+            </div>
+            <div id="{{ id }}_collapse-laboratoryequipment-lft"
+                 class="accordion-collapse collapse"
+                 role="region"
+                 data-bs-parent="#{{ id }}_collapseDiv-lft"
+                 aria-labelledby="{{ id }}_heading-laboratoryequipment-lft">
+                <div class="accordion-body">
+                    [[ item.LaboratoryEquipment ]]
+                </div>
             </div>
         </div>
 
         <!-- ResearchPersonnel -->
-        <div v-if="item.LaboratoryResearchPersonnel && item.LaboratoryResearchPersonnel.length">
-            <div class="collapse-header" id="{{ id }}_heading-researchpersonnel-lft">
-                <button data-toggle="collapse"
-                        data-target="#{{ id }}_collapse-researchpersonnel-lft"
+        <div class="accordion-item" v-if="item.LaboratoryResearchPersonnel && item.LaboratoryResearchPersonnel.length">
+            <div class="accordion-header" id="{{ id }}_heading-researchpersonnel-lft">
+                <button class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ id }}_collapse-researchpersonnel-lft"
                         aria-expanded="false"
-                        role="tab"
                         aria-controls="{{ id }}_collapse-researchpersonnel-lft">
                     {% trans "Research Personnel" %}
                 </button>
             </div>
             <div id="{{ id }}_collapse-researchpersonnel-lft"
-                 class="collapse"
-                 role="tabpanel"
+                 class="accordion-collapse collapse"
+                 role="region"
+                 data-bs-parent="#{{ id }}_collapseDiv-lft"
                  aria-labelledby="{{ id }}_heading-researchpersonnel-lft">
-                <div class="collapse-body">
+                <div class="accordion-body">
                     <ul>
                         <li v-for="subvalue in item.LaboratoryResearchPersonnel" v-if="subvalue.ResearchPersonnelName && subvalue.ResearchPersonnelName != ''">
                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.ResearchPersonnelID +'/'">
@@ -266,21 +284,23 @@
         </div>
 
         <!-- TechPersonnel -->
-        <div v-if="item.LaboratoryTechPersonnel && item.LaboratoryTechPersonnel.length">
-            <div class="collapse-header" id="{{ id }}_heading-techpersonnel-lft">
-                <button data-toggle="collapse"
-                        data-target="#{{ id }}_collapse-techpersonnel-lft"
+        <div class="accordion-item" v-if="item.LaboratoryTechPersonnel && item.LaboratoryTechPersonnel.length">
+            <div class="accordion-header" id="{{ id }}_heading-techpersonnel-lft">
+                <button class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ id }}_collapse-techpersonnel-lft"
                         aria-expanded="false"
-                        role="tab"
                         aria-controls="{{ id }}_collapse-techpersonnel-lft">
                     {% trans "Tech Personnel" %}
                 </button>
             </div>
             <div id="{{ id }}_collapse-techpersonnel-lft"
-                 class="collapse"
-                 role="tabpanel"
+                 class="accordion-collapse collapse"
+                 role="region"
+                 data-bs-parent="#{{ id }}_collapseDiv-lft"
                  aria-labelledby="{{ id }}_heading-techpersonnel-lft">
-                <div class="collapse-body">
+                <div class="accordion-body">
                     <ul>
                         <li v-for="subvalue in item.LaboratoryTechPersonnel" v-if="subvalue.TechPersonnelName && subvalue.TechPersonnelName != ''">
                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.TechPersonnelID +'/'">

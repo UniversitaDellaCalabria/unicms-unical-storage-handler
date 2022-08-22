@@ -23,7 +23,7 @@
                 <use xlink:href="{% static 'svg/sprite.svg' %}#it-user"></use>
             </svg>
         </div>
-        <div class="col-9 pl-3 align-left">
+        <div class="col-9 ps-3 align-left">
             <small>
                 <b>[[ item.Name ]]</b>
                 {% block structure %}
@@ -37,7 +37,7 @@
                 {% block location %}
                 <div>
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-map-marker-circle"></use>
                         </svg>
                         <a href="#">-</a>
@@ -47,7 +47,7 @@
                 {% endblock location %}
                 <div v-for="office_email in item.OfficeReference">
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
                         </svg>
                         <a href="mailto: [[ office_email ]]">[[ office_email ]]</a>
@@ -56,7 +56,7 @@
                 </div>
                 <div v-for="email in item.Email">
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
                         </svg>
                         <a href="mailto: [[ email ]]">[[ email ]]</a>
@@ -66,7 +66,7 @@
                 {% block pec %}
                 <div v-for="pec in item.PEC">
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
                         </svg>
                         <a href="mailto: [[ pec ]]">[[ pec ]]</a>
@@ -76,7 +76,7 @@
                 {% endblock pec %}
                 <div v-for="teloffice in item.TelOffice">
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
                         </svg> [[ teloffice ]]
                     </span>
@@ -84,7 +84,7 @@
                 </div>
                 <div v-for="telceloffice in item.TelCelOffice">
                     <span>
-                        <svg class="icon icon-sm icon-muted mr-2">
+                        <svg class="icon icon-sm icon-muted me-2">
                             <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
                         </svg> [[ telceloffice ]]
                     </span>
