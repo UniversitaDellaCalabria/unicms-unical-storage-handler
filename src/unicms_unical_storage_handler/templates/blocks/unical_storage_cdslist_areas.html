@@ -175,7 +175,7 @@
 
         <div v-else>
             <div class="card-columns card-columns-2">
-                <div class="card no-after" v-for="area in cds_areas" v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
+                <div class="card d-inline-block" v-for="area in cds_areas" v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
                     <b class="bordeaux-unical-color">
                         {% if LANGUAGE_CODE == 'it' %}
                             Area
