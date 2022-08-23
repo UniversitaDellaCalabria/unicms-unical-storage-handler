@@ -248,12 +248,12 @@
                                 <div class="col-12 col-md-auto">
                                     <a :href="item.CdSDoc" target="_blank" v-if="item.CdSDoc.includes('https') || item.CdSDoc.includes('http')">
                                         <svg class="m-auto icon icon-muted">
-                                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-clip"></use>
+                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-clip"></use>
                                         </svg> <b>{% trans "Download brochure" %}</b>
                                     </a>
                                     <a :href="'{{ api_root }}' + item.CdSDoc" target="_blank" v-else>
                                         <svg class="m-auto icon icon-muted">
-                                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-clip"></use>
+                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-clip"></use>
                                         </svg> <b>{% trans "Download brochure" %}</b>
                                     </a>
                                 </div>
@@ -432,7 +432,7 @@
             <div class="col-12"><hr></div>
             <div class="col-2">
                 <svg class="icon icon-muted">
-                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-user"></use>
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
                 </svg>
             </div>
             <div class="col-9 align-left">
@@ -453,7 +453,7 @@
             <div class="col-12"><hr></div>
             <div class="col-2">
                 <svg class="icon icon-muted">
-                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-user"></use>
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
                 </svg>
             </div>
             <div class="col-9 align-left">
@@ -474,7 +474,7 @@
             <div class="col-12"><hr></div>
             <div class="col-2">
                 <svg class="icon icon-muted">
-                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-info-circle"></use>
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
                 </svg>
             </div>
             <div class="col-9 align-left">
@@ -494,7 +494,7 @@
                         <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
                             <div class="col-2">
                                 <svg class="icon icon-sm icon-muted me-2">
-                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
                                 </svg>
                             </div>
                             <div class="col-10">
@@ -504,7 +504,7 @@
                         <div class="row" v-if="office.Email && office.Email.trim().length>0">
                             <div class="col-2">
                                 <svg class="icon icon-sm icon-muted me-2">
-                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
                                 </svg>
                             </div>
                             <div class="col-10">
@@ -516,7 +516,7 @@
                         <div class="row" v-if="office.Floor && office.Floor.trim().length>0">
                             <div class="col-2">
                                 <svg class="icon icon-sm icon-muted me-2">
-                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-map-marker"></use>
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
                                 </svg>
                             </div>
                             <div class="col-10">
@@ -526,7 +526,7 @@
                         <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
                             <div class="col-2">
                                 <svg class="icon icon-sm icon-muted me-2">
-                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-clock"></use>
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
                                 </svg>
                             </div>
                             <div class="col-10">
@@ -536,7 +536,7 @@
                         <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
                             <div class="col-2">
                                 <svg class="icon icon-sm icon-muted me-2">
-                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use>
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
                                 </svg>
                             </div>
                             <div class="col-10">
@@ -558,7 +558,7 @@
                             <b>
                                 <svg class="icon" aria-labelledby="doc_menu">
                                     <title id="doc_menu">{% trans "Documents" %}</title>
-                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-files"></use>
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
                                 </svg>
                             </b>
                         </div>

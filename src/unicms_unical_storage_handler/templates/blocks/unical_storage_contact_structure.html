@@ -20,7 +20,7 @@
     <div v-else-if="Object.keys(item).length" class="row">
         <div class="col-2">
             <svg class="icon icon-lg icon-muted">
-                <use xlink:href="{% static 'svg/sprite.svg' %}#it-info-circle"></use>
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
             </svg>
         </div>
         <div class="col-9 ps-3 align-left">
@@ -34,7 +34,7 @@
                 <div>
                     <span>
                         <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-map-marker-circle"></use>
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker-circle"></use>
                         </svg>
                         <a href="#">-</a>
                     </span>
@@ -43,7 +43,7 @@
                 <div v-for="email in item.StructureEmail">
                     <span>
                         <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
                         </svg>
                         <a href="mailto: [[ email ]]">[[ email ]]</a>
                     </span>
@@ -52,7 +52,7 @@
                 <div v-for="pec in item.StructurePec">
                     <span>
                         <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
                         </svg>
                         <a href="mailto: [[ pec ]]">[[ pec ]]</a>
                     </span>
@@ -61,7 +61,7 @@
                 <div v-for="tel in item.StructureTfr">
                     <span>
                         <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
                         </svg> [[ tel ]]
                     </span>
                     <br>
