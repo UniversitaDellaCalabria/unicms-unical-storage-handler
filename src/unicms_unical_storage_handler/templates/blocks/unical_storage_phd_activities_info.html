@@ -118,31 +118,35 @@
                 <!-- Main Teachers -->
                 <div v-if="item.MainTeachers && item.MainTeachers.length"
                      id="collapse_main_teachers_{{ id }}"
-                     class="collapse-div collapse-left-icon">
-                    <div class="collapse-header" id="{{ id }}_heading-main-teachers-lft">
-                        <button data-toggle="collapse"
-                                data-target="#{{ id }}_collapse-main-teachers-lft"
-                                aria-expanded="false"
-                                role="tab"
-                                aria-controls="{{ id }}_collapse-main-teachers-lft">
-                            {% trans "Main Teachers" %}
-                        </button>
-                    </div>
-                    <div id="{{ id }}_collapse-main-teachers-lft"
-                         class="collapse"
-                         role="tabpanel"
-                         aria-labelledby="{{ id }}_heading-main-teachers-lft">
-                        <div class="collapse-body">
-                            <ul>
-                                <li v-for="subvalue in item.MainTeachers" v-if="subvalue.PersonName && subvalue.PersonName != ''">
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.PersonId +'/'" v-if="subvalue.PersonId">
-                                        [[ subvalue.PersonName ]]
-                                    </a>
-                                    <span v-else>
-                                        [[ subvalue.PersonName ]]
-                                    </span>
-                                </li>
-                            </ul>
+                     class="accordion accordion-left-icon">
+                    <div class="accordion-item">
+                        <div class="accordion-header" id="{{ id }}_heading-main-teachers-lft">
+                            <button class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#{{ id }}_collapse-main-teachers-lft"
+                                    aria-expanded="false"
+                                    aria-controls="{{ id }}_collapse-main-teachers-lft">
+                                {% trans "Main Teachers" %}
+                            </button>
+                        </div>
+                        <div id="{{ id }}_collapse-main-teachers-lft"
+                             class="accordion-collapse collapse"
+                             role="region"
+                             data-bs-parent="#collapse_main_teachers_{{ id }}"
+                             aria-labelledby="{{ id }}_heading-main-teachers-lft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li v-for="subvalue in item.MainTeachers" v-if="subvalue.PersonName && subvalue.PersonName != ''">
+                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.PersonId +'/'" v-if="subvalue.PersonId">
+                                            [[ subvalue.PersonName ]]
+                                        </a>
+                                        <span v-else>
+                                            [[ subvalue.PersonName ]]
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,31 +154,35 @@
                 <!-- Other Teachers -->
                 <div v-if="item.OtherTeachers && item.OtherTeachers.length"
                      id="collapse_other_teachers_{{ id }}"
-                     class="collapse-div collapse-left-icon">
-                    <div class="collapse-header" id="{{ id }}_heading-other-teachers-lft">
-                        <button data-toggle="collapse"
-                                data-target="#{{ id }}_collapse-other-teachers-lft"
-                                aria-expanded="false"
-                                role="tab"
-                                aria-controls="{{ id }}_collapse-other-teachers-lft">
-                            {% trans "Other Teachers" %}
-                        </button>
-                    </div>
-                    <div id="{{ id }}_collapse-other-teachers-lft"
-                         class="collapse"
-                         role="tabpanel"
-                         aria-labelledby="{{ id }}_heading-other-teachers-lft">
-                        <div class="collapse-body">
-                            <ul>
-                                <li v-for="subvalue in item.OtherTeachers" v-if="subvalue.PersonName && subvalue.PersonName != ''">
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.PersonId +'/'" v-if="subvalue.PersonId">
-                                        [[ subvalue.PersonName ]]
-                                    </a>
-                                    <span v-else>
-                                        [[ subvalue.PersonName ]]
-                                    </span>
-                                </li>
-                            </ul>
+                     class="accordion accordion-left-icon">
+                    <div class="accordion-item">
+                        <div class="accordion-header" id="{{ id }}_heading-other-teachers-lft">
+                            <button class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#{{ id }}_collapse-other-teachers-lft"
+                                    aria-expanded="false"
+                                    aria-controls="{{ id }}_collapse-other-teachers-lft">
+                                {% trans "Other Teachers" %}
+                            </button>
+                        </div>
+                        <div id="{{ id }}_collapse-other-teachers-lft"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#collapse_other_teachers_{{ id }}"
+                             role="region"
+                             aria-labelledby="{{ id }}_heading-other-teachers-lft">
+                            <div class="accordion-body">
+                                <ul>
+                                    <li v-for="subvalue in item.OtherTeachers" v-if="subvalue.PersonName && subvalue.PersonName != ''">
+                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.PersonId +'/'" v-if="subvalue.PersonId">
+                                            [[ subvalue.PersonName ]]
+                                        </a>
+                                        <span v-else>
+                                            [[ subvalue.PersonName ]]
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -182,22 +190,27 @@
             <!-- Final Test Mode -->
                 <div v-if="item.FinalTestMode && item.FinalTestMode.length"
                      id="collapse_final_test_mode_{{ id }}"
-                     class="collapse-div collapse-left-icon">
-                    <div class="collapse-header" id="{{ id }}_heading-final-test-mode-lft">
-                        <button data-toggle="collapse"
-                                data-target="#{{ id }}_collapse-final-test-mode-lft"
-                                aria-expanded="false"
-                                aria-controls="{{ id }}_collapse-final-test-mode-lft">
-                            {% trans 'Final Test Mode' %}
-                        </button>
-                    </div>
-                    <div id="{{ id }}_collapse-final-test-mode-lft"
-                         class="collapse"
-                         role="tabpanel"
-                         aria-labelledby="{{ id }}_heading-final-test-mode-lft">
+                     class="accordion accordion-left-icon">
+                    <div class="accordion-item">
+                        <div class="accordion-header" id="{{ id }}_heading-final-test-mode-lft">
+                            <button class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#{{ id }}_collapse-final-test-mode-lft"
+                                    aria-expanded="false"
+                                    aria-controls="{{ id }}_collapse-final-test-mode-lft">
+                                {% trans 'Final Test Mode' %}
+                            </button>
+                        </div>
+                        <div id="{{ id }}_collapse-final-test-mode-lft"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#collapse_final_test_mode_{{ id }}"
+                             role="region"
+                             aria-labelledby="{{ id }}_heading-final-test-mode-lft">
 
-                        <div class="collapse-body">
-                            [[ item.FinalTestMode ]]
+                            <div class="accordion-body">
+                                [[ item.FinalTestMode ]]
+                            </div>
                         </div>
                     </div>
                 </div>

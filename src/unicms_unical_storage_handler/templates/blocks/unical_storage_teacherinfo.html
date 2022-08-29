@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-12 col-lg-2 d-flex">
                 <svg class="m-auto icon icon-xl icon-muted">
-                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-user"></use>
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
                 </svg>
             </div>
             <div class="col-12 col-lg-10 my-3 my-lg-0">
@@ -103,25 +103,28 @@
 
         <!-- CV -->
         <div id="{{ id }}_collapse-1-lft"
-             class="collapse-div collapse-left-icon"
-             role="tablist"
+             class="accordion accordion-left-icon"
              v-if="item.TeacherCVFull">
-            <div class="collapse-header" id="{{ id }}_heading-cvfull-lft">
-                <button data-toggle="collapse"
-                        data-target="#{{ id }}_collapse-cvfull-lft"
-                        aria-expanded="false"
-                        role="tab"
-                        aria-controls="{{ id }}_collapse-cvfull-lft">
-                    {% trans "Curriculum vitae" %}
-                </button>
-            </div>
-            <div id="{{ id }}_collapse-cvfull-lft"
-                 class="collapse"
-                 role="tabpanel"
-                 aria-labelledby="{{ id }}_heading-cvfull-lft">
-                <div class="mt-3">
-                    <span v-if="containsHTML(item.TeacherCVFull)" v-html="item.TeacherCVFull"></span>
-                    <span v-else style="white-space: pre-line;">[[ item.TeacherCVFull ]]</span>
+            <div class="accordion-item">
+                <div class="accordion-header" id="{{ id }}_heading-cvfull-lft">
+                     <button class="accordion-button"
+                             type="button"
+                             data-bs-toggle="collapse"
+                             data-bs-target="#{{ id }}_collapse-cvfull-lft"
+                             aria-expanded="false"
+                             aria-controls="{{ id }}_collapse-cvfull-lft">
+                        {% trans "Curriculum vitae" %}
+                    </button>
+                </div>
+                <div id="{{ id }}_collapse-cvfull-lft"
+                     class="accordion-collapse collapse"
+                     role="region"
+                     data-bs-parent="#{{ id }}_collapse-1-lft"
+                     aria-labelledby="{{ id }}_heading-cvfull-lft">
+                    <div class="mt-3 accordion-body">
+                        <span v-if="containsHTML(item.TeacherCVFull)" v-html="item.TeacherCVFull"></span>
+                        <span v-else style="white-space: pre-line;">[[ item.TeacherCVFull ]]</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,26 +140,30 @@
 {% endwith %}
 
 <!-- teacher's activities -->
-<div id="{{ id }}_collapse-3-lft" class="collapse-div collapse-left-icon" role="tablist">
-    <div class="collapse-header" id="{{ id }}_heading-activities-lft">
-        <button data-toggle="collapse"
-                data-target="#{{ id }}_collapse-activities-lft"
-                aria-expanded="false"
-                role="tab"
-                aria-controls="{{ id }}_collapse-activities-lft">
-            {% trans "Teachings" %}
-        </button>
-    </div>
-    <div id="{{ id }}_collapse-activities-lft"
-         class="collapse"
-         role="tabpanel"
-         aria-labelledby="{{ id }}_heading-activities-lft">
-        <div class="mt-3">
-            {% storage_settings_value "CURRENT_YEAR" as current_year %}
-            {% clean_url url as cleaned_url %}
-            {% with cleaned_url|add:"/studyactivities/?year="|add:current_year as studyactivities_url %}
-            {% include "blocks/unical_storage_teacherstudyactivities.html" with url=studyactivities_url uid=id|add:"_2" %}
-            {% endwith %}
+<div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
+    <div class="accordion-item">
+        <div class="accordion-header" id="{{ id }}_heading-activities-lft">
+            <button class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#{{ id }}_collapse-activities-lft"
+                    aria-expanded="false"
+                    aria-controls="{{ id }}_collapse-activities-lft">
+                {% trans "Teachings" %}
+            </button>
+        </div>
+        <div id="{{ id }}_collapse-activities-lft"
+             class="accordion-collapse collapse"
+             data-bs-parent="#{{ id }}_collapse-3-lft"
+             role="region"
+             aria-labelledby="{{ id }}_heading-activities-lft">
+            <div class="mt-3 accordion-body">
+                {% storage_settings_value "CURRENT_YEAR" as current_year %}
+                {% clean_url url as cleaned_url %}
+                {% with cleaned_url|add:"/studyactivities/?year="|add:current_year as studyactivities_url %}
+                {% include "blocks/unical_storage_teacherstudyactivities.html" with url=studyactivities_url uid=id|add:"_2" %}
+                {% endwith %}
+            </div>
         </div>
     </div>
 </div>

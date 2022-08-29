@@ -1,17 +1,20 @@
 <div id="{{ id }}" v-if="(initial_items && initial_items.length) || initial_parameters">
-    <div id="{{ id }}_collapse-container-lft" class="collapse-div collapse-left-icon" role="tablist">
-        <div class="collapse-header" id="{{ id }}_heading-lft">
-            <button data-toggle="collapse"
-                    data-target="#{{ id }}_collapse-lft"
-                    aria-expanded="false"
-                    role="tab"
-                    aria-controls="{{ id }}_collapse-lft">
-                {{ title }}
-            </button>
-        </div>
-        <div id="{{ id }}_collapse-lft"
-             class="collapse"
-             role="tabpanel"
-             aria-labelledby="{{ id }}_heading-lft">
-            <div class="mt-3">
-                <div v-if="items || parameters">
+    <div id="{{ id }}_collapse-container-lft" class="accordion accordion-left-icon">
+        <div class="accordion-item">
+            <div class="accordion-header" id="{{ id }}_heading-lft">
+                <button class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ id }}_collapse-lft"
+                        aria-expanded="false"
+                        aria-controls="{{ id }}_collapse-lft">
+                    {{ title }}
+                </button>
+            </div>
+            <div id="{{ id }}_collapse-lft"
+                 class="accordion-collapse collapse"
+                 role="region"
+                 data-bs-parent="#{{ id }}_collapse-container-lft"
+                 aria-labelledby="{{ id }}_heading-lft">
+                <div class="mt-3 accordion-body">
+                    <div v-if="items || parameters">

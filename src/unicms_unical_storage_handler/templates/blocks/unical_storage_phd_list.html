@@ -14,22 +14,26 @@
                     <div class="card card-bg no-after">
                         <div class="card-body">
 
-                            <div class="collapse-header" id="heading1">
-                                <button style="padding: 0px; color: #19191a;"
-                                        data-toggle="collapse"
-                                        data-target="#collapse1"
+                            <div class="accordion-header" id="heading1">
+                                <button class="accordion-button"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        style="padding: 0px; color: #19191a;"
+                                        data-bs-target="#collapse1"
                                         aria-expanded="false"
-                                        role="tab"
                                         aria-controls="collapse1">
                                     {% trans "Filters" %}
                                 </button>
                             </div>
 
-                            <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="heading1">
+                            <div id="collapse1"
+                                 class="accordion-collapse collapse"
+                                 role="region"
+                                 aria-labelledby="heading1">
                                 <!-- Year & Year From & Year To -->
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm">
+                                        <div class="col-sm form-group mb-0">
                                             <div>
                                                 <label>{% trans "Year" %}</label>
                                                 <div class="w-30 mt-5">
@@ -40,7 +44,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm">
+                                        <div class="col-sm form-group mb-0">
                                             <div>
                                                 <label>{% trans "From" %}</label>
                                                 <div class="w-30 mt-5">
@@ -51,7 +55,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm">
+                                        <div class="col-sm form-group mb-0">
                                             <div>
                                                 <label>{% trans "To" %}</label>
                                                 <div class="w-30 mt-5">
@@ -68,7 +72,7 @@
                                 <!-- CdS ID & CdS COD & Department ID -->
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm">
+                                        <div class="col-sm form-group mb-0">
                                             <div>
                                                 <label>{% trans "Course of study ID" %}</label>
                                                 <div class="w-30 mt-5">
@@ -80,7 +84,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm">
+                                        <div class="col-sm form-group mb-0">
                                             <div>
                                                 <label>{% trans "Course of study code" %}</label>
                                                 <div class="w-30 mt-5">
@@ -91,7 +95,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm">
+                                        <div class="col-sm form-group mb-0">
                                             <div>
                                                 <label for="department_id_input">{% trans "Department ID" %}</label>
                                                 <div class="w-30 mt-5">
@@ -108,7 +112,7 @@
                                 <!-- Study Plan Code & Cycle -->
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm">
+                                        <div class="col-sm form-group mb-0">
                                             <div>
                                                 <label for="pds_cod_input">{% trans "Study plan code" %}</label>
                                                 <div class="w-30 mt-5">
@@ -119,8 +123,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm">
-                                            <div class="ml-5 mr-5">
+                                        <div class="col-sm form-group mb-0">
+                                            <div class="ms-5 me-5">
                                                 <label>{% trans "Cycle" %}</label>
                                                 <div class="w-30 mt-5">
                                                     <input type="number" id="cycle_input" name="cycle_input">
@@ -130,11 +134,13 @@
                                     </div>
                                 </div>
                                 <div class="input-group-append d-flex justify-content-center">
+                                   {% comment %}
                                     <div class="input-group-text">
                                         <svg class="icon icon-sm icon-muted">
-                                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
+                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-search"></use>
                                         </svg>
                                     </div>
+                                    {% endcomment %}
                                     <button class="btn btn-primary"
                                             type="button"
                                             id="search-button"

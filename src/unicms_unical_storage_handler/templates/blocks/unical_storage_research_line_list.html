@@ -37,7 +37,7 @@
                                         :loader_source="loader_source_departments">
                                     </loading-icon>
 
-                                    <div class="col-sm" v-else>
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_department_input">
                                                 {% trans "Department" %}
@@ -63,7 +63,7 @@
 
                                 <!-- Type -->
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                         <div>
                                             <label for="{{ id }}_research_line_type">
                                                 {% trans "Type" %}
@@ -85,7 +85,7 @@
 
                                 <!-- ERC 1 -->
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                         <loading-icon
                                             v-if="is_loading_erc1"
                                             :loader_source="loader_source_erc1">
@@ -118,7 +118,7 @@
 
                                 <!-- Aster 1 -->
                                 <div class="row">
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
                                         <loading-icon
                                             v-if="is_loading_aster1"
                                             :loader_source="is_loading_aster1">

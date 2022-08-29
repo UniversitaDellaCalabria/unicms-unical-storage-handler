@@ -37,11 +37,13 @@
                                                v-model="selected_search"
                                                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                         <div class="input-group-append">
+                                            {% comment %}
                                             <div class="input-group-text">
                                                 <svg class="icon icon-sm icon-muted">
-                                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-search"></use>
                                                 </svg>
                                             </div>
+                                            {% endcomment %}
 
                                             {% include "includes/unical_storage_search_button.html" with id=id %}
 
@@ -59,11 +61,13 @@
                                                v-model="selected_phone"
                                                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                         <div class="input-group-append">
+                                            {% comment %}
                                             <div class="input-group-text">
                                                 <svg class="icon icon-sm icon-muted">
-                                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-search"></use>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-search"></use>
                                                 </svg>
                                             </div>
+                                            {% endcomment %}
 
                                             {% include "includes/unical_storage_search_button.html" with id=id %}
 
@@ -80,7 +84,7 @@
                                     {% block filters %}
 
                                     {% block structure_type_filter %}
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
 
                                         <loading-icon
                                             v-if="is_loading_structure_type"
@@ -111,7 +115,7 @@
                                     </div>
                                     {% endblock structure_type_filter %}
 
-                                    <div class="col-sm" v-if="structure_id_filter.length">
+                                    <div class="col-sm form-group mb-0" v-if="structure_id_filter.length">
 
                                         <loading-icon
                                             v-if="is_loading_structure_id"
@@ -140,7 +144,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm">
+                                    <div class="col-sm form-group mb-0">
 
                                         <loading-icon
                                             v-if="is_loading_roles"
@@ -205,7 +209,7 @@
                                     {% comment %}
                                     <div class="col-2">
                                         <svg class="icon icon-lg icon-muted">
-                                            <use xlink:href="{% static 'svg/sprite.svg' %}#it-user"></use>
+                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
                                         </svg>
                                     </div>
                                     {% endcomment %}
@@ -226,7 +230,7 @@
 
                                             {% block role %}
                                             <br>
-                                            <ul class="mt-2 mb-1 pl-0" style="list-style: none">
+                                            <ul class="mt-2 mb-1 ps-0" style="list-style: none">
                                                 <li v-for="role in item.Roles" v-if="((allowed_roles.length==0 || allowed_roles.includes(role.Role)) && (allowed_structure_types.length==0 || allowed_structure_types.includes(role.StructureTypeCOD))) || special_roles.includes(item.ProfileId)">
                                                     <span v-if="role.StructureTypeCOD != '000'">
                                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + role.StructureCod +'/'">
@@ -246,8 +250,8 @@
                                             {% comment %}
                                             <div>
                                                 <span>
-                                                    <svg class="icon icon-sm icon-muted mr-2">
-                                                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-map-marker-circle"></use>
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker-circle"></use>
                                                     </svg>
                                                     <a href="#">-</a>
                                                 </span>
@@ -258,8 +262,8 @@
 
                                             <div v-for="office in item.OfficeReference">
                                                 <span>
-                                                    <svg class="icon icon-sm icon-muted mr-2">
-                                                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-map-marker"></use>
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
                                                     </svg>
                                                     [[ office ]]
                                                 </span>
@@ -267,8 +271,8 @@
                                             </div>
                                             <div v-for="email in item.Email">
                                                 <span>
-                                                    <svg class="icon icon-sm icon-muted mr-2">
-                                                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
                                                     </svg>
                                                     <a :href="'mailto:'+email">[[ email ]]</a>
                                                 </span>
@@ -277,8 +281,8 @@
                                             {% block pec %}
                                             <div v-for="pec in item.PEC">
                                                 <span>
-                                                    <svg class="icon icon-sm icon-muted mr-2">
-                                                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
                                                     </svg>
                                                     <a href="mailto: [[ pec ]]">[[ pec ]]</a>
                                                 </span>
@@ -287,16 +291,16 @@
                                             {% endblock pec %}
                                             <div v-for="teloffice in item.TelOffice">
                                                 <span>
-                                                    <svg class="icon icon-sm icon-muted mr-2">
-                                                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
                                                     </svg> [[ teloffice ]]
                                                 </span>
                                                 <br>
                                             </div>
                                             <div v-for="telceloffice in item.TelCelOffice">
                                                 <span>
-                                                    <svg class="icon icon-sm icon-muted mr-2">
-                                                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
                                                     </svg> [[ telceloffice ]]
                                                 </span>
                                                 <br>

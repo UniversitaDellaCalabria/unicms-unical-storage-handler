@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-12 col-lg-2 d-flex">
                 <svg class="m-auto icon icon-xl icon-muted">
-                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-user"></use>
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
                 </svg>
             </div>
             <div class="col-12 col-lg-10 my-3 my-lg-0">
@@ -54,7 +54,7 @@
                             [[ labels[name] ]]
                         </td>
                         <td v-if="typeof value === 'object'">
-                            <ul v-if="name == 'Roles'" style="list-style: none" class="pl-0">
+                            <ul v-if="name == 'Roles'" style="list-style: none" class="ps-0">
                                 <li v-for="(subvalue, index) in value" v-if="((allowed_roles.length==0 || allowed_roles.includes(subvalue.Role)) && (allowed_structure_types.length==0 || allowed_structure_types.includes(subvalue.StructureTypeCOD))) || special_roles.includes(item.ProfileId)">
                                     <hr v-if="index > 0">
                                     <span v-if="subvalue.StructureTypeCOD != '000'">

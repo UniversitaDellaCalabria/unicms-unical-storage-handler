@@ -26,63 +26,65 @@
 
             <h5 class="mt-4 mb-3">{% trans "Teachings" %}</h5>
 
-            <div :id="'collapseActivitiesDiv{{ id }}-lft'"
-                 class="collapse-div collapse-left-icon"
-                 role="tablist">
+            <div :id="'accordionActivitiesDiv{{ id }}-lft'" class="accordion accordion-left-icon">
                 <div v-for="(value, label, index) in items.results[0].StudyActivities">
-                    <div class="collapse-header"
-                         :id="'heading-{{ id }}-' + index + '-lft'">
-                        <button data-toggle="collapse"
-                                :data-target="'#collapse-{{ id }}-' + index +'-lft'"
-                                aria-expanded="false"
-                                role="tab"
-                                :aria-controls="'collapse-{{ id }}-' + index +'-lft'">
-                        [[ label ]] {% trans "year" %} ([[ academic_year + parseInt(label) - 1]]/[[ academic_year + parseInt(label)]])
-                        </button>
-                    </div>
-                    <div :id="'collapse-{{ id }}-' + index +'-lft'"
-                         class="collapse"
-                         role="tabpanel"
-                         :aria-labelledby="'heading-{{ id }}-' + index + '-lft'">
-                        <div class="collapse-body">
-                            <div class="it-list-wrapper">
-                                <div class="table-responsive">
-                                    <small>
-                                        <table class="table table-sm table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">[[ items.labels.StudyActivityName ]]</th>
-                                                    <th scope="col">[[ items.labels.StudyActivitySemester ]]</th>
-                                                    <th scope="col">[[ items.labels.StudyActivityECTS ]]</th>
-                                                    <th scope="col" v-if="interclass_degree_class && degree_class">
-                                                        [[ degree_class ]]
-                                                    </th>
-                                                    <th scope="col" v-else-if="degree_class"></th>
-                                                    <th scope="col" v-if="interclass_degree_class">
-                                                        [[ interclass_degree_class ]]
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
-                                                    <td>
-                                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
-                                                            [[ activity.StudyActivityName ]]
-                                                            <span v-if="items.StudyActivityCompulsory == 1">*</span>
-                                                        </a>
-                                                    </td>
-                                                    <td>[[ activity.StudyActivitySemester ]]</td>
-                                                    <td>[[ activity.StudyActivityECTS ]]</td>
-                                                    <td v-if="degree_class">
-                                                        [[ activity.StudyActivityTeachingUnitType || "-" ]]
-                                                    </td>
-                                                    <td v-if="interclass_degree_class">
-                                                        [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </small>
+                    <div class="accordion-item">
+                        <div class="accordion-header" :id="'heading-{{ id }}-' + index + '-lft'">
+                            <button class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    :data-bs-target="'#collapse-{{ id }}-' + index +'-lft'"
+                                    aria-expanded="false"
+                                    :aria-controls="'collapse-{{ id }}-' + index +'-lft'">
+                                [[ label ]] {% trans "year" %} ([[ academic_year + parseInt(label) - 1]]/[[ academic_year + parseInt(label)]])
+                              </button>
+                            </button>
+                        </div>
+                        <div :id="'collapse-{{ id }}-' + index +'-lft'"
+                             class="accordion-collapse collapse"
+                             :data-bs-parent="'#accordionActivitiesDiv{{ id }}-lft'"
+                             role="region"
+                             :aria-labelledby="'heading-{{ id }}-' + index + '-lft'">
+                            <div class="accordion-body">
+                                <div class="it-list-wrapper">
+                                    <div class="table-responsive">
+                                        <small>
+                                            <table class="table table-sm table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">[[ items.labels.StudyActivityName ]]</th>
+                                                        <th scope="col">[[ items.labels.StudyActivitySemester ]]</th>
+                                                        <th scope="col">[[ items.labels.StudyActivityECTS ]]</th>
+                                                        <th scope="col" v-if="interclass_degree_class && degree_class">
+                                                            [[ degree_class ]]
+                                                        </th>
+                                                        <th scope="col" v-else-if="degree_class"></th>
+                                                        <th scope="col" v-if="interclass_degree_class">
+                                                            [[ interclass_degree_class ]]
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                        <td>
+                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                [[ activity.StudyActivityName ]]
+                                                                <span v-if="items.StudyActivityCompulsory == 1">*</span>
+                                                            </a>
+                                                        </td>
+                                                        <td>[[ activity.StudyActivitySemester ]]</td>
+                                                        <td>[[ activity.StudyActivityECTS ]]</td>
+                                                        <td v-if="degree_class">
+                                                            [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                        </td>
+                                                        <td v-if="interclass_degree_class">
+                                                            [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -93,83 +95,83 @@
 
         <div v-else>
             <h5 class="mt-4 mb-3">{% trans "Study paths" %}</h5>
-            <div :id="'studyPlanCollapseDiv{{ id }}-lft'"
-                 class="collapse-div collapse-left-icon"
-                 role="tablist">
-                <div v-for="(item, index) in items.results">
-                    <div class="collapse-header"
-                         :id="'studyPlanHeading-{{ id }}-' + index + '-lft'">
-                        <button data-toggle="collapse"
-                                :data-target="'#studyPlanCollapse-{{ id }}-' + index +'-lft'"
+            <div :id="'studyPlanAccordionDiv{{ id }}-lft'" class="accordion accordion-left-icon">
+                <div v-for="(item, index) in items.results" class="accordion-item">
+                    <div class="accordion-header" :id="'studyPlanHeading-{{ id }}-' + index + '-lft'">
+                        <button class="accordion-button"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                :data-bs-target="'#studyPlanAccordion-{{ id }}-' + index +'-lft'"
                                 aria-expanded="false"
-                                role="tab"
-                                :aria-controls="'studyPlanCollapse-{{ id }}-' + index +'-lft'">
+                                :aria-controls="'studyPlanAccordion-{{ id }}-' + index +'-lft'">
                             [[ item.StudyPlanName ]]
                         </button>
                     </div>
-                    <div :id="'studyPlanCollapse-{{ id }}-' + index +'-lft'"
-                         class="collapse"
-                         role="tabpanel"
-                         :aria-labelledby="'studyPlanHeading-{{ id }}-' + index + '-lft'">
-                        <div class="collapse-body">
-
-                            <div :id="'studyPlanCollapseInnerDiv{{ id }}-' + index + '-lft'"
-                                 class="collapse-div collapse-left-icon"
-                                 role="tablist">
+                    <div :id="'studyPlanAccordion-{{ id }}-' + index +'-lft'"
+                         class="accordion-collapse collapse"
+                         :data-bs-parent="'#studyPlanAccordionDiv{{ id }}-lft'"
+                         role="region"
+                         aria-labelledby="'studyPlanHeading-{{ id }}-' + index + '-lft'">
+                        <div class="accordion-body">
+                            <div :id="'studyPlanAccordionInnerDiv{{ id }}-' + index + '-lft'"
+                                 class="accordion accordion-left-icon">
                                 <div v-for="(value, label, index2) in item.StudyActivities">
-                                    <div class="collapse-header"
-                                         :id="'heading-{{ id }}-' + index + index2 + '-lft'">
-                                        <button data-toggle="collapse"
-                                                :data-target="'#collapse-{{ id }}-' + index + index2 +'-lft'"
-                                                aria-expanded="false"
-                                                role="tab"
-                                                :aria-controls="'collapse-{{ id }}-' + index + index2 +'-lft'">
-                                        [[ label ]] {% trans "year" %}  ([[ academic_year + parseInt(label) - 1]]/[[ academic_year + parseInt(label)]])
-                                        </button>
-                                    </div>
-                                    <div :id="'collapse-{{ id }}-' + index + index2 +'-lft'"
-                                         class="collapse"
-                                         role="tabpanel"
-                                         :aria-labelledby="'heading-{{ id }}-' + index + index2 + '-lft'">
-                                        <div class="collapse-body">
-                                            <div class="it-list-wrapper">
-                                                <div class="table-responsive">
-                                                    <small>
-                                                        <table class="table table-sm table-hover table-striped">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col">[[ items.labels.StudyActivityName ]]</th>
-                                                                    <th scope="col">[[ items.labels.StudyActivitySemester ]]</th>
-                                                                    <th scope="col">[[ items.labels.StudyActivityECTS ]]</th>
-                                                                    <th scope="col" v-if="interclass_degree_class && degree_class">
-                                                                        [[ degree_class ]]
-                                                                    </th>
-                                                                    <th scope="col" v-else-if="degree_class"></th>
-                                                                    <th scope="col" v-if="interclass_degree_class">
-                                                                        [[ interclass_degree_class ]]
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
-                                                                    <td>
-                                                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
-                                                                            [[ activity.StudyActivityName ]]
-                                                                            <span v-if="items.StudyActivityCompulsory == 1">*</span>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td>[[ activity.StudyActivitySemester ]]</td>
-                                                                    <td>[[ activity.StudyActivityECTS ]]</td>
-                                                                    <td v-if="degree_class">
-                                                                        [[ activity.StudyActivityTeachingUnitType || "-" ]]
-                                                                    </td>
-                                                                    <td v-if="interclass_degree_class">
-                                                                        [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </small>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header" :id="'heading-{{ id }}-' + index + index2 + '-lft'">
+                                            <button class="accordion-button"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    :data-bs-target="'#collapse-{{ id }}-' + index + index2 +'-lft'"
+                                                    aria-expanded="false"
+                                                    :aria-controls="'collapse-{{ id }}-' + index + index2 +'-lft'">
+                                            [[ label ]] {% trans "year" %}  ([[ academic_year + parseInt(label) - 1]]/[[ academic_year + parseInt(label)]])
+                                            </button>
+                                        </div>
+                                        <div :id="'collapse-{{ id }}-' + index + index2 +'-lft'"
+                                             class="accordion-collapse collapse"
+                                             :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
+                                             role="region"
+                                             :aria-labelledby="'heading-{{ id }}-' + index + index2 + '-lft'">
+                                            <div class="accordion-body">
+                                                <div class="it-list-wrapper">
+                                                    <div class="table-responsive">
+                                                        <small>
+                                                            <table class="table table-sm table-hover table-striped">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">[[ items.labels.StudyActivityName ]]</th>
+                                                                        <th scope="col">[[ items.labels.StudyActivitySemester ]]</th>
+                                                                        <th scope="col">[[ items.labels.StudyActivityECTS ]]</th>
+                                                                        <th scope="col" v-if="interclass_degree_class && degree_class">
+                                                                            [[ degree_class ]]
+                                                                        </th>
+                                                                        <th scope="col" v-else-if="degree_class"></th>
+                                                                        <th scope="col" v-if="interclass_degree_class">
+                                                                            [[ interclass_degree_class ]]
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                                        <td>
+                                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                                [[ activity.StudyActivityName ]]
+                                                                                <span v-if="items.StudyActivityCompulsory == 1">*</span>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>[[ activity.StudyActivitySemester ]]</td>
+                                                                        <td>[[ activity.StudyActivityECTS ]]</td>
+                                                                        <td v-if="degree_class">
+                                                                            [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                                        </td>
+                                                                        <td v-if="interclass_degree_class">
+                                                                            [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </small>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

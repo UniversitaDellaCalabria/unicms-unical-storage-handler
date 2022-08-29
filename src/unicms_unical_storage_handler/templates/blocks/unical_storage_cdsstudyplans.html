@@ -47,46 +47,49 @@
 
                     <div v-for="(value, label, index2) in item.StudyActivities"
                          :id="'collapseDiv{{ id }}-' + index + '-lft'"
-                         class="collapse-div collapse-left-icon"
-                         role="tablist">
-                        <div class="collapse-header"
-                             :id="'heading-{{ id }}-' + index + index2 + '-lft'">
-                            <button data-toggle="collapse"
-                                    :data-target="'#collapse-{{ id }}-' + index + index2 +'-lft'"
-                                    aria-expanded="false"
-                                    role="tab"
-                                    :aria-controls="'collapse-{{ id }}-' + index + index2 +'-lft'">
-                            [[ label ]] {% trans "year" %}
-                            </button>
-                        </div>
-                        <div :id="'collapse-{{ id }}-' + index + index2 +'-lft'"
-                             class="collapse"
-                             role="tabpanel"
-                             :aria-labelledby="'heading-{{ id }}-' + index + index2 + '-lft'">
-                            <div class="collapse-body">
-                                <div class="it-list-wrapper">
-                                    <div class="table-responsive">
-                                        <table class="table table-sm table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">[[ items.labels.StudyActivityName ]]</th>
-                                                    <th scope="col">[[ items.labels.StudyActivitySemester ]]</th>
-                                                    <th scope="col">[[ items.labels.StudyActivityECTS ]]</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
-                                                    <td>
-                                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
-                                                            [[ activity.StudyActivityName ]]
-                                                            <span v-if="items.StudyActivityCompulsory == 1">*</span>
-                                                        </a>
-                                                    </td>
-                                                    <td>[[ activity.StudyActivitySemester ]]</td>
-                                                    <td>[[ activity.StudyActivityECTS ]]</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                         class="accordion accordion-left-icon">
+                        <div class="accordion-item">
+                            <div class="accordion-header"
+                                 :id="'heading-{{ id }}-' + index + index2 + '-lft'">
+                                <button class="accordion-button"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        :data-bs-target="'#collapse-{{ id }}-' + index + index2 +'-lft'"
+                                        aria-expanded="false"
+                                        :aria-controls="'collapse-{{ id }}-' + index + index2 +'-lft'">
+                                [[ label ]] {% trans "year" %}
+                                </button>
+                            </div>
+                            <div :id="'collapse-{{ id }}-' + index + index2 +'-lft'"
+                                 class="accordion-collapse collapse"
+                                 :data-bs-parent="'#collapseDiv{{ id }}-' + index + '-lft'"
+                                 role="region"
+                                 :aria-labelledby="'heading-{{ id }}-' + index + index2 + '-lft'">
+                                <div class="accordion-body">
+                                    <div class="it-list-wrapper">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">[[ items.labels.StudyActivityName ]]</th>
+                                                        <th scope="col">[[ items.labels.StudyActivitySemester ]]</th>
+                                                        <th scope="col">[[ items.labels.StudyActivityECTS ]]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                        <td>
+                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                [[ activity.StudyActivityName ]]
+                                                                <span v-if="items.StudyActivityCompulsory == 1">*</span>
+                                                            </a>
+                                                        </td>
+                                                        <td>[[ activity.StudyActivitySemester ]]</td>
+                                                        <td>[[ activity.StudyActivityECTS ]]</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
