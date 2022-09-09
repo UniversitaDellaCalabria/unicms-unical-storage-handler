@@ -460,7 +460,7 @@
                 <small>
                     <b>[[ labels['DeputyDirectorName'] ]]</b>
                     <br>
-                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DeputyDirectorId +'/'" v-if="item.OtherData[0].DirectorId">
+                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DeputyDirectorId +'/'" v-if="item.OtherData[0].DeputyDirectorId">
                         [[ item.OtherData[0].DeputyDirectorName ]]
                     </a>
                     <span v-else>
