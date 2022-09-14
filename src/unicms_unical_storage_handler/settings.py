@@ -242,7 +242,9 @@ STUDY_ACTIVITY_INFO_NOT_SHOW = ['StudyActivityName',
                                 'StudyActivityExtendedPartitionDes',
                                 'StudyActivityPartitionDes',
                                 'StudyActivitySSDCod',
-                                'StudyActivityFather']
+                                'StudyActivityFather',
+                                'StudyActivityPdsCod',
+                                'StudyActivityPdsDes']
 
 ADDRESSBOOK_INFO_NOT_SHOW = ['ID', 'Name', 'Role',
                              'RoleDescription', 'StructureTypeCOD',
