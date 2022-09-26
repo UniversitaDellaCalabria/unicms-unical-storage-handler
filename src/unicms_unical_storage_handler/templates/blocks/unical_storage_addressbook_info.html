@@ -80,7 +80,11 @@
                             </ul>
                             <ul class="list-unstyled" v-else>
                                 <li v-for="v in value">
-                                    <span style="white-space: pre-line;">
+                                    <a v-if="name == 'WebSite'"
+                                       :href="v" target="_blank">
+                                        [[ v ]]
+                                    </a>
+                                    <span style="white-space: pre-line;" v-else>
                                         [[ v ]]
                                     </span>
                                 </li>
