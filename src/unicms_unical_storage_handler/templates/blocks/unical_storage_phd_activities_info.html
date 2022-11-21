@@ -102,6 +102,27 @@
                                         <b>[[ item.FinalTest ]] </b>
                                     </small>
                                 </div>
+                                <div class="col-12 col-md-auto" v-if="item.ActivityStart">
+                                        <small>
+                                            [[ labels['ActivityStart'] ]] >
+                                            <b>[[ item.ActivityStart ]] </b>
+                                        </small>
+                                    </div><div class="col-12 col-md-auto" v-if="item.ActivityEnd">
+                                        <small>
+                                            [[ labels['ActivityEnd'] ]] >
+                                            <b>[[ item.ActivityEnd ]] </b>
+                                        </small>
+                                    </div><div class="col-12 col-md-auto" v-if="item.ClassroomsTimetable">
+                                        <small>
+                                            [[ labels['ClassroomsTimetable'] ]] >
+                                            <b>[[ item.ClassroomsTimetable ]] </b>
+                                        </small>
+                                    </div><div class="col-12 col-md-auto" v-if="item.ShowTimetable">
+                                        <small>
+                                            [[ labels['ShowTimetable'] ]] >
+                                            <b>[[ item.ShowTimetable ]] </b>
+                                        </small>
+                                    </div>
 
                             </div>
 
@@ -182,6 +203,35 @@
                                         </span>
                                     </li>
                                 </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            <!-- Notes -->
+                <div v-if="item.Notes"
+                     id="collapse_notes_{{ id }}"
+                     class="accordion accordion-left-icon">
+                    <div class="accordion-item">
+                        <div class="accordion-header" id="{{ id }}_heading-notes-lft">
+                            <button class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#{{ id }}_collapse-notes-lft"
+                                    aria-expanded="false"
+                                    aria-controls="{{ id }}_collapse-notes-lft">
+                                {% trans "Notes" %}
+                            </button>
+                        </div>
+                        <div id="{{ id }}_collapse-notes-lft"
+                             class="accordion-collapse collapse"
+                             role="region"
+                             data-bs-parent="#collapse_notes_{{ id }}"
+                             aria-labelledby="{{ id }}_heading-notes-lft">
+                            <div class="accordion-body">
+                                [[ item.Notes ]]
                             </div>
                         </div>
                     </div>

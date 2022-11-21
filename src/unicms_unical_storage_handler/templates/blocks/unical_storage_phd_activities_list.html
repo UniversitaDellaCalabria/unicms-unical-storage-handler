@@ -227,6 +227,27 @@
                                             <b>[[ item.CFU ]] </b>
                                         </small>
                                     </div>
+                                    <div class="col-12 col-md-auto" v-if="item.ActivityStart">
+                                        <small>
+                                            [[ labels['ActivityStart'] ]] >
+                                            <b>[[ item.ActivityStart ]] </b>
+                                        </small>
+                                    </div><div class="col-12 col-md-auto" v-if="item.ActivityEnd">
+                                        <small>
+                                            [[ labels['ActivityEnd'] ]] >
+                                            <b>[[ item.ActivityEnd ]] </b>
+                                        </small>
+                                    </div><div class="col-12 col-md-auto" v-if="item.ClassroomsTimetable">
+                                        <small>
+                                            [[ labels['ClassroomsTimetable'] ]] >
+                                            <b>[[ item.ClassroomsTimetable ]] </b>
+                                        </small>
+                                    </div><div class="col-12 col-md-auto" v-if="item.ShowTimetable">
+                                        <small>
+                                            [[ labels['ShowTimetable'] ]] >
+                                            <b>[[ item.ShowTimetable ]] </b>
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
