@@ -146,7 +146,7 @@
                                 </div>
                             </div>
 
-                            <div class="row" v-if="item.OfficesData.length > 0" v-for="office in item.OfficesData">
+                            <div class="row" v-if="item.OfficesData" v-for="office in item.OfficesData">
                                 <div class="col-12">
                                     <hr>
                                     <small>
@@ -398,7 +398,7 @@
                             data-bs-target="#collapse-teachers-lft"
                             aria-expanded="false"
                             aria-controls="collapse-teachers-lft">
-                        {% trans "Teachings year" %} <span id="{{ id }}_cds_year"></span>
+                        {% trans "Teachings year" %}&nbsp;<span id="{{ id }}_cds_year"></span>
                       </button>
                     </button>
                 </div>
@@ -460,7 +460,7 @@
                 <small>
                     <b>[[ labels['DeputyDirectorName'] ]]</b>
                     <br>
-                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DeputyDirectorId +'/'">
+                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DeputyDirectorId +'/'" v-if="item.OtherData[0].DeputyDirectorId">
                         [[ item.OtherData[0].DeputyDirectorName ]]
                     </a>
                     <span v-else>
@@ -470,7 +470,7 @@
             </div>
         </div>
 
-        <div v-if="item.OfficesData.length > 0" v-for="office in item.OfficesData" class="row">
+        <div v-if="item.OfficesData" v-for="office in item.OfficesData" class="row">
             <div class="col-12"><hr></div>
             <div class="col-2">
                 <svg class="icon icon-muted">

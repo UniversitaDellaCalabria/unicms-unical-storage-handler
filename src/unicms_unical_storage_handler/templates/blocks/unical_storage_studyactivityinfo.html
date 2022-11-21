@@ -35,7 +35,7 @@
                 ([[ item.StudyActivityPartitionDes ]])
             </span>
         </h1>
-        <h3 class="lighter">[[ item.StudyActivityCdSName ]]</h3>
+        <h3 class="lighter">[[ item.StudyActivityCdSName ]] ([[ item.StudyActivityPdsDes ]])</h3>
         <hr class="my-4 bordeaux-unical-bg">
         <div class="table-responsive">
             <table class="table table-sm table-hover table-striped">
@@ -78,6 +78,15 @@
                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityRoot.StudyActivityID +'/'">
                                 [[ item.StudyActivityRoot.StudyActivityName ]]
                             </a>
+
+                            <!-- Father activity -->
+                            <ul v-if="item.StudyActivityFather">
+                                <li>
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityFather.StudyActivityID +'/'">
+                                        [[ item.StudyActivityFather.StudyActivityName ]]
+                                    </a>
+                                </li>
+                            </ul>
                         </td>
 
                         <!-- Modules activities -->
@@ -90,6 +99,17 @@
                                             ([[ valueProfile.StudyActivityPartitionDescription ]])
                                         </span>
                                     </a>
+                                    <ul v-if="valueProfile.StudyActivityGroups">
+                                        <li v-for="(subValueProfile, subNameProfile) in valueProfile.StudyActivityGroups">
+                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + subValueProfile.StudyActivityID +'/'">
+                                                [[ subValueProfile.StudyActivityName ]]
+                                                <span v-if="subValueProfile.StudyActivityPartitionDescription">
+                                                    ([[ subValueProfile.StudyActivityPartitionDescription ]])
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
                                 </li>
                             </ul>
                         </td>

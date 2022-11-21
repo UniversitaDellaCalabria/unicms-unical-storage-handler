@@ -46,7 +46,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     install_requires=[
-        'django>=2.0,<4.0',
+        'django>=2.0,<5.0',
         'unicms',
         'unicms-template-unical'
     ],
