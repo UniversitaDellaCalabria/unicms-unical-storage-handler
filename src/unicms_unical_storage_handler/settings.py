@@ -30,7 +30,8 @@ CMS_STORAGE_RESEARCH_LINE_VIEW_PREFIX_PATH = 'research-lines'
 CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH = 'companies'
 CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH = 'structures'
 CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = 'teachers'
-
+CMS_STORAGE_TEACHER_MATERIALS_VIEW_PREFIX_PATH = 'materials'
+CMS_STORAGE_TEACHER_NEWS_VIEW_PREFIX_PATH = 'news'
 
 
 # regexps
@@ -62,6 +63,7 @@ CMS_STORAGE_STRUCTURE_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*
 CMS_STORAGE_STRUCTURE_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH})/(?P<code>[a-z0-9\-]+)(/)?$' # noqa
 CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
+CMS_STORAGE_TEACHER_NEWS_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)/{CMS_STORAGE_TEACHER_NEWS_VIEW_PREFIX_PATH}(/)?$' # noqa
 
 
 CMS_STORAGE_HANDLERS_PATHS = [
@@ -93,6 +95,7 @@ CMS_STORAGE_HANDLERS_PATHS = [
                               CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP,
                               CMS_STORAGE_PHD_ACTIVITES_LIST_URL_VIEW_REGEXP,
                               CMS_STORAGE_PHD_ACTIVITES_INFO_URL_VIEW_REGEXP,
+                              CMS_STORAGE_TEACHER_NEWS_VIEW_REGEXP
                               ]
 
 
@@ -125,11 +128,13 @@ CMS_STORAGE_APP_REGEXP_URLPATHS = {
     'unicms_unical_storage_handler.handlers.StructureInfoViewHandler' : CMS_STORAGE_STRUCTURE_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.TeacherListViewHandler' : CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.TeacherInfoViewHandler' : CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP,
+    'unicms_unical_storage_handler.handlers.TeacherNewsListViewHandler': CMS_STORAGE_TEACHER_NEWS_VIEW_REGEXP,
+
 }
 
 
 # cms_storage APIs (ref: https://storage.unical.it)
-CMS_STORAGE_ROOT_API = 'https://storage.portale.unical.it'
+CMS_STORAGE_ROOT_API = 'https://pp.storage.unical.it'
 CMS_STORAGE_BASE_API = f'{CMS_STORAGE_ROOT_API}/api/ricerca/'
 
 CMS_STORAGE_ACADEMICYEARS_API = 'academicyears/'
@@ -171,6 +176,8 @@ CMS_STORAGE_STRUCTUREFUNCTIONS_API = 'functions/'
 CMS_STORAGE_STRUCTURETYPES_API = 'structuretypes/'
 CMS_STORAGE_TEACHER_API = 'teachers/'
 CMS_STORAGE_TECHAREAS_API = 'tech-areas/'
+CMS_STORAGE_TEACHER_NEWS_API = 'news/'
+
 
 
 # labels (for breadcrumbs and page title)
@@ -191,6 +198,7 @@ CMS_STORAGE_ROOT_LABEL = _("Open data")
 CMS_STORAGE_SPINOFF_LABEL = _("Companies")
 CMS_STORAGE_STRUCTURE_LABEL = _("Structures")
 CMS_STORAGE_TEACHERS_LABEL = _("Teachers")
+CMS_STORAGE_TEACHER_NEWS_LABEL = _("News")
 
 
 # API filters
@@ -258,7 +266,8 @@ TEACHER_INFO_NOT_SHOW = ['TeacherID', 'TeacherDepartmentID',
                          'TeacherRole', 'TeacherRoleDescription',
                          'TeacherCVFull', 'TeacherSSDCod',
                          'TeacherDepartmentCod', 'ProfileId', 'ProfileDescription',
-                         'ProfileShortDescription']
+                         'ProfileShortDescription', 'ReceptionHours', 'ReceptionHoursEn',
+                        'CVPathIta', 'CVPathEn', 'ShortBio', 'ShortBioEn', 'PhotoPath']
 
 STRUCTURE_INFO_NOT_SHOW = ['StructureId', 'StructureCod', 'StructureFatherId',
                            'StructureTypeCOD', 'StructurePersonnelFunctions',

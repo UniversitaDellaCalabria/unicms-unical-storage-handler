@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-21 11:24+0100\n"
-"PO-Revision-Date: 2022-11-21 11:25+0100\n"
+"POT-Creation-Date: 2023-01-23 15:29+0100\n"
+"PO-Revision-Date: 2023-01-23 15:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: settings.py:177 templates/blocks/unical_storage_cdsstudyplans_v3.html:27
-#: templates/blocks/unical_storage_teacherinfo.html:152
+#: templates/blocks/unical_storage_teacherinfo.html:173
 msgid "Teachings"
 msgstr "Insegnamenti"
 
@@ -112,7 +112,7 @@ msgstr "Imprese"
 msgid "Structures"
 msgstr "Strutture"
 
-#: settings.py:193 templates/blocks/unical_storage_cdsinfo.html:393
+#: settings.py:193 templates/blocks/unical_storage_cdsinfo.html:392
 #: templates/storage_base.html:124 templates/storage_teachers_list.html:11
 #: templates/storage_teachers_list.html:20
 msgid "Teachers"
@@ -178,6 +178,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_teacherresearchlines.html:39
 #: templates/blocks/unical_storage_teacherslist.html:164
 #: templates/blocks/unical_storage_teacherstudyactivities.html:140
+#: templates/blocks/unical_storage_teachingmaterials.html:76
 msgid "No items here"
 msgstr "Nessun risultato"
 
@@ -309,7 +310,7 @@ msgstr "Professori Emeriti"
 msgid "Honorary Professors"
 msgstr "Professori Onorari"
 
-#: templates/blocks/unical_storage_addressbook_info.html:100
+#: templates/blocks/unical_storage_addressbook_info.html:104
 #: templates/blocks/unical_storage_laboratory_info.html:117
 #: templates/blocks/unical_storage_publications_info.html:85
 #: templates/blocks/unical_storage_studyactivityinfo.html:48
@@ -367,20 +368,20 @@ msgstr "Sito web"
 msgid "Download brochure"
 msgstr "Scarica la brochure"
 
-#: templates/blocks/unical_storage_cdsinfo.html:404
+#: templates/blocks/unical_storage_cdsinfo.html:403
 msgid "Teachings year"
 msgstr "Docenze anno"
 
-#: templates/blocks/unical_storage_cdsinfo.html:564
+#: templates/blocks/unical_storage_cdsinfo.html:563
 msgid "Documents"
 msgstr "Documenti"
 
-#: templates/blocks/unical_storage_cdsinfo.html:573
-#: templates/blocks/unical_storage_cdsinfo.html:576
+#: templates/blocks/unical_storage_cdsinfo.html:572
+#: templates/blocks/unical_storage_cdsinfo.html:575
 msgid "Study course brochure"
 msgstr "Brochure del corso"
 
-#: templates/blocks/unical_storage_cdsinfo.html:589
+#: templates/blocks/unical_storage_cdsinfo.html:588
 #: templates/storage_high_formation_master_info.html:35
 #: templates/storage_high_formation_masters_list.html:35
 msgid "Digital services"
@@ -842,9 +843,13 @@ msgstr "Corso di studio"
 msgid "Code"
 msgstr "Codice"
 
-#: templates/blocks/unical_storage_teacherinfo.html:116
+#: templates/blocks/unical_storage_teacherinfo.html:137
 msgid "Curriculum vitae"
 msgstr ""
+
+#: templates/blocks/unical_storage_teacherinfo.html:254
+msgid "Teaching Materials"
+msgstr "Materiale Didattico"
 
 #: templates/blocks/unical_storage_teacherslist.html:37
 msgid "Course of study"

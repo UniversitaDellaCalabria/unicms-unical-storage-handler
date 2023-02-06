@@ -1,0 +1,178 @@
+{% extends "bases/unical_storage_list.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% block content %}
+
+{% get_allowed_website request.get_host as host %}
+
+
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_NEWS_VIEW_PREFIX_PATH" as news_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
+
+<div id="{{ id }}">
+    <div v-if="(initial_items && initial_items.length) || parameters">
+            <!--
+                <br>
+                <div class="col-12 mb-4">
+                    <div class="pt-2 pb-3 ps-3 background-yellow">
+                        <h2 class="m-0 p-0">
+                            <span style="font-weight: 500">unical</span>
+                            <span class="super-bold">world</span>
+                        </h2>
+                    </div>
+                </div>
+            -->
+        <loading-icon
+            v-if="is_loading"
+            :loader_source="loader_source">
+        </loading-icon>
+
+
+    <div v-else>
+
+
+
+        {#<div class="form-group">#}
+        {#    <div class="input-group">#}
+        {#        <label for="news_search"></label>#}
+        {#        <input type="text"#}
+        {#               id="news_search"#}
+        {#               class="form-control"#}
+        {#               name="news_search"#}
+        {#               v-model="selected_search"#}
+        {#               v-on:keyup.enter="search()">#}
+        {#        <div class="input-group-append">#}
+        {#            {% comment %}#}
+        {#            <div class="input-group-text">#}
+        {#                <svg class="icon icon-sm icon-muted">#}
+        {#                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-search"></use>#}
+        {#                </svg>#}
+        {#            </div>#}
+        {#            {% endcomment %}#}
+        {#            <button class="btn btn-primary"#}
+        {#                    type="button"#}
+        {#                    id="search-button"#}
+        {#                    @click="search()">#}
+        {#                {% trans "Search" %}#}
+        {#            </button>#}
+        {##}
+        {##}
+        {#        </div>#}
+        {#    </div>#}
+        {#</div>#}
+
+        <list-panel v-bind:data="items"></list-panel>
+
+        <div v-if="items">
+            <div class="row">
+                <div class="col-12 col-lg-4 " v-for="item in items.results" :key="item.id">
+                    <!--start card-->
+                    <div class="card-wrapper card-space">
+                        <div class="card card-bg no-after">
+                            <div class="card-body">
+                                {#<div class="img-responsive-wrapper mx-n4 mb-3 {% if category_name %}mt-n4{% endif %}" v-if="item.publication.image">#}
+                                {#    <div class="img-responsive img-responsive-panoramic">#}
+                                {#        <figure class="img-wrapper">#}
+                                {#          <a :href="item.path">#}
+                                {#            <img :src="item.publication.image"#}
+                                {#                 :title="item.publication.preview_image.title"#}
+                                {#                 :alt="item.publication.preview_image.description"#}
+                                {#                 v-if="item.publication.preview_image"/>#}
+                                {#            <img :src="item.publication.image"#}
+                                {#                 :title="item.publication.presentation_image.title"#}
+                                {#                 :alt="item.publication.presentation_image.description"#}
+                                {#                 v-else-if="item.publication.presentation_image"/>#}
+                                {#          </a>#}
+                                {#        </figure>#}
+                                {#    </div>#}
+                                {#</div>#}
+                                {#<div class="category-top">#}
+                                {#    <span>{% trans "Published" %}: [[ new Date(item.date_start).toLocaleString("{{ LANGUAGE_CODE }}",#}
+                                {#                                                                                {day: '2-digit',#}
+                                {#                                                                                 month: '2-digit',#}
+                                {#                                                                                 year: 'numeric',#}
+                                {#                                                                                 hour: '2-digit',#}
+                                {#                                                                                 minute:'2-digit'}) ]]</span>#}
+                                {#    {% if request.user.is_authenticated %}#}
+                                {#    {% settings_value "EDITORIAL_BOARD_NEWS_EDIT_URL_JS" as editorial_board_url %}#}
+                                {#    <span class="float-end">#}
+                                {#        <a :href="{{ editorial_board_url|safe }}" target="_blank" title="{% trans 'Edit' %}">#}
+                                {#            <svg class="icon icon-xs">#}
+                                {#                <use xlink:href="{% static '/svg/sprites.svg' %}#it-settings"></use>#}
+                                {#            </svg>#}
+                                {#        </a>#}
+                                {#    </span>#}
+                                {#    {% endif %}#}
+                                {#</div>#}
+                                <h4 class="card-title mt-3">
+                                    <p style="text-decoration: none; color: #17324d;">
+                                        <p>[[ item.Title]]</p>
+                                    </p>
+                                </h4>
+                                <p v-if="item.Text">
+                                    [[ item.Text ]]
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end card-->
+                </div>
+            </div>
+        </div>
+
+        <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
+        </div>
+    </div>
+
+        <div v-else>
+            {% trans "No items here" %}
+        </div>
+</div>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+
+var news = new Vue({
+  el: '#news',
+    data () {
+        return {
+            items: [],
+            newsLoaded: false,
+            selected_search: '',
+            url: '{{ url|safe }}?lang={{ LANGUAGE_CODE }}'
+        }
+    },
+    mounted(){
+        this.callURL(this.url)
+    },
+    methods: {
+        callURL (url) {
+            axios
+                .get( url )
+                .then(response => {
+                    this.items = response.data
+                    this.newsLoaded = true
+                    this.scrollToTop()
+                })
+        },
+        search() {
+            this.parameters = '&search=' + this.selected_search
+            this.newsLoaded = false
+            this.callURL(this.url + this.parameters);
+        },
+        scrollToTop () {
+            // faulty on mobile ...
+            window.scrollTo({top:100, left:0, behavior: 'smooth'});
+        }
+    }
+})
+</script>
+{% endblock extra_scripts %}
