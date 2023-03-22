@@ -751,3 +751,25 @@ class TeacherNewsListViewHandler(BaseStorageHandler):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         leaf = ('#', CMS_STORAGE_TEACHER_NEWS_LABEL)
         return (root, leaf)
+
+
+class ActivitiesListViewHandler(BaseStorageHandler):
+    template = "storage_activities_list.html"
+
+    def __init__(self, **kwargs):
+        super(ActivitiesListViewHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        url_data = {}
+        # if HIGH_FORMATION_YEAR:
+            # url_data['year'] = HIGH_FORMATION_YEAR
+        # params = urllib.parse.urlencode(url_data)
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}'
+        # if params: self.data['url'] = f"{self.data['url']}?{params}"
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        leaf = ('#', CMS_STORAGE_ACTIVITIES_LABEL)
+        return (root, leaf)

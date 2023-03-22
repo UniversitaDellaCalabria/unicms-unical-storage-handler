@@ -64,6 +64,7 @@ CMS_STORAGE_STRUCTURE_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*
 CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)(/)?$' # noqa
 CMS_STORAGE_TEACHER_NEWS_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH})/(?P<code>[a-zA-Z0-9\-\_\=\:\%]+)/{CMS_STORAGE_TEACHER_NEWS_VIEW_PREFIX_PATH}(/)?$' # noqa
+CMS_STORAGE_ACTIVITIES_LIST_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_BASE_PATH})/({CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH})(/)?$' # noqa
 
 
 CMS_STORAGE_HANDLERS_PATHS = [
@@ -95,7 +96,8 @@ CMS_STORAGE_HANDLERS_PATHS = [
                               CMS_STORAGE_HIGH_FORMATION_MASTERS_INFO_URL_VIEW_REGEXP,
                               CMS_STORAGE_PHD_ACTIVITES_LIST_URL_VIEW_REGEXP,
                               CMS_STORAGE_PHD_ACTIVITES_INFO_URL_VIEW_REGEXP,
-                              CMS_STORAGE_TEACHER_NEWS_VIEW_REGEXP
+                              CMS_STORAGE_TEACHER_NEWS_VIEW_REGEXP,
+                              CMS_STORAGE_ACTIVITIES_LIST_URL_VIEW_REGEXP,
                               ]
 
 
@@ -129,6 +131,7 @@ CMS_STORAGE_APP_REGEXP_URLPATHS = {
     'unicms_unical_storage_handler.handlers.TeacherListViewHandler' : CMS_STORAGE_TEACHER_LIST_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.TeacherInfoViewHandler' : CMS_STORAGE_TEACHER_INFO_URL_VIEW_REGEXP,
     'unicms_unical_storage_handler.handlers.TeacherNewsListViewHandler': CMS_STORAGE_TEACHER_NEWS_VIEW_REGEXP,
+    'unicms_unical_storage_handler.handlers.ActivitiesListViewHandler': CMS_STORAGE_ACTIVITIES_LIST_URL_VIEW_REGEXP,
 
 }
 
@@ -199,6 +202,7 @@ CMS_STORAGE_SPINOFF_LABEL = _("Companies")
 CMS_STORAGE_STRUCTURE_LABEL = _("Structures")
 CMS_STORAGE_TEACHERS_LABEL = _("Teachers")
 CMS_STORAGE_TEACHER_NEWS_LABEL = _("News")
+CMS_STORAGE_ACTIVITIES_LABEL = _("Activities")
 
 
 # API filters

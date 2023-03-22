@@ -283,6 +283,7 @@
                                 <th scope="col">{% trans "Code" %}</th>
                                 <th scope="col">{% trans "Teaching" %}</th>
                                 <th scope="col">{% trans "SSD" %}</th>
+                                <th scope="col">{% trans "Main Activity" %}</th>
                                 <th scope="col">[[ labels.StudyActivityCdSName ]]</th>
                                 <th scope="col">[[ labels.StudyActivityTeacherName ]]</th>
                             </tr>
@@ -298,9 +299,6 @@
                                 <td>
                                     <a v-if="item.StudyActivityID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/{{ activity_prefix }}/' + item.StudyActivityID +'/'">
                                         [[ item.StudyActivityName ]]
-                                        <span v-if="item.StudyActivityPartitionDes">
-                                            ([[ item.StudyActivityPartitionDes ]])
-                                        </span>
                                     </a>
                                     <span v-else>
                                         [[ item.StudyActivityName ]]
@@ -316,12 +314,16 @@
                                     <span v-else>-</span>
                                 </td>
                                 <td>
+                                    <a v-if="item.StudyActivityFatherCode && item.StudyActivityFatherCode != item.StudyActivityID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/{{ activity_prefix }}/' + item.StudyActivityFatherCode +'/'">
+                                        [[ item.StudyActivityFatherName ]]
+                                    </a>
+                                    <span v-else>
+                                        -
+                                    </span>
+                                </td>
+                                <td>
                                     <a v-if="item.StudyActivityCdSName" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/'">
                                         [[ item.StudyActivityCdSName ]]</a>
-                                        <span v-if="item.StudyPlanDes">
-                                            ([[ item.StudyPlanDes ]])
-                                        </span>
-
                                     <span v-else>-</span>
                                 </td>
                                 <td>
