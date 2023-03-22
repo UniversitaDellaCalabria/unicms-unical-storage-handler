@@ -13,6 +13,7 @@
 {% random_id uid as id %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "CMS_STORAGE_ROOT_API" as api_root %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
 {% storage_api_root "CMS_STORAGE_LABORATORY_API" as laboratories_api %}
@@ -22,7 +23,13 @@
 {% storage_settings_value "TEACHER_INFO_NOT_SHOW" as fields_to_hide %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 
+<script src="{% static 'js/vue-markdown.js' %}"></script>
 
+
+{% if full_page %}
+<div class="row">
+    <div class="col-12 col-lg-8">
+{% endif %}
 <div id="{{ id }}">
 
     <loading-icon
@@ -33,9 +40,13 @@
     <div v-else-if="Object.keys(item).length">
         <div class="row">
             <div class="col-12 col-lg-2 d-flex">
-                <svg class="m-auto icon icon-xl icon-muted">
+                <div class="col-12 col-lg-12 d-flex" v-if="item.PhotoPath && item.PhotoPath != ''">
+                    <img :src="'{{ api_root }}'+item.PhotoPath" class="w-100"/>
+                </div>
+                <svg class="m-auto icon icon-xl icon-muted" v-if="!item.PhotoPath || item.PhotoPath == ''">
                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
                 </svg>
+
             </div>
             <div class="col-12 col-lg-10 my-3 my-lg-0">
                 <h1 class="lighter">
@@ -46,6 +57,7 @@
                 </h3>
             </div>
         </div>
+
         <hr class="my-4 bordeaux-unical-bg">
         <div class="table-responsive">
             <table class="table table-sm table-hover table-striped">
@@ -79,6 +91,14 @@
                                 </li>
                             </ul>
                         </td>
+                        <td v-else-if="name == 'ORCID'">
+                            <span v-if="item.ORCID">
+                                [[ item.ORCID ]]
+                            </span>
+                            <span v-else>
+                                -
+                            </span>
+                        </td>
                         <td v-else-if="typeof value === 'array'">
                             <ul>
                                 <li v-for="subvalue in value">
@@ -96,6 +116,7 @@
                                 <span v-else style="white-space: pre-line;">[[ value]]</span>
                             </span>
                         </td>
+
                     </tr>
                 </tbody>
             </table>
@@ -168,6 +189,42 @@
     </div>
 </div>
 
+{% comment %}
+{#<!-- teacher's  -->#}
+{##}
+{#<div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">#}
+{#    <div class="accordion-item">#}
+{#        <div class="accordion-header" id="{{ id }}_heading-activities-lft">#}
+{#            <button class="accordion-button"#}
+{#                    type="button"#}
+{#                    data-bs-toggle="collapse"#}
+{#                    data-bs-target="#{{ id }}_collapse-activities-lft"#}
+{#                    aria-expanded="false"#}
+{#                    aria-controls="{{ id }}_collapse-activities-lft">#}
+{#                {% trans "Teachings" %}#}
+{#            </button>#}
+{#        </div>#}
+{#        <div id="{{ id }}_collapse-activities-lft"#}
+{#             class="accordion-collapse collapse"#}
+{#             data-bs-parent="#{{ id }}_collapse-3-lft"#}
+{#             role="region"#}
+{#             aria-labelledby="{{ id }}_heading-activities-lft">#}
+{#            <div class="mt-3 accordion-body">#}
+{#                {% storage_settings_value "CURRENT_YEAR" as current_year %}#}
+{#                {% clean_url url as cleaned_url %}#}
+{#                {% with cleaned_url|add:"/studyactivities/?year="|add:current_year as studyactivities_url %}#}
+{#                {% include "blocks/unical_storage_teacherstudyactivities.html" with url=studyactivities_url uid=id|add:"_2" %}#}
+{#                {% endwith %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{% endcomment %}
+
+
+
+
+
 <!-- Publications -->
 {% clean_url url as cleaned_url %}
 {% with cleaned_url|add:"/publications/" as publications_url %}
@@ -184,7 +241,86 @@
 {% include "blocks/collapse/unical_storage_collapse_research_line_list_without_any_filter.html" with url=researchlines_url uid=id|add:"_6" %}
 {% endwith %}
 
+<!-- teaching materials -->
+<div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
+    <div class="accordion-item">
+        <div class="accordion-header" id="{{ id }}_heading-materials-lft">
+            <button class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#{{ id }}_collapse-materials-lft"
+                    aria-expanded="false"
+                    aria-controls="{{ id }}_collapse-materials-lft">
+                {% trans "Teaching Materials" %}
+            </button>
+        </div>
+        <div id="{{ id }}_collapse-materials-lft"
+             class="accordion-collapse collapse"
+             data-bs-parent="#{{ id }}_collapse-3-lft"
+             role="region"
+             aria-labelledby="{{ id }}_heading-materials-lft">
+            <div class="mt-3 accordion-body">
+                {% clean_url url as cleaned_url %}
+                {% with cleaned_url|add:"/materials/" as teachingmaterials_url %}
+                {% include "blocks/unical_storage_teachingmaterials.html" with url=teachingmaterials_url uid=id|add:"_7" %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Teacher News -->
+{% with cleaned_url|add:"/news/" as teachernews_url %}
+{% include "blocks/unical_storage_news_carousel.html" with url=teachernews_url uid=id|add:"_8" teacher_id=code%}
+{% endwith %}
+
+{% if full_page %}
+    </div>
+    <div class="col-12 col-lg-3 offset-lg-1" id="{{ id }}_datas">
+            <div class="d-none d-lg-block">
+                {% include "includes/unical_storage_history_back.html" %}
+            </div>
+            <div v-if="item.ReceptionHours &&  item.ReceptionHours.length > 0" class="row mt-4" >
+                <div class="col-12"><hr></div>
+                <div class="col-2">
+                    <svg class="icon icon-muted">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
+                    </svg>
+                </div>
+                <div class="col-9 align-left">
+                    <small>
+                        <b>[[ labels['ReceptionHours'] ]]</b>
+                        <br>
+                        <div class="col-10">
+                            [[ item.ReceptionHours ]]
+                        </div>
+                    </small>
+                    <small>
+                        <b>[[ labels['ReceptionHoursEn'] ]]</b>
+                        <br>
+                        <div class="col-10">
+                            [[ item.ReceptionHoursEn ]]
+                        </div>
+                    </small>
+                </div>
+            </div>
+    </div>
+</div>
+{% endif %}
+
 <script>
+    Vue.use(VueMarkdown);
+
+    var {{ id }}_datas = new Vue({
+        el: '#{{ id }}_datas',
+        data() {
+            return {
+                item: {},
+                labels: {},
+            }
+        },
+    })
     var {{ id }} = new Vue({
         el: '[id="{{ id }}"]',
         data() {
@@ -210,7 +346,9 @@
                     .get(this.url)
                     .then(response => {
                         this.item = response.data.results;
+                        {{ id }}_datas.item = response.data.results;
                         this.labels = response.data.labels;
+                        {{ id }}_datas.labels = response.data.labels;
                         this.is_loading = false
                         {% if change_breadcrumb %}
                         document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.TeacherLastName.concat(" ", this.item.TeacherFirstName)
@@ -227,4 +365,5 @@
             }
         }
     })
+
 </script>
