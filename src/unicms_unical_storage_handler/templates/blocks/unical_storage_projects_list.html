@@ -315,9 +315,9 @@ is_loading_infrastructures: true,
 is_loading_techareas: true,
 
 loader_source_programtypes: '{{ programtypes_api }}?lang={{ LANGUAGE_CODE }}&page_size=200',
-loader_source_territorialscopes: '{{ territorialscopes_api }}?lang={{ LANGUAGE_CODE }}',
-loader_source_techareas: '{{ techareas_api }}?lang={{ LANGUAGE_CODE }}',
-loader_source_infrastructures: '{{ infrastructures_api }}?lang={{ LANGUAGE_CODE }}',
+loader_source_territorialscopes: '{{ territorialscopes_api }}?lang={{ LANGUAGE_CODE }}&page_size=200',
+loader_source_techareas: '{{ techareas_api }}?lang={{ LANGUAGE_CODE }}&page_size=200',
+loader_source_infrastructures: '{{ infrastructures_api }}?lang={{ LANGUAGE_CODE }}&page_size=200',
 
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 selected_programtype: this.getItemFromSession("{{ id }}", 'programtype'),

@@ -271,7 +271,7 @@ TEACHER_INFO_NOT_SHOW = ['TeacherID', 'TeacherDepartmentID',
                          'TeacherCVFull', 'TeacherSSDCod',
                          'TeacherDepartmentCod', 'ProfileId', 'ProfileDescription',
                          'ProfileShortDescription', 'ReceptionHours', 'ReceptionHoursEn',
-                        'CVPathIta', 'CVPathEn', 'ShortBio', 'ShortBioEn', 'PhotoPath']
+                         'CVPathIta', 'CVPathEn', 'ShortBio', 'ShortBioEn', 'PhotoPath']
 
 STRUCTURE_INFO_NOT_SHOW = ['StructureId', 'StructureCod', 'StructureFatherId',
                            'StructureTypeCOD', 'StructurePersonnelFunctions',

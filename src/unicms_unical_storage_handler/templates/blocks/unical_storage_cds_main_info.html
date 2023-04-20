@@ -11,8 +11,6 @@
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% storage_settings_value "CMS_STORAGE_ROOT_API" as api_root %}
-{% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
 {% storage_settings_value "CDS_INFO_FIELDS" as fields_to_show %}
@@ -41,13 +39,7 @@
                 <div class="ratio ratio-16x9">
                     <iframe :title="item.CdSVideo"
                             :src="youtubeNoCookie(item.CdSVideo)"
-                            allowfullscreen sandbox="allow-scripts allow-same-origin"
-                            v-if="item.CdSVideo.includes('https') || item.CdSVideo.includes('http')">
-                    </iframe>
-                    <iframe :title="item.CdSVideo"
-                            :src="'{{ api_root }}' + item.CdSVideo"
-                            allowfullscreen
-                            v-else>
+                            allowfullscreen sandbox="allow-scripts allow-same-origin">
                     </iframe>
                 </div>
             </div>

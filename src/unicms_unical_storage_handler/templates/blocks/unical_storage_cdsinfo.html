@@ -11,7 +11,6 @@
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% storage_settings_value "CMS_STORAGE_ROOT_API" as api_root %}
 {% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
@@ -223,13 +222,7 @@
                     <div class="ratio ratio-16x9">
                         <iframe :title="item.CdSVideo"
                                 :src="youtubeNoCookie(item.CdSVideo)"
-                                allowfullscreen sandbox="allow-scripts allow-same-origin"
-                                v-if="item.CdSVideo.includes('https') || item.CdSVideo.includes('http')">
-                        </iframe>
-                        <iframe :title="item.CdSVideo"
-                                :src="'{{ api_root }}' + item.CdSVideo"
-                                allowfullscreen
-                                v-else>
+                                allowfullscreen sandbox="allow-scripts allow-same-origin">
                         </iframe>
                     </div>
                 </div>
@@ -251,7 +244,7 @@
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-clip"></use>
                                         </svg> <b>{% trans "Download brochure" %}</b>
                                     </a>
-                                    <a :href="'{{ api_root }}' + item.CdSDoc" target="_blank" v-else>
+                                    <a :href="item.CdSDoc" target="_blank" v-else>
                                         <svg class="m-auto icon icon-muted">
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-clip"></use>
                                         </svg> <b>{% trans "Download brochure" %}</b>
@@ -564,10 +557,7 @@
                         <div class="col m-auto align-middle">
                             <ul class="mb-0 ps-0 list-unstyled">
                                 <li>
-                                    <a :href="item.CdSDoc" class="no-color" target="_blank" v-if="item.CdSDoc.includes('https') || item.CdSDoc.includes('http')">
-                                        <small><b>{% trans "Study course brochure" %}</b></small>
-                                    </a>
-                                    <a :href="'{{ api_root }}' + item.CdSDoc" class="no-color" target="_blank" v-else>
+                                    <a :href="item.CdSDoc" class="no-color" target="_blank">
                                         <small><b>{% trans "Study course brochure" %}</b></small>
                                     </a>
                                 </li>

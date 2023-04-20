@@ -12,7 +12,6 @@
 
 {% storage_settings_value "LABORATORY_INFO_NOT_SHOW" as fields_to_hide %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% storage_settings_value "CMS_STORAGE_ROOT_API" as api_root %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
@@ -30,7 +29,7 @@
 
         <div class="row">
             <div class="col-12 col-lg-3" v-if="item.LaboratoryLogo">
-                <img :src="'{{ api_root }}'+item.LaboratoryLogo"
+                <img :src="item.LaboratoryLogo"
                      class="w-100"/>
             </div>
             <div class="col-12 col-lg-2 text-center" v-else>

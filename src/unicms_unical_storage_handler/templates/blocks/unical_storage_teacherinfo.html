@@ -13,7 +13,6 @@
 {% random_id uid as id %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% storage_settings_value "CMS_STORAGE_ROOT_API" as api_root %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
 {% storage_api_root "CMS_STORAGE_LABORATORY_API" as laboratories_api %}
@@ -25,255 +24,273 @@
 
 <script src="{% static 'js/vue-markdown.js' %}"></script>
 
-
 {% if full_page %}
 <div class="row">
     <div class="col-12 col-lg-8">
 {% endif %}
-<div id="{{ id }}">
 
-    <loading-icon
-        v-if="is_loading"
-        :loader_source="loader_source">
-    </loading-icon>
+<ul class="nav nav-tabs nav-tabs-icon-text" id="myTab3" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="tab1c-tab" data-bs-toggle="tab" href="#tab1b" role="tab" aria-controls="tab1b" aria-selected="true">
+            <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-user"></use></svg>
+            Profilo
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab2b-tab" data-bs-toggle="tab" href="#tab2b" role="tab" aria-controls="tab2b" aria-selected="false">
+            <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-horn"></use></svg>
+            Bacheca avvisi
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab3b-tab" data-bs-toggle="tab" href="#tab3b" role="tab" aria-controls="tab3b" aria-selected="false">
+            <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-note"></use></svg>
+            CV
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab4b-tab" data-bs-toggle="tab" href="#tab4b" role="tab" aria-controls="tab4b" aria-selected="false">
+            <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-folder"></use></svg>
+            Didattica
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab5b-tab" data-bs-toggle="tab" href="#tab5b" role="tab" aria-controls="tab5b" aria-selected="false">
+            <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-tool"></use></svg>
+            Ricerca
+        </a>
+    </li>
+</ul>
 
-    <div v-else-if="Object.keys(item).length">
-        <div class="row">
-            <div class="col-12 col-lg-2 d-flex">
-                <div class="col-12 col-lg-12 d-flex" v-if="item.PhotoPath && item.PhotoPath != ''">
-                    <img :src="'{{ api_root }}'+item.PhotoPath" class="w-100"/>
+<div class="tab-content" id="myTab3Content">
+    <div class="tab-pane p-4 fade show active" id="tab1b" role="tabpanel" aria-labelledby="tab1c-tab">
+
+
+        <div id="{{ id }}">
+
+            <loading-icon
+                v-if="is_loading"
+                :loader_source="loader_source">
+            </loading-icon>
+
+            <div v-else-if="Object.keys(item).length">
+                <div class="row">
+                    <div class="col-12 col-lg-2 d-flex">
+                        <div class="col-12 col-lg-12 d-flex" v-if="item.PhotoPath && item.PhotoPath != ''">
+                            <img :src="item.PhotoPath" class="w-100"/>
+                        </div>
+                        <svg class="m-auto icon icon-xl icon-muted" v-if="!item.PhotoPath || item.PhotoPath == ''">
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
+                        </svg>
+
+                    </div>
+                    <div class="col-12 col-lg-10 my-3 my-lg-0">
+                        <h1 class="lighter">
+                            [[ item.TeacherLastName ]] [[ item.TeacherFirstName ]]
+                        </h1>
+                        <h3 class="lighter">
+                            [[ item.TeacherRoleDescription ]]
+                        </h3>
+                    </div>
                 </div>
-                <svg class="m-auto icon icon-xl icon-muted" v-if="!item.PhotoPath || item.PhotoPath == ''">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                </svg>
 
-            </div>
-            <div class="col-12 col-lg-10 my-3 my-lg-0">
-                <h1 class="lighter">
-                    [[ item.TeacherLastName ]] [[ item.TeacherFirstName ]]
-                </h1>
-                <h3 class="lighter">
-                    [[ item.TeacherRoleDescription ]]
-                </h3>
-            </div>
-        </div>
+                <hr class="my-4 bordeaux-unical-bg">
 
-        <hr class="my-4 bordeaux-unical-bg">
-        <div class="table-responsive">
-            <table class="table table-sm table-hover table-striped">
-                <tbody>
-                    <tr v-for="(value, name) in item" v-if="value && !fields_to_not_show.includes(name) && value != ''">
-                        <td>[[ labels[name] ]]</td>
-                        <td v-if="name == 'TeacherSSDDescription'">
-                            <span v-if="!item.TeacherSSDCod.includes('0000')">
-                                [[ item.TeacherSSDCod ]] - [[ item.TeacherSSDDescription ]]
-                            </span>
-                            <span v-else>
-                                -
-                            </span>
-                        </td>
-                        <td v-else-if="typeof value === 'object'">
-                            <ul v-if="name == 'TeacherFunctions'">
-                                <li v-for="subvalue in value">
-                                    <span style="white-space: pre-line;">
-                                        [[ subvalue.TeacherRole]]
+                <div class="row" v-if="item.ShortBio">
+                    <div class="col">
+                        <span v-html="item.ShortBio"></span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover table-striped">
+                        <tbody>
+                            <tr v-for="(value, name) in item" v-if="value && !fields_to_not_show.includes(name) && value != ''">
+                                <td>[[ labels[name] ]]</td>
+                                <td v-if="name == 'TeacherSSDDescription'">
+                                    <span v-if="!item.TeacherSSDCod.includes('0000')">
+                                        [[ item.TeacherSSDCod ]] - [[ item.TeacherSSDDescription ]]
                                     </span>
-                                    <br>
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.StructureId +'/'">
-                                        [[ subvalue.StructureName]]
+                                    <span v-else>
+                                        -
+                                    </span>
+                                </td>
+                                <td v-else-if="typeof value === 'object'">
+                                    <ul v-if="name == 'TeacherFunctions'">
+                                        <li v-for="subvalue in value">
+                                            <span style="white-space: pre-line;">
+                                                [[ subvalue.TeacherRole]]
+                                            </span>
+                                            <br>
+                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.StructureId +'/'">
+                                                [[ subvalue.StructureName]]
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <ul v-else>
+                                        <li v-for="v in value">
+                                            <span v-if="containsHTML(v)" v-html="v"></span>
+                                            <span v-else style="white-space: pre-line;">[[ v ]]</span>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td v-else-if="name == 'ORCID'">
+                                    <span v-if="item.ORCID">
+                                        [[ item.ORCID ]]
+                                    </span>
+                                    <span v-else>
+                                        -
+                                    </span>
+                                </td>
+                                <td v-else-if="typeof value === 'array'">
+                                    <ul>
+                                        <li v-for="subvalue in value">
+                                            [[ subvalue ]]
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td v-else>
+                                    <a v-if="name == 'TeacherDepartmentName'"
+                                       :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.TeacherDepartmentCod +'/'">
+                                        [[ item.TeacherDepartmentName ]]
                                     </a>
-                                </li>
-                            </ul>
-                            <ul v-else>
-                                <li v-for="v in value">
-                                    <span v-if="containsHTML(v)" v-html="v"></span>
-                                    <span v-else style="white-space: pre-line;">[[ v ]]</span>
-                                </li>
-                            </ul>
-                        </td>
-                        <td v-else-if="name == 'ORCID'">
-                            <span v-if="item.ORCID">
-                                [[ item.ORCID ]]
-                            </span>
-                            <span v-else>
-                                -
-                            </span>
-                        </td>
-                        <td v-else-if="typeof value === 'array'">
-                            <ul>
-                                <li v-for="subvalue in value">
-                                    [[ subvalue ]]
-                                </li>
-                            </ul>
-                        </td>
-                        <td v-else>
-                            <a v-if="name == 'TeacherDepartmentName'"
-                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.TeacherDepartmentCod +'/'">
-                                [[ item.TeacherDepartmentName ]]
-                            </a>
-                            <span v-else>
-                                <span v-if="containsHTML(value)" v-html="value"></span>
-                                <span v-else style="white-space: pre-line;">[[ value]]</span>
-                            </span>
-                        </td>
+                                    <span v-else>
+                                        <span v-if="containsHTML(value)" v-html="value"></span>
+                                        <span v-else style="white-space: pre-line;">[[ value]]</span>
+                                    </span>
+                                </td>
 
-                    </tr>
-                </tbody>
-            </table>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- CV -->
+                <div id="{{ id }}_collapse-1-lft"
+                     class="accordion accordion-left-icon"
+                     v-if="item.TeacherCVFull">
+                    <div class="accordion-item">
+                        <div class="accordion-header" id="{{ id }}_heading-cvfull-lft">
+                             <button class="accordion-button"
+                                     type="button"
+                                     data-bs-toggle="collapse"
+                                     data-bs-target="#{{ id }}_collapse-cvfull-lft"
+                                     aria-expanded="false"
+                                     aria-controls="{{ id }}_collapse-cvfull-lft">
+                                {% trans "Curriculum vitae" %}
+                            </button>
+                        </div>
+                        <div id="{{ id }}_collapse-cvfull-lft"
+                             class="accordion-collapse collapse"
+                             role="region"
+                             data-bs-parent="#{{ id }}_collapse-1-lft"
+                             aria-labelledby="{{ id }}_heading-cvfull-lft">
+                            <div class="mt-3 accordion-body">
+                                <span v-if="containsHTML(item.TeacherCVFull)" v-html="item.TeacherCVFull"></span>
+                                <span v-else style="white-space: pre-line;">[[ item.TeacherCVFull ]]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-else>
+                {% include "includes/unical_storage_empty.html" with url=url %}
+            </div>
         </div>
+    </div>
 
-        <!-- CV -->
-        <div id="{{ id }}_collapse-1-lft"
-             class="accordion accordion-left-icon"
-             v-if="item.TeacherCVFull">
+    <div class="tab-pane p-4 fade" id="tab2b" role="tabpanel" aria-labelledby="tab2b-tab">
+        <!-- Laboratories -->
+        {% with laboratories_api|add:"?teacher="|add:code as laboratories_url %}
+        {% include "blocks/collapse/unical_storage_collapse_laboratory_list_without_any_filter.html" with url=laboratories_url uid=id|add:"_1" teacher_id=code %}
+        {% endwith %}
+
+        <!-- teacher's activities -->
+        <div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
             <div class="accordion-item">
-                <div class="accordion-header" id="{{ id }}_heading-cvfull-lft">
-                     <button class="accordion-button"
-                             type="button"
-                             data-bs-toggle="collapse"
-                             data-bs-target="#{{ id }}_collapse-cvfull-lft"
-                             aria-expanded="false"
-                             aria-controls="{{ id }}_collapse-cvfull-lft">
-                        {% trans "Curriculum vitae" %}
+                <div class="accordion-header" id="{{ id }}_heading-activities-lft">
+                    <button class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#{{ id }}_collapse-activities-lft"
+                            aria-expanded="false"
+                            aria-controls="{{ id }}_collapse-activities-lft">
+                        {% trans "Teachings" %}
                     </button>
                 </div>
-                <div id="{{ id }}_collapse-cvfull-lft"
+                <div id="{{ id }}_collapse-activities-lft"
                      class="accordion-collapse collapse"
+                     data-bs-parent="#{{ id }}_collapse-3-lft"
                      role="region"
-                     data-bs-parent="#{{ id }}_collapse-1-lft"
-                     aria-labelledby="{{ id }}_heading-cvfull-lft">
+                     aria-labelledby="{{ id }}_heading-activities-lft">
                     <div class="mt-3 accordion-body">
-                        <span v-if="containsHTML(item.TeacherCVFull)" v-html="item.TeacherCVFull"></span>
-                        <span v-else style="white-space: pre-line;">[[ item.TeacherCVFull ]]</span>
+                        {% storage_settings_value "CURRENT_YEAR" as current_year %}
+                        {% clean_url url as cleaned_url %}
+                        {% with cleaned_url|add:"/studyactivities/?year="|add:current_year as studyactivities_url %}
+                        {% include "blocks/unical_storage_teacherstudyactivities.html" with url=studyactivities_url uid=id|add:"_2" %}
+                        {% endwith %}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div v-else>
-        {% include "includes/unical_storage_empty.html" with url=url %}
-    </div>
-</div>
 
-<!-- Laboratories -->
-{% with laboratories_api|add:"?teacher="|add:code as laboratories_url %}
-{% include "blocks/collapse/unical_storage_collapse_laboratory_list_without_any_filter.html" with url=laboratories_url uid=id|add:"_1" teacher_id=code %}
-{% endwith %}
+    </div>
 
-<!-- teacher's activities -->
-<div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
-    <div class="accordion-item">
-        <div class="accordion-header" id="{{ id }}_heading-activities-lft">
-            <button class="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#{{ id }}_collapse-activities-lft"
-                    aria-expanded="false"
-                    aria-controls="{{ id }}_collapse-activities-lft">
-                {% trans "Teachings" %}
-            </button>
-        </div>
-        <div id="{{ id }}_collapse-activities-lft"
-             class="accordion-collapse collapse"
-             data-bs-parent="#{{ id }}_collapse-3-lft"
-             role="region"
-             aria-labelledby="{{ id }}_heading-activities-lft">
-            <div class="mt-3 accordion-body">
-                {% storage_settings_value "CURRENT_YEAR" as current_year %}
-                {% clean_url url as cleaned_url %}
-                {% with cleaned_url|add:"/studyactivities/?year="|add:current_year as studyactivities_url %}
-                {% include "blocks/unical_storage_teacherstudyactivities.html" with url=studyactivities_url uid=id|add:"_2" %}
-                {% endwith %}
+    <div class="tab-pane p-4 fade" id="tab3b" role="tabpanel" aria-labelledby="tab3b-tab">
+        <!-- Publications -->
+        {% clean_url url as cleaned_url %}
+        {% with cleaned_url|add:"/publications/" as publications_url %}
+        {% include "blocks/collapse/unical_storage_collapse_publications_list.html" with url=publications_url uid=id|add:"_3" all_years=1 %}
+        {% endwith %}
+
+        <!-- Research groups -->
+        {% with research_groups_api|add:"?teacher="|add:code as research_groups_url %}
+        {% include "blocks/collapse/unical_storage_collapse_research_group_list_without_any_filter.html" with url=research_groups_url uid=id|add:"_4" %}
+        {% endwith %}
+
+        <!-- Research lines -->
+        {% with cleaned_url|add:"/researchlines/" as researchlines_url %}
+        {% include "blocks/collapse/unical_storage_collapse_research_line_list_without_any_filter.html" with url=researchlines_url uid=id|add:"_6" %}
+        {% endwith %}
+    </div>
+
+    <div class="tab-pane p-4 fade" id="tab4b" role="tabpanel" aria-labelledby="tab4b-tab">
+        <!-- teaching materials -->
+        <div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
+            <div class="accordion-item">
+                <div class="accordion-header" id="{{ id }}_heading-materials-lft">
+                    <button class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#{{ id }}_collapse-materials-lft"
+                            aria-expanded="false"
+                            aria-controls="{{ id }}_collapse-materials-lft">
+                        {% trans "Teaching Materials" %}
+                    </button>
+                </div>
+                <div id="{{ id }}_collapse-materials-lft"
+                     class="accordion-collapse collapse"
+                     data-bs-parent="#{{ id }}_collapse-3-lft"
+                     role="region"
+                     aria-labelledby="{{ id }}_heading-materials-lft">
+                    <div class="mt-3 accordion-body">
+                        {% clean_url url as cleaned_url %}
+                        {% with cleaned_url|add:"/materials/" as teachingmaterials_url %}
+                        {% include "blocks/unical_storage_teachingmaterials.html" with url=teachingmaterials_url uid=id|add:"_7" %}
+                        {% endwith %}
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Teacher News -->
+        {% with cleaned_url|add:"/news/" as teachernews_url %}
+        {% include "blocks/unical_storage_news_carousel.html" with url=teachernews_url uid=id|add:"_8" teacher_id=code%}
+        {% endwith %}
+
     </div>
 </div>
 
-{% comment %}
-{#<!-- teacher's  -->#}
-{##}
-{#<div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">#}
-{#    <div class="accordion-item">#}
-{#        <div class="accordion-header" id="{{ id }}_heading-activities-lft">#}
-{#            <button class="accordion-button"#}
-{#                    type="button"#}
-{#                    data-bs-toggle="collapse"#}
-{#                    data-bs-target="#{{ id }}_collapse-activities-lft"#}
-{#                    aria-expanded="false"#}
-{#                    aria-controls="{{ id }}_collapse-activities-lft">#}
-{#                {% trans "Teachings" %}#}
-{#            </button>#}
-{#        </div>#}
-{#        <div id="{{ id }}_collapse-activities-lft"#}
-{#             class="accordion-collapse collapse"#}
-{#             data-bs-parent="#{{ id }}_collapse-3-lft"#}
-{#             role="region"#}
-{#             aria-labelledby="{{ id }}_heading-activities-lft">#}
-{#            <div class="mt-3 accordion-body">#}
-{#                {% storage_settings_value "CURRENT_YEAR" as current_year %}#}
-{#                {% clean_url url as cleaned_url %}#}
-{#                {% with cleaned_url|add:"/studyactivities/?year="|add:current_year as studyactivities_url %}#}
-{#                {% include "blocks/unical_storage_teacherstudyactivities.html" with url=studyactivities_url uid=id|add:"_2" %}#}
-{#                {% endwith %}#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
-{% endcomment %}
-
-
-
-
-
-<!-- Publications -->
-{% clean_url url as cleaned_url %}
-{% with cleaned_url|add:"/publications/" as publications_url %}
-{% include "blocks/collapse/unical_storage_collapse_publications_list.html" with url=publications_url uid=id|add:"_3" all_years=1 %}
-{% endwith %}
-
-<!-- Research groups -->
-{% with research_groups_api|add:"?teacher="|add:code as research_groups_url %}
-{% include "blocks/collapse/unical_storage_collapse_research_group_list_without_any_filter.html" with url=research_groups_url uid=id|add:"_4" %}
-{% endwith %}
-
-<!-- Research lines -->
-{% with cleaned_url|add:"/researchlines/" as researchlines_url %}
-{% include "blocks/collapse/unical_storage_collapse_research_line_list_without_any_filter.html" with url=researchlines_url uid=id|add:"_6" %}
-{% endwith %}
-
-<!-- teaching materials -->
-<div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
-    <div class="accordion-item">
-        <div class="accordion-header" id="{{ id }}_heading-materials-lft">
-            <button class="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#{{ id }}_collapse-materials-lft"
-                    aria-expanded="false"
-                    aria-controls="{{ id }}_collapse-materials-lft">
-                {% trans "Teaching Materials" %}
-            </button>
-        </div>
-        <div id="{{ id }}_collapse-materials-lft"
-             class="accordion-collapse collapse"
-             data-bs-parent="#{{ id }}_collapse-3-lft"
-             role="region"
-             aria-labelledby="{{ id }}_heading-materials-lft">
-            <div class="mt-3 accordion-body">
-                {% clean_url url as cleaned_url %}
-                {% with cleaned_url|add:"/materials/" as teachingmaterials_url %}
-                {% include "blocks/unical_storage_teachingmaterials.html" with url=teachingmaterials_url uid=id|add:"_7" %}
-                {% endwith %}
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Teacher News -->
-{% with cleaned_url|add:"/news/" as teachernews_url %}
-{% include "blocks/unical_storage_news_carousel.html" with url=teachernews_url uid=id|add:"_8" teacher_id=code%}
-{% endwith %}
 
 {% if full_page %}
     </div>

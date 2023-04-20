@@ -14,7 +14,6 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% storage_settings_value "CMS_STORAGE_ROOT_API" as api_root %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH" as spinoff_prefix %}
@@ -31,7 +30,7 @@
     <div v-else-if="Object.keys(item).length">
         <div class="row">
             <div class="col-12 col-lg-3">
-                <img :src="'{{ api_root }}'+item.SpinoffImage"
+                <img :src="item.SpinoffImage"
                      class="w-100"
                      v-if="item.SpinoffImage"/>
                 <svg class="m-auto icon icon-xl icon-muted" v-else>
