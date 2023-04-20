@@ -18,55 +18,12 @@
 
 <div id="{{ id }}">
     <div v-if="(initial_items && initial_items.length) || parameters">
-            <!--
-                <br>
-                <div class="col-12 mb-4">
-                    <div class="pt-2 pb-3 ps-3 background-yellow">
-                        <h2 class="m-0 p-0">
-                            <span style="font-weight: 500">unical</span>
-                            <span class="super-bold">world</span>
-                        </h2>
-                    </div>
-                </div>
-            -->
         <loading-icon
             v-if="is_loading"
             :loader_source="loader_source">
         </loading-icon>
 
-
     <div v-else>
-
-
-
-        {#<div class="form-group">#}
-        {#    <div class="input-group">#}
-        {#        <label for="news_search"></label>#}
-        {#        <input type="text"#}
-        {#               id="news_search"#}
-        {#               class="form-control"#}
-        {#               name="news_search"#}
-        {#               v-model="selected_search"#}
-        {#               v-on:keyup.enter="search()">#}
-        {#        <div class="input-group-append">#}
-        {#            {% comment %}#}
-        {#            <div class="input-group-text">#}
-        {#                <svg class="icon icon-sm icon-muted">#}
-        {#                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-search"></use>#}
-        {#                </svg>#}
-        {#            </div>#}
-        {#            {% endcomment %}#}
-        {#            <button class="btn btn-primary"#}
-        {#                    type="button"#}
-        {#                    id="search-button"#}
-        {#                    @click="search()">#}
-        {#                {% trans "Search" %}#}
-        {#            </button>#}
-        {##}
-        {##}
-        {#        </div>#}
-        {#    </div>#}
-        {#</div>#}
 
         <list-panel v-bind:data="items"></list-panel>
 

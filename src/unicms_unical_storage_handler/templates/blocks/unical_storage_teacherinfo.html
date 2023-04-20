@@ -29,6 +29,25 @@
     <div class="col-12 col-lg-8">
 {% endif %}
 
+<div id="{{ id }}_head">
+    <div class="row">
+        <div class="col-2 d-flex" v-if="item.PhotoPath && item.PhotoPath != ''">
+            <div class="col-12 col-lg-12">
+                <img :src="item.PhotoPath" class="w-100"/>
+            </div>
+        </div>
+        <div class="col my-0">
+            <h1 class="lighter">
+                [[ item.TeacherLastName ]] [[ item.TeacherFirstName ]]
+            </h1>
+            <h3 class="lighter">
+                [[ item.TeacherRoleDescription ]]
+            </h3>
+        </div>
+    </div>
+</div>
+<hr>
+
 <ul class="nav nav-tabs nav-tabs-icon-text" id="myTab3" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" id="tab1c-tab" data-bs-toggle="tab" href="#tab1b" role="tab" aria-controls="tab1b" aria-selected="true">
@@ -63,9 +82,9 @@
 </ul>
 
 <div class="tab-content" id="myTab3Content">
+
+    <!-- Profilo -->
     <div class="tab-pane p-4 fade show active" id="tab1b" role="tabpanel" aria-labelledby="tab1c-tab">
-
-
         <div id="{{ id }}">
 
             <loading-icon
@@ -74,27 +93,6 @@
             </loading-icon>
 
             <div v-else-if="Object.keys(item).length">
-                <div class="row">
-                    <div class="col-12 col-lg-2 d-flex">
-                        <div class="col-12 col-lg-12 d-flex" v-if="item.PhotoPath && item.PhotoPath != ''">
-                            <img :src="item.PhotoPath" class="w-100"/>
-                        </div>
-                        <svg class="m-auto icon icon-xl icon-muted" v-if="!item.PhotoPath || item.PhotoPath == ''">
-                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                        </svg>
-
-                    </div>
-                    <div class="col-12 col-lg-10 my-3 my-lg-0">
-                        <h1 class="lighter">
-                            [[ item.TeacherLastName ]] [[ item.TeacherFirstName ]]
-                        </h1>
-                        <h3 class="lighter">
-                            [[ item.TeacherRoleDescription ]]
-                        </h3>
-                    </div>
-                </div>
-
-                <hr class="my-4 bordeaux-unical-bg">
 
                 <div class="row" v-if="item.ShortBio">
                     <div class="col">
@@ -164,47 +162,57 @@
                         </tbody>
                     </table>
                 </div>
-
-                <!-- CV -->
-                <div id="{{ id }}_collapse-1-lft"
-                     class="accordion accordion-left-icon"
-                     v-if="item.TeacherCVFull">
-                    <div class="accordion-item">
-                        <div class="accordion-header" id="{{ id }}_heading-cvfull-lft">
-                             <button class="accordion-button"
-                                     type="button"
-                                     data-bs-toggle="collapse"
-                                     data-bs-target="#{{ id }}_collapse-cvfull-lft"
-                                     aria-expanded="false"
-                                     aria-controls="{{ id }}_collapse-cvfull-lft">
-                                {% trans "Curriculum vitae" %}
-                            </button>
-                        </div>
-                        <div id="{{ id }}_collapse-cvfull-lft"
-                             class="accordion-collapse collapse"
-                             role="region"
-                             data-bs-parent="#{{ id }}_collapse-1-lft"
-                             aria-labelledby="{{ id }}_heading-cvfull-lft">
-                            <div class="mt-3 accordion-body">
-                                <span v-if="containsHTML(item.TeacherCVFull)" v-html="item.TeacherCVFull"></span>
-                                <span v-else style="white-space: pre-line;">[[ item.TeacherCVFull ]]</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div v-else>
                 {% include "includes/unical_storage_empty.html" with url=url %}
             </div>
         </div>
     </div>
+    <!-- end Profilo -->
 
+    <!-- Bacheca -->
     <div class="tab-pane p-4 fade" id="tab2b" role="tabpanel" aria-labelledby="tab2b-tab">
-        <!-- Laboratories -->
-        {% with laboratories_api|add:"?teacher="|add:code as laboratories_url %}
-        {% include "blocks/collapse/unical_storage_collapse_laboratory_list_without_any_filter.html" with url=laboratories_url uid=id|add:"_1" teacher_id=code %}
+        {% clean_url url as cleaned_url %}
+        {% with cleaned_url|add:"/news/" as teachernews_url %}
+        {% include "blocks/unical_storage_teacher_news_list.html" with url=teachernews_url uid=id|add:"_8" teacher_id=code %}
         {% endwith %}
+    </div>
+    <!-- end Bacheca -->
 
+    <!-- CV -->
+    <div class="tab-pane p-4 fade" id="tab3b" role="tabpanel" aria-labelledby="tab3b-tab">
+        <div id="{{ id }}_collapse-1-lft"
+             class="accordion accordion-left-icon"
+             v-if="item.TeacherCVFull">
+            <div class="accordion-item">
+                <div class="accordion-header" id="{{ id }}_heading-cvfull-lft">
+                     <button class="accordion-button"
+                             type="button"
+                             data-bs-toggle="collapse"
+                             data-bs-target="#{{ id }}_collapse-cvfull-lft"
+                             aria-expanded="false"
+                             aria-controls="{{ id }}_collapse-cvfull-lft">
+                        {% trans "Curriculum vitae" %}
+                    </button>
+                </div>
+                <div id="{{ id }}_collapse-cvfull-lft"
+                     class="accordion-collapse collapse"
+                     role="region"
+                     data-bs-parent="#{{ id }}_collapse-1-lft"
+                     aria-labelledby="{{ id }}_heading-cvfull-lft">
+                    <div class="mt-3 accordion-body">
+                        <span v-if="containsHTML(item.TeacherCVFull)" v-html="item.TeacherCVFull"></span>
+                        <span v-else style="white-space: pre-line;">[[ item.TeacherCVFull ]]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end CV -->
+
+    <!-- Didattica -->
+    <div class="tab-pane p-4 fade" id="tab4b" role="tabpanel" aria-labelledby="tab4b-tab">
         <!-- teacher's activities -->
         <div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
             <div class="accordion-item">
@@ -234,27 +242,6 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="tab-pane p-4 fade" id="tab3b" role="tabpanel" aria-labelledby="tab3b-tab">
-        <!-- Publications -->
-        {% clean_url url as cleaned_url %}
-        {% with cleaned_url|add:"/publications/" as publications_url %}
-        {% include "blocks/collapse/unical_storage_collapse_publications_list.html" with url=publications_url uid=id|add:"_3" all_years=1 %}
-        {% endwith %}
-
-        <!-- Research groups -->
-        {% with research_groups_api|add:"?teacher="|add:code as research_groups_url %}
-        {% include "blocks/collapse/unical_storage_collapse_research_group_list_without_any_filter.html" with url=research_groups_url uid=id|add:"_4" %}
-        {% endwith %}
-
-        <!-- Research lines -->
-        {% with cleaned_url|add:"/researchlines/" as researchlines_url %}
-        {% include "blocks/collapse/unical_storage_collapse_research_line_list_without_any_filter.html" with url=researchlines_url uid=id|add:"_6" %}
-        {% endwith %}
-    </div>
-
-    <div class="tab-pane p-4 fade" id="tab4b" role="tabpanel" aria-labelledby="tab4b-tab">
         <!-- teaching materials -->
         <div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
             <div class="accordion-item">
@@ -282,13 +269,33 @@
                 </div>
             </div>
         </div>
+    </div>
+    <!-- end Didattica -->
 
-        <!-- Teacher News -->
-        {% with cleaned_url|add:"/news/" as teachernews_url %}
-        {% include "blocks/unical_storage_news_carousel.html" with url=teachernews_url uid=id|add:"_8" teacher_id=code%}
+    <!-- Ricerca -->
+    <div class="tab-pane p-4 fade" id="tab5b" role="tabpanel" aria-labelledby="tab5b-tab">
+        <!-- Laboratories -->
+        {% with laboratories_api|add:"?teacher="|add:code as laboratories_url %}
+        {% include "blocks/collapse/unical_storage_collapse_laboratory_list_without_any_filter.html" with url=laboratories_url uid=id|add:"_1" teacher_id=code %}
         {% endwith %}
 
+        <!-- Publications -->
+        {% clean_url url as cleaned_url %}
+        {% with cleaned_url|add:"/publications/" as publications_url %}
+        {% include "blocks/collapse/unical_storage_collapse_publications_list.html" with url=publications_url uid=id|add:"_3" all_years=1 %}
+        {% endwith %}
+
+        <!-- Research groups -->
+        {% with research_groups_api|add:"?teacher="|add:code as research_groups_url %}
+        {% include "blocks/collapse/unical_storage_collapse_research_group_list_without_any_filter.html" with url=research_groups_url uid=id|add:"_4" %}
+        {% endwith %}
+
+        <!-- Research lines -->
+        {% with cleaned_url|add:"/researchlines/" as researchlines_url %}
+        {% include "blocks/collapse/unical_storage_collapse_research_line_list_without_any_filter.html" with url=researchlines_url uid=id|add:"_6" %}
+        {% endwith %}
     </div>
+    <!-- end Ricerca -->
 </div>
 
 
@@ -329,6 +336,26 @@
 <script>
     Vue.use(VueMarkdown);
 
+    var {{ id }}_head = new Vue({
+        el: '#{{ id }}_head',
+        data() {
+            return {
+                item: {},
+                labels: {},
+            }
+        },
+    })
+
+    var {{ id }}_cv = new Vue({
+        el: '#tab3b',
+        data() {
+            return {
+                item: {},
+                labels: {},
+            }
+        },
+    })
+
     var {{ id }}_datas = new Vue({
         el: '#{{ id }}_datas',
         data() {
@@ -338,6 +365,7 @@
             }
         },
     })
+
     var {{ id }} = new Vue({
         el: '[id="{{ id }}"]',
         data() {
@@ -363,7 +391,9 @@
                     .get(this.url)
                     .then(response => {
                         this.item = response.data.results;
+                        {{ id }}_cv.item = response.data.results;
                         {{ id }}_datas.item = response.data.results;
+                        {{ id }}_head.item = response.data.results;
                         this.labels = response.data.labels;
                         {{ id }}_datas.labels = response.data.labels;
                         this.is_loading = false
@@ -382,5 +412,4 @@
             }
         }
     })
-
 </script>
