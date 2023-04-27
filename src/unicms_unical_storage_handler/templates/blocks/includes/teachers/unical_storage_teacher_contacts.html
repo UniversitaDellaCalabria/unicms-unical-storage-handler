@@ -1,0 +1,45 @@
+{% load i18n %}
+{% load static %}
+
+
+<div class="background-light-grey px-2 py-3 mb-2 w-100 mt-4">
+    <div class="row">
+        <div class="col-2">
+            <svg class="icon icon-muted">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
+            </svg>
+        </div>
+        <div class="col m-auto align-middle">
+            <b>{% trans "Contacts" %}</b>
+            <ul class="mb-0 ps-0 list-unstyled">
+                <li v-if="item.TeacherDepartmentName">
+                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.TeacherDepartmentCod +'/'">
+                        <svg class="icon icon-muted icon-xs me-2">
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-pa"></use>
+                        </svg> <small>[[ item.TeacherDepartmentName]]</small>
+                    </a>
+                </li>
+                <li v-if="item.TeacherOffice">
+                    <svg class="icon icon-muted icon-xs me-2">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                    </svg> <small>[[ item.TeacherOffice]]</small>
+                </li>
+                <li v-for="email in item.TeacherEmail">
+                    <svg class="icon icon-muted icon-xs me-2">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                    </svg> <small>[[ email]]</small>
+                </li>
+                <li v-for="phone in item.TeacherTelOffice">
+                    <svg class="icon icon-muted icon-xs me-2">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
+                    </svg> <small>[[ phone]]</small>
+                </li>
+                <li v-for="website in item.TeacherWebSite">
+                   <svg class="icon icon-muted icon-xs me-2">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                    </svg> <small>[[ website]]</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

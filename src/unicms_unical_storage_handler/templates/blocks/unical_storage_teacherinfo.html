@@ -32,21 +32,23 @@
 <!-- Profile photo and name -->
 <div id="{{ id }}_head">
     <div class="row" v-if="Object.keys(item).length">
-        <div class="col-2 d-flex" v-if="item.PhotoPath && item.PhotoPath != ''">
-            <div class="col-12 col-lg-12">
-                <img :src="item.PhotoPath" class="w-100" style="border-radius: 50%"/>
-            </div>
+        <div class="col-2 d-flex">
+            <img :src="item.PhotoPath" class="w-100" style="border-radius: 50%" v-if="item.PhotoPath && item.PhotoPath != ''" />
+            <img src="{% static 'images/user.avif' %}" class="w-100" v-else />
         </div>
-        <div class="col my-0">
-            <h1 class="lighter">
-                [[ item.TeacherLastName ]] [[ item.TeacherFirstName ]]
-            </h1>
+        <div class="col my-0 ms-2">
+            <h2 class="lighter">
+                [[ item.TeacherFirstName ]] [[ item.TeacherLastName ]]
+            </h2>
             <h3 class="lighter">
                 [[ item.TeacherRoleDescription ]]
             </h3>
+            <p v-if="!item.TeacherSSDCod.includes('0000')">
+                [[ item.TeacherSSDDescription ]] ([[ item.TeacherSSDCod ]])
+            </p>
         </div>
-        <hr>
     </div>
+    <hr v-if="Object.keys(item).length">
     <div v-else>
         {% include "includes/unical_storage_empty.html" with url=url %}
     </div>
@@ -100,74 +102,27 @@
 
             <div v-else-if="Object.keys(item).length">
 
+                <div class="d-lg-none">
+                    {% include "blocks/includes/teachers/unical_storage_teacher_contacts.html" %}
+                </div>
+
+                <ul v-if="item.TeacherFunctions && item.TeacherFunctions.length > 0">
+                    <li v-for="value in item.TeacherFunctions">
+                        <span style="white-space: pre-line;">
+                            [[ value.TeacherRole]]
+                        </span> :
+                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + value.StructureId +'/'">
+                            [[ value.StructureName]]
+                        </a>
+                    </li>
+                </ul>
+
                 <div class="row" v-if="item.ShortBio">
                     <div class="col">
                         <span v-html="item.ShortBio"></span>
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-sm table-hover table-striped">
-                        <tbody>
-                            <tr v-for="(value, name) in item" v-if="value && !fields_to_not_show.includes(name) && value != ''">
-                                <td>[[ labels[name] ]]</td>
-                                <td v-if="name == 'TeacherSSDDescription'">
-                                    <span v-if="!item.TeacherSSDCod.includes('0000')">
-                                        [[ item.TeacherSSDCod ]] - [[ item.TeacherSSDDescription ]]
-                                    </span>
-                                    <span v-else>
-                                        -
-                                    </span>
-                                </td>
-                                <td v-else-if="typeof value === 'object'">
-                                    <ul v-if="name == 'TeacherFunctions'">
-                                        <li v-for="subvalue in value">
-                                            <span style="white-space: pre-line;">
-                                                [[ subvalue.TeacherRole]]
-                                            </span>
-                                            <br>
-                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.StructureId +'/'">
-                                                [[ subvalue.StructureName]]
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul v-else>
-                                        <li v-for="v in value">
-                                            <span v-if="containsHTML(v)" v-html="v"></span>
-                                            <span v-else style="white-space: pre-line;">[[ v ]]</span>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td v-else-if="name == 'ORCID'">
-                                    <span v-if="item.ORCID">
-                                        [[ item.ORCID ]]
-                                    </span>
-                                    <span v-else>
-                                        -
-                                    </span>
-                                </td>
-                                <td v-else-if="typeof value === 'array'">
-                                    <ul>
-                                        <li v-for="subvalue in value">
-                                            [[ subvalue ]]
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td v-else>
-                                    <a v-if="name == 'TeacherDepartmentName'"
-                                       :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.TeacherDepartmentCod +'/'">
-                                        [[ item.TeacherDepartmentName ]]
-                                    </a>
-                                    <span v-else>
-                                        <span v-if="containsHTML(value)" v-html="value"></span>
-                                        <span v-else style="white-space: pre-line;">[[ value]]</span>
-                                    </span>
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
@@ -271,6 +226,11 @@
 
     <!-- Didattica -->
     <div class="tab-pane p-4 fade" id="tab4b" role="tabpanel" aria-labelledby="tab4b-tab">
+
+        <div id="{{ id }}_receptionMobile" class="d-lg-none">
+            {% include "blocks/includes/teachers/unical_storage_teacher_info.html" %}
+        </div>
+
         <!-- teacher's activities -->
         <div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
             <div class="accordion-item">
@@ -332,6 +292,17 @@
 
     <!-- Ricerca -->
     <div class="tab-pane p-4 fade" id="tab5b" role="tabpanel" aria-labelledby="tab5b-tab">
+
+        <div class="table-responsive" v-if="item.ORCID" id="{{ id }}_researchFields">
+            <ul style="list-style: none">
+                <li>
+                    <a :href="'https://orcid.org/' + [[ item.ORCID ]]" target="_blank">
+                        <img src="{% static 'images/orcid.png' %}" width="100" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+
         <!-- Laboratories -->
         {% with laboratories_api|add:"?teacher="|add:code as laboratories_url %}
         {% include "blocks/collapse/unical_storage_collapse_laboratory_list_without_any_filter.html" with url=laboratories_url uid=id|add:"_1" teacher_id=code %}
@@ -363,59 +334,11 @@
 
         {% include "includes/unical_storage_history_back.html" %}
 
-        <div class="background-light-grey px-2 py-3 mb-2 w-100 mt-4" v-if="Object.keys(item).length">
-            <div class="row">
-                <div class="col-2">
-                    <svg class="icon icon-muted">
-                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
-                    </svg>
-                </div>
-                <div class="col m-auto align-middle">
-                    <b>{% trans "Contacts" %}</b>
-                    <ul class="mb-0 ps-0 list-unstyled">
-                        <li v-if="item.TeacherDepartmentName">
-                            <svg class="icon icon-muted icon-xs me-2">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-pa"></use>
-                            </svg> <small>[[ item.TeacherDepartmentName]]</small>
-                        </li>
-                        <li v-if="item.TeacherOffice">
-                            <svg class="icon icon-muted icon-xs me-2">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                            </svg> <small>[[ item.TeacherOffice]]</small>
-                        </li>
-                        <li v-for="email in item.TeacherEmail">
-                            <svg class="icon icon-muted icon-xs me-2">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
-                            </svg> <small>[[ email]]</small>
-                        </li>
-                        <li v-for="phone in item.TeacherTelOffice">
-                            <svg class="icon icon-muted icon-xs me-2">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
-                            </svg> <small>[[ phone]]</small>
-                        </li>
-                        <li v-for="website in item.TeacherWebSite">
-                           <svg class="icon icon-muted icon-xs me-2">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
-                            </svg> <small>[[ website]]</small>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div v-if="Object.keys(item).length">
+            {% include "blocks/includes/teachers/unical_storage_teacher_contacts.html" %}
         </div>
 
-        <div class="background-light-grey px-2 py-3 mb-2 w-100 mt-4" v-if="item.ReceptionHours &&  item.ReceptionHours.length > 0">
-            <div class="row">
-                <div class="col-2">
-                    <svg class="icon icon-muted">
-                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                    </svg>
-                </div>
-                <div class="col m-auto align-middle">
-                    <b>[[ labels['ReceptionHours'] ]]</b>
-                    <small v-html="item.ReceptionHours"></small>
-                </div>
-            </div>
-        </div>
+        {% include "blocks/includes/teachers/unical_storage_teacher_info.html" %}
     </div>
 </div>
 {% endif %}
@@ -425,32 +348,27 @@
 
     var {{ id }}_head = new Vue({
         el: '#{{ id }}_head',
-        data() {
-            return {
-                item: {},
-                labels: {},
-            }
-        },
+        data() { return { item: {}, labels: {}, } },
     })
 
     var {{ id }}_tabList = new Vue({
         el: '#{{ id }}_tabList',
-        data() {
-            return {
-                item: {},
-                labels: {},
-            }
-        },
+        data() { return { item: {}, labels: {}, } },
+    })
+
+    var {{ id }}_researchFields = new Vue({
+        el: '#{{ id }}_researchFields',
+        data() { return { item: {}, labels: {}, } },
+    })
+
+    var {{ id }}_receptionMobile = new Vue({
+        el: '#{{ id }}_receptionMobile',
+        data() { return { item: {}, labels: {}, } },
     })
 
     var {{ id }}_cv = new Vue({
         el: '#tab3b',
-        data() {
-            return {
-                item: {},
-                labels: {},
-            }
-        },
+        data() { return { item: {}, labels: {}, } },
         methods: {
             containsHTML(s) {
                 return /<\/?[a-z][\s\S]*>/i.test(s)
@@ -460,12 +378,7 @@
 
     var {{ id }}_datas = new Vue({
         el: '#{{ id }}_datas',
-        data() {
-            return {
-                item: {},
-                labels: {},
-            }
-        },
+        data() { return { item: {}, labels: {}, } },
     })
 
     var {{ id }} = new Vue({
@@ -495,14 +408,18 @@
                         this.item = response.data.results;
                         {{ id }}_head.item = response.data.results;
                         {{ id }}_tabList.item = response.data.results;
+                        {{ id }}_receptionMobile.item = response.data.results;
+                        {{ id }}_receptionMobile.labels = response.data.labels;
+                        {{ id }}_researchFields.item = response.data.results;
+                        {{ id }}_researchFields.labels = response.data.labels;
                         {{ id }}_cv.item = response.data.results;
                         {{ id }}_datas.item = response.data.results;
                         this.labels = response.data.labels;
                         {{ id }}_datas.labels = response.data.labels;
                         this.is_loading = false
                         {% if change_breadcrumb %}
-                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.TeacherLastName.concat(" ", this.item.TeacherFirstName)
-                        document.title = this.item.TeacherLastName.concat(" ", this.item.TeacherFirstName)
+                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.TeacherFirstName.concat(" ", this.item.TeacherLastName)
+                        document.title = this.item.TeacherFirstName.concat(" ", this.item.TeacherLastName)
                         {% endif %}
                     })
                     .catch(error => {

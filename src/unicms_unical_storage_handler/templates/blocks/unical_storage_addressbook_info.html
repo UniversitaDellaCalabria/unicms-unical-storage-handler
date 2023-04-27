@@ -31,15 +31,17 @@
 
     <div v-else-if="Object.keys(item).length">
         <div class="row">
+            {% comment %}
             <div class="col-12 col-lg-2 d-flex">
                 <svg class="m-auto icon icon-xl icon-muted">
                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
                 </svg>
             </div>
-            <div class="col-12 col-lg-10 my-3 my-lg-0">
-                <h1 class="lighter">
+            {% endcomment %}
+            <div class="col-12 my-3 my-lg-0">
+                <h2 class="lighter">
                     [[ item.Name ]]
-                </h1>
+                </h2>
                 <h3 class="lighter" v-if="special_roles.includes(item.ProfileId)">
                     [[ item.ProfileDescription ]]
                 </h3>

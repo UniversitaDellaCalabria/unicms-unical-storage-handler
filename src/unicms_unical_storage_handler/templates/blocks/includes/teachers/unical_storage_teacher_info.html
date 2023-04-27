@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load static %}
+
+
+<div class="background-light-grey px-2 py-3 mb-2 w-100 mt-4" v-if="item.ReceptionHours &&  item.ReceptionHours.length > 0">
+    <div class="row">
+        <div class="col-2">
+            <svg class="icon icon-muted">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+            </svg>
+        </div>
+        <div class="col m-auto align-middle">
+            <b>[[ labels['ReceptionHours'] ]]</b>
+            <small v-html="item.ReceptionHours"></small>
+        </div>
+    </div>
+</div>

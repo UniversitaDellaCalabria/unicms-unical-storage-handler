@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-20 15:39+0100\n"
-"PO-Revision-Date: 2023-03-20 15:39+0100\n"
+"POT-Creation-Date: 2023-04-27 17:53+0200\n"
+"PO-Revision-Date: 2023-04-27 17:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: settings.py:187 templates/blocks/unical_storage_cdsstudyplans_v3.html:27
-#: templates/blocks/unical_storage_teacherinfo.html:173
+#: templates/blocks/unical_storage_teacherinfo.html:247
 msgid "Teachings"
 msgstr "Insegnamenti"
 
@@ -118,8 +118,8 @@ msgstr "Strutture"
 msgid "Teachers"
 msgstr "Docenti"
 
-#: settings.py:204 templates/storage_news_list.html:11
-#: templates/storage_news_list.html:19
+#: settings.py:204 templates/storage_teacher_news_list.html:11
+#: templates/storage_teacher_news_list.html:19
 msgid "News"
 msgstr ""
 
@@ -128,8 +128,8 @@ msgstr ""
 msgid "Activities"
 msgstr "Insegnamenti"
 
-#: settings.py:213 templates/blocks/unical_storage_spinoff_list.html:72
-#: templates/blocks/unical_storage_spinoff_list.html:96
+#: settings.py:213 templates/blocks/unical_storage_spinoff_list.html:71
+#: templates/blocks/unical_storage_spinoff_list.html:95
 msgid "No"
 msgstr "No"
 
@@ -172,25 +172,24 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:191
 #: templates/blocks/unical_storage_departments_list.html:69
 #: templates/blocks/unical_storage_high_formation_masters_list.html:258
-#: templates/blocks/unical_storage_laboratory_list.html:264
-#: templates/blocks/unical_storage_news_carousel.html:174
-#: templates/blocks/unical_storage_news_list.html:135
-#: templates/blocks/unical_storage_patents_list.html:140
+#: templates/blocks/unical_storage_laboratory_list.html:263
+#: templates/blocks/unical_storage_patents_list.html:139
 #: templates/blocks/unical_storage_phd_activities_list.html:266
 #: templates/blocks/unical_storage_phd_list.html:191
 #: templates/blocks/unical_storage_projects_list.html:253
 #: templates/blocks/unical_storage_publications_list.html:165
 #: templates/blocks/unical_storage_research_group_list.html:184
 #: templates/blocks/unical_storage_research_line_list.html:230
-#: templates/blocks/unical_storage_spinoff_list.html:178
+#: templates/blocks/unical_storage_spinoff_list.html:177
 #: templates/blocks/unical_storage_structure_list.html:120
 #: templates/blocks/unical_storage_studyactivity_list.html:353
 #: templates/blocks/unical_storage_studyplanactivities.html:37
+#: templates/blocks/unical_storage_teacher_materials.html:108
+#: templates/blocks/unical_storage_teacher_news_list.html:114
 #: templates/blocks/unical_storage_teacherresearchgroups.html:41
 #: templates/blocks/unical_storage_teacherresearchlines.html:39
 #: templates/blocks/unical_storage_teacherslist.html:164
 #: templates/blocks/unical_storage_teacherstudyactivities.html:140
-#: templates/blocks/unical_storage_teachingmaterials.html:76
 msgid "No items here"
 msgstr "Nessun risultato"
 
@@ -202,6 +201,10 @@ msgstr "Personale"
 #: templates/blocks/unical_storage_high_formation_master_info.html:559
 msgid "Organization"
 msgstr "Organizzazione"
+
+#: templates/blocks/includes/teachers/unical_storage_teacher_contacts.html:13
+msgid "Contacts"
+msgstr "Contatti"
 
 #: templates/blocks/unical_storage_addressbook.html:36
 msgid "Surname"
@@ -248,15 +251,15 @@ msgstr "Tipo struttura"
 #: templates/blocks/unical_storage_high_formation_masters_list.html:145
 #: templates/blocks/unical_storage_high_formation_masters_list.html:170
 #: templates/blocks/unical_storage_high_formation_masters_list.html:174
-#: templates/blocks/unical_storage_laboratory_list.html:48
-#: templates/blocks/unical_storage_laboratory_list.html:52
-#: templates/blocks/unical_storage_laboratory_list.html:74
-#: templates/blocks/unical_storage_laboratory_list.html:78
-#: templates/blocks/unical_storage_laboratory_list.html:103
-#: templates/blocks/unical_storage_laboratory_list.html:129
-#: templates/blocks/unical_storage_laboratory_list.html:155
-#: templates/blocks/unical_storage_patents_list.html:46
-#: templates/blocks/unical_storage_patents_list.html:50
+#: templates/blocks/unical_storage_laboratory_list.html:47
+#: templates/blocks/unical_storage_laboratory_list.html:51
+#: templates/blocks/unical_storage_laboratory_list.html:73
+#: templates/blocks/unical_storage_laboratory_list.html:77
+#: templates/blocks/unical_storage_laboratory_list.html:102
+#: templates/blocks/unical_storage_laboratory_list.html:128
+#: templates/blocks/unical_storage_laboratory_list.html:154
+#: templates/blocks/unical_storage_patents_list.html:45
+#: templates/blocks/unical_storage_patents_list.html:49
 #: templates/blocks/unical_storage_phd_activities_list.html:98
 #: templates/blocks/unical_storage_phd_activities_list.html:102
 #: templates/blocks/unical_storage_phd_activities_list.html:128
@@ -281,12 +284,12 @@ msgstr "Tipo struttura"
 #: templates/blocks/unical_storage_research_line_list.html:73
 #: templates/blocks/unical_storage_research_line_list.html:100
 #: templates/blocks/unical_storage_research_line_list.html:133
-#: templates/blocks/unical_storage_spinoff_list.html:39
-#: templates/blocks/unical_storage_spinoff_list.html:43
-#: templates/blocks/unical_storage_spinoff_list.html:61
-#: templates/blocks/unical_storage_spinoff_list.html:65
-#: templates/blocks/unical_storage_spinoff_list.html:85
-#: templates/blocks/unical_storage_spinoff_list.html:89
+#: templates/blocks/unical_storage_spinoff_list.html:38
+#: templates/blocks/unical_storage_spinoff_list.html:42
+#: templates/blocks/unical_storage_spinoff_list.html:60
+#: templates/blocks/unical_storage_spinoff_list.html:64
+#: templates/blocks/unical_storage_spinoff_list.html:84
+#: templates/blocks/unical_storage_spinoff_list.html:88
 #: templates/blocks/unical_storage_structure_list.html:44
 #: templates/blocks/unical_storage_structure_list.html:48
 #: templates/blocks/unical_storage_studyactivity_list.html:46
@@ -323,38 +326,38 @@ msgid "Honorary Professors"
 msgstr "Professori Onorari"
 
 #: templates/blocks/unical_storage_addressbook_info.html:104
-#: templates/blocks/unical_storage_laboratory_info.html:117
+#: templates/blocks/unical_storage_laboratory_info.html:116
 #: templates/blocks/unical_storage_publications_info.html:85
 #: templates/blocks/unical_storage_studyactivityinfo.html:48
 msgid "Link"
 msgstr ""
 
-#: templates/blocks/unical_storage_cds_main_info.html:68
+#: templates/blocks/unical_storage_cds_main_info.html:60
 msgid "Duration"
 msgstr "Durata"
 
-#: templates/blocks/unical_storage_cds_main_info.html:71
-#: templates/blocks/unical_storage_cdsinfo.html:96
+#: templates/blocks/unical_storage_cds_main_info.html:63
+#: templates/blocks/unical_storage_cdsinfo.html:95
 #: templates/blocks/unical_storage_cdslist.html:269
 msgid "years"
 msgstr "anni"
 
-#: templates/blocks/unical_storage_cds_main_info.html:76
+#: templates/blocks/unical_storage_cds_main_info.html:68
 msgid "Language"
 msgstr "Lingua"
 
-#: templates/blocks/unical_storage_cds_main_info.html:86
+#: templates/blocks/unical_storage_cds_main_info.html:78
 msgid "Erogation mode"
 msgstr "Modalità di erogazione"
 
-#: templates/blocks/unical_storage_cds_main_info.html:94
+#: templates/blocks/unical_storage_cds_main_info.html:86
 msgid "Class"
 msgstr "Classe"
 
-#: templates/blocks/unical_storage_cds_main_info.html:102
+#: templates/blocks/unical_storage_cds_main_info.html:94
 #: templates/blocks/unical_storage_cdslist.html:171
 #: templates/blocks/unical_storage_high_formation_masters_list.html:137
-#: templates/blocks/unical_storage_laboratory_list.html:70
+#: templates/blocks/unical_storage_laboratory_list.html:69
 #: templates/blocks/unical_storage_research_group_list.html:44
 #: templates/blocks/unical_storage_research_line_list.html:43
 #: templates/blocks/unical_storage_studyactivity_list.html:71
@@ -362,42 +365,41 @@ msgstr "Classe"
 msgid "Department"
 msgstr "Dipartimento"
 
-#: templates/blocks/unical_storage_cds_main_info.html:110
+#: templates/blocks/unical_storage_cds_main_info.html:102
 msgid "Coordinator"
 msgstr "Coordinatore"
 
-#: templates/blocks/unical_storage_cdsinfo.html:65
+#: templates/blocks/unical_storage_cdsinfo.html:64
 msgid "Interclass degree"
 msgstr "Corso di laurea interclasse"
 
-#: templates/blocks/unical_storage_cdsinfo.html:109
+#: templates/blocks/unical_storage_cdsinfo.html:108
 #: templates/blocks/unical_storage_structure_list.html:103
 msgid "Website"
 msgstr "Sito web"
 
-#: templates/blocks/unical_storage_cdsinfo.html:254
-#: templates/blocks/unical_storage_cdsinfo.html:259
+#: templates/blocks/unical_storage_cdsinfo.html:247
+#: templates/blocks/unical_storage_cdsinfo.html:252
 msgid "Download brochure"
 msgstr "Scarica la brochure"
 
-#: templates/blocks/unical_storage_cdsinfo.html:392
+#: templates/blocks/unical_storage_cdsinfo.html:385
 msgid "Faculty"
 msgstr "Docenti"
 
-#: templates/blocks/unical_storage_cdsinfo.html:403
+#: templates/blocks/unical_storage_cdsinfo.html:396
 msgid "Academic Courses"
 msgstr "Docenze Anno"
 
-#: templates/blocks/unical_storage_cdsinfo.html:563
+#: templates/blocks/unical_storage_cdsinfo.html:556
 msgid "Documents"
 msgstr "Documenti"
 
-#: templates/blocks/unical_storage_cdsinfo.html:572
-#: templates/blocks/unical_storage_cdsinfo.html:575
+#: templates/blocks/unical_storage_cdsinfo.html:565
 msgid "Study course brochure"
 msgstr "Brochure del corso"
 
-#: templates/blocks/unical_storage_cdsinfo.html:588
+#: templates/blocks/unical_storage_cdsinfo.html:578
 #: templates/storage_high_formation_master_info.html:35
 #: templates/storage_high_formation_masters_list.html:35
 msgid "Digital services"
@@ -483,7 +485,7 @@ msgid "Study paths"
 msgstr "Percorsi di studio"
 
 #: templates/blocks/unical_storage_departments_info.html:95
-#: templates/blocks/unical_storage_laboratory_list.html:220
+#: templates/blocks/unical_storage_laboratory_list.html:219
 #: templates/blocks/unical_storage_structure_info.html:103
 msgid "Manager"
 msgstr "Responsabile"
@@ -577,94 +579,76 @@ msgstr "Modalità di erogazione"
 msgid "Academic Year"
 msgstr "Anno accademico"
 
-#: templates/blocks/unical_storage_laboratory_info.html:60
+#: templates/blocks/unical_storage_laboratory_info.html:59
 msgid "European Research Council Classification"
 msgstr "Classificazione European Research Council"
 
-#: templates/blocks/unical_storage_laboratory_info.html:146
+#: templates/blocks/unical_storage_laboratory_info.html:145
 msgid "Laboratory Extra Departments"
 msgstr "Altri Dipartimenti Coinvolti"
 
-#: templates/blocks/unical_storage_laboratory_info.html:175
+#: templates/blocks/unical_storage_laboratory_info.html:174
 msgid "Scope"
 msgstr "Finalità"
 
-#: templates/blocks/unical_storage_laboratory_info.html:186
+#: templates/blocks/unical_storage_laboratory_info.html:185
 msgid "Services Scope"
 msgstr "Finalità dei servizi"
 
-#: templates/blocks/unical_storage_laboratory_info.html:191
+#: templates/blocks/unical_storage_laboratory_info.html:190
 msgid "Research Scope"
 msgstr "Finalità di ricerca"
 
-#: templates/blocks/unical_storage_laboratory_info.html:196
+#: templates/blocks/unical_storage_laboratory_info.html:195
 msgid "Teaching Scope"
 msgstr "Finalità Didattiche"
 
-#: templates/blocks/unical_storage_laboratory_info.html:214
+#: templates/blocks/unical_storage_laboratory_info.html:213
 msgid "Offered Services"
 msgstr "Servizi offerti"
 
-#: templates/blocks/unical_storage_laboratory_info.html:243
+#: templates/blocks/unical_storage_laboratory_info.html:242
 msgid "Laboratory Equipment"
 msgstr "Strumentazione"
 
-#: templates/blocks/unical_storage_laboratory_info.html:266
+#: templates/blocks/unical_storage_laboratory_info.html:265
 msgid "Research Personnel"
 msgstr "Personale di ricerca"
 
-#: templates/blocks/unical_storage_laboratory_info.html:295
+#: templates/blocks/unical_storage_laboratory_info.html:294
 msgid "Tech Personnel"
 msgstr "Personale tecnico"
 
-#: templates/blocks/unical_storage_laboratory_list.html:44
+#: templates/blocks/unical_storage_laboratory_list.html:43
 msgid "Area"
 msgstr "Ambito"
 
-#: templates/blocks/unical_storage_laboratory_list.html:98
+#: templates/blocks/unical_storage_laboratory_list.html:97
 msgid "Infastructure"
 msgstr "Infrastruttura"
 
-#: templates/blocks/unical_storage_laboratory_list.html:105
-#: templates/blocks/unical_storage_laboratory_list.html:131
-#: templates/blocks/unical_storage_laboratory_list.html:158
+#: templates/blocks/unical_storage_laboratory_list.html:104
+#: templates/blocks/unical_storage_laboratory_list.html:130
+#: templates/blocks/unical_storage_laboratory_list.html:157
 #: templates/blocks/unical_storage_research_group_list.html:82
 #: templates/blocks/unical_storage_research_line_list.html:103
 #: templates/blocks/unical_storage_research_line_list.html:136
 msgid "Clear all"
 msgstr "Deseleziona tutto"
 
-#: templates/blocks/unical_storage_laboratory_list.html:124
+#: templates/blocks/unical_storage_laboratory_list.html:123
 msgid "Scopes"
 msgstr "Finalità"
 
-#: templates/blocks/unical_storage_laboratory_list.html:150
+#: templates/blocks/unical_storage_laboratory_list.html:149
 msgid "ERC 1"
 msgstr ""
 
-#: templates/blocks/unical_storage_news_carousel.html:76
-msgid "Published"
-msgstr ""
-
-#: templates/blocks/unical_storage_news_carousel.html:139
-msgid "Go to all notices"
-msgstr ""
-
-#: templates/blocks/unical_storage_news_carousel.html:150
-#, fuzzy
-#| msgid "previous"
-msgid "Previous"
-msgstr "precedente"
-
-#: templates/blocks/unical_storage_news_carousel.html:158
-msgid "Next"
-msgstr ""
-
-#: templates/blocks/unical_storage_patents_list.html:42
+#: templates/blocks/unical_storage_patents_list.html:41
 #: templates/blocks/unical_storage_projects_list.html:59
 #: templates/blocks/unical_storage_projects_list.html:228
-#: templates/blocks/unical_storage_spinoff_list.html:35
-#: templates/blocks/unical_storage_spinoff_list.html:158
+#: templates/blocks/unical_storage_spinoff_list.html:34
+#: templates/blocks/unical_storage_spinoff_list.html:157
 msgid "Tech Area"
 msgstr "Area tecnologica"
 
@@ -791,20 +775,20 @@ msgstr "Ricerca applicata (Rif. ASTER)"
 msgid "Ref. ASTER"
 msgstr "Rif. ASTER"
 
-#: templates/blocks/unical_storage_spinoff_info.html:50
-#: templates/blocks/unical_storage_spinoff_list.html:57
-#: templates/blocks/unical_storage_spinoff_list.html:138
+#: templates/blocks/unical_storage_spinoff_info.html:49
+#: templates/blocks/unical_storage_spinoff_list.html:56
+#: templates/blocks/unical_storage_spinoff_list.html:137
 msgid "Spin-off"
 msgstr ""
 
-#: templates/blocks/unical_storage_spinoff_info.html:56
-#: templates/blocks/unical_storage_spinoff_list.html:81
-#: templates/blocks/unical_storage_spinoff_list.html:144
+#: templates/blocks/unical_storage_spinoff_info.html:55
+#: templates/blocks/unical_storage_spinoff_list.html:80
+#: templates/blocks/unical_storage_spinoff_list.html:143
 msgid "Startup"
 msgstr ""
 
-#: templates/blocks/unical_storage_spinoff_list.html:68
-#: templates/blocks/unical_storage_spinoff_list.html:92
+#: templates/blocks/unical_storage_spinoff_list.html:67
+#: templates/blocks/unical_storage_spinoff_list.html:91
 msgid "Yes"
 msgstr "Si"
 
@@ -881,11 +865,49 @@ msgstr "Codice"
 msgid "Main Activity"
 msgstr "Attività Principale"
 
-#: templates/blocks/unical_storage_teacherinfo.html:137
-msgid "Curriculum vitae"
-msgstr ""
+#: templates/blocks/unical_storage_teacher_materials.html:60
+#: templates/blocks/unical_storage_teacher_news_list.html:66
+msgid "Close"
+msgstr "Chiudi"
 
-#: templates/blocks/unical_storage_teacherinfo.html:254
+#: templates/blocks/unical_storage_teacherinfo.html:65
+msgid "Profile"
+msgstr "Profilo"
+
+#: templates/blocks/unical_storage_teacherinfo.html:71
+msgid "Notice board"
+msgstr "Bacheca avvisi"
+
+#: templates/blocks/unical_storage_teacherinfo.html:83
+msgid "Didactic"
+msgstr "Didattica"
+
+#: templates/blocks/unical_storage_teacherinfo.html:89
+msgid "Research"
+msgstr "Ricerca"
+
+#: templates/blocks/unical_storage_teacherinfo.html:149
+msgid "Uploaded CV (it)"
+msgstr "CV caricato (it)"
+
+#: templates/blocks/unical_storage_teacherinfo.html:155
+#: templates/blocks/unical_storage_teacherinfo.html:166
+msgid "Download"
+msgstr "Scarica"
+
+#: templates/blocks/unical_storage_teacherinfo.html:160
+msgid "Uploaded CV (en)"
+msgstr "CV caricato (en)"
+
+#: templates/blocks/unical_storage_teacherinfo.html:184
+msgid "Curriculum vitae (short)"
+msgstr "Curriculum vitae (breve)"
+
+#: templates/blocks/unical_storage_teacherinfo.html:211
+msgid "Curriculum vitae (full)"
+msgstr "Curriculum vitae (esteso)"
+
+#: templates/blocks/unical_storage_teacherinfo.html:276
 msgid "Teaching Materials"
 msgstr "Materiale Didattico"
 
@@ -1010,6 +1032,11 @@ msgstr "Dettaglio della struttura"
 #: templates/storage_teachers_info.html:12
 msgid "Teacher detail"
 msgstr "Dettaglio docente"
+
+#, fuzzy
+#~| msgid "previous"
+#~ msgid "Previous"
+#~ msgstr "precedente"
 
 #~ msgid "Teachings year"
 #~ msgstr "Docenze anno"
