@@ -29,8 +29,9 @@
     <div class="col-12 col-lg-8">
 {% endif %}
 
+<!-- Profile photo and name -->
 <div id="{{ id }}_head">
-    <div class="row">
+    <div class="row" v-if="Object.keys(item).length">
         <div class="col-2 d-flex" v-if="item.PhotoPath && item.PhotoPath != ''">
             <div class="col-12 col-lg-12">
                 <img :src="item.PhotoPath" class="w-100" style="border-radius: 50%"/>
@@ -44,21 +45,25 @@
                 [[ item.TeacherRoleDescription ]]
             </h3>
         </div>
+        <hr>
+    </div>
+    <div v-else>
+        {% include "includes/unical_storage_empty.html" with url=url %}
     </div>
 </div>
-<hr>
+<!-- END profile photo and name -->
 
-<ul class="nav nav-tabs nav-tabs-icon-text" id="myTab3" role="tablist">
+<ul class="nav nav-tabs nav-tabs-icon-text" id="{{ id }}_tabList" role="tablist" v-if="Object.keys(item).length">
     <li class="nav-item">
-        <a class="nav-link active" id="tab1c-tab" data-bs-toggle="tab" href="#tab1b" role="tab" aria-controls="tab1b" aria-selected="true">
+        <a class="nav-link active" id="profileTab-tab" data-bs-toggle="tab" href="#profileTab" role="tab" aria-controls="profileTab" aria-selected="true">
             <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-user"></use></svg>
-            Profilo
+            {% trans "Profile" %}
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link" id="tab2b-tab" data-bs-toggle="tab" href="#tab2b" role="tab" aria-controls="tab2b" aria-selected="false">
             <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-horn"></use></svg>
-            Bacheca avvisi
+            {% trans "Notice board" %}
         </a>
     </li>
     <li class="nav-item">
@@ -70,21 +75,22 @@
     <li class="nav-item">
         <a class="nav-link" id="tab4b-tab" data-bs-toggle="tab" href="#tab4b" role="tab" aria-controls="tab4b" aria-selected="false">
             <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-folder"></use></svg>
-            Didattica
+            {% trans "Didactic" %}
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link" id="tab5b-tab" data-bs-toggle="tab" href="#tab5b" role="tab" aria-controls="tab5b" aria-selected="false">
             <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-tool"></use></svg>
-            Ricerca
+            {% trans "Research" %}
         </a>
     </li>
 </ul>
 
-<div class="tab-content" id="myTab3Content">
+
+<div class="tab-content" id="tabContent">
 
     <!-- Profilo -->
-    <div class="tab-pane p-4 fade show active" id="tab1b" role="tabpanel" aria-labelledby="tab1c-tab">
+    <div class="tab-pane p-4 fade show active" id="profileTab" role="tabpanel" aria-labelledby="profileTab-tab">
         <div id="{{ id }}">
 
             <loading-icon
@@ -162,9 +168,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div v-else>
-                {% include "includes/unical_storage_empty.html" with url=url %}
             </div>
         </div>
     </div>
@@ -318,7 +321,7 @@
                     <div class="mt-3 accordion-body">
                         {% clean_url url as cleaned_url %}
                         {% with cleaned_url|add:"/materials/" as teachingmaterials_url %}
-                        {% include "blocks/unical_storage_teachingmaterials.html" with url=teachingmaterials_url uid=id|add:"_7" %}
+                        {% include "blocks/unical_storage_teacher_materials.html" with url=teachingmaterials_url uid=id|add:"_7" %}
                         {% endwith %}
                     </div>
                 </div>
@@ -360,7 +363,7 @@
 
         {% include "includes/unical_storage_history_back.html" %}
 
-        <div class="background-light-grey px-2 py-3 mb-2 w-100 mt-4">
+        <div class="background-light-grey px-2 py-3 mb-2 w-100 mt-4" v-if="Object.keys(item).length">
             <div class="row">
                 <div class="col-2">
                     <svg class="icon icon-muted">
@@ -430,6 +433,16 @@
         },
     })
 
+    var {{ id }}_tabList = new Vue({
+        el: '#{{ id }}_tabList',
+        data() {
+            return {
+                item: {},
+                labels: {},
+            }
+        },
+    })
+
     var {{ id }}_cv = new Vue({
         el: '#tab3b',
         data() {
@@ -456,7 +469,7 @@
     })
 
     var {{ id }} = new Vue({
-        el: '[id="{{ id }}"]',
+        el: '#{{ id }}',
         data() {
             return {
                 item: {},
@@ -480,9 +493,10 @@
                     .get(this.url)
                     .then(response => {
                         this.item = response.data.results;
+                        {{ id }}_head.item = response.data.results;
+                        {{ id }}_tabList.item = response.data.results;
                         {{ id }}_cv.item = response.data.results;
                         {{ id }}_datas.item = response.data.results;
-                        {{ id }}_head.item = response.data.results;
                         this.labels = response.data.labels;
                         {{ id }}_datas.labels = response.data.labels;
                         this.is_loading = false

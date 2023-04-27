@@ -8,13 +8,7 @@
 
 {% block content %}
 
-{% get_allowed_website request.get_host as host %}
 
-
-{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% storage_settings_value "CMS_STORAGE_TEACHER_NEWS_VIEW_PREFIX_PATH" as news_prefix %}
-{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
 
 <div id="{{ id }}">
     <div v-if="(initial_items && initial_items.length) || initial_parameters">
@@ -25,6 +19,7 @@
         </loading-icon>
 
         <div v-else>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card-wrapper card-space">
@@ -44,23 +39,22 @@
                     <thead>
                         <tr>
                             <th scope="col">[[ labels.Title ]]</th>
-                            <th scope="col">[[ labels.TextType ]]</th>
                             <th scope="col">[[ labels.PublicationDate ]]</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="item in items.results">
                             <td>
-                                <a href="" data-bs-toggle="modal" :data-bs-target="'#newsModal_' + item.ID">
+                                <a href="" data-bs-toggle="modal" :data-bs-target="'#matModal_' + item.ID">
                                     [[ item.Title ]]
                                 </a>
 
                                 <!-- Modal -->
-                                <div class="modal fade" tabindex="-1" role="dialog" :id="'newsModal_' + item.ID" :aria-labelledby="'newsModalTitle_' + item.ID">
+                                <div class="modal fade" tabindex="-1" role="dialog" :id="'matModal_' + item.ID" :aria-labelledby="'matModalTitle_' + item.ID">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <div class="modal-title h4" :id="'newsModalTitle_' + item.ID">
+                                                <div class="modal-title h4" :id="'matModalTitle_' + item.ID">
                                                     [[ item.Title ]]
                                                 </div>
                                                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="{% trans 'Close' %}">
@@ -71,8 +65,6 @@
                                             </div>
                                             <div class="modal-body">
                                                 <p>
-                                                    [[ item.TextType ]]
-                                                    -
                                                     [[ new Date(item.PublicationDate).toLocaleString("{{ LANGUAGE_CODE }}",
                                                                                     {day: '2-digit',
                                                                                      month: '2-digit',
@@ -92,7 +84,6 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>[[ item.TextType ]]</td>
                             <td>
                                 [[ new Date(item.PublicationDate).toLocaleString("{{ LANGUAGE_CODE }}",
                                                                                     {day: '2-digit',
@@ -106,13 +97,17 @@
                 </table>
             </div>
 
-            <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
 
         </div>
+
+        <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
+
     </div>
+
     <div v-else>
         {% trans "No items here" %}
     </div>
+
 </div>
 {% endblock content %}
 
