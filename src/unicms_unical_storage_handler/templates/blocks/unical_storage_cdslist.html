@@ -9,6 +9,7 @@
 {% block content %}
 
 {% get_allowed_website request.get_host as host %}
+{% get_current_language as LANGUAGE_CODE %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
@@ -238,6 +239,13 @@
                                        :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"
                                        {% if request.get_host != host %}target="_blank"{% endif %}>
                                         <b>[[ item.CdSName ]]</b>
+                                        <b v-if="item.RegDidId == 21540">
+                                        {% if LANGUAGE_CODE != 'it' %}
+                                            (inter-university)
+                                        {% else %}
+                                            (interateneo)
+                                        {% endif %}
+                                        </b>
                                     </a>
 
                                 </h5>

@@ -195,6 +195,13 @@
                                {% if request.get_host != host %}target="_blank"{% endif %}>
                                 <small>
                                 <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
+                                <b v-if="item.RegDidId == 21540">
+                                {% if LANGUAGE_CODE != 'it' %}
+                                    (inter-university)
+                                {% else %}
+                                    (interateneo)
+                                {% endif %}
+                                </b>
                                 <span>
                                     - [[ item.CourseType ]]
                                 </span>
