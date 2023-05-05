@@ -31,24 +31,30 @@
 
 <!-- Profile photo and name -->
 <div id="{{ id }}_head">
-    <div class="row" v-if="Object.keys(item).length">
-        <div class="col-2 d-flex">
-            <img :src="item.PhotoPath" class="w-100" style="height: fit-content; border-radius: 50%" v-if="item.PhotoPath && item.PhotoPath != ''" />
-            <img src="{% static 'images/user.avif' %}" class="w-100" style="height: fit-content;" v-else />
+    <loading-icon
+        v-if="is_loading"
+        :loader_source="loader_source">
+    </loading-icon>
+    <div v-else-if="Object.keys(item).length">
+        <div class="row">
+            <div class="col-2 d-flex">
+                <img :src="item.PhotoPath" class="w-100" style="height: fit-content; border-radius: 50%" v-if="item.PhotoPath && item.PhotoPath != ''" />
+                <img src="{% static 'images/user.avif' %}" class="w-100" style="height: fit-content;" v-else />
+            </div>
+            <div class="col my-0 ms-2">
+                <h2 class="lighter">
+                    [[ item.TeacherFirstName ]] [[ item.TeacherLastName ]]
+                </h2>
+                <h3 class="lighter">
+                    [[ item.TeacherRoleDescription ]]
+                </h3>
+                <p v-if="!item.TeacherSSDCod.includes('0000')">
+                    [[ item.TeacherSSDDescription ]] ([[ item.TeacherSSDCod ]])
+                </p>
+            </div>
         </div>
-        <div class="col my-0 ms-2">
-            <h2 class="lighter">
-                [[ item.TeacherFirstName ]] [[ item.TeacherLastName ]]
-            </h2>
-            <h3 class="lighter">
-                [[ item.TeacherRoleDescription ]]
-            </h3>
-            <p v-if="!item.TeacherSSDCod.includes('0000')">
-                [[ item.TeacherSSDDescription ]] ([[ item.TeacherSSDCod ]])
-            </p>
-        </div>
+        <hr v-if="Object.keys(item).length">
     </div>
-    <hr v-if="Object.keys(item).length">
     <div v-else>
         {% include "includes/unical_storage_empty.html" with url=url %}
     </div>
