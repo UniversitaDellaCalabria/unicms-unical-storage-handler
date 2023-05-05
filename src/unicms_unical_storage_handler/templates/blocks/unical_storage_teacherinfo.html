@@ -354,7 +354,13 @@
 
     var {{ id }}_head = new Vue({
         el: '#{{ id }}_head',
-        data() { return { item: {}, labels: {}, } },
+        data() {
+            return {
+                item: {},
+                labels: {},
+                is_loading: true,
+            }
+        },
     })
 
     var {{ id }}_tabList = new Vue({
@@ -413,6 +419,7 @@
                     .then(response => {
                         this.item = response.data.results;
                         {{ id }}_head.item = response.data.results;
+                        {{ id }}_head.is_loading = false;
                         {{ id }}_tabList.item = response.data.results;
                         {{ id }}_receptionMobile.item = response.data.results;
                         {{ id }}_receptionMobile.labels = response.data.labels;
