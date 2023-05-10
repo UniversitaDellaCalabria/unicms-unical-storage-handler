@@ -55,7 +55,14 @@
                         <td>
                             [[ labels[name] ]]
                         </td>
-                        <td v-if="typeof value === 'object'">
+                        <td v-if="Array.isArray(value)">
+                            <ul class="list-unstyled">
+                                <li v-for="subvalue in value">
+                                    [[ subvalue ]]
+                                </li>
+                            </ul>
+                        </td>
+                        <td v-else-if="typeof value === 'object'">
                             <ul v-if="name == 'Roles'" style="list-style: none" class="ps-0">
                                 <li v-for="(subvalue, index) in value" v-if="((allowed_roles.length==0 || allowed_roles.includes(subvalue.Role)) && (allowed_structure_types.length==0 || allowed_structure_types.includes(subvalue.StructureTypeCOD))) || special_roles.includes(item.ProfileId)">
                                     <hr v-if="index > 0">
@@ -89,13 +96,6 @@
                                     <span style="white-space: pre-line;" v-else>
                                         [[ v ]]
                                     </span>
-                                </li>
-                            </ul>
-                        </td>
-                        <td v-else-if="typeof value === 'array'">
-                            <ul class="list-unstyled">
-                                <li v-for="subvalue in value">
-                                    [[ subvalue ]]
                                 </li>
                             </ul>
                         </td>

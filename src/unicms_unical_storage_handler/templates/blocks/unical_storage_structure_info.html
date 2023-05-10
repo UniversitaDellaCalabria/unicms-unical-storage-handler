@@ -58,7 +58,13 @@
                                 [[ value ]]
                             </a>
                         </td>
-
+                        <td v-else-if="Array.isArray(value)">
+                            <ul>
+                                <li v-for="subvalue in value">
+                                    [[ subvalue ]]
+                                </li>
+                            </ul>
+                        </td>
                         <td v-else-if="typeof value === 'object'">
                             <ul v-for="(valueProfile, nameProfile) in value">
                                 <div v-if="typeof valueProfile === 'object'">
@@ -78,13 +84,6 @@
                                     <span style="white-space: pre-line;">
                                         [[ valueProfile ]]
                                     </span>
-                                </li>
-                            </ul>
-                        </td>
-                        <td v-else-if="typeof value === 'array'">
-                            <ul>
-                                <li v-for="subvalue in value">
-                                    [[ subvalue ]]
                                 </li>
                             </ul>
                         </td>

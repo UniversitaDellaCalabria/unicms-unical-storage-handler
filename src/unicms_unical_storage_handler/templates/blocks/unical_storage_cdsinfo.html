@@ -288,7 +288,15 @@
                                  role="region"
                                  :aria-labelledby="'heading-' + name +'-lft'">
                                 <div class="accordion-body">
-                                    <span v-if="typeof item[name] === 'object'">
+                                    <span v-if="Array.isArray(item[name])">
+                                        <ul>
+                                            <li v-for="subvalue in item[name]">
+                                                <span v-if="containsHTML(subvalue)" v-html="subvalue"></span>
+                                                <span v-else>[[ subvalue ]]</span>
+                                            </li>
+                                        </ul>
+                                    </span>
+                                    <span v-else-if="typeof item[name] === 'object'">
                                         <ul v-for="(valueProfile, nameProfile) in item[name]">
                                             <li>
                                                 [[ nameProfile ]]
@@ -305,14 +313,6 @@
                                                         <span v-else style="white-space: pre-line;">[[ valueProfileInstance ]]</span>
                                                     </li>
                                                 </ul>
-                                            </li>
-                                        </ul>
-                                    </span>
-                                    <span v-else-if="typeof item[name] === 'array'">
-                                        <ul>
-                                            <li v-for="subvalue in item[name]">
-                                                <span v-if="containsHTML(subvalue)" v-html="subvalue"></span>
-                                                <span v-else>[[ subvalue ]]</span>
                                             </li>
                                         </ul>
                                     </span>

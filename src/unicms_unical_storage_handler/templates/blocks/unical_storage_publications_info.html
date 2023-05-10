@@ -51,7 +51,14 @@
                     <tr v-for="(value, name) in item" v-if="value && !fields_to_not_show.includes(name) && value != ''">
                         <td>[[ labels[name] ]]</td>
 
-                        <td v-if="typeof value === 'object'">
+                        <td v-if="Array.isArray(value)">
+                            <ul>
+                                <li v-for="subvalue in value">
+                                    [[ subvalue ]]
+                                </li>
+                            </ul>
+                        </td>
+                        <td v-else-if="typeof value === 'object'">
                             <ul v-if="name == 'PublicationAuthors'">
                                 <li v-for="subvalue in value">
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.AuthorId +'/'">
@@ -64,13 +71,6 @@
                                     <span style="white-space: pre-line;">
                                         [[ v ]]
                                     </span>
-                                </li>
-                            </ul>
-                        </td>
-                        <td v-else-if="typeof value === 'array'">
-                            <ul>
-                                <li v-for="subvalue in value">
-                                    [[ subvalue ]]
                                 </li>
                             </ul>
                         </td>
