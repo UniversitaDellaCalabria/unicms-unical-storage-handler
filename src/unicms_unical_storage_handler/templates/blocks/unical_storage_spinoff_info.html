@@ -95,6 +95,7 @@
                                :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.SpinoffUnicalReferentId +'/'">
                                 [[ item.SpinoffUnicalReferent ]]
                             </a>
+                            <span v-else-if="name == 'SpinoffDescription'" v-html="item.SpinoffDescription"></span>
                             <span v-else-if="name == 'SpinoffUnicalReferent' &! item.SpinoffUnicalReferentId">
                                 [[ item.SpinoffUnicalReferent ]]
                             </span>
