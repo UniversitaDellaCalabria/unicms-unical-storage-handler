@@ -175,9 +175,7 @@
                                 <h5><b>[[ item.RLineDescription ]]</b></h5>
                                 <div class="row" v-if="item.RLineResults">
                                     <div class="col-12 col-md-auto">
-                                        <span style="white-space: pre-line;">
-                                            [[ item.RLineResults ]]
-                                        </small>
+                                        <span v-html="item.RLineResults"></small>
                                     </div>
                                 </div>
                                 <div class="row mt-2" v-if="item.Teachers && item.Teachers.length > 0 || item.RYear || item.RLineErc2Name || item.RLineAster2Name">

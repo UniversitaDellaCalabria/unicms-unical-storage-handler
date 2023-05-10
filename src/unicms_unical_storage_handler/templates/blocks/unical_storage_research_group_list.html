@@ -146,9 +146,7 @@
                                             <div class="accordion-body">
                                                 <div class="row">
                                                     <div class="col-12 col-md-auto">
-                                                        <small>
-                                                            [[ item.RGroupDescription ]]
-                                                        </small>
+                                                        <small v-html="item.RGroupDescription"></small>
                                                     </div>
                                                 </div>
                                                 <div class="row mt-2" v-if="item.Teachers && item.Teachers.length > 0">

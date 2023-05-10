@@ -547,8 +547,8 @@
                              data-bs-parent="#collapse_final_test_mode_{{ id }}"
                              aria-labelledby="{{ id }}_heading-final-test-mode-lft">
 
-                            <div class="accordion-body" style="white-space: break-spaces">
-                                [[ item.FinalTestMode ]]
+                            <div class="accordion-body">
+                                <span v-html="item.FinalTestMode"></span>
                             </div>
                         </div>
                     </div>

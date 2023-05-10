@@ -115,7 +115,7 @@
                                     </div><div class="col-12 col-md-auto" v-if="item.ClassroomsTimetable">
                                         <small>
                                             [[ labels['ClassroomsTimetable'] ]] >
-                                            <b>[[ item.ClassroomsTimetable ]] </b>
+                                            <span v-html="item.ClassroomsTimetable"></span>
                                         </small>
                                     </div><div class="col-12 col-md-auto" v-if="item.ShowTimetable">
                                         <small>
@@ -131,9 +131,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <vue-markdown :emoji=false>
-                        [[ item.ActivityContents ]]
-                    </vue-markdown>
+                    <span v-html="item.ActivityContents"></span>
                 </div>
 
                 <!-- Main Teachers -->
@@ -259,7 +257,7 @@
                              aria-labelledby="{{ id }}_heading-final-test-mode-lft">
 
                             <div class="accordion-body">
-                                [[ item.FinalTestMode ]]
+                                <span v-html="item.FinalTestMode"></span>
                             </div>
                         </div>
                     </div>

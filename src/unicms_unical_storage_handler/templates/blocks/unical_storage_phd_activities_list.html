@@ -240,7 +240,7 @@
                                     </div><div class="col-12 col-md-auto" v-if="item.ClassroomsTimetable">
                                         <small>
                                             [[ labels['ClassroomsTimetable'] ]] >
-                                            <b>[[ item.ClassroomsTimetable ]] </b>
+                                            <span v-html="item.ClassroomsTimetable"></span>
                                         </small>
                                     </div><div class="col-12 col-md-auto" v-if="item.ShowTimetable">
                                         <small>
