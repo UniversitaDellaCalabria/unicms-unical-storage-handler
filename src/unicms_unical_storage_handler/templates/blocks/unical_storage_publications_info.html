@@ -52,13 +52,6 @@
                         <td>[[ labels[name] ]]</td>
 
                         <td v-if="Array.isArray(value)">
-                            <ul>
-                                <li v-for="subvalue in value">
-                                    [[ subvalue ]]
-                                </li>
-                            </ul>
-                        </td>
-                        <td v-else-if="typeof value === 'object'">
                             <ul v-if="name == 'PublicationAuthors'">
                                 <li v-for="subvalue in value">
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.AuthorId +'/'">
@@ -67,6 +60,13 @@
                                 </li>
                             </ul>
                             <ul v-else>
+                                <li v-for="subvalue in value">
+                                    [[ subvalue ]]
+                                </li>
+                            </ul>
+                        </td>
+                        <td v-else-if="typeof value === 'object'">
+                            <ul>
                                 <li v-for="v in value">
                                     <span style="white-space: pre-line;">
                                         [[ v ]]
