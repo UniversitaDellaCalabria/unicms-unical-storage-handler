@@ -25,6 +25,17 @@
 </div>
 {% endblock header_center_logo %}
 
+{% block unical_mobile_logo %}
+<div id="_{{ cds_cod }}_logo_mobile">
+    <p class="h5 text-white">
+        [[ item.CDSCourseClassName ]]
+    </p>
+    <p class="h2 text-white">
+        [[ item.CDSName ]]
+    </p>
+</div>
+{% endblock unical_mobile_logo %}
+
 {% block container %}
 
 {% get_current_language as LANGUAGE_CODE %}
@@ -287,6 +298,15 @@
         },
     });
 
+    var _{{ cds_cod }}_logo = new Vue({
+        el: '[id="_{{ cds_cod }}_logo_mobile"]',
+        data() {
+            return {
+                item: {},
+            }
+        },
+    });
+
     var _{{ cds_cod }} = new Vue({
         el: '[id="_{{ cds_cod }}"]',
         data() {
@@ -319,6 +339,7 @@
                         this.labels = response.data.labels;
                         this.is_loading = false
                         _{{ cds_cod }}_logo.item = response.data.results
+                        _{{ cds_cod }}_logo_mobile.item = response.data.results
                         {% if change_breadcrumb %}
                         document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.LaboratoryName
                         document.title = this.item.LaboratoryName
