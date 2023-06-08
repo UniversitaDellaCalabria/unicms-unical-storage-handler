@@ -78,7 +78,7 @@ def get_cds_website_webpath(value):
     if not cms_webpath_cds: return None
     found = cms_webpath_cds.get(value, None)
     if found: return found
-    webpath = WebPath.objects.filter(pk=value).first()
+    webpath = WebPath.objects.filter(pk=value).select_related('parent').first()
     if not webpath: return None
     parent = webpath.parent
     if not parent: return None
