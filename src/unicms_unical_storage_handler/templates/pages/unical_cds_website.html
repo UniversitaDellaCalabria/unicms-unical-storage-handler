@@ -2,17 +2,15 @@
 
 {% load i18n %}
 {% load static %}
-{% load unicms_templates %}
+{% load unicms_storage_handler %}
 
 
 {% block header_center_logo %}
 
 {% get_current_language as LANGUAGE_CODE %}
-{% settings_value "CMS_WEBPATH_CDS" as cms_webpath_cds %}
-{% if cms_webpath_cds %}
-    {% with cms_webpath_cds|get_value:webpath.pk as cds_identifier %}
-    {% if cds_identifier %}
-    <div id="_{{ cds_cod }}_logo">
+{% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% if cds_identifier %}
+    <div id="_cds_identifier_logo">
         <p class="h5 text-white">
             [[ item.CDSCourseClassName ]]
         </p>
@@ -21,8 +19,8 @@
         </p>
     </div>
     <script>
-        var _{{ cds_cod }}_logo = new Vue({
-            el: '[id="_{{ cds_cod }}_logo"]',
+        var _cds_identifier_logo = new Vue({
+            el: '[id="_cds_identifier_logo"]',
             data() {
                 return {
                     item: {},
@@ -38,16 +36,12 @@
                         .get(url)
                         .then(response => {
                             this.item = response.data.results;
-                        })
+                        }
+                    )
                 }
             }
         });
     </script>
-    {% else %}
-        {{ block.super }}
-    {% endif %}
-
-    {% endwith %}
 {% else %}
     {{ block.super }}
 {% endif %}

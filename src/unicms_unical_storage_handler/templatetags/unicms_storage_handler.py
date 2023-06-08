@@ -3,7 +3,7 @@ import logging
 from django import template
 from django.conf import settings
 
-from cms.contexts.models import WebSite
+from cms.contexts.models import WebPath, WebSite
 
 import unicms_unical_storage_handler.settings as app_settings
 
@@ -69,3 +69,17 @@ def storage_api_root(value):
     settings_value = getattr(settings, value, app_value)
 
     return f'{settings_root}{settings_value}'
+
+
+@register.simple_tag
+def get_cds_website_webpath(value):
+    if not value: return None
+    cms_webpath_cds = getattr(settings, 'CMS_WEBPATH_CDS', {})
+    if not cms_webpath_cds: return None
+    found = cms_webpath_cds.get(value, None)
+    if found: return found
+    webpath = WebPath.objects.filter(pk=value).first()
+    if not webpath: return None
+    parent = webpath.parent
+    if not parent: return None
+    return get_cds_website_webpath(parent.pk)
