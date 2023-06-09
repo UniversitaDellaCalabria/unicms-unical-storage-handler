@@ -75,7 +75,7 @@
                                                         [[ article.CdsArticle.ArticleTitle ]]
                                                     </span>
                                                     <span v-else-if="article.CdsObject">
-                                                        oggetto portale (serve fare chiamata a API)
+                                                        [[ article.CdsObject.Object.title ]]
                                                     </span>
                                                 </button>
                                             </div>
@@ -93,7 +93,7 @@
                                                         </div>
                                                     </span>
                                                     <span v-else-if="article.CdsObject">
-                                                        descrizione oggetto portale
+                                                        <span v-html="article.CdsObject.Object.content"></span>
                                                         <div v-for="other_data in article.CdsObject.OtherData">
                                                             <p class="h6 mt-3">[[ other_data.Title ]]</p>
                                                             <div>[[ other_data.Text ]]</div>
