@@ -59,7 +59,7 @@
                         <p class="h1 lighter">{{ page_title }}</p>
                         <div class="row">
                             <div v-for="allowed_topic in allowed_topics">
-                                <p class="h4 lighter mt-5" v-for="topic in topics" v-if="topic.TopicId == allowed_topic">
+                                <p class="h4 lighter mt-5" v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId)">
                                     [[ topic.TopicDescription ]]
                                 </p>
                                 <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
@@ -318,6 +318,7 @@
                 cds: {},
                 cds_labels: {},
                 allowed_topics: {{ page_topics|get_value:'iscriversi'|safe }},
+                empty_topics: [],
                 topics: {},
                 topic_articles: {},
                 labels: {},
@@ -365,6 +366,12 @@
                     .get(url)
                     .then(response => {
                         this.topic_articles = response.data.results
+                        this.allowed_topics.forEach(
+                            topic => {
+                                let found = response.data.results.some(el => el.TopicId === topic);
+                                if(!found) this.empty_topics.push(topic)
+                            }
+                        )
                     }
                 )
             },
