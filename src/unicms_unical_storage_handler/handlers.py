@@ -828,6 +828,21 @@ class BaseCdsWebsiteStorageHandler(BaseContentHandler):
         # return (leaf,)
 
 
+class CdsWebsitesProspectHandler(BaseCdsWebsiteStorageHandler):
+    template = "storage_cds_websites_prospect.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        return [('#', CMS_STORAGE_CDS_WEBSITES_PROSPECT_LABEL)]
+
+
 class CdsWebsitesCorsoHandler(BaseCdsWebsiteStorageHandler):
     template = "storage_cds_websites_corso.html"
 
