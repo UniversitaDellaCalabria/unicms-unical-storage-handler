@@ -130,31 +130,34 @@
                                 <div class="pb-0 mt-3">
                                     <div class="card no-after" style="border:2px solid #b71918">
                                         <div class="card-body">
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <small>
+                                                        classe di Laurea <b>[[ item.CDSCourseClassName ]]</b>
+                                                    </small>
+                                                </div>
+                                            </div>
                                             <div class="row">
-                                                <div class="col-12 col-md-auto" v-if="cds.CdSDuration">
+                                                <div class="col-12 col-lg-4">
                                                     <small>
-                                                        [[ labels['AcademicYear'] ]]
-                                                        <b>[[ cds.AcademicYear ]]/[[ cds.AcademicYear + 1 ]]</b>
+                                                        [[ labels['CDSSeatsNumber'] ]]
+                                                        <b class="h3">[[ item.CDSSeatsNumber ]]</b>
                                                     </small>
                                                 </div>
-                                                <div class="col-12 col-md-auto" v-if="cds.CdSDuration">
+                                                <div class="col-12 col-lg-4">
                                                     <small>
-                                                        [[ labels['CdSDuration'] ]] >
-                                                        <b>[[ cds.CdSDuration ]] {% trans "years" %}</b>
+                                                        [[ labels['CDSLanguage'] ]]
+                                                        <b class="h3">
+                                                            <span v-for="lang in item.CDSLanguage">
+                                                                [[ lang ]]
+                                                            </span>
+                                                        </b>
                                                     </small>
                                                 </div>
-                                                <div class="col-12 col-md-auto" v-if="cds.CdSLanguage.length > 0 && cds.CdSLanguage[0]">
+                                                <div class="col-12 col-lg-4">
                                                     <small>
-                                                        [[ labels['CdSLanguage'] ]] >
-                                                        <b>[[ cds.CdSLanguage.join(', ') ]] </b>
-                                                    </small>
-                                                </div>
-
-                                                <div class="col-12 col-md-auto" v-if="cds.CdsUrl">
-                                                    <small>
-                                                        <a :href="[[ cds.CdsUrl ]]" target="_blank" rel="noopener noreferrer">
-                                                            <b>{% trans "Website" %} >></b>
-                                                        </a>
+                                                        [[ labels['CDSDuration'] ]]
+                                                        <b class="h3">[[ item.CDSDuration ]] {% trans "years" %}</b>
                                                     </small>
                                                 </div>
                                             </div>
