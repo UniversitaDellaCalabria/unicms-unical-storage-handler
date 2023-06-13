@@ -49,6 +49,8 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
+{% include "includes/unical_storage_loading.html" %}
+
 
 <div class="container" id="_{{ cds_cod }}">
     <div class="col-12 py-5 bd-content">
@@ -58,7 +60,11 @@
                     <div class="col-12 col-lg-8">
                         <p class="h1 lighter">{{ page_title }}</p>
                         <div class="row">
-                            <div v-for="allowed_topic in allowed_topics">
+                            <loading-icon
+                                v-if="is_loading"
+                                :loader_source="loader_source">
+                            </loading-icon>
+                            <div v-for="allowed_topic in allowed_topics" v-else>
                                 <p class="h4 lighter mt-5" v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId)">
                                     [[ topic.TopicDescription ]]
                                 </p>
@@ -341,7 +347,6 @@
                     .then(response => {
                         this.item = response.data.results;
                         this.labels = response.data.labels;
-                        this.is_loading = false
                         _{{ cds_cod }}_logo.item = response.data.results
                         _{{ cds_cod }}_logo_mobile.item = response.data.results
                         {% if change_breadcrumb %}
@@ -372,6 +377,7 @@
                                 if(!found) this.empty_topics.push(topic)
                             }
                         )
+                        this.is_loading = false
                     }
                 )
             },
