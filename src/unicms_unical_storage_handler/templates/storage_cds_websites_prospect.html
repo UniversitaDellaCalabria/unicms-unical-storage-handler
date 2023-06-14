@@ -51,7 +51,7 @@
 <div id="_{{ cds_cod }}">
     <div class="col-12 py-5 bd-content">
         {% block centered_container %}
-        <div class="container">
+        <div class="container pb-5">
             <div class="row">
                 <div class="col">
                     <loading-icon
@@ -190,9 +190,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-lg-8">
-                            <p class="h1 lighter" style="color: var(--bordeaux_unical); font-family: Lora; font-style: italic;">
-                                [[ item.CDSSliders[0]['SliderDescription'] ]]
-                            </p>
+                            <div id="CdsSlider" class="owl-carousel owl-theme">
+                                <div class="item" v-for="slide in item.CDSSliders">
+                                    <p class="h1 lighter" style="color: var(--bordeaux_unical); font-family: Lora; font-style: italic;">
+                                        [[ slide.SliderDescription ]]
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12 col-lg-4 text-center m-auto">
                             <svg class="m-auto icon icon-xl">
@@ -204,7 +208,7 @@
             </div>
         </div>
 
-        <div class="container mt-3">
+        <div class="container mt-3 py-5">
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <b>descrizione sintetica</b>&nbsp;/&nbsp;<span v-html="item.CDSIntro"></span>
@@ -339,15 +343,35 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <b>
-                                i nostri ex
-                            </b>
+                            <p class="h4">
+                                I nostri ex
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div id="CdsExStudents" class="owl-carousel owl-theme">
+                                <div class="item text-center" v-for="slide in item.CDSExStudents">
+<!--
+                                    <img :src="slide.StudentPhoto" class="w-100" style="height: fit-content; border-radius: 50%" v-if="slide.StudentPhoto && slide.StudentPhoto != ''" />
+-->
+                                    <img src="{% static 'images/user.avif' %}" class="w-50 m-auto" style="height: fit-content; border:2px solid #b71918; border-radius: 50%" />
+                                    <p class="h3 lighter mt-2" style="color: var(--bordeaux_unical); font-family: Lora; font-style: italic;">
+                                        [[ slide.StudentName ]]
+                                    </p>
+                                    <p>
+                                        [[ slide.StudentProfile ]]
+                                    </p>
+                                    <p>
+                                        <a :href="slide.StudentLink">{% trans "Click here" %}</a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- modals -->
@@ -421,6 +445,39 @@
             this.CallURL();
         },
         methods: {
+            setSlider(div_id, items=1, single=false, timeout=5000) {
+                let tablet_items = 2;
+                if(single) tablet_items = 1;
+                $(div_id).owlCarousel({
+                    nav : true, // Show next and prev buttons
+                    //rewind: true,
+                    loop: true,
+                    //slideSpeed : 300,
+                    //paginationSpeed : 400,
+                    autoplay: true,
+                    autoplayTimeout: timeout,
+                    dots: false,
+                    margin: 12,
+                    //dotsEach: false,
+                    stagePadding: 0,
+
+                    responsive : {
+                        // breakpoint from 0 up
+                        0 : {
+                            items: 1
+                        },
+                        // breakpoint from 481 up
+                        481 : {
+                            items: tablet_items
+                        },
+                        // breakpoint from 1024 up
+                        1024 : {
+                            items: items
+                        }
+                    }
+                  //lazyLoad : true,
+                });
+            },
             CallURL() {
                 axios
                     .get(this.url)
@@ -439,8 +496,13 @@
                                 this.cds = response.data.results
                                 this.cds_labels = response.data.labels
                                 this.is_loading = false
+
+                                this.setSlider('#CdsSlider', 1, true);
+                                this.setSlider('#CdsExStudents', 3, 7000);
                             }
                         )
+
+
 
                     })
             },
