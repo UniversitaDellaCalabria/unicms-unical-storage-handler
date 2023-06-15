@@ -302,9 +302,9 @@
                                                 [[ nameProfile ]]
                                                 <ul v-for="(valueProfileInstance, nameProfileInstance) in valueProfile">
                                                     <li>
-                                                        <span v-if="nameProfile in labels && nameProfileInstance in labels[nameProfile]"
+                                                        <span v-if="nameProfileInstance in labels"
                                                               style="white-space: pre-line;">
-                                                            [[ labels[nameProfile][nameProfileInstance] ]]
+                                                            [[ labels[nameProfileInstance] ]]
                                                         </span>
                                                         <span v-else>
                                                             [[ nameProfileInstance ]]
