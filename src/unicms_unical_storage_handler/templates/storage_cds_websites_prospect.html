@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-12 col-lg-4 mt-3 mt-lg-0">
                                 <ul style="list-style: none" class="ps-0">
-                                    <li class="mb-2 m-auto">
+                                    <li class="mb-2 pb-1">
                                         <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
                                         </svg>
@@ -82,7 +82,7 @@
                                             </a>
                                         </span>
                                     </li>
-                                    <li class="mb-2">
+                                    <li class="mb-2 pb-1">
                                         <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-copy"></use>
                                         </svg>
@@ -92,7 +92,7 @@
                                             </a>
                                         </span>
                                     </li>
-                                    <li class="mb-2">
+                                    <li class="mb-2 pb-1">
                                         <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
                                         </svg>
@@ -102,7 +102,7 @@
                                             </a>
                                         </span>
                                     </li>
-                                    <li class="mb-2">
+                                    <li class="mb-2 pb-1">
                                         <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
                                         </svg>
@@ -363,7 +363,9 @@
                                         [[ slide.StudentProfile ]]
                                     </p>
                                     <p>
-                                        <a :href="slide.StudentLink">{% trans "Click here" %}</a>
+                                        <a :href="slide.StudentLink" target="_blank" rel="noreferrer noopener">
+                                            {% trans "Click here" %}
+                                        </a>
                                     </p>
                                 </div>
                             </div>
