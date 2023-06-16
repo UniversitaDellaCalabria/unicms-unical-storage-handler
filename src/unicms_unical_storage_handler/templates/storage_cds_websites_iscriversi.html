@@ -97,12 +97,14 @@
                                                     </span>
                                                     <span v-else-if="article.CdsObject">
                                                         <span v-html="article.CdsObject.ObjectText"></span>
-                                                        <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
-                                                            <span v-html="article.CdsObject.Object.content"></span>
-                                                        </span>
-                                                        <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                            <a :href="article.CdsObject.Object.get_full_path">[[ article.CdsObject.Object.name ]]</a>
-                                                        </span>
+                                                        <div v-if="article.CdsObject.Object">
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                <span v-html="article.CdsObject.Object.content"></span>
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                <a :href="article.CdsObject.Object.get_full_path">[[ article.CdsObject.Object.name ]]</a>
+                                                            </span>
+                                                        </div>
                                                         <div v-for="other_data in article.CdsObject.OtherData">
                                                             <p class="h6 mt-3">[[ other_data.Title ]]</p>
                                                             <div>[[ other_data.Text ]]</div>
