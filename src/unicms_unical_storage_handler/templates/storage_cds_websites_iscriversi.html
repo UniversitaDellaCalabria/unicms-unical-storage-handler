@@ -65,56 +65,57 @@
                                 :loader_source="loader_source">
                             </loading-icon>
                             <div v-for="allowed_topic in allowed_topics" v-else>
-                                <p class="h4 lighter mt-5" v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId)">
-                                    [[ topic.TopicDescription ]]
-                                </p>
-                                <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
-                                    <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId)">
+                                    <p class="h4 lighter mt-5">
+                                        [[ topic.TopicDescription ]]
+                                    </p>
+                                    <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
+                                        <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
 
-                                        <div class="accordion-item">
-                                            <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
-                                                <button class="accordion-button"
-                                                        type="button"
-                                                        data-bs-toggle="collapse"
-                                                        :data-bs-target="'#collapse-' + article.ID +'-lft'"
-                                                        aria-expanded="false"
-                                                        :aria-controls="'collapse-' + article.ID +'-lft'">
-                                                    [[ article.Title ]]
-                                                </button>
-                                            </div>
-                                            <div :id="'collapse-' + article.ID +'-lft'"
-                                                 class="accordion-collapse collapse"
-                                                 :data-bs-parent="'#accordionDiv-' + allowed_topic +'-lft'"
-                                                 role="region"
-                                                 :aria-labelledby="'heading-' + article.ID +'-lft'">
-                                                <div class="accordion-body">
-                                                    <span v-if="article.CdsArticle">
-                                                        [[ article.CdsArticle.ArticleDescription ]]
-                                                        <div v-for="other_data in article.CdsArticle.OtherData">
-                                                            <p class="h6 mt-3">[[ other_data.Title ]]</p>
-                                                            <div>[[ other_data.Text ]]</div>
-                                                        </div>
-                                                    </span>
-                                                    <span v-else-if="article.CdsObject">
-                                                        <span v-html="article.CdsObject.ObjectText"></span>
-                                                        <div v-if="article.CdsObject.Object">
-                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
-                                                                <span v-html="article.CdsObject.Object.content"></span>
-                                                            </span>
-                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                                <a :href="article.CdsObject.Object.get_full_path">[[ article.CdsObject.Object.name ]]</a>
-                                                            </span>
-                                                        </div>
-                                                        <div v-for="other_data in article.CdsObject.OtherData">
-                                                            <p class="h6 mt-3">[[ other_data.Title ]]</p>
-                                                            <div>[[ other_data.Text ]]</div>
-                                                        </div>
-                                                    </span>
+                                            <div class="accordion-item">
+                                                <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
+                                                    <button class="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            :data-bs-target="'#collapse-' + article.ID +'-lft'"
+                                                            aria-expanded="false"
+                                                            :aria-controls="'collapse-' + article.ID +'-lft'">
+                                                        [[ article.Title ]]
+                                                    </button>
+                                                </div>
+                                                <div :id="'collapse-' + article.ID +'-lft'"
+                                                     class="accordion-collapse collapse"
+                                                     :data-bs-parent="'#accordionDiv-' + allowed_topic +'-lft'"
+                                                     role="region"
+                                                     :aria-labelledby="'heading-' + article.ID +'-lft'">
+                                                    <div class="accordion-body">
+                                                        <span v-if="article.CdsArticle">
+                                                            [[ article.CdsArticle.ArticleDescription ]]
+                                                            <div v-for="other_data in article.CdsArticle.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                        <span v-else-if="article.CdsObject">
+                                                            <span v-html="article.CdsObject.ObjectText"></span>
+                                                            <div v-if="article.CdsObject.Object">
+                                                                <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                    <span v-html="article.CdsObject.Object.content"></span>
+                                                                </span>
+                                                                <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                    <a :href="article.CdsObject.Object.get_full_path">[[ article.CdsObject.Object.name ]]</a>
+                                                                </span>
+                                                            </div>
+                                                            <div v-for="other_data in article.CdsObject.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -375,7 +376,7 @@
                         this.topic_articles = response.data.results
                         this.allowed_topics.forEach(
                             topic => {
-                                let found = response.data.results.some(el => el.TopicId === topic);
+                                let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
                                 if(!found) this.empty_topics.push(topic)
                             }
                         )
