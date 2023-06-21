@@ -1,0 +1,77 @@
+{% extends "pages/department.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+
+
+{% block header_center_logo %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% if cds_identifier %}
+    <div id="_cds_identifier_logo">
+        <p class="h5 text-white">
+            [[ item.CDSCourseClassName ]]
+        </p>
+        <p class="h2 text-white">
+            [[ item.CDSName ]]
+        </p>
+    </div>
+    <script>
+        var _cds_identifier_logo = new Vue({
+            el: '[id="_cds_identifier_logo"]',
+            data() {
+                return {
+                    item: {},
+                }
+            },
+            mounted() {
+                this.CallURL();
+            },
+            methods: {
+                CallURL() {
+                    let url = 'https://pp.storage.unical.it/api/ricerca/cds-websites/{{ cds_identifier }}/?lang={{ LANGUAGE_CODE }}';
+                    axios
+                        .get(url)
+                        .then(response => {
+                            this.item = response.data.results;
+                            _cds_identifier_logo_mobile.item = response.data.results;
+                        }
+                    )
+                }
+            }
+        });
+    </script>
+{% else %}
+    {{ block.super }}
+{% endif %}
+{% endblock header_center_logo %}
+
+
+{% block unical_mobile_logo %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% if cds_identifier %}
+    <div id="_cds_identifier_logo_mobile">
+        <p class="h5 text-white">
+            [[ item.CDSCourseClassName ]]
+        </p>
+        <p class="h2 text-white">
+            [[ item.CDSName ]]
+        </p>
+    </div>
+    <script>
+        var _cds_identifier_logo_mobile = new Vue({
+            el: '[id="_cds_identifier_logo_mobile"]',
+            data() {
+                return {
+                    item: {},
+                }
+            },
+        });
+    </script>
+{% else %}
+    {{ block.super }}
+{% endif %}
+{% endblock unical_mobile_logo %}

@@ -1,0 +1,407 @@
+{% extends this_string_will_be_replaced %}
+
+{% load static %}
+{% load i18n %}
+
+{% load unicms_contexts %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<!-- SEO  -->
+{% block page_title %}{% trans "Laboratory detail" %}{% endblock page_title %}
+
+
+{% block header_center_logo %}
+<div id="_{{ cds_cod }}_logo">
+    <p class="h5 text-white">
+        [[ item.CDSCourseClassName ]]
+    </p>
+    <p class="h2 text-white">
+        [[ item.CDSName ]]
+    </p>
+</div>
+{% endblock header_center_logo %}
+
+{% block unical_mobile_logo %}
+<div id="_{{ cds_cod }}_logo_mobile">
+    <p class="h5 text-white">
+        [[ item.CDSCourseClassName ]]
+    </p>
+    <p class="h2 text-white">
+        [[ item.CDSName ]]
+    </p>
+</div>
+{% endblock unical_mobile_logo %}
+
+{% block container %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% breadcrumbs webpath=webpath leaf=handler %}
+
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as page_title %}
+{% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<div class="container" id="_{{ cds_cod }}">
+    <div class="col-12 py-5 bd-content">
+        {% block centered_container %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <p class="h1 lighter">{{ page_title }}</p>
+                        <div class="row">
+                            <loading-icon
+                                v-if="is_loading"
+                                :loader_source="loader_source">
+                            </loading-icon>
+                            <div v-for="allowed_topic in allowed_topics" v-else>
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId)">
+                                    <p class="h4 lighter mt-5">
+                                        [[ topic.TopicDescription ]]
+                                    </p>
+                                    <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
+                                        <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
+
+                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object)">
+                                                <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
+                                                    <button class="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            :data-bs-target="'#collapse-' + article.ID +'-lft'"
+                                                            aria-expanded="false"
+                                                            :aria-controls="'collapse-' + article.ID +'-lft'">
+                                                        [[ article.Title ]]
+                                                    </button>
+                                                </div>
+                                                <div :id="'collapse-' + article.ID +'-lft'"
+                                                     class="accordion-collapse collapse"
+                                                     :data-bs-parent="'#accordionDiv-' + allowed_topic +'-lft'"
+                                                     role="region"
+                                                     :aria-labelledby="'heading-' + article.ID +'-lft'">
+                                                    <div class="accordion-body">
+                                                        <span v-if="article.CdsArticle">
+                                                            [[ article.CdsArticle.ArticleDescription ]]
+                                                            <div v-for="other_data in article.CdsArticle.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                        <span v-else-if="article.CdsObject">
+                                                            <span v-html="article.CdsObject.ObjectText"></span>
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                <span v-html="article.CdsObject.Object.content"></span>
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                <a :href="article.CdsObject.Object.get_full_path">[[ article.CdsObject.Object.name ]]</a>
+                                                            </span>
+                                                            <div v-for="other_data in article.CdsObject.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 offset-lg-1">
+                        <div class="row mt-4">
+                            <div class="col">
+                                <img src="{% static 'images/corso_in_sintesi.png' %}" class="w-100"/>
+                            </div>
+                        </div>
+                        <div class="row mt-4" v-if="cds.OtherData && cds.OtherData.DirectorName && cds.OtherData.DirectorName.trim().length>0">
+                            <div class="col-12"><hr></div>
+                            <div class="col-2">
+                                <svg class="icon icon-muted">
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
+                                </svg>
+                            </div>
+                            <div class="col-9 align-left">
+                                <small>
+                                    <b>[[ cds_labels['DirectorName'] ]]</b>
+                                    <br>
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + cds.OtherData.DirectorId +'/'" v-if="cds.OtherData.DirectorId">
+                                        [[ cds.OtherData.DirectorName ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ cds.OtherData.DirectorName ]]
+                                    </span>
+                                </small>
+                            </div>
+                        </div>
+
+                        <div v-if="cds.OtherData && cds.OtherData.DeputyDirectorName && cds.OtherData.DeputyDirectorName.trim().length>0" class="row">
+                            <div class="col-12"><hr></div>
+                            <div class="col-2">
+                                <svg class="icon icon-muted">
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
+                                </svg>
+                            </div>
+                            <div class="col-9 align-left">
+                                <small>
+                                    <b>[[ cds_labels['DeputyDirectorName'] ]]</b>
+                                    <br>
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + cds.OtherData.DeputyDirectorId +'/'" v-if="cds.OtherData.DeputyDirectorId">
+                                        [[ cds.OtherData.DeputyDirectorName ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ cds.OtherData.DeputyDirectorName ]]
+                                    </span>
+                                </small>
+                            </div>
+                        </div>
+
+                        <div v-if="cds.OfficesData" v-for="office in cds.OfficesData" class="row">
+                            <div class="col-12"><hr></div>
+                            <div class="col-2">
+                                <svg class="icon icon-muted">
+                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
+                                </svg>
+                            </div>
+                            <div class="col-9 align-left">
+                                <small>
+                                    <b>[[ office.OfficeName ]]</b>
+                                    <div class="mt-2">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.OfficeDirector && office.OfficeDirectorName">
+                                                    [[ office.OfficeDirectorName ]]
+                                                </a>
+                                                <span v-else-if="office.OfficeDirectorName">
+                                                    [[ office.OfficeDirectorName ]]
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
+                                            <div class="col-2">
+                                                <svg class="icon icon-sm icon-muted me-2">
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
+                                                </svg>
+                                            </div>
+                                            <div class="col-10">
+                                                [[ office.TelOffice ]]
+                                            </div>
+                                        </div>
+                                        <div class="row" v-if="office.Email && office.Email.trim().length>0">
+                                            <div class="col-2">
+                                                <svg class="icon icon-sm icon-muted me-2">
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                                                </svg>
+                                            </div>
+                                            <div class="col-10">
+                                                <a :href="'email:'+office.Email">
+                                                    [[ office.Email ]]
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="row" v-if="office.Floor && office.Floor.trim().length>0">
+                                            <div class="col-2">
+                                                <svg class="icon icon-sm icon-muted me-2">
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                                                </svg>
+                                            </div>
+                                            <div class="col-10">
+                                                [[ labels['Floor'] ]] [[ office.Floor ]]
+                                            </div>
+                                        </div>
+                                        <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
+                                            <div class="col-2">
+                                                <svg class="icon icon-sm icon-muted me-2">
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                                                </svg>
+                                            </div>
+                                            <div class="col-10">
+                                                [[ office.Timetables ]]
+                                            </div>
+                                        </div>
+                                        <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
+                                            <div class="col-2">
+                                                <svg class="icon icon-sm icon-muted me-2">
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                </svg>
+                                            </div>
+                                            <div class="col-10">
+                                                <a :href="office.OnlineCounter" target="_blank" rel="noreferrer noopener">
+                                                    [[ cds_labels['OnlineCounter'] ]]
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+
+                        <div v-if="cds.CdSDoc || cds.CdSSatisfactionSurvey" class="mt-4">
+                            <div v-if="cds.CdSDoc">
+                                <div class="background-light-grey px-2 py-3 mb-2 w-100">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <b>
+                                                <svg class="icon" aria-labelledby="doc_menu">
+                                                    <title id="doc_menu">{% trans "Documents" %}</title>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
+                                                </svg>
+                                            </b>
+                                        </div>
+                                        <div class="col m-auto align-middle">
+                                            <ul class="mb-0 ps-0 list-unstyled">
+                                                <li>
+                                                    <a :href="cds.CdSDoc" class="no-color" target="_blank">
+                                                        <small><b>{% trans "Study course brochure" %}</b></small>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-if="cds.CdSSatisfactionSurvey">
+                                <div class="background-light-grey px-2 py-3 mb-2 w-100">
+                                    <div class="row">
+                                        <div class="col-2 text-center" style="font-size: x-large">
+                                            <span style="font-weight: 400" title='{% trans "Digital services" %}'>@</span>
+                                        </div>
+                                        <div class="col m-auto align-middle">
+                                            <ul class="mb-0 ps-0 list-unstyled">
+                                                <li>
+                                                    <a class="no-color" target="_blank" :href="'{{ almalaurea_link }}' + cds.CdSSatisfactionSurvey">
+                                                        <small><b>[[ cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+</div>
+
+<script>
+    var _{{ cds_cod }}_logo = new Vue({
+        el: '[id="_{{ cds_cod }}_logo"]',
+        data() {
+            return {
+                item: {},
+            }
+        },
+    });
+
+    var _{{ cds_cod }}_logo_mobile = new Vue({
+        el: '[id="_{{ cds_cod }}_logo_mobile"]',
+        data() {
+            return {
+                item: {},
+            }
+        },
+    });
+
+    var _{{ cds_cod }} = new Vue({
+        el: '[id="_{{ cds_cod }}"]',
+        data() {
+            return {
+                item: {},
+                cds: {},
+                cds_labels: {},
+                allowed_topics: {{ page_topics|get_value:'iscriversi'|safe }},
+                empty_topics: [],
+                topics: {},
+                topic_articles: {},
+                labels: {},
+                url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
+                is_loading: true,
+                loader_source: '{{ url }}',
+                //fields_to_not_show: {{ fields_to_hide|safe }},
+            }
+        },
+        mounted() {
+            this.CallURL();
+            this.CallTopics();
+            this.CallTopicArticles();
+            //this.CallCds();
+        },
+        methods: {
+            CallURL() {
+                axios
+                    .get(this.url)
+                    .then(response => {
+                        this.item = response.data.results;
+                        this.labels = response.data.labels;
+                        _{{ cds_cod }}_logo.item = response.data.results
+                        _{{ cds_cod }}_logo_mobile.item = response.data.results
+                        {% if change_breadcrumb %}
+                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.LaboratoryName
+                        document.title = this.item.LaboratoryName
+                        {% endif %}
+
+                        let cds_url = '{{ base_api }}{{ cds_api }}'+response.data.results['RegDidId']+'/?lang={{ LANGUAGE_CODE }}'
+                        axios
+                            .get(cds_url)
+                            .then(response => {
+                                this.cds = response.data.results
+                                this.cds_labels = response.data.labels
+                            }
+                        )
+
+                    })
+            },
+            CallTopicArticles() {
+                let url = '{{ base_api }}{{ page_topic_articles }}?lang={{ LANGUAGE_CODE }}&page_size=200&cds_cod={{ cds_cod }}&topic_id=' + this.allowed_topics
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.topic_articles = response.data.results
+                        this.allowed_topics.forEach(
+                            topic => {
+                                let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
+                                if(!found) this.empty_topics.push(topic)
+                            }
+                        )
+                        this.is_loading = false
+                    }
+                )
+            },
+            CallTopics() {
+                let url = '{{ base_api }}{{ topics_api }}?lang={{ LANGUAGE_CODE }}&page_size=200'
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.topics = response.data.results
+                    }
+                )
+            },
+            CallCds() {
+                let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_cod }}'
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.cds = response.data.results[0]
+                        this.cds_labels = response.data.labels
+                    }
+                )
+            },
+        }
+    })
+</script>
+{% endblock container %}

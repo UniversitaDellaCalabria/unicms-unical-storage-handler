@@ -69,6 +69,13 @@ CURRENT_YEAR = getattr(settings, 'CURRENT_YEAR', CURRENT_YEAR)
 HIGH_FORMATION_YEAR = getattr(settings, 'HIGH_FORMATION_YEAR', HIGH_FORMATION_YEAR)
 INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
 
+CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
+CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
+CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL', CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL)
+CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)
+CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)
+CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)
+
 
 class BaseStorageHandler(BaseContentHandler):
     template = "storage_base.html"
@@ -773,3 +780,145 @@ class ActivitiesListViewHandler(BaseStorageHandler):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         leaf = ('#', CMS_STORAGE_ACTIVITIES_LABEL)
         return (root, leaf)
+
+
+####### CDS WEBSITES #######
+
+class BaseCdsWebsiteStorageHandler(BaseContentHandler):
+    def __init__(self, **kwargs):
+        super(BaseCdsWebsiteStorageHandler, self).__init__(**kwargs)
+        self.match_dict = self.match.groupdict()
+        self.webpath = WebPath.objects.filter(site=self.website,
+                                              fullpath=self.match_dict.get('webpath', ''),
+                                              is_active=True)\
+                                      .first()
+        if not self.webpath:
+            raise Http404('Unknown WebPath')
+
+        if not self.webpath.pk in CMS_WEBPATH_CDS:
+            raise Http404('No study course linked to this webpath')
+
+        self.page = Page.objects.filter(is_active=True,
+                                        webpath=self.webpath).first()
+        self.cds_cod = CMS_WEBPATH_CDS[self.webpath.pk]
+        self.data = {'request': self.request,
+                     'webpath': self.webpath,
+                     'website': self.website,
+                     'page': self.page,
+                     'path': self.match_dict.get('webpath', '/'),
+                     'handler': self,
+                     'cds_cod': self.cds_cod
+        }
+
+    def as_view(self):
+        if not self.template: return
+        ext_template_sources = contextualize_template(self.template,
+                                                      self.page)
+        template = Template(ext_template_sources)
+        context = Context(self.data)
+        return HttpResponse(template.render(context), status=200)
+
+    @property
+    def get_base_url(self):
+        return self.webpath.get_full_path()
+
+    # @property
+    # def breadcrumbs(self):
+        # leaf = ('#', CMS_STORAGE_ROOT_LABEL)
+        # return (leaf,)
+
+
+class CdsWebsitesProspectHandler(BaseCdsWebsiteStorageHandler):
+    template = "storage_cds_websites_prospect.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        return [('#', CMS_STORAGE_CDS_WEBSITES_PROSPECT_LABEL)]
+
+
+class CdsWebsitesCorsoHandler(BaseCdsWebsiteStorageHandler):
+    template = "storage_cds_websites_corso.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesCorsoHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        return [('#', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)]
+
+
+class CdsWebsitesIscriversiHandler(BaseCdsWebsiteStorageHandler):
+    template = "storage_cds_websites_iscriversi.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesIscriversiHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        self.data['cds_cod'] = self.cds_cod
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        return [('#', CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL)]
+
+
+class CdsWebsitesStudiareHandler(BaseCdsWebsiteStorageHandler):
+    template = "storage_cds_websites_corso.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesStudiareHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        # self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}{self.code}/'
+        self.data['cds'] = self.cds_cod
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        return [('#', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)]
+
+
+class CdsWebsitesOpportunitaHandler(BaseCdsWebsiteStorageHandler):
+    template = "storage_cds_websites_corso.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesOpportunitaHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        # self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}{self.code}/'
+        self.data['cds'] = self.cds_cod
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        return [('#', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)]
+
+
+class CdsWebsitesOrganizzazioneHandler(BaseCdsWebsiteStorageHandler):
+    template = "storage_cds_websites_corso.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesOrganizzazioneHandler, self).__init__(**kwargs)
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        return [('#', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)]
+
+
+

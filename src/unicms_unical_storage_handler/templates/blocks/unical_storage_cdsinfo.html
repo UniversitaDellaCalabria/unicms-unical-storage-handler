@@ -119,36 +119,36 @@
                                 </div>
                             </div>
                                 {% comment %}
-                                <div class="col-12 col-md-auto" v-if="item.OtherData[0].SeatsNumber">
+                                <div class="col-12 col-md-auto" v-if="item.OtherData.SeatsNumber">
                                     <small>
                                     [[ labels['SeatsNumber'] ]]
                                     <span>
-                                        <b>[[ item.OtherData[0].SeatsNumber ]]</b>
+                                        <b>[[ item.OtherData.SeatsNumber ]]</b>
                                     </span>
                                     </small>
                                 </div>
 
-                                <div class="col-12" v-if="item.OtherData[0].DirectorName && item.OtherData[0].DirectorName.trim().length>0">
+                                <div class="col-12" v-if="item.OtherData.DirectorName && item.OtherData.DirectorName.trim().length>0">
                                     <hr>
                                     <small>
                                     [[ labels['DirectorName'] ]]
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DirectorId +'/'" v-if="item.OtherData[0].DirectorId">
-                                        <b>[[ item.OtherData[0].DirectorName ]]</b>
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData.DirectorId +'/'" v-if="item.OtherData.DirectorId">
+                                        <b>[[ item.OtherData.DirectorName ]]</b>
                                     </a>
                                     <span v-else>
-                                        <b>[[ item.OtherData[0].DirectorName ]]</b>
+                                        <b>[[ item.OtherData.DirectorName ]]</b>
                                     </span>
                                     </small>
                                 </div>
 
-                                <div class="col-12" v-if="item.OtherData[0].DeputyDirectorName && item.OtherData[0].DeputyDirectorName.trim().length>0">
+                                <div class="col-12" v-if="item.OtherData.DeputyDirectorName && item.OtherData.DeputyDirectorName.trim().length>0">
                                     <small>
                                     [[ labels['DeputyDirectorName'] ]]
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DeputyDirectorId +'/'" v-if="item.OtherData[0].DeputyDirectorId">
-                                        <b>[[ item.OtherData[0].DeputyDirectorName ]]</b>
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData.DeputyDirectorId +'/'" v-if="item.OtherData.DeputyDirectorId">
+                                        <b>[[ item.OtherData.DeputyDirectorName ]]</b>
                                     </a>
                                     <span v-else>
-                                        <b>[[ item.OtherData[0].DeputyDirectorName ]]</b>
+                                        <b>[[ item.OtherData.DeputyDirectorName ]]</b>
                                     </span>
                                     </small>
                                 </div>
@@ -429,7 +429,7 @@
             {% include "includes/unical_storage_history_back.html" %}
         </div>
 
-        <div class="row mt-4" v-if="item.OtherData && item.OtherData[0].DirectorName && item.OtherData[0].DirectorName.trim().length>0">
+        <div class="row mt-4" v-if="item.OtherData && item.OtherData.DirectorName && item.OtherData.DirectorName.trim().length>0">
             <div class="col-12"><hr></div>
             <div class="col-2">
                 <svg class="icon icon-muted">
@@ -440,17 +440,17 @@
                 <small>
                     <b>[[ labels['DirectorName'] ]]</b>
                     <br>
-                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DirectorId +'/'" v-if="item.OtherData[0].DirectorId">
-                        [[ item.OtherData[0].DirectorName ]]
+                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData.DirectorId +'/'" v-if="item.OtherData.DirectorId">
+                        [[ item.OtherData.DirectorName ]]
                     </a>
                     <span v-else>
-                        [[ item.OtherData[0].DirectorName ]]
+                        [[ item.OtherData.DirectorName ]]
                     </span>
                 </small>
             </div>
         </div>
 
-        <div v-if="item.OtherData && item.OtherData[0].DeputyDirectorName && item.OtherData[0].DeputyDirectorName.trim().length>0" class="row">
+        <div v-if="item.OtherData && item.OtherData.DeputyDirectorName && item.OtherData.DeputyDirectorName.trim().length>0" class="row">
             <div class="col-12"><hr></div>
             <div class="col-2">
                 <svg class="icon icon-muted">
@@ -461,11 +461,11 @@
                 <small>
                     <b>[[ labels['DeputyDirectorName'] ]]</b>
                     <br>
-                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData[0].DeputyDirectorId +'/'" v-if="item.OtherData[0].DeputyDirectorId">
-                        [[ item.OtherData[0].DeputyDirectorName ]]
+                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData.DeputyDirectorId +'/'" v-if="item.OtherData.DeputyDirectorId">
+                        [[ item.OtherData.DeputyDirectorName ]]
                     </a>
                     <span v-else>
-                        [[ item.OtherData[0].DeputyDirectorName ]]
+                        [[ item.OtherData.DeputyDirectorName ]]
                     </span>
                 </small>
             </div>
