@@ -38,6 +38,9 @@
 
 {% block container %}
 
+<script src="{% static 'js/vue-markdown.js' %}"></script>
+
+
 {% get_current_language as LANGUAGE_CODE %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
@@ -90,7 +93,9 @@
                                                      :aria-labelledby="'heading-' + article.ID +'-lft'">
                                                     <div class="accordion-body">
                                                         <span v-if="article.CdsArticle">
-                                                            [[ article.CdsArticle.ArticleDescription ]]
+                                                            <vue-markdown :emoji=false>
+                                                                [[ article.CdsArticle.ArticleDescription ]]
+                                                            </vue-markdown>
                                                             <div v-for="other_data in article.CdsArticle.OtherData">
                                                                 <p class="h6 mt-3">[[ other_data.Title ]]</p>
                                                                 <div>[[ other_data.Text ]]</div>
@@ -299,6 +304,7 @@
 </div>
 
 <script>
+    Vue.use(VueMarkdown);
     var _{{ cds_cod }}_logo = new Vue({
         el: '[id="_{{ cds_cod }}_logo"]',
         data() {
