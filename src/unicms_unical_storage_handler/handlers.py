@@ -875,14 +875,14 @@ class CdsWebsitesIscriversiHandler(BaseCdsWebsiteStorageHandler):
 
 
 class CdsWebsitesStudiareHandler(BaseCdsWebsiteStorageHandler):
-    template = "storage_cds_websites_corso.html"
+    template = "storage_cds_websites_studiare.html"
 
     def __init__(self, **kwargs):
         super(CdsWebsitesStudiareHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        # self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}{self.code}/'
-        self.data['cds'] = self.cds_cod
+        self.data['cds_cod'] = self.cds_cod
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
         return super().as_view()
 
     @property
