@@ -75,3 +75,39 @@
     {{ block.super }}
 {% endif %}
 {% endblock unical_mobile_logo %}
+
+{% block menu_main %}
+
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_VIEW_PREFIX_PATH" as cds_iscriversi_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_VIEW_PREFIX_PATH" as cds_opportunita_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as cds_iscriversi_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as cds_studiare_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL" as cds_opportunita_label %}
+
+{% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% if cds_identifier %}
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}">
+            Home
+        </a>
+    </li>
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_iscriversi_path }}/">
+            <span>{{ cds_iscriversi_label }}</span>
+        </a>
+    </li>
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">
+            <span>{{ cds_studiare_label }}</span>
+        </a>
+    </li>
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_opportunita_path }}/">
+            <span>{{ cds_opportunita_label }}</span>
+        </a>
+    </li>
+{% endif %}
+{{ block.super }}
+{% endblock menu_main %}
