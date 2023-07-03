@@ -5,41 +5,83 @@
 {% load unicms_storage_handler %}
 
 
+{% block extra_head %}
+{{ block.super }}
+<script src="{% static 'js/vue-markdown.js' %}"></script>
+{% endblock extra_head %}
+
+
 {% block header_center_logo %}
+
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
+{% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
 {% if cds_identifier %}
-    <div id="_cds_identifier_logo">
+    <div id="_cds_data">
         <p class="h5 text-white">
-            [[ item.CDSCourseClassName ]]
+            [[ cds.CourseTypeDescription ]]
         </p>
         <p class="h2 text-white">
             [[ item.CDSName ]]
         </p>
     </div>
     <script>
-        var _cds_identifier_logo = new Vue({
-            el: '[id="_cds_identifier_logo"]',
+        Vue.use(VueMarkdown);
+
+        var _cds_data = new Vue({
+            el: '[id="_cds_data"]',
             data() {
                 return {
                     item: {},
+                    cds: {},
+                    cds_labels: {},
+                    regdidid: null,
+                    is_loading: true
+
+                    {% block cds_website_extra_data %}
+                    {% endblock cds_website_extra_data %}
                 }
             },
             mounted() {
                 this.CallURL();
+                {% block cds_website_extra_mounted %}
+                {% endblock cds_website_extra_mounted %}
             },
             methods: {
-                CallURL() {
-                    let url = 'https://pp.storage.unical.it/api/ricerca/cds-websites/{{ cds_identifier }}/?lang={{ LANGUAGE_CODE }}';
+                CallRegDid(regdidid) {
+                    let cds_url = '{{ base_api }}{{ cds_api }}' + regdidid + '/?lang={{ LANGUAGE_CODE }}'
+                    axios
+                        .get(cds_url)
+                        .then(response => {
+                            this.cds = response.data.results
+                            _cds_identifier_logo_mobile.cds = response.data.results
+                            this.cds_labels = response.data.labels
+                            _{{ cds_cod }}.regdidid = regdidid
+                            this.is_loading = false
+                        }
+                    )
+                },
+                CallURL(regdidid=null) {
+                    let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_identifier }}/?lang={{ LANGUAGE_CODE }}'
                     axios
                         .get(url)
                         .then(response => {
                             this.item = response.data.results;
-                            _cds_identifier_logo_mobile.item = response.data.results;
+                            _cds_identifier_logo_mobile.item = response.data.results
+                            if(!regdidid) regdidid = response.data.results['RegDidId']
+                            this.regdidid = regdidid
+                            this.CallRegDid(regdidid)
+                            {% block cds_website_extra_main %}
+                            {% endblock cds_website_extra_main %}
                         }
                     )
-                }
+                },
+                {% block cds_website_extra_methods %}
+                {% endblock cds_website_extra_methods %}
             }
         });
     </script>
@@ -48,14 +90,14 @@
 {% endif %}
 {% endblock header_center_logo %}
 
-
 {% block unical_mobile_logo %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
+
 {% if cds_identifier %}
     <div id="_cds_identifier_logo_mobile">
         <p class="h5 text-white">
-            [[ item.CDSCourseClassName ]]
+            [[ cds.CourseTypeDescription ]]
         </p>
         <p class="h2 text-white">
             [[ item.CDSName ]]
@@ -67,6 +109,7 @@
             data() {
                 return {
                     item: {},
+                    cds: {},
                 }
             },
         });
@@ -74,17 +117,24 @@
 {% else %}
     {{ block.super }}
 {% endif %}
+
 {% endblock unical_mobile_logo %}
 
 {% block menu_main %}
 
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
+
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_VIEW_PREFIX_PATH" as cds_iscriversi_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_VIEW_PREFIX_PATH" as cds_opportunita_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH" as cds_corso_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_VIEW_PREFIX_PATH" as cds_organizzazione_path %}
+
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as cds_iscriversi_label %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as cds_studiare_label %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL" as cds_opportunita_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL" as cds_corso_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL" as cds_organizzazione_label %}
 
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
 {% if cds_identifier %}
@@ -94,6 +144,11 @@
         </a>
     </li>
     <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_corso_path }}/">
+            <span>{{ cds_corso_label }}</span>
+        </a>
+    </li>
+     <li class="nav-item megamenu">
         <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_iscriversi_path }}/">
             <span>{{ cds_iscriversi_label }}</span>
         </a>
@@ -106,6 +161,11 @@
     <li class="nav-item megamenu">
         <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_opportunita_path }}/">
             <span>{{ cds_opportunita_label }}</span>
+        </a>
+    </li>
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_organizzazione_path }}/">
+            <span>{{ cds_organizzazione_label }}</span>
         </a>
     </li>
 {% endif %}

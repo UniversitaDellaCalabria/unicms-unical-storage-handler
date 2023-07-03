@@ -1,4 +1,4 @@
-{% extends this_string_will_be_replaced %}
+{% extends "pages/unical_cds_website.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -9,28 +9,6 @@
 
 {% include "includes/unical_storage_loading.html" %}
 
-
-{% block header_center_logo %}
-<div id="_{{ cds_cod }}_logo">
-    <p class="h5 text-white">
-        [[ item.CDSCourseClassName ]]
-    </p>
-    <p class="h2 text-white">
-        [[ item.CDSName ]]
-    </p>
-</div>
-{% endblock header_center_logo %}
-
-{% block unical_mobile_logo %}
-<div id="_{{ cds_cod }}_logo_mobile">
-    <p class="h5 text-white">
-        [[ item.CDSCourseClassName ]]
-    </p>
-    <p class="h2 text-white">
-        [[ item.CDSName ]]
-    </p>
-</div>
-{% endblock unical_mobile_logo %}
 
 {% block container %}
 

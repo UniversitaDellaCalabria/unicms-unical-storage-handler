@@ -243,9 +243,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <vue-markdown :emoji=false>
-                        [[ item.CdSIntro ]]
-                    </vue-markdown>
+                    <vue-markdown :emoji=false :source='item.CdSIntro'></vue-markdown>
                 </div>
 
                 {% if not full_page %}
@@ -406,7 +404,6 @@
                             aria-expanded="false"
                             aria-controls="collapse-teachers-lft">
                         {% trans "Academic Courses" %}&nbsp;<span id="{{ id }}_cds_year"></span>
-                      </button>
                     </button>
                 </div>
                 <div id="collapse-teachers-lft"

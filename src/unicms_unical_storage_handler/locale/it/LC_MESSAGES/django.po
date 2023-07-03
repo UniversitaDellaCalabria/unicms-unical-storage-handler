@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-29 08:35+0200\n"
-"PO-Revision-Date: 2023-06-29 08:37+0200\n"
+"POT-Creation-Date: 2023-06-30 08:33+0200\n"
+"PO-Revision-Date: 2023-06-30 08:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -146,10 +146,8 @@ msgid "Brochure"
 msgstr ""
 
 #: settings.py:386
-#, fuzzy
-#| msgid "Courses"
 msgid "Course"
-msgstr "Alta formazione"
+msgstr "Corso"
 
 #: settings.py:387
 msgid "Enroll"
@@ -177,6 +175,7 @@ msgstr ""
 #: templates/blocks/unical_storage_cdsinfo.html:576
 #: templates/storage_cds_websites_iscriversi.html:273
 #: templates/storage_cds_websites_opportunita.html:271
+#: templates/storage_cds_websites_organizzazione.html:271
 #: templates/storage_cds_websites_studiare.html:271
 msgid "Documents"
 msgstr "Documenti"
@@ -185,6 +184,7 @@ msgstr "Documenti"
 #: templates/blocks/unical_storage_cdsinfo.html:585
 #: templates/storage_cds_websites_iscriversi.html:282
 #: templates/storage_cds_websites_opportunita.html:280
+#: templates/storage_cds_websites_organizzazione.html:280
 #: templates/storage_cds_websites_studiare.html:280
 msgid "Study course brochure"
 msgstr "Brochure del corso"
@@ -193,6 +193,7 @@ msgstr "Brochure del corso"
 #: templates/blocks/unical_storage_cdsinfo.html:598
 #: templates/storage_cds_websites_iscriversi.html:295
 #: templates/storage_cds_websites_opportunita.html:293
+#: templates/storage_cds_websites_organizzazione.html:293
 #: templates/storage_cds_websites_studiare.html:293
 #: templates/storage_high_formation_master_info.html:35
 #: templates/storage_high_formation_masters_list.html:35
@@ -1035,6 +1036,7 @@ msgstr "Persone"
 #: templates/storage_cds_websites_corso.html:14
 #: templates/storage_cds_websites_iscriversi.html:16
 #: templates/storage_cds_websites_opportunita.html:14
+#: templates/storage_cds_websites_organizzazione.html:14
 #: templates/storage_cds_websites_studiare.html:14
 #: templates/storage_laboratory_info.html:11
 msgid "Laboratory detail"

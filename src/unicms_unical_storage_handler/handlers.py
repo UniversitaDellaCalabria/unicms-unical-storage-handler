@@ -1,3 +1,4 @@
+import requests
 import urllib
 
 from django.conf import settings
@@ -845,12 +846,22 @@ class CdsWebsitesProspectHandler(BaseCdsWebsiteStorageHandler):
 
 class CdsWebsitesCorsoHandler(BaseCdsWebsiteStorageHandler):
     template = "storage_cds_websites_corso.html"
+    # template = "storage_cdsinfo.html"
 
     def __init__(self, **kwargs):
         super(CdsWebsitesCorsoHandler, self).__init__(**kwargs)
 
+    # def as_view(self):
+        # self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        # return super().as_view()
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        self.data['cds_cod'] = self.cds_cod
+        cds_url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        self.data['url'] = cds_url
+        cds_data = requests.get(cds_url)
+        regdid = cds_data.json()['results'].get('RegDidId', '')
+        self.data['url_regdid'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_API}{regdid}/'
+        self.data['cdsid'] = regdid
         return super().as_view()
 
     @property
@@ -907,12 +918,13 @@ class CdsWebsitesOpportunitaHandler(BaseCdsWebsiteStorageHandler):
 
 
 class CdsWebsitesOrganizzazioneHandler(BaseCdsWebsiteStorageHandler):
-    template = "storage_cds_websites_corso.html"
+    template = "storage_cds_websites_organizzazione.html"
 
     def __init__(self, **kwargs):
         super(CdsWebsitesOrganizzazioneHandler, self).__init__(**kwargs)
 
     def as_view(self):
+        self.data['cds_cod'] = self.cds_cod
         self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
         return super().as_view()
 
