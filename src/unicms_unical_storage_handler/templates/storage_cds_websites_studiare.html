@@ -352,6 +352,7 @@
                     return '#' + this.lightenDarkenColor(colour, -50)
                 },
                 getEvents(year=1) {
+                    this.attributes = []
                     let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&year=' + year
                     this.year = year
                     this.is_loading_up = true
