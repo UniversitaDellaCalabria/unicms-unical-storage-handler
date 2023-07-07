@@ -151,7 +151,7 @@
                         </div>
 
                         <div id="impegniUP">
-                            <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
+                            <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %} [[ _cds_data.cds.AcademicYear ]]/[[ _cds_data.cds.AcademicYear +1 ]]</h5>
 
                             <div v-if="years">
                                 <a v-for="y_index in years" class="no-color" @click="getEvents(y_index)" href="javascript:void(0)">
