@@ -10,6 +10,10 @@
 {% include "includes/unical_storage_loading.html" %}
 
 
+{% block page_title %}
+Brochure - {{ block.super }}
+{% endblock page_title %
+
 {% block container %}
 
 {% get_current_language as LANGUAGE_CODE %}

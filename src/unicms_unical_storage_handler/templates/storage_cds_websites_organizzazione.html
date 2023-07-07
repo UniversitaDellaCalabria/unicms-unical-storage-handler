@@ -11,7 +11,10 @@
 
 
 <!-- SEO  -->
-{% block page_title %}{% trans "Laboratory detail" %}{% endblock page_title %}
+{% block page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL" as page_title %}
+{{ page_title }} - {{ block.super }}
+{% endblock page_title %}
 
 
 {% block container %}
@@ -27,7 +30,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL" as page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
 {% include "includes/unical_storage_loading.html" %}

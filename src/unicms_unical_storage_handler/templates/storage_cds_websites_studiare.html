@@ -13,7 +13,10 @@
 
 
 <!-- SEO  -->
-{% block page_title %}{% trans "Laboratory detail" %}{% endblock page_title %}
+{% block page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as page_title %}
+{{ page_title }} - {{ block.super }}
+{% endblock page_title %}
 
 
 {% block extra_head %}
