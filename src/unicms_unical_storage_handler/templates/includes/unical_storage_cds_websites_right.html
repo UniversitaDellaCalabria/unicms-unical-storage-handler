@@ -6,200 +6,213 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as prospect_page_path %}
 
 
-<div class="row mt-4">
-    <div class="col">
-        <a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ prospect_page_path }}/">
-            <img src="{% static 'images/corso_in_sintesi.png' %}" class="w-100"/>
-        </a>
-    </div>
-</div>
-<div class="row mt-4" v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DirectorName && _cds_data.cds.OtherData.DirectorName.trim().length>0">
-    <div class="col-12"><hr></div>
-    <div class="col-2">
-        <svg class="icon icon-muted">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
-        </svg>
-    </div>
-    <div class="col-9 align-left">
-        <small>
-            <b>[[ _cds_data.cds_labels['DirectorName'] ]]</b>
-            <br>
-            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DirectorId +'/'" v-if="_cds_data.cds.OtherData.DirectorId">
-                [[ _cds_data.cds.OtherData.DirectorName ]]
+<div id="_cds_website_right_col">
+    <div class="row mt-4">
+        <div class="col">
+            <a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ prospect_page_path }}/">
+                <img src="{% static 'images/corso_in_sintesi.png' %}" class="w-100"/>
             </a>
-            <span v-else>
-                [[ _cds_data.cds.OtherData.DirectorName ]]
-            </span>
-        </small>
+        </div>
     </div>
-</div>
+    <div class="row mt-4" v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DirectorName && _cds_data.cds.OtherData.DirectorName.trim().length>0">
+        <div class="col-12"><hr></div>
+        <div class="col-2">
+            <svg class="icon icon-muted">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
+            </svg>
+        </div>
+        <div class="col-9 align-left">
+            <small>
+                <b>[[ _cds_data.cds_labels['DirectorName'] ]]</b>
+                <br>
+                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DirectorId +'/'" v-if="_cds_data.cds.OtherData.DirectorId">
+                    [[ _cds_data.cds.OtherData.DirectorName ]]
+                </a>
+                <span v-else>
+                    [[ _cds_data.cds.OtherData.DirectorName ]]
+                </span>
+            </small>
+        </div>
+    </div>
 
-<div v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DeputyDirectorName && _cds_data.cds.OtherData.DeputyDirectorName.trim().length>0" class="row">
-    <div class="col-12"><hr></div>
-    <div class="col-2">
-        <svg class="icon icon-muted">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
-        </svg>
+    <div v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DeputyDirectorName && _cds_data.cds.OtherData.DeputyDirectorName.trim().length>0" class="row">
+        <div class="col-12"><hr></div>
+        <div class="col-2">
+            <svg class="icon icon-muted">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
+            </svg>
+        </div>
+        <div class="col-9 align-left">
+            <small>
+                <b>[[ _cds_data.cds_labels['DeputyDirectorName'] ]]</b>
+                <br>
+                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DeputyDirectorId +'/'" v-if="_cds_data.cds.OtherData.DeputyDirectorId">
+                    [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
+                </a>
+                <span v-else>
+                    [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
+                </span>
+            </small>
+        </div>
     </div>
-    <div class="col-9 align-left">
-        <small>
-            <b>[[ _cds_data.cds_labels['DeputyDirectorName'] ]]</b>
-            <br>
-            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DeputyDirectorId +'/'" v-if="_cds_data.cds.OtherData.DeputyDirectorId">
-                [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
-            </a>
-            <span v-else>
-                [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
-            </span>
-        </small>
-    </div>
-</div>
 
-<div v-if="_cds_data.cds.OfficesData" v-for="office in _cds_data.cds.OfficesData" class="row">
-    <div class="col-12"><hr></div>
-    <div class="col-2">
-        <svg class="icon icon-muted">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
-        </svg>
+    <div v-if="_cds_data.cds.OfficesData" v-for="office in _cds_data.cds.OfficesData" class="row">
+        <div class="col-12"><hr></div>
+        <div class="col-2">
+            <svg class="icon icon-muted">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
+            </svg>
+        </div>
+        <div class="col-9 align-left">
+            <small>
+                <b>[[ office.OfficeName ]]</b>
+                <div class="mt-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.OfficeDirector && office.OfficeDirectorName">
+                                [[ office.OfficeDirectorName ]]
+                            </a>
+                            <span v-else-if="office.OfficeDirectorName">
+                                [[ office.OfficeDirectorName ]]
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
+                        <div class="col-2">
+                            <svg class="icon icon-sm icon-muted me-2">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
+                            </svg>
+                        </div>
+                        <div class="col-10">
+                            [[ office.TelOffice ]]
+                        </div>
+                    </div>
+                    <div class="row" v-if="office.Email && office.Email.trim().length>0">
+                        <div class="col-2">
+                            <svg class="icon icon-sm icon-muted me-2">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                            </svg>
+                        </div>
+                        <div class="col-10">
+                            <a :href="'email:'+office.Email">
+                                [[ office.Email ]]
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" v-if="office.Floor && office.Floor.trim().length>0">
+                        <div class="col-2">
+                            <svg class="icon icon-sm icon-muted me-2">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                            </svg>
+                        </div>
+                        <div class="col-10">
+                            [[ _cds_data.cds_labels['Floor'] ]] [[ office.Floor ]]
+                        </div>
+                    </div>
+                    <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
+                        <div class="col-2">
+                            <svg class="icon icon-sm icon-muted me-2">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                            </svg>
+                        </div>
+                        <div class="col-10">
+                            [[ office.Timetables ]]
+                        </div>
+                    </div>
+                    <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
+                        <div class="col-2">
+                            <svg class="icon icon-sm icon-muted me-2">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                            </svg>
+                        </div>
+                        <div class="col-10">
+                            <a :href="office.OnlineCounter" target="_blank" rel="noreferrer noopener">
+                                [[ _cds_data.cds_labels['OnlineCounter'] ]]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </small>
+        </div>
     </div>
-    <div class="col-9 align-left">
-        <small>
-            <b>[[ office.OfficeName ]]</b>
-            <div class="mt-2">
+
+    <div v-if="_cds_data.cds.CdSDoc || _cds_data.cds.CdSSatisfactionSurvey" class="mt-4">
+        <div v-if="_cds_data.cds.CdSDoc">
+            <div class="background-light-grey px-2 py-3 mb-2 w-100">
                 <div class="row">
-                    <div class="col-12">
-                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.OfficeDirector && office.OfficeDirectorName">
-                            [[ office.OfficeDirectorName ]]
-                        </a>
-                        <span v-else-if="office.OfficeDirectorName">
-                            [[ office.OfficeDirectorName ]]
-                        </span>
-                    </div>
-                </div>
-                <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
                     <div class="col-2">
-                        <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
-                        </svg>
+                        <b>
+                            <svg class="icon" aria-labelledby="doc_menu">
+                                <title id="doc_menu">{% trans "Documents" %}</title>
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
+                            </svg>
+                        </b>
                     </div>
-                    <div class="col-10">
-                        [[ office.TelOffice ]]
+                    <div class="col m-auto align-middle">
+                        <ul class="mb-0 ps-0 list-unstyled">
+                            <li>
+                                <a :href="_cds_data.cds.CdSDoc" class="no-color" target="_blank">
+                                    <small><b>{% trans "Study course brochure" %}</b></small>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                <div class="row" v-if="office.Email && office.Email.trim().length>0">
-                    <div class="col-2">
-                        <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
-                        </svg>
-                    </div>
-                    <div class="col-10">
-                        <a :href="'email:'+office.Email">
-                            [[ office.Email ]]
-                        </a>
-                    </div>
-                </div>
-                <div class="row" v-if="office.Floor && office.Floor.trim().length>0">
-                    <div class="col-2">
-                        <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                        </svg>
-                    </div>
-                    <div class="col-10">
-                        [[ _cds_data.cds_labels['Floor'] ]] [[ office.Floor ]]
-                    </div>
-                </div>
-                <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
-                    <div class="col-2">
-                        <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                        </svg>
-                    </div>
-                    <div class="col-10">
-                        [[ office.Timetables ]]
-                    </div>
-                </div>
-                <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
-                    <div class="col-2">
-                        <svg class="icon icon-sm icon-muted me-2">
-                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
-                        </svg>
-                    </div>
-                    <div class="col-10">
-                        <a :href="office.OnlineCounter" target="_blank" rel="noreferrer noopener">
-                            [[ _cds_data.cds_labels['OnlineCounter'] ]]
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </small>
-    </div>
-</div>
-
-<div v-if="_cds_data.cds.CdSDoc || _cds_data.cds.CdSSatisfactionSurvey" class="mt-4">
-    <div v-if="_cds_data.cds.CdSDoc">
-        <div class="background-light-grey px-2 py-3 mb-2 w-100">
-            <div class="row">
-                <div class="col-2">
-                    <b>
-                        <svg class="icon" aria-labelledby="doc_menu">
-                            <title id="doc_menu">{% trans "Documents" %}</title>
-                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
-                        </svg>
-                    </b>
-                </div>
-                <div class="col m-auto align-middle">
-                    <ul class="mb-0 ps-0 list-unstyled">
-                        <li>
-                            <a :href="_cds_data.cds.CdSDoc" class="no-color" target="_blank">
-                                <small><b>{% trans "Study course brochure" %}</b></small>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div v-if="_cds_data.cds.DidacticRegulation">
-        <div class="background-light-grey px-2 py-3 mb-2 w-100">
-            <div class="row">
-                <div class="col-2 text-center" style="font-size: x-large">
-                    <b>
-                        <svg class="icon" aria-labelledby="info_menu">
-                            <title id="info_menu">{% trans 'Didactic Regulation' %}</title>
-                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
-                        </svg>
-                    </b>
-                </div>
-                <div class="col m-auto align-middle">
-                    <ul class="mb-0 ps-0 list-unstyled">
-                        <li>
-                            <a class="no-color" target="_blank" :href="_cds_data.cds.DidacticRegulation">
-                                <small><b>[[ _cds_data.cds_labels['DidacticRegulation'] ]]</b></small>
-                            </a>
-                        </li>
-                    </ul>
+        <div v-if="_cds_data.cds.DidacticRegulation">
+            <div class="background-light-grey px-2 py-3 mb-2 w-100">
+                <div class="row">
+                    <div class="col-2 text-center" style="font-size: x-large">
+                        <b>
+                            <svg class="icon" aria-labelledby="info_menu">
+                                <title id="info_menu">{% trans 'Didactic Regulation' %}</title>
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                            </svg>
+                        </b>
+                    </div>
+                    <div class="col m-auto align-middle">
+                        <ul class="mb-0 ps-0 list-unstyled">
+                            <li>
+                                <a class="no-color" target="_blank" :href="_cds_data.cds.DidacticRegulation">
+                                    <small><b>[[ _cds_data.cds_labels['DidacticRegulation'] ]]</b></small>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div v-if="_cds_data.cds.CdSSatisfactionSurvey">
-        <div class="background-light-grey px-2 py-3 mb-2 w-100">
-            <div class="row">
-                <div class="col-2 text-center" style="font-size: x-large">
-                    <span style="font-weight: 400" title="{% trans 'Digital services' %}">@</span>
-                </div>
-                <div class="col m-auto align-middle">
-                    <ul class="mb-0 ps-0 list-unstyled">
-                        <li>
-                            <a class="no-color" target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.cds.CdSSatisfactionSurvey">
-                                <small><b>[[ _cds_data.cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
-                            </a>
-                        </li>
-                    </ul>
+        <div v-if="_cds_data.cds.CdSSatisfactionSurvey">
+            <div class="background-light-grey px-2 py-3 mb-2 w-100">
+                <div class="row">
+                    <div class="col-2 text-center" style="font-size: x-large">
+                        <span style="font-weight: 400" title="{% trans 'Digital services' %}">@</span>
+                    </div>
+                    <div class="col m-auto align-middle">
+                        <ul class="mb-0 ps-0 list-unstyled">
+                            <li>
+                                <a class="no-color" target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.cds.CdSSatisfactionSurvey">
+                                    <small><b>[[ _cds_data.cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+var _cds_website_right_col = new Vue({
+    el: '[id="_cds_website_right_col"]',
+    data() {
+        return {
+            item: {},
+            cds: {},
+        }
+    },
+});
+</script>

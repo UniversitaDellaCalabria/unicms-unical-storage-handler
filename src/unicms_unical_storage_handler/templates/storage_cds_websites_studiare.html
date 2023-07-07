@@ -16,6 +16,14 @@
 {% block page_title %}{% trans "Laboratory detail" %}{% endblock page_title %}
 
 
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/unicms_storage_calendar.css' %}" type="text/css">
+<!-- Link VCalendar Javascript (Plugin automatically installed) -->
+<script src='https://unpkg.com/v-calendar'></script>
+{% endblock extra_head %}
+
+
 {% block container %}
 
 <script src="{% static 'js/vue-markdown.js' %}"></script>
@@ -26,23 +34,25 @@
 
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
+{% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 
 {% include "includes/unical_storage_loading.html" %}
 
 
-<div id="_{{ cds_cod }}">
-    <div class="col-12 py-5 bd-content">
+<div class="col-12 py-5 bd-content">
+    <div>
         {% block centered_container %}
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-8">
                         <p class="h1 lighter">{{ page_title }}</p>
-                        <div class="row">
+                        <div class="row" id="_{{ cds_cod }}">
                             <loading-icon
                                 v-if="is_loading"
                                 :loader_source="loader_source">
@@ -110,6 +120,96 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- teachers block import -->
+                        <h5 class="mt-5 mb-3">{% trans "Faculty" %}</h5>
+                        <div id="accordionDiv3-lft" class="accordion accordion-left-icon">
+                            <div class="accordion-item">
+                                <div class="accordion-header" id="heading-teachers-lft">
+                                    <button class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapse-teachers-lft"
+                                            aria-expanded="false"
+                                            aria-controls="collapse-teachers-lft">
+                                        {% trans "Academic Courses" %}&nbsp;<span id="cds_year"></span>
+                                    </button>
+                                </div>
+                                <div id="collapse-teachers-lft"
+                                     class="accordion-collapse collapse"
+                                     data-bs-parent="#accordionDiv3-lft"
+                                     role="region"
+                                     aria-labelledby="heading-teachers-lft">
+                                    <div class="accordion-body mt-3">
+                                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with uid="teachers_list" mark_contract_teachers=1 %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="impegniUP">
+                            <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
+
+                            <div v-if="years">
+                                <a v-for="y_index in years" class="no-color" @click="getEvents(y_index)" href="javascript:void(0)">
+                                    <span
+                                        class="badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100"
+                                        :class="year == y_index ? 'selected' : ''">
+                                        <h5>[[ y_index ]] {% trans "year" %}</h5>
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="mt-3">
+                                <loading-icon
+                                    v-if="is_loading_up"
+                                    :loader_source="loader_source_up">
+                                </loading-icon>
+
+                                <div v-else>
+                                    <v-calendar
+                                        class="custom-calendar"
+                                        :masks="masks"
+                                        :attributes="attributes"
+                                        locale="{{ LANGUAGE_CODE }}"
+                                        {% comment %}
+                                        @update:from-page="switchPage"
+                                        disable-page-swipe
+                                        is-expanded
+                                        v-if="attr.customData.dataInizio=[[ day.id ]]"
+                                        :href="'http://localhost/' + attr.customData.id"
+                                        {% endcomment %}>
+                                        <template v-slot:day-content="{ day, attributes }">
+                                            <div class="flex flex-col h-100 overflow-hidden" style="font-size: 0.875rem">
+                                                <span class="day-label text-sm text-gray-900">[[ day.day ]]</span>
+                                                <div class="overflow-auto">
+                                                        <p :key="attr.key" v-for="attr in attributes"
+                                                           class="rounded p-1 mt-0 mb-1 mx-1 text-white"
+                                                           :class="attr.customData.class"
+                                                           :style="'background: ' + attr.customData.background">
+                                                            <span style="font-size: smaller;">
+                                                                <!--[[ attr.customData.title ]]<br />-->
+                                                                <b>[[ attr.customData.title ]]</b>
+                                                                <br />
+                                                                [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
+                                                                <br />
+                                                                [[ attr.customData.docente ]]
+                                                                <br />
+                                                                [[ attr.customData.aula ]]
+                                                                <br />
+                                                                [[ attr.customData.edificio ]]
+                                                            </span>
+                                                        </p>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </v-calendar>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
                         {% include "includes/unical_storage_cds_websites_right.html" %}
@@ -136,6 +236,14 @@
                 url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
                 is_loading: true,
                 loader_source: '{{ url }}',
+                regdidid: null,
+                teachers: [],
+                teachers_labels: {},
+                teachers_is_loading: true
+                //teachers.next_page: null,
+                //teachers.previous_page: null,
+                //teachers.labels: null,
+                //teachers.is_loading: true,
                 //fields_to_not_show: {{ fields_to_hide|safe }},
             }
         },
@@ -146,18 +254,6 @@
             //this.CallCds();
         },
         methods: {
-            CallURL() {
-                axios
-                    .get(this.url)
-                    .then(response => {
-                        this.item = response.data.results;
-                        this.labels = response.data.labels;
-                        {% if change_breadcrumb %}
-                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.LaboratoryName
-                        document.title = this.item.LaboratoryName
-                        {% endif %}
-                    })
-            },
             CallTopicArticles() {
                 let url = '{{ base_api }}{{ page_topic_articles }}?lang={{ LANGUAGE_CODE }}&page_size=200&cds_cod={{ cds_cod }}&topic_id=' + this.allowed_topics
                 axios
@@ -183,17 +279,115 @@
                     }
                 )
             },
-            CallCds() {
-                let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_cod }}'
-                axios
-                    .get(url)
-                    .then(response => {
-                        this.cds = response.data.results[0]
-                        this.cds_labels = response.data.labels
-                    }
-                )
-            },
+        },
+        watch: {
+            regdidid: function(val) {
+                teachers_list.cds_cod = "{{ cds_cod }}"
+                teachers_list.academic_year = _cds_data.cds.AcademicYear
+                document.getElementById("cds_year").innerHTML = _cds_data.cds.AcademicYear + "/" + (_cds_data.cds.AcademicYear +1)
+                let year_index = 1
+                while(year_index <= _cds_data.cds.CdSDuration) {
+                    impegniUP.years.push(year_index)
+                    year_index += 1
+                }
+            }
         }
     })
+
+
+    var impegniUP = new Vue({
+            el: '[id="impegniUP"]',
+            data () {
+                return {
+                    events: [],
+                    years: [],
+                    year: 1,
+                    is_loading_up: true,
+                    loader_source_up: "ciao",
+                    colors: {
+                        0: "secondary",
+                        1: "danger",
+                        2: "info",
+                        3: "success",
+                        4: "warning",
+                    },
+                    colors_dict: {},
+                    attributes: [],
+                    url: '',
+                    masks: {weekdays: 'WWW',},
+                } //end return
+            }, //end data
+            mounted()  {
+                this.getEvents();
+            },
+            methods: {
+                //generateHex() {
+                    //let color = '#';
+                    //for (var i = 0; i < 6; i++) {
+                        //color += Math.floor(Math.random() * 10);
+                    //}
+                    //return color;
+                //},
+                lightenDarkenColor(col, amt) {
+                  var num = parseInt(col, 16);
+                  var r = (num >> 16) + amt;
+                  var b = ((num >> 8) & 0x00FF) + amt;
+                  var g = (num & 0x0000FF) + amt;
+                  var newColor = g | (b << 8) | (r << 16);
+                  return newColor.toString(16);
+                },
+                generateHex2(value) {
+                    let hash = 0;
+                    value.split('').forEach(char => {
+                        hash = char.charCodeAt(0) + ((hash << 5) - hash)
+                    })
+                    let colour = ''
+                    for (let i = 0; i < 3; i++) {
+                        let value = (hash >> (i * 8)) & 0xff
+                        colour += value.toString(16).padStart(2, '0')
+                    }
+                    return '#' + this.lightenDarkenColor(colour, -50)
+                },
+                getEvents(year=1) {
+                    let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&year=' + year
+                    this.year = year
+                    this.is_loading_up = true
+                    axios
+                        .get(up_url)
+                        .then(response => {
+                            this.events = response.data
+                            this.is_loading_up = false
+                            response.data.forEach((item, index)=>{
+                                this.attributes.push(
+                                    {
+                                        key: index,
+                                        customData: {
+                                            class: 'bg-secondary text-white',
+                                            //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
+                                            title: item.insegnamento,
+                                            dataInizio: item.dataInizio,
+                                            dataFine: item.dataFine,
+                                            orarioInizio: item.orarioInizio,
+                                            orarioFine: item.orarioFine,
+                                            docente: item.docente,
+                                            aula: item.aula,
+                                            edificio: item.edificio,
+                                            background: this.colors_dict[item.insegnamento]
+                                        },
+                                        dates: { start: new Date(item.dataInizio),
+                                                 end: new Date(item.dataFine) }
+                                    }
+                                )
+                            })
+                        }
+                    )
+                },
+
+                switchPage(page) {
+                    this.attributes = [];
+                    this.getEvents();
+                },
+            } //methods
+        }) //end "new Vue"
 </script>
 {% endblock container %}

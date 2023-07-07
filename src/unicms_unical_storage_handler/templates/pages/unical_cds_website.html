@@ -3,12 +3,22 @@
 {% load i18n %}
 {% load static %}
 {% load unicms_storage_handler %}
+{% load unicms_template_unical %}
 
 
 {% block extra_head %}
 {{ block.super }}
 <script src="{% static 'js/vue-markdown.js' %}"></script>
 {% endblock extra_head %}
+
+
+{% block unical_top_bar_text %}
+<image src="{% unicms_template_unical_static_path 'images/logo_unical_white.svg' %}" alt="{% trans 'University of Calabria' %}" class="w-75"/>
+{% endblock unical_top_bar_text %}
+
+{% block unical_top_bar_text_mobile %}
+<image src="{% unicms_template_unical_static_path 'images/logo_unical_white.svg' %}" alt="{% trans 'University of Calabria' %}" class="w-75"/>
+{% endblock unical_top_bar_text_mobile %}
 
 
 {% block header_center_logo %}
@@ -18,6 +28,9 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
+
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
 {% if cds_identifier %}
@@ -26,7 +39,7 @@
             [[ cds.CourseTypeDescription ]]
         </p>
         <p class="h2 text-white">
-            [[ item.CDSName ]]
+            [[ item.CdSName ]]
         </p>
     </div>
     <script>
@@ -37,9 +50,9 @@
             data() {
                 return {
                     item: {},
+                    labels: {},
                     cds: {},
                     cds_labels: {},
-                    regdidid: null,
                     is_loading: true
 
                     {% block cds_website_extra_data %}
@@ -47,11 +60,16 @@
                 }
             },
             mounted() {
+                {% block cds_website_callURL %}
                 this.CallURL();
+                {% endblock cds_website_callURL %}
                 {% block cds_website_extra_mounted %}
                 {% endblock cds_website_extra_mounted %}
             },
             methods: {
+                containsHTML(s) {
+                    return /<\/?[a-z][\s\S]*>/i.test(s)
+                },
                 CallRegDid(regdidid) {
                     let cds_url = '{{ base_api }}{{ cds_api }}' + regdidid + '/?lang={{ LANGUAGE_CODE }}'
                     axios
@@ -65,15 +83,12 @@
                         }
                     )
                 },
-                CallURL(regdidid=null) {
-                    let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_identifier }}/?lang={{ LANGUAGE_CODE }}'
+                CallURL(regdidid=null, year="{{ cds_website_current_year }}") {
+                    let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_identifier }}&academicyear=' + year
                     axios
                         .get(url)
                         .then(response => {
-                            this.item = response.data.results;
-                            _cds_identifier_logo_mobile.item = response.data.results
-                            if(!regdidid) regdidid = response.data.results['RegDidId']
-                            this.regdidid = regdidid
+                            if(!regdidid) regdidid = response.data.results[0]['RegDidId']
                             this.CallRegDid(regdidid)
                             {% block cds_website_extra_main %}
                             {% endblock cds_website_extra_main %}
@@ -100,7 +115,7 @@
             [[ cds.CourseTypeDescription ]]
         </p>
         <p class="h2 text-white">
-            [[ item.CDSName ]]
+            [[ item.CdSName ]]
         </p>
     </div>
     <script>

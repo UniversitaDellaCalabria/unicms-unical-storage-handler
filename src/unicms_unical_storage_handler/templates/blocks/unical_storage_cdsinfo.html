@@ -360,7 +360,7 @@
 
         {% clean_url url as cleaned_url %}
         {% with cleaned_url|add:"/studyplans/" as studyplans_url %}
-        {% include "blocks/unical_storage_cdsstudyplans_v3.html" with url=studyplans_url uid=id|add:"_1" father_uid=id full_page=full_page teacher_uid=id|add:"_2" %}
+        {% include "blocks/unical_storage_cdsstudyplans_v3.html" with url=studyplans_url uid=id|add:"_1" father_uid=id full_page=full_page %}
         {% endwith %}
 
         {% comment %}
@@ -412,13 +412,7 @@
                      role="region"
                      aria-labelledby="heading-teachers-lft">
                     <div class="accordion-body mt-3">
-                        {% comment %}
-                        This teachers list is called in StudyPlans template!!
-                        (just following)
-                        {% endcomment %}
-                        {% with teachers_api|add:"?regdid="|add:cdsid as teachers_url %}
-                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with url=teachers_url uid=id|add:"_2" mark_contract_teachers=1 %}
-                        {% endwith %}
+                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with uid=id|add:"_2" mark_contract_teachers=1 %}
                     </div>
                 </div>
             </div>
@@ -626,6 +620,7 @@ var {{ id }} = new Vue({
     },
     mounted() {
         //this.CallURL(); called by studyPlans.CallCdS()
+        this.CallURL()
     },
     methods: {
         containsHTML(s) {
@@ -638,10 +633,26 @@ var {{ id }} = new Vue({
                     this.item = response.data.results;
                     this.labels = response.data.labels;
                     this.is_loading = false
+
+                    {{ id }}_contacts.item = response.data.results;
+                    {{ id }}_contacts.labels = response.data.labels;
+
                     {% if change_breadcrumb %}
                     document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.CdSName
                     document.title = this.item.CdSName
                     {% endif %}
+
+                    // set nested block values
+
+                    // studyplans
+                    {{ id }}_1.regdidid = response.data.results['RegDidId']
+                    {{ id }}_1.degree_class = response.data.results.CourseClassCod
+                    {{ id }}_1.interclass_degree_class = response.data.results.CourseInterClassCod
+                    {{ id }}_1.academic_year = response.data.results.AcademicYear
+
+                    {{ id }}_2.cds_cod = response.data.results.CdSCod
+                    {{ id }}_2.academic_year = response.data.results.AcademicYear
+                    document.getElementById("{{ id }}_cds_year").innerHTML = response.data.results.AcademicYear + "/" + (response.data.results.AcademicYear+1)
                 });
         },
         youtubeNoCookie(value) {

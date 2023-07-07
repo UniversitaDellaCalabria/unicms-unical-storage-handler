@@ -205,72 +205,25 @@ exclude_studyactivity_codes: {{ exclude_studyactivity_codes|safe }},
 cds_cod: '',
 degree_class: '',
 interclass_degree_class: '',
-academic_year: ''
+academic_year: '',
+regdidid: null
 {% endblock extra_data %}
 
-{% block method_callurl %}
-CallURL(url, initial=false) {
-    this.is_loading = true
-    this.loader_source = url
-    axios
-        .get(url)
-        .then(response => {
-            if(initial) this.initial_items = response.data.results;
-            this.items = response.data;
-            this.next_page = response.data.next;
-            this.previous_page = response.data.previous;
-            this.labels = response.data.labels;
-            this.is_loading = false;
-            this.CallCdS();
-        })
-},
-{% endblock method_callurl %}
+{% block call_url %}
+{% if url %}
+    {{ block.super }}
+{% endif %}
+{% endblock call_url %}
 
-{% block extra_methods %}
-
-{% storage_api_root "CMS_STORAGE_CDS_API" as cds_api %}
-{% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
-{% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
-{% get_current_language as LANGUAGE_CODE %}
-
-CallCdS() {
-    axios
-        .get("{{cds_api}}"+this.items.results[0].RegDidId + "/?lang={{ LANGUAGE_CODE }}")
-        .then(response => {
-            this.degree_class = response.data.results.CourseClassCod
-            this.interclass_degree_class = response.data.results.CourseInterClassCod
-            this.academic_year = response.data.results.AcademicYear
-            this.cds_cod = response.data.results.CdSCod
-
-            {% if father_uid %}
-                {{father_uid}}.item = response.data.results;
-                {{father_uid}}.labels = response.data.labels;
-                {{father_uid}}.is_loading = false
-
-                {% if full_page %}
-                {{father_uid}}_contacts.item = response.data.results;
-                {{father_uid}}_contacts.labels = response.data.labels;
-                {% endif %}
-
-                {% if change_breadcrumb %}
-                document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = response.data.results.CdSName
-                document.title = response.data.results.CdSName
-                {% endif %}
-            {% endif %}
-
-            {% if teacher_uid %}
-            axios
-                .get("{{teachers_api}}?lang={{ LANGUAGE_CODE }}&cds=" + this.cds_cod + "&year=" + this.academic_year)
-                .then(response => {
-                        {{teacher_uid}}.items = response.data;
-                        {{teacher_uid}}.next_page = response.data.next;
-                        {{teacher_uid}}.previous_page = response.data.previous;
-                        {{teacher_uid}}.labels = response.data.labels;
-                        {{teacher_uid}}.is_loading = false;
-                        document.getElementById("{{ father_uid }}_cds_year").innerHTML = this.academic_year + "/" + (this.academic_year+1)
-                });
-            {% endif %}
-
-        });
+{% block extra_sections %}
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% if not url %}
+watch: {
+    regdidid: function(val) {
+        this.url = "{{ base_api }}{{ cds_api }}" + val + "/studyplans/"
+        this.CallURL(this.url, initial=false)
+    }
 }
-{% endblock extra_methods %}
+{% endif %}
+{% endblock extra_sections %}
