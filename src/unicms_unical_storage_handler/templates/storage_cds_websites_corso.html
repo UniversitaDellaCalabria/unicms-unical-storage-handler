@@ -208,6 +208,42 @@
                 </div>
                 <div class="col-12 col-lg-3 offset-lg-1">
                     {% include "includes/unical_storage_cds_websites_right.html" %}
+
+                    <div id="_cds_website_right_col_dynamic" class="mt-4">
+                        <div v-if="_cds_data.cds.StudyManifesto || _cds_data.cds.DidacticRegulation || _cds_data.cds.TeachingSystem">
+                            <div class="background-light-grey px-2 py-3 mb-2 w-100">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <b>
+                                            <svg class="icon" aria-labelledby="info_menu">
+                                                <title id="doc_menu">{% trans "Documents" %}</title>
+                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
+                                            </svg>
+                                        </b>
+                                    </div>
+                                    <div class="col m-auto align-middle">
+                                        <ul class="mb-0 ps-0 list-unstyled">
+                                            <li v-if="_cds_data.cds.StudyManifesto">
+                                                <a class="no-color" target="_blank" :href="_cds_data.cds.StudyManifesto">
+                                                    <small><b>[[ _cds_data.cds_labels['StudyManifesto'] ]]</b></small>
+                                                </a>
+                                            </li>
+                                            <li v-if="_cds_data.cds.DidacticRegulation">
+                                                <a class="no-color" target="_blank" :href="_cds_data.cds.DidacticRegulation">
+                                                    <small><b>[[ _cds_data.cds_labels['DidacticRegulation'] ]]</b></small>
+                                                </a>
+                                            </li>
+                                            <li v-if="_cds_data.cds.TeachingSystem">
+                                                <a class="no-color" target="_blank" :href="_cds_data.cds.TeachingSystem">
+                                                    <small><b>[[ _cds_data.cds_labels['TeachingSystem'] ]]</b></small>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -276,6 +312,16 @@ var _{{ cds_cod }} = new Vue({
         }
     }
 })
+
+var _cds_website_right_col_dynamic = new Vue({
+        el: '[id="_cds_website_right_col_dynamic"]',
+        data() {
+            return {
+                item: {},
+                cds: {},
+            }
+        },
+    });
 </script>
 {% endblock container %}
 

@@ -27,6 +27,7 @@ Brochure - {{ block.super }}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as page_titlke %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS" as collapse_fields %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2" as collapse_fields_2 %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
 {% include "includes/unical_storage_loading.html" %}
@@ -106,53 +107,88 @@ Brochure - {{ block.super }}
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-lg-8">
-                                <div class="pb-0 mt-3">
-                                    <div class="card no-after" style="border:2px solid #b71918">
-                                        <div class="card-body">
-                                            <div class="row mb-3">
-                                                <div class="col">
-                                                    <small>
-                                                        [[ _cds_data.cds_labels['CourseClassName'] ]] <b>[[ _cds_data.cds.CourseClassName ]]</b>
-                                                    </small>
-                                                </div>
+                            <div class="col-12 col-lg-8 d-flex">
+                                <div class="card no-after mt-3" style="border:2px solid #b71918">
+                                    <div class="card-body">
+                                        <div class="row mb-3 mb-lg-5">
+                                            <div class="col">
+                                                [[ _cds_data.cds_labels['CourseClassName'] ]] <b>[[ _cds_data.cds.CourseClassName ]]</b>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-12 col-lg-4">
-                                                    <small>
-                                                        [[ website_labels['CDSSeatsNumber'] ]]
-                                                        <b class="h3 lighter ms-3">[[ website.CDSSeatsNumber ]]</b>
-                                                    </small>
-                                                </div>
-                                                <div class="col-12 col-lg-4">
-                                                    <small>
-                                                        [[ website_labels['CDSLanguage'] ]]
-                                                        <b class="h3 lighter ms-3">
-                                                            <span v-for="lang in website.CDSLanguage">
-                                                                [[ lang ]]
-                                                            </span>
-                                                        </b>
-                                                    </small>
-                                                </div>
-                                                <div class="col-12 col-lg-4">
-                                                    <small>
-                                                        [[ website_labels['CDSDuration'] ]]
-                                                        <b class="h3 lighter ms-3">[[ website.CDSDuration ]] {% trans "years" %}</b>
-                                                    </small>
-                                                </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-lg-4">
+                                                [[ website_labels['CDSSeatsNumber'] ]]
+                                                <b class="h3 lighter ms-3">[[ website.CDSSeatsNumber ]]</b>
+                                            </div>
+                                            <div class="col-12 col-lg-4">
+                                                [[ website_labels['CDSLanguage'] ]]
+                                                <b class="h3 lighter ms-3">
+                                                    <span v-for="lang in website.CDSLanguage">
+                                                        [[ lang ]]
+                                                    </span>
+                                                </b>
+                                            </div>
+                                            <div class="col-12 col-lg-4">
+                                                [[ website_labels['CDSDuration'] ]]
+                                                <b class="h3 lighter ms-3">[[ website.CDSDuration ]] {% trans "years" %}</b>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="pb-0 mt-3">
-                                    <div class="card no-after" style="border:2px solid #b71918">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col">
-                                                    right
-                                                </div>
+                            <div class="col-12 col-lg-4 d-flex ">
+                                <div class="card no-after mt-3" style="border:2px solid #b71918">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h4 class="card-title">
+                                                        Social
+                                                </h4>
+
+                                                <ul class="list-inline text-start social">
+                                                    <li class="list-inline-item">
+                                                        <a class="p-2" href="https://it-it.facebook.com/unicalufficiale/" target="_blank" title="Facebook" rel="noopener noreferrer">
+                                                            <svg class="icon icon-lg align-top">
+                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-facebook-square"></use>
+                                                            </svg><span class="visually-hidden">Facebook</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <a class="p-2" href="https://twitter.com/UniCalPortale?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank" title="Twitted" rel="noopener noreferrer">
+                                                            <svg class="icon icon-lg align-top">
+                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-twitter"></use>
+                                                            </svg><span class="visually-hidden">Twitter</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <a class="p-2" href="https://www.linkedin.com/school/universit%C3%A0-della-calabria/" target="_blank" title="Linkedin" rel="noopener noreferrer">
+                                                            <svg class="icon icon-lg align-top">
+                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-linkedin-square"></use>
+                                                            </svg><span class="visually-hidden">Linkedin</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <a class="p-2" href="https://www.instagram.com/unical_official/" target="_blank" title="Instagram" rel="noopener noreferrer">
+                                                            <svg class="icon icon-lg align-top">
+                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-instagram"></use>
+                                                            </svg><span class="visually-hidden">Instagram</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <a class="p-2" href="http://www.youtube.com/@campusunical" target="_blank" title="YouTube" rel="noopener noreferrer">
+                                                            <svg class="icon icon-lg align-top">
+                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-youtube"></use>
+                                                            </svg><span class="visually-hidden">Youtube</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <a class="p-2" href="https://github.com/UniversitaDellaCalabria" target="_blank" title="Github" rel="noopener noreferrer">
+                                                            <svg class="icon icon-lg align-top">
+                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-github"></use>
+                                                            </svg><span class="visually-hidden">Github</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -244,7 +280,65 @@ Brochure - {{ block.super }}
                                             <span v-else>
                                                 <span style="white-space: pre-line;">
                                                     <span>
-                                                        <span v-if="_cds_data.containsHTML(_cds_data.cds[name])" v-html="website[name]"></span>
+                                                        <span v-if="_cds_data.containsHTML(website[name])" v-html="website[name]"></span>
+                                                        <span v-else>[[ website[name] ]]</span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-for="name in collapse_fields_2" v-if="website[name] && (website[name].length > 0 || Object.keys(website[name]).length > 0)">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" :id="'heading-' + name +'-lft'">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="'#collapse-' + name +'-lft'"
+                                                aria-expanded="false"
+                                                :aria-controls="'collapse-' + name +'-lft'">
+                                            [[ website_labels[name] ]]
+                                        </button>
+                                    </div>
+                                    <div :id="'collapse-' + name +'-lft'"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDiv1-lft"
+                                         role="region"
+                                         :aria-labelledby="'heading-' + name +'-lft'">
+                                        <div class="accordion-body">
+                                            <span v-if="Array.isArray(website[name])">
+                                                <ul>
+                                                    <li v-for="subvalue in website[name]">
+                                                        <span v-if="_cds_data.containsHTML(subvalue)" v-html="subvalue"></span>
+                                                        <span v-else>[[ subvalue ]]</span>
+                                                    </li>
+                                                </ul>
+                                            </span>
+                                            <span v-else-if="typeof website[name] === 'object'">
+                                                <ul v-for="(valueProfile, nameProfile) in website[name]">
+                                                    <li>
+                                                        [[ nameProfile ]]
+                                                        <ul v-for="(valueProfileInstance, nameProfileInstance) in valueProfile">
+                                                            <li>
+                                                                <span v-if="nameProfileInstance in website_labels"
+                                                                      style="white-space: pre-line;">
+                                                                    [[ _cds_data.cds_labels[nameProfileInstance] ]]
+                                                                </span>
+                                                                <span v-else>
+                                                                    [[ nameProfileInstance ]]
+                                                                </span> :
+                                                                <span v-if="_cds_data.containsHTML(valueProfileInstance)" v-html="valueProfileInstance"></span>
+                                                                <span v-else style="white-space: pre-line;">[[ valueProfileInstance ]]</span>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </span>
+                                            <span v-else>
+                                                <span style="white-space: pre-line;">
+                                                    <span>
+                                                        <span v-if="_cds_data.containsHTML(website[name])" v-html="website[name]"></span>
                                                         <span v-else>[[ website[name] ]]</span>
                                                     </span>
                                                 </span>
@@ -255,10 +349,8 @@ Brochure - {{ block.super }}
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-3 offset-lg-1">
                     <div class="row mt-4" v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DirectorName && _cds_data.cds.OtherData.DirectorName.trim().length>0">
                         <div class="col-2">
                             <svg class="icon icon-muted">
@@ -459,6 +551,7 @@ Brochure - {{ block.super }}
                 website: {},
                 website_labels: {},
                 collapse_fields: {{ collapse_fields|safe }},
+                collapse_fields_2: {{ collapse_fields_2|safe }},
                 regdidid: null
             }
         },

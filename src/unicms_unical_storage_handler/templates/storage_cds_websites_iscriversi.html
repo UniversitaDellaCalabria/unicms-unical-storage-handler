@@ -31,6 +31,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS_RIGHT_COLUMN" as page_topics_right_column %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
@@ -117,6 +118,32 @@
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
                         {% include "includes/unical_storage_cds_websites_right.html" %}
+
+                        <div id="_cds_website_right_col_dynamic" class="mt-4">
+                            <div v-if="_{{ cds_cod }}.topic_articles_right_column && _{{ cds_cod }}.empty_topics_right_column.length == 0">
+                                <div class="background-light-grey px-2 py-3 mb-2 w-100">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <b>
+                                                <svg class="icon" aria-labelledby="info_menu">
+                                                    <title id="info_menu">{% trans "Informations" %}</title>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                                                </svg>
+                                            </b>
+                                        </div>
+                                        <div class="col m-auto align-middle">
+                                            <ul class="mb-0 ps-0 list-unstyled">
+                                                <li v-for="right_article in _{{ cds_cod }}.topic_articles_right_column"  v-if="right_article.CdsArticle || (right_article.CdsObject && right_article.CdsObject.Object)">
+                                                    <a class="no-color" target="_blank" :href="right_article.CdsObject.Object.get_full_path">
+                                                        <small><b>[[ right_article.Title ]]</b></small>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,9 +160,12 @@
             return {
                 item: {},
                 allowed_topics: {{ page_topics|get_value:'iscriversi'|safe }},
+                allowed_topics_right_column: {{ page_topics_right_column|get_value:'iscriversi'|safe }},
                 empty_topics: [],
+                empty_topics_right_column: [],
                 topics: {},
                 topic_articles: {},
+                topic_articles_right_column: {},
                 labels: {},
                 url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
                 is_loading: true,
@@ -147,6 +177,7 @@
             //this.CallURL();
             this.CallTopics();
             this.CallTopicArticles();
+            this.CallTopicArticlesRight();
             //this.CallCds();
         },
         methods: {
@@ -166,6 +197,21 @@
                     }
                 )
             },
+            CallTopicArticlesRight() {
+                let url = '{{ base_api }}{{ page_topic_articles }}?lang={{ LANGUAGE_CODE }}&page_size=200&cds_cod={{ cds_cod }}&topic_id=' + this.allowed_topics_right_column
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.topic_articles_right_column = response.data.results
+                        this.allowed_topics_right_column.forEach(
+                            topic => {
+                                let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
+                                if(!found) this.empty_topics_right_column.push(topic)
+                            }
+                        )
+                    }
+                )
+            },
             CallTopics() {
                 let url = '{{ base_api }}{{ topics_api }}?lang={{ LANGUAGE_CODE }}&page_size=200'
                 axios
@@ -177,5 +223,15 @@
             },
         }
     })
+
+    var _cds_website_right_col_dynamic = new Vue({
+        el: '[id="_cds_website_right_col_dynamic"]',
+        data() {
+            return {
+                item: {},
+                cds: {},
+            }
+        },
+    });
 </script>
 {% endblock container %}

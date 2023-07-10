@@ -395,4 +395,10 @@ CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS = [
     'CDSAdmission', 'CDSGoals', 'CDSJobOpportunities'
 ]
 
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2 = [
+    'CDSTaxes', 'CDSScholarships', 'CDSConcessions'
+]
+
+
+
 CDS_WEBSITE_CURRENT_YEAR = ""

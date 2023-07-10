@@ -14,6 +14,66 @@
             </a>
         </div>
     </div>
+
+    <div class="mt-4">
+        <div class="card no-after" style="border:2px solid #b71918">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="card-title">
+                                Social
+                        </h4>
+
+                        <ul class="list-inline text-start social">
+                            <li class="list-inline-item">
+                                <a class="p-2" href="https://it-it.facebook.com/unicalufficiale/" target="_blank" title="Facebook" rel="noopener noreferrer">
+                                    <svg class="icon icon-lg align-top">
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-facebook-square"></use>
+                                    </svg><span class="visually-hidden">Facebook</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="p-2" href="https://twitter.com/UniCalPortale?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank" title="Twitted" rel="noopener noreferrer">
+                                    <svg class="icon icon-lg align-top">
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-twitter"></use>
+                                    </svg><span class="visually-hidden">Twitter</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="p-2" href="https://www.linkedin.com/school/universit%C3%A0-della-calabria/" target="_blank" title="Linkedin" rel="noopener noreferrer">
+                                    <svg class="icon icon-lg align-top">
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-linkedin-square"></use>
+                                    </svg><span class="visually-hidden">Linkedin</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="p-2" href="https://www.instagram.com/unical_official/" target="_blank" title="Instagram" rel="noopener noreferrer">
+                                    <svg class="icon icon-lg align-top">
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-instagram"></use>
+                                    </svg><span class="visually-hidden">Instagram</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="p-2" href="http://www.youtube.com/@campusunical" target="_blank" title="YouTube" rel="noopener noreferrer">
+                                    <svg class="icon icon-lg align-top">
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-youtube"></use>
+                                    </svg><span class="visually-hidden">Youtube</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="p-2" href="https://github.com/UniversitaDellaCalabria" target="_blank" title="Github" rel="noopener noreferrer">
+                                    <svg class="icon icon-lg align-top">
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-github"></use>
+                                    </svg><span class="visually-hidden">Github</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row mt-4" v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DirectorName && _cds_data.cds.OtherData.DirectorName.trim().length>0">
         <div class="col-12"><hr></div>
         <div class="col-2">
@@ -136,73 +196,42 @@
         </div>
     </div>
 
-    <div v-if="_cds_data.cds.CdSDoc || _cds_data.cds.CdSSatisfactionSurvey" class="mt-4">
-        <div v-if="_cds_data.cds.CdSDoc">
-            <div class="background-light-grey px-2 py-3 mb-2 w-100">
-                <div class="row">
-                    <div class="col-2">
-                        <b>
-                            <svg class="icon" aria-labelledby="doc_menu">
-                                <title id="doc_menu">{% trans "Documents" %}</title>
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
-                            </svg>
-                        </b>
-                    </div>
-                    <div class="col m-auto align-middle">
-                        <ul class="mb-0 ps-0 list-unstyled">
-                            <li>
-                                <a :href="_cds_data.cds.CdSDoc" class="no-color" target="_blank">
-                                    <small><b>{% trans "Study course brochure" %}</b></small>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+    <div v-if="_cds_data.cds.CdSDoc" class="mt-4">
+        <a :href="_cds_data.cds.CdSDoc" target="_blank">
+            <div class="row">
+                <div class="col-3">
+                    <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
+                    </svg>
+                </div>
+                <div class="col m-auto align-middle">
+                    <ul class="mb-0 ps-0 list-unstyled">
+                        <li>
+                            <small><b>{% trans "Study course brochure" %}</b></small>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </a>
+    </div>
 
-        <div v-if="_cds_data.cds.DidacticRegulation">
-            <div class="background-light-grey px-2 py-3 mb-2 w-100">
-                <div class="row">
-                    <div class="col-2 text-center" style="font-size: x-large">
-                        <b>
-                            <svg class="icon" aria-labelledby="info_menu">
-                                <title id="info_menu">{% trans 'Didactic Regulation' %}</title>
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
-                            </svg>
-                        </b>
-                    </div>
-                    <div class="col m-auto align-middle">
-                        <ul class="mb-0 ps-0 list-unstyled">
-                            <li>
-                                <a class="no-color" target="_blank" :href="_cds_data.cds.DidacticRegulation">
-                                    <small><b>[[ _cds_data.cds_labels['DidacticRegulation'] ]]</b></small>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+    <div v-if="_cds_data.cds.CdSSatisfactionSurvey" class="mt-4">
+        <a target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.cds.CdSSatisfactionSurvey">
+        <div class="row">
+            <div class="col-3">
+                <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-chart-line"></use>
+                </svg>
+            </div>
+            <div class="col m-auto align-middle">
+                <ul class="mb-0 ps-0 list-unstyled">
+                    <li>
+                        <small><b>[[ _cds_data.cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
+                    </li>
+                </ul>
             </div>
         </div>
-
-        <div v-if="_cds_data.cds.CdSSatisfactionSurvey">
-            <div class="background-light-grey px-2 py-3 mb-2 w-100">
-                <div class="row">
-                    <div class="col-2 text-center" style="font-size: x-large">
-                        <span style="font-weight: 400" title="{% trans 'Digital services' %}">@</span>
-                    </div>
-                    <div class="col m-auto align-middle">
-                        <ul class="mb-0 ps-0 list-unstyled">
-                            <li>
-                                <a class="no-color" target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.cds.CdSSatisfactionSurvey">
-                                    <small><b>[[ _cds_data.cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </a>
     </div>
 </div>
 <script>
