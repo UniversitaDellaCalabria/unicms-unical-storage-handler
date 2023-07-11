@@ -75,21 +75,21 @@ Brochure - {{ block.super }}
                                     </li>
                                     <li class="mb-2 pb-1">
                                         <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
-                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
-                                        </svg>
-                                        <span class="ms-3">
-                                            <a href="#" style="text-decoration: none">
-                                                <b>{% trans "download" %}</b>
-                                            </a>
-                                        </span>
-                                    </li>
-                                    <li class="mb-2 pb-1">
-                                        <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
                                         </svg>
                                         <span class="ms-3">
                                             <a href="#" style="text-decoration: none" data-bs-toggle="modal" data-bs-target="#modal_CDSEnrollmentMode">
                                                 <b>{% trans "how to enroll" %}</b>
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="mb-2 pb-1">
+                                        <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
+                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
+                                        </svg>
+                                        <span class="ms-3">
+                                            <a href="#" style="text-decoration: none">
+                                                <b>{% trans "download materials" %}</b>
                                             </a>
                                         </span>
                                     </li>
@@ -110,7 +110,7 @@ Brochure - {{ block.super }}
                             <div class="col-12 col-lg-8 d-flex">
                                 <div class="card no-after mt-3" style="border:2px solid #b71918">
                                     <div class="card-body">
-                                        <div class="row mb-3 mb-lg-5">
+                                        <div class="row mb-3 mb-lg-3">
                                             <div class="col">
                                                 [[ _cds_data.cds_labels['CourseClassName'] ]] <b>[[ _cds_data.cds.CourseClassName ]]</b>
                                             </div>
@@ -118,11 +118,11 @@ Brochure - {{ block.super }}
                                         <div class="row">
                                             <div class="col-12 col-lg-4">
                                                 [[ website_labels['CDSSeatsNumber'] ]]
-                                                <b class="h3 lighter ms-3">[[ website.CDSSeatsNumber ]]</b>
+                                                <b class="h2 lighter ms-3 mb-0">[[ website.CDSSeatsNumber ]]</b>
                                             </div>
                                             <div class="col-12 col-lg-4">
                                                 [[ website_labels['CDSLanguage'] ]]
-                                                <b class="h3 lighter ms-3">
+                                                <b class="h2 lighter ms-3 mb-0">
                                                     <span v-for="lang in website.CDSLanguage">
                                                         [[ lang ]]
                                                     </span>
@@ -130,7 +130,7 @@ Brochure - {{ block.super }}
                                             </div>
                                             <div class="col-12 col-lg-4">
                                                 [[ website_labels['CDSDuration'] ]]
-                                                <b class="h3 lighter ms-3">[[ website.CDSDuration ]] {% trans "years" %}</b>
+                                                <b class="h2 lighter ms-3 mb-0">[[ website.CDSDuration ]] {% trans "years" %}</b>
                                             </div>
                                         </div>
                                     </div>
@@ -138,51 +138,47 @@ Brochure - {{ block.super }}
                             </div>
                             <div class="col-12 col-lg-4 d-flex ">
                                 <div class="card no-after mt-3" style="border:2px solid #b71918">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h4 class="card-title">
-                                                        Social
-                                                </h4>
-
-                                                <ul class="list-inline text-start social">
+                                    <div class="card-body d-flex">
+                                        <div class="row m-auto">
+                                            <div class="col m-auto">
+                                                <ul class="list-inline text-start social m-auto">
                                                     <li class="list-inline-item">
-                                                        <a class="p-2" href="https://it-it.facebook.com/unicalufficiale/" target="_blank" title="Facebook" rel="noopener noreferrer">
+                                                        <a href="https://it-it.facebook.com/unicalufficiale/" target="_blank" title="Facebook" rel="noopener noreferrer">
                                                             <svg class="icon icon-lg align-top">
                                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-facebook-square"></use>
                                                             </svg><span class="visually-hidden">Facebook</span>
                                                         </a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a class="p-2" href="https://twitter.com/UniCalPortale?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank" title="Twitted" rel="noopener noreferrer">
+                                                        <a href="https://twitter.com/UniCalPortale?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank" title="Twitted" rel="noopener noreferrer">
                                                             <svg class="icon icon-lg align-top">
                                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-twitter"></use>
                                                             </svg><span class="visually-hidden">Twitter</span>
                                                         </a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a class="p-2" href="https://www.linkedin.com/school/universit%C3%A0-della-calabria/" target="_blank" title="Linkedin" rel="noopener noreferrer">
+                                                        <a href="https://www.linkedin.com/school/universit%C3%A0-della-calabria/" target="_blank" title="Linkedin" rel="noopener noreferrer">
                                                             <svg class="icon icon-lg align-top">
                                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-linkedin-square"></use>
                                                             </svg><span class="visually-hidden">Linkedin</span>
                                                         </a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a class="p-2" href="https://www.instagram.com/unical_official/" target="_blank" title="Instagram" rel="noopener noreferrer">
+                                                        <a href="https://www.instagram.com/unical_official/" target="_blank" title="Instagram" rel="noopener noreferrer">
                                                             <svg class="icon icon-lg align-top">
                                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-instagram"></use>
                                                             </svg><span class="visually-hidden">Instagram</span>
                                                         </a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a class="p-2" href="http://www.youtube.com/@campusunical" target="_blank" title="YouTube" rel="noopener noreferrer">
+                                                        <a href="http://www.youtube.com/@campusunical" target="_blank" title="YouTube" rel="noopener noreferrer">
                                                             <svg class="icon icon-lg align-top">
                                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-youtube"></use>
                                                             </svg><span class="visually-hidden">Youtube</span>
                                                         </a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a class="p-2" href="https://github.com/UniversitaDellaCalabria" target="_blank" title="Github" rel="noopener noreferrer">
+                                                        <a href="https://github.com/UniversitaDellaCalabria" target="_blank" title="Github" rel="noopener noreferrer">
                                                             <svg class="icon icon-lg align-top">
                                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-github"></use>
                                                             </svg><span class="visually-hidden">Github</span>
@@ -480,8 +476,8 @@ Brochure - {{ block.super }}
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <p class="h4">
-                                I nostri ex
+                            <p class="h4 mb-3">
+                                {% trans "Our ex students" %}
                             </p>
                         </div>
                     </div>
@@ -508,6 +504,180 @@ Brochure - {{ block.super }}
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-3 py-5">
+            <div class="col">
+                <div class="container">
+                    <ul class="nav nav-tabs nav-tabs-icon-text" id="tabList" role="tablist">
+                        <li class="nav-item h3">
+                            <a class="nav-link active" id="studentLife-tab" data-bs-toggle="tab" href="#studentLifeTab" role="tab" aria-controls="studentLifeTab" aria-selected="true">
+                                {% trans "Student life" %}
+                            </a>
+                        </li>
+                        <li class="nav-item h3">
+                            <a class="nav-link" id="studentServices-tab" data-bs-toggle="tab" href="#studentServicesTab" role="tab" aria-controls="studentServicesTab">
+                                {% trans "Student services" %}
+                            </a>
+                        </li>
+                        <li class="nav-item h3">
+                            <a class="nav-link" id="residentialCenter-tab" data-bs-toggle="tab" href="#residentialCenterTab" role="tab" aria-controls="residentialCenterTab">
+                                {% trans "Residential center" %}
+                            </a>
+                        </li>
+                    </ul>
+
+
+                    <div class="tab-content" id="tabContent">
+
+                        <div class="tab-pane p-4 pb-0 fade show active" id="studentLifeTab" role="tabpanel" aria-labelledby="studentLifeTab-tab">
+                            <div class="row">
+                                <div class="col-12 col-lg-3">
+                                    <img src="{% static 'images/cds_websites/tab_1.jpg' %}" class="w-100"/>
+                                </div>
+                                <div class="col-12 col-lg-9 ps-lg-3">
+                                    {% trans "On the largest and most equipped campus in Italy, you can experience a unique university community, sharing educational, recreational, sporting and cultural moments with colleagues and teachers. The Campus is equipped with study rooms, a sports centre, theatres, amphitheatres, cinemas, bars, refreshment points and other meeting spaces. A citadel that allows you to live an extraordinary human experience, as well as an educational one." %}
+                                    <p class="mt-4">
+                                    <a href="/campus/vivere-il-campus/" target="_blank" class="btn btn-secondary">
+                                        {% trans "Discover more" %}
+                                    </a>
+                                </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane p-4 pb-0 fade" id="studentServicesTab" role="tabpanel" aria-labelledby="studentServicesTab-tab">
+                            <div class="row">
+                                <div class="col-12 col-lg-3">
+                                    <img src="{% static 'images/cds_websites/tab_2.jpg' %}" class="w-100"/>
+                                </div>
+                                <div class="col-12 col-lg-9 ps-lg-3">
+                                    {% trans "A citadel that hosts those who live on the Campus in the best possible way, because it offers multiple services for study and for individual and collective well-being: libraries, a language learning centre, counseling and inclusion services. On the Campus there is also a health center, a post office, a bank branch and a space for silence." %}
+                                    <p class="mt-4">
+                                        <a href="/campus/servizi/" class="btn btn-secondary">
+                                            {% trans "Discover more" %}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane p-4 pb-0 fade" id="residentialCenterTab" role="tabpanel" aria-labelledby="residentialCenterTab-tab">
+                            <div class="row">
+                                <div class="col-12 col-lg-3">
+                                    <img src="{% static 'images/cds_websites/tab_3.jpg' %}" class="w-100"/>
+                                </div>
+                                <div class="col-12 col-lg-9 ps-lg-3">
+                                    {% trans "It completes and enhances the offer of the University of Calabria and realizes the idea of ​​an Anglo-Saxon university campus. It is distributed in 10 districts in which the university residences are located, consisting of apartments with double and single bedrooms, living room, kitchen and bathroom. In the neighborhoods there are common spaces for studying and for recreational and sporting activities, with the presence of TV rooms, games rooms and gyms; laundry and bike rental services are available." %}
+                                    <p class="mt-4">
+                                        <a href="/organizzazione/strutture/centro-residenziale/" class="btn btn-secondary">
+                                            {% trans "Discover more" %}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 py-5" style="background: var(--light_grey)" v-if="website.CDSSliders">
+            <div class="col">
+                <div class="container mb-3">
+                    <p class="h3 mb-4">
+                        {% trans "Request information for this course" %}
+                    </p>
+
+                    <form method="post">
+                        <div class="row">
+                            {% for field in form %}
+                                {% if not forloop.counter0 or field.name == 'text'%}
+                                <div class="col-12 col-lg-6">
+                                {% endif %}
+                                    <div style="padding: 0 0 1rem">
+                                        <b>{{ field.label_tag }}</b>
+                                        {% if field.field.required %}*{% endif %}
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">
+                                            {{ field.help_text|safe }}
+                                        </small>
+                                    {% endif %}
+                                        <small class="text-danger">
+                                            {{ field.errors }}
+                                        </small>
+                                    </div>
+                                {% if field.name == 'phone' or field.name == 'text' %}
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <input type="hidden" name="cds_cod" value="{{ cds_cod }}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}">
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success"
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal_submit">
+                                <svg class="icon icon-xs icon-white">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-plus-circle"></use>
+                                </svg>
+                                {% trans "Submit" %}
+                            </button>
+                        </div>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="modal_submit">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            {% trans "Confirm" %}
+                                        </h5>
+                                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="{% trans 'Close' %}">
+                                           <svg class="icon">
+                                              <use xlink:href="{% static 'svg/sprite.svg' %}#it-close"></use>
+                                           </svg>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            {% trans "Do you want to confirm the entered data?" %}
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input class="btn btn-success"
+                                               type="submit"
+                                               id="submitForm"
+                                               value="{% trans 'Yes, proceed' %}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 pt-5">
+            <div class="col">
+                <div class="container">
+                    <p class="h3 text-center">
+                        {% trans "If you want more information on the Degree Course" %}
+                    </p>
+                    <p class="text-center my-4">
+                        {% trans "For details on the contents of individual courses, training periods abroad, teachers, tutors, study rooms, laboratories, research centres, other structures and socialization initiatives, visit the Study Program website." %}
+                    </p>
+                    <p class="text-center">
+                        <a href="{{ webpath.fullpath }}{{ cds_base_path }}" class="btn btn-secondary">
+                            {% trans "Go to the institutional site" %}
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -540,7 +710,6 @@ Brochure - {{ block.super }}
             </div>
         </div>
     </div>
-
 </div>
 
 <script>

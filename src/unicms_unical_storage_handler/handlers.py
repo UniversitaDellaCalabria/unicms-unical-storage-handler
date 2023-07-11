@@ -6,15 +6,18 @@ from datetime import datetime, timezone
 from django.conf import settings
 from django.http import (HttpResponse,
                          Http404)
+from django.middleware.csrf import get_token
 from django.template import Template, Context
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.csrf import get_token
 
 from cms.contexts.handlers import BaseContentHandler
 from cms.contexts.models import WebPath
 from cms.contexts.utils import contextualize_template, sanitize_path
 from cms.pages.models import Page
 
+from . forms import CdsWebsiteContactForm
 from . settings import *
 
 
@@ -811,7 +814,8 @@ class CdsWebsiteBaseHandler(BaseContentHandler):
                      'page': self.page,
                      'path': self.match_dict.get('webpath', '/'),
                      'handler': self,
-                     'cds_cod': self.cds_cod
+                     'cds_cod': self.cds_cod,
+                     'csrf': get_token(self.request)
         }
 
     def as_view(self):
@@ -820,6 +824,7 @@ class CdsWebsiteBaseHandler(BaseContentHandler):
                                                       self.page)
         template = Template(ext_template_sources)
         context = Context(self.data)
+
         return HttpResponse(template.render(context), status=200)
 
     @property
@@ -829,6 +834,16 @@ class CdsWebsiteBaseHandler(BaseContentHandler):
 
 class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
     template = "storage_cds_websites_prospect.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
+        if self.request.POST:
+            form = CdsWebsiteContactForm(data=self.request.POST)
+            if form.is_valid():
+                print(form.data)
+        else:
+            form = CdsWebsiteContactForm()
+        self.data['form'] = form
 
     @property
     def breadcrumbs(self):
