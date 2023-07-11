@@ -98,7 +98,7 @@ Brochure - {{ block.super }}
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
                                         </svg>
                                         <span class="ms-3">
-                                            <a href="#" style="text-decoration: none">
+                                            <a href="#requestInfoForm" style="text-decoration: none">
                                                 <b>{% trans "request info" %}</b>
                                             </a>
                                         </span>
@@ -585,7 +585,7 @@ Brochure - {{ block.super }}
             </div>
         </div>
 
-        <div class="row mt-3 py-5" style="background: var(--light_grey)" v-if="website.CDSSliders">
+        <div class="row mt-3 py-5" style="background: var(--light_grey)" id="requestInfoForm">
             <div class="col">
                 <div class="container mb-3">
                     <p class="h3 mb-4">
