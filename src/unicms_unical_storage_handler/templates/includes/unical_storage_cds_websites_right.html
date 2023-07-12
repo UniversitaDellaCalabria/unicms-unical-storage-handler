@@ -74,6 +74,8 @@
         </div>
     </div>
 
+
+    {% if not hide_informations %}
     <div class="row mt-4" v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DirectorName && _cds_data.cds.OtherData.DirectorName.trim().length>0">
         <div class="col-12"><hr></div>
         <div class="col-2">
@@ -195,6 +197,7 @@
             </small>
         </div>
     </div>
+    {% endif %}
 
     <div v-if="_cds_data.cds.CdSDoc" class="mt-4">
         <a :href="_cds_data.cds.CdSDoc" target="_blank">

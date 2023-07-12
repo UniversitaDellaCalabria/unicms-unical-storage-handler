@@ -98,10 +98,88 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div v-if="_cds_data.cds.OfficesData" id="accordionDivOffices-lft" class="accordion accordion-left-icon mt-4">
+                                <div class="accordion-item" v-for="office in _cds_data.cds.OfficesData">
+                                    <div class="accordion-header" :id="'heading-office' + office.id +'-lft'">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="'#collapse-office' + office.id +'-lft'"
+                                                aria-expanded="false"
+                                                :aria-controls="'collapse-office' + office.id +'-lft'">
+                                            [[ office.OfficeName ]]
+                                        </button>
+                                    </div>
+                                    <div :id="'collapse-office' + office.id +'-lft'"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDivOffices-lft"
+                                         role="region"
+                                         :aria-labelledby="'heading-office' + office.id +'-lft'">
+                                        <div class="accordion-body">
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.OfficeDirector && office.OfficeDirectorName">
+                                                        [[ office.OfficeDirectorName ]]
+                                                    </a>
+                                                    <span v-else-if="office.OfficeDirectorName">
+                                                        [[ office.OfficeDirectorName ]]
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
+                                                    </svg>
+                                                    [[ office.TelOffice ]]
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.Email && office.Email.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                                                    </svg>
+                                                    <a :href="'email:'+office.Email">
+                                                        [[ office.Email ]]
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.Floor && office.Floor.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                                                    </svg>
+                                                    [[ _cds_data.cds_labels['Floor'] ]] [[ office.Floor ]]
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                                                    </svg>
+                                                    [[ office.Timetables ]]
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                    </svg>
+                                                    <a :href="office.OnlineCounter" target="_blank" rel="noreferrer noopener">
+                                                        [[ _cds_data.cds_labels['OnlineCounter'] ]]
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
-                        {% include "includes/unical_storage_cds_websites_right.html" %}
+                        {% include "includes/unical_storage_cds_websites_right.html" with hide_informations=1 %}
                     </div>
                 </div>
             </div>
