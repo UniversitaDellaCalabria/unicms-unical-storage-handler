@@ -97,7 +97,7 @@
                                                     <div class="accordion-body">
                                                         <span v-if="article.CdsArticle">
                                                             <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
-                                                            <div v-for="other_data in article.CdsArticle.OtherData">
+                                                            <div v-for="other_data in article.OtherData">
                                                                 <p class="h6 mt-3">[[ other_data.Title ]]</p>
                                                                 <div>[[ other_data.Text ]]</div>
                                                             </div>
@@ -110,7 +110,7 @@
                                                             <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
                                                                 <a :href="article.CdsObject.Object.get_absolute_url">[[ article.CdsObject.Object.name ]]</a>
                                                             </span>
-                                                            <div v-for="other_data in article.CdsObject.OtherData">
+                                                            <div v-for="other_data in article.OtherData">
                                                                 <p class="h6 mt-3">[[ other_data.Title ]]</p>
                                                                 <div>[[ other_data.Text ]]</div>
                                                             </div>
