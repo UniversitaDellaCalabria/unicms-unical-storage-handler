@@ -23,6 +23,7 @@
         <div class="row">
             <div class="col-12">
 
+                {% block academic_year_select %}
                 <loading-icon
                     v-if="is_loading_academicyears"
                     :loader_source="loader_source_academicyears">
@@ -51,6 +52,7 @@
                         </div>
                     </div>
                 </div>
+                {% endblock academic_year_select %}
 
                 {% comment %}
                 <div class="card-wrapper card-space">
