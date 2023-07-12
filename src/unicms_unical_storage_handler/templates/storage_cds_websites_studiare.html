@@ -108,7 +108,7 @@
                                                                 <span v-html="article.CdsObject.Object.content"></span>
                                                             </span>
                                                             <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                                <a :href="article.CdsObject.Object.get_full_path">[[ article.CdsObject.Object.name ]]</a>
+                                                                <a :href="article.CdsObject.Object.get_absolute_url">[[ article.CdsObject.Object.name ]]</a>
                                                             </span>
                                                             <div v-for="other_data in article.CdsObject.OtherData">
                                                                 <p class="h6 mt-3">[[ other_data.Title ]]</p>

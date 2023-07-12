@@ -100,7 +100,7 @@
                                                                 <span v-html="article.CdsObject.Object.content"></span>
                                                             </span>
                                                             <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                                <a :href="article.CdsObject.Object.get_full_path">[[ article.CdsObject.Object.name ]]</a>
+                                                                <a :href="article.CdsObject.Object.get_absolute_url">[[ article.CdsObject.Object.name ]]</a>
                                                             </span>
                                                             <div v-for="other_data in article.CdsObject.OtherData">
                                                                 <p class="h6 mt-3">[[ other_data.Title ]]</p>
@@ -134,7 +134,7 @@
                                         <div class="col m-auto align-middle">
                                             <ul class="mb-0 ps-0 list-unstyled">
                                                 <li v-for="right_article in _{{ cds_cod }}.topic_articles_right_column"  v-if="right_article.CdsArticle || (right_article.CdsObject && right_article.CdsObject.Object)">
-                                                    <a class="no-color" target="_blank" :href="right_article.CdsObject.Object.get_full_path">
+                                                    <a class="no-color" target="_blank" :href="right_article.CdsObject.Object.get_absolute_url">
                                                         <small><b>[[ right_article.Title ]]</b></small>
                                                     </a>
                                                 </li>
