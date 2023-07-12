@@ -207,7 +207,7 @@
 
                 </div>
                 <div class="col-12 col-lg-3 offset-lg-1">
-                    {% include "includes/unical_storage_cds_websites_right.html" %}
+                    {% include "includes/unical_storage_cds_websites_right.html" with hide_ordinamento=1 %}
 
                     <div id="_cds_website_right_col_dynamic" class="mt-4">
                         <div v-if="_cds_data.cds.StudyManifesto || _cds_data.cds.DidacticRegulation || _cds_data.cds.TeachingSystem">

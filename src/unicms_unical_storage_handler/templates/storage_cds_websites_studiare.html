@@ -124,6 +124,10 @@
                             </div>
                         </div>
 
+                        <div class="mt-5">
+                            {% include "blocks/unical_storage_cdsstudyplans_v3.html" with uid="course_studyplans" full_page=full_page %}
+                        </div>
+
                         <!-- teachers block import -->
                         <h5 class="mt-5 mb-3">{% trans "Faculty" %}</h5>
                         <div id="accordionDiv3-lft" class="accordion accordion-left-icon">
@@ -305,6 +309,10 @@
         },
         watch: {
             regdidid: function(val) {
+                course_studyplans.regdidid = this.regdidid
+                course_studyplans.degree_class = _cds_data.cds.CourseClassCod
+                course_studyplans.interclass_degree_class = _cds_data.cds.CourseInterClassCod
+                course_studyplans.academic_year = _cds_data.cds.AcademicYear
                 teachers_list.cds_cod = "{{ cds_cod }}"
                 teachers_list.academic_year = _cds_data.cds.AcademicYear
                 document.getElementById("cds_year").innerHTML = _cds_data.cds.AcademicYear + "/" + (_cds_data.cds.AcademicYear +1)
