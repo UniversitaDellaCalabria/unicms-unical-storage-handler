@@ -1,0 +1,13 @@
+{% extends "blocks/unical_storage_cdslist_areas.html" %}
+
+{% load unicms_storage_handler %}
+
+
+{% block cds_area_item_link %}
+
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_websites_basepath %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_websites_redirect_path %}
+
+:href="'{{ cds_websites_basepath }}/' + item.CdSCod +'/{{ cds_websites_redirect_path }}/'"
+
+{% endblock cds_area_item_link %}

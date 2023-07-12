@@ -7,6 +7,7 @@ from django.conf import settings
 from django.http import (HttpResponse,
                          Http404)
 from django.middleware.csrf import get_token
+from django.shortcuts import get_object_or_404, redirect
 from django.template import Template, Context
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -888,3 +889,20 @@ class CdsWebsitesOrganizzazioneHandler(CdsWebsiteBaseHandler):
     @property
     def breadcrumbs(self):
         return [('#', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)]
+
+
+class CdsWebsitesRedirectHandler(BaseContentHandler):
+    def __init__(self, **kwargs):
+        super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
+        path_dict = getattr(settings, 'CMS_WEBPATH_CDS', {})
+        self.webpath = None
+        for path in path_dict:
+            if path_dict[path] == kwargs['cds_cod']:
+                self.webpath = get_object_or_404(WebPath,
+                                                 pk=path,
+                                                 is_active=True)
+                break
+
+    def as_view(self):
+        if self.webpath: return redirect(self.webpath.fullpath)
+        raise Http404()
