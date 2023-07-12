@@ -485,7 +485,7 @@ Brochure - {{ block.super }}
                         <div class="col-12">
                             <div id="CdsExStudents" class="owl-carousel owl-theme">
                                 <div class="item text-center" v-for="slide in website.CDSExStudents">
-                                    <img v-if="slide.StudentPhoto" :src="slide.StudentPhoto" class="w-50 m-auto" style="height: fit-content; border:2px solid #b71918; border-radius: 50%" />
+                                    <img v-if="slide.StudentPhoto" :src="slide.StudentPhoto" class="w-50 m-auto" style="height: fit-content; border:2px solid #b71918; border-radius: 50%; aspect-ratio: 1/1;" />
                                     <img v-else src="{% static 'images/user.avif' %}" class="w-50 m-auto" style="height: fit-content; border:2px solid #b71918; border-radius: 50%" />
                                     <p class="h3 lighter mt-2" style="color: var(--bordeaux_unical); font-family: Lora; font-style: italic;">
                                         [[ slide.StudentName ]]
