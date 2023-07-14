@@ -78,10 +78,12 @@
                         .get(cds_url)
                         .then(response => {
                             this.cds = response.data.results
-                            _cds_identifier_logo_mobile.cds = response.data.results
+                            _{{ cds_identifier }}_logo_mobile.cds = response.data.results
                             this.cds_labels = response.data.labels
-                            _{{ cds_cod }}.regdidid = regdidid
                             this.is_loading = false
+                            if (typeof _{{ cds_identifier }} != "undefined") {
+                                _{{ cds_identifier }}.regdidid = regdidid
+                            }
                         }
                     )
                 },
@@ -112,7 +114,7 @@
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
 
 {% if cds_identifier %}
-    <div id="_cds_identifier_logo_mobile">
+    <div id="{{ cds_identifier }}logo_mobile">
         <p class="h5 text-white">
             [[ cds.CourseTypeDescription ]]
         </p>
@@ -121,8 +123,8 @@
         </p>
     </div>
     <script>
-        var _cds_identifier_logo_mobile = new Vue({
-            el: '[id="_cds_identifier_logo_mobile"]',
+        var _{{ cds_identifier }}_logo_mobile = new Vue({
+            el: '[id="_{{ cds_identifier }}_logo_mobile"]',
             data() {
                 return {
                     item: {},
