@@ -303,7 +303,6 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% storage_settings_value "ALLOWED_CDS_LANGUAGES" as allowed_languages %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
-{% storage_settings_value "CURRENT_YEAR" as current_year %}
 {% storage_settings_value "ALLOWED_CDS_COURSETYPES" as allowed_cds_coursetypes %}
 
 {% storage_api_root "CMS_STORAGE_DEGREETYPES_API" as degreetypes_api %}
@@ -311,7 +310,10 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
 {% storage_api_root "CMS_STORAGE_CDS_AREAS_API" as cds_areas_api %}
 
+{% block current_year %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
 initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
+{% endblock current_year %}
 
 selected_coursetype: this.getItemFromSession("{{ id }}", 'coursetype'),
 selected_academic_year: this.getItemFromSession("{{ id }}", 'academicyear') || {{ id }}_get_param('academicyear'),

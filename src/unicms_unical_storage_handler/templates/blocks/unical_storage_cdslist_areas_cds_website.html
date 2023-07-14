@@ -3,6 +3,11 @@
 {% load unicms_storage_handler %}
 
 
+{% block current_year %}
+{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as current_year %}
+initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
+{% endblock current_year %}
+
 {% block academic_year_select %}
 {% endblock academic_year_select %}
 
