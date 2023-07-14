@@ -116,11 +116,16 @@
 {% block unical_mobile_logo %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 
 {% if cds_identifier %}
-    <div id="{{ cds_identifier }}logo_mobile">
+    <div id="_{{ cds_identifier }}_logo_mobile">
         <p class="h5 text-white">
             [[ cds.CourseTypeDescription ]]
+            <span v-for="joint in joint_degree_filter"
+                  v-if="cds.JointDegree == joint.COD && cds.JointDegree != 'N'">
+                &nbsp;- [[ joint.name ]]
+            </span>
         </p>
         <p class="h2 text-white">
             [[ cds.CdSName ]]
@@ -133,6 +138,7 @@
                 return {
                     item: {},
                     cds: {},
+                    joint_degree_filter: {{ allowed_joint_degrees|safe }}
                 }
             },
         });
