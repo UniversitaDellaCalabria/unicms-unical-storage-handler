@@ -29,7 +29,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
-
+{% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 {% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
 
@@ -39,6 +39,10 @@
     <div id="_cds_data">
         <p class="h5 text-white">
             [[ cds.CourseTypeDescription ]]
+            <span v-for="joint in joint_degree_filter"
+                  v-if="cds.JointDegree == joint.COD && cds.JointDegree != 'N'">
+                &nbsp;- [[ joint.name ]]
+            </span>
         </p>
         <p class="h2 text-white">
             [[ cds.CdSName ]]
@@ -55,8 +59,8 @@
                     labels: {},
                     cds: {},
                     cds_labels: {},
-                    is_loading: true
-
+                    is_loading: true,
+                    joint_degree_filter: {{ allowed_joint_degrees|safe }}
                     {% block cds_website_extra_data %}
                     {% endblock cds_website_extra_data %}
                 }
