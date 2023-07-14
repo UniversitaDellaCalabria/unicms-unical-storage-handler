@@ -123,7 +123,8 @@ Brochure - {{ block.super }}
                                             <div class="col-12 col-lg-4">
                                                 [[ website_labels['CDSLanguage'] ]]
                                                 <b class="h2 lighter ms-3 mb-0">
-                                                    <span v-for="lang in website.CDSLanguage">
+                                                    <span v-for="(lang, index)  in website.CDSLanguage">
+                                                        <span v-if="index > 0">, </span>
                                                         [[ lang ]]
                                                     </span>
                                                 </b>

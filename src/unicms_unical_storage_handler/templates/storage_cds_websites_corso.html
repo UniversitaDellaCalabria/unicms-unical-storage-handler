@@ -85,7 +85,8 @@
                                 {% trans "Language" %}
                             </p>
                             <p class="h5">
-                                <b v-for="lang in _cds_data.cds.CdSLanguage">
+                                <b v-for="(lang, index) in _cds_data.cds.CdSLanguage">
+                                    <span v-if="index > 0">, </span>
                                     [[ lang ]]
                                 </b>
                             </p>
