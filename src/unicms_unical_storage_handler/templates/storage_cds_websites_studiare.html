@@ -23,7 +23,7 @@
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/unicms_storage_calendar.css' %}" type="text/css">
 <!-- Link VCalendar Javascript (Plugin automatically installed) -->
-<script src='https://unpkg.com/v-calendar'></script>
+<script src="https://unpkg.com/v-calendar"></script>
 {% endblock extra_head %}
 
 
@@ -108,7 +108,9 @@
                                                                 <span v-html="article.CdsObject.Object.content"></span>
                                                             </span>
                                                             <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                                <a :href="article.CdsObject.Object.get_absolute_url">[[ article.CdsObject.Object.name ]]</a>
+                                                                <a :href="article.CdsObject.Object.get_absolute_url">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </a>
                                                             </span>
                                                             <div v-for="other_data in article.OtherData">
                                                                 <p class="h6 mt-3">[[ other_data.Title ]]</p>

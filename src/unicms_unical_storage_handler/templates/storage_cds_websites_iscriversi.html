@@ -90,8 +90,54 @@
                                                         <span v-if="article.CdsArticle">
                                                             <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
                                                             <div v-for="other_data in article.OtherData">
-                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
-                                                                <div>[[ other_data.Text ]]</div>
+                                                                <div class="mt-3">
+                                                                    <p class="h6" v-if="other_data.Title">[[ other_data.Title ]]</p>
+                                                                    <div v-if="other_data.Text && other_data.TypeID == 4">[[ other_data.Text ]]</div>
+                                                                    <a :href="other_data.Link" target="_blank" v-if="other_data.Link">
+                                                                        <div v-if="other_data.TypeID == 1">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-file"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Download" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 2">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Open" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 3">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-video"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Watch video" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 5">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <div v-if="other_data.Text">[[ other_data.Text ]]</div>
+                                                                            <div v-else>{% trans "Open URL" %}</div>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 6">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Send email" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 7">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-tool"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Open ticket" %}</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </span>
                                                         <span v-else-if="article.CdsObject">
@@ -103,8 +149,54 @@
                                                                 <a :href="article.CdsObject.Object.get_absolute_url">[[ article.CdsObject.Object.name ]]</a>
                                                             </span>
                                                             <div v-for="other_data in article.OtherData">
-                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
-                                                                <div>[[ other_data.Text ]]</div>
+                                                                <div class="mt-3">
+                                                                    <p class="h6" v-if="other_data.Title">[[ other_data.Title ]]</p>
+                                                                    <div v-if="other_data.Text && other_data.TypeID == 4">[[ other_data.Text ]]</div>
+                                                                    <a :href="other_data.Link" target="_blank" v-if="other_data.Link">
+                                                                        <div v-if="other_data.TypeID == 1">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-file"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Download" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 2">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Open" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 3">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-video"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Watch video" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 5">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <div v-if="other_data.Text">[[ other_data.Text ]]</div>
+                                                                            <div v-else>{% trans "Open URL" %}</div>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 6">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Send email" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 7">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-tool"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Open ticket" %}</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </span>
                                                     </div>
