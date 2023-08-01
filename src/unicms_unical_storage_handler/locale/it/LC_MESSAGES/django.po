@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-01 14:25+0200\n"
-"PO-Revision-Date: 2023-08-01 14:11+0200\n"
+"PO-Revision-Date: 2023-08-01 14:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -78,8 +78,7 @@ msgid "Laboratories"
 msgstr "Laboratori"
 
 #: settings.py:194 templates/storage_base.html:180
-#: templates/storage_patents_list.html:11
-#: templates/storage_patents_list.html:20
+#: templates/storage_patents_list.html:11 templates/storage_patents_list.html:20
 msgid "Patents"
 msgstr "Brevetti"
 
@@ -104,8 +103,7 @@ msgstr "Pubblicazioni"
 
 #: settings.py:198
 #: templates/blocks/collapse/unical_storage_collapse_research_group_list.html:7
-#: templates/storage_base.html:234
-#: templates/storage_research_group_list.html:11
+#: templates/storage_base.html:234 templates/storage_research_group_list.html:11
 #: templates/storage_research_group_list.html:20
 msgid "Research groups"
 msgstr "Gruppi di ricerca"
@@ -117,14 +115,12 @@ msgstr "Gruppi di ricerca"
 msgid "Research lines"
 msgstr "Linee di ricerca"
 
-#: settings.py:200 templates/storage_base.html:12
-#: templates/storage_base.html:24
+#: settings.py:200 templates/storage_base.html:12 templates/storage_base.html:24
 msgid "Open data"
 msgstr ""
 
 #: settings.py:201 templates/storage_base.html:198
-#: templates/storage_spinoff_list.html:11
-#: templates/storage_spinoff_list.html:20
+#: templates/storage_spinoff_list.html:11 templates/storage_spinoff_list.html:20
 msgid "Companies"
 msgstr "Imprese"
 
@@ -1088,7 +1084,7 @@ msgstr "Durata"
 
 #: templates/storage_cds_websites_prospect.html:72
 msgid "course in pills"
-msgstr "corso in pillole"
+msgstr "il corso in pillole"
 
 #: templates/storage_cds_websites_prospect.html:89
 msgid "what is studied"
@@ -1137,19 +1133,19 @@ msgstr "Centro residenziale"
 
 #: templates/storage_cds_websites_prospect.html:596
 msgid ""
-"On the largest and most equipped campus in Italy, you can experience a "
-"unique university community, sharing educational, recreational, sporting and "
+"On the largest and most equipped campus in Italy, you can experience a unique "
+"university community, sharing educational, recreational, sporting and "
 "cultural moments with colleagues and teachers. The Campus is equipped with "
 "study rooms, a sports centre, theatres, amphitheatres, cinemas, bars, "
 "refreshment points and other meeting spaces. A citadel that allows you to "
 "live an extraordinary human experience, as well as an educational one."
 msgstr ""
-"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di "
-"comunità universitaria unica, condividendo con colleghi e docenti momenti "
-"formativi, ludici, sportivi e culturali. Il Campus è dotato di aule studio, "
-"di un centro sportivo, teatri, anfiteatri, cinema, bar, punti ristoro e "
-"altri spazi aggregativi. Una cittadella che consente di vivere una "
-"straordinaria esperienza umana, oltre che formativa."
+"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di comunità "
+"universitaria unica, condividendo con colleghi e docenti momenti formativi, "
+"ludici, sportivi e culturali. Il Campus è dotato di aule studio, di un centro "
+"sportivo, teatri, anfiteatri, cinema, bar, punti ristoro e altri spazi "
+"aggregativi. Una cittadella che consente di vivere una straordinaria "
+"esperienza umana, oltre che formativa."
 
 #: templates/storage_cds_websites_prospect.html:601
 #: templates/storage_cds_websites_prospect.html:619
@@ -1168,8 +1164,8 @@ msgstr ""
 "Una cittadella che ospita nel migliore dei modi chi vive nel Campus, perché "
 "offre molteplici servizi per lo studio e per il benessere individuale e "
 "collettivo: biblioteche, centro per l’apprendimento linguistico, servizi di "
-"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, "
-"un ufficio postale, uno sportello bancario e uno spazio per il silenzio."
+"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, un "
+"ufficio postale, uno sportello bancario e uno spazio per il silenzio."
 
 #: templates/storage_cds_websites_prospect.html:632
 msgid ""
@@ -1220,9 +1216,8 @@ msgid ""
 "structures and socialization initiatives, visit the Study Program website."
 msgstr ""
 "Per i dettagli sui contenuti dei singoli insegnamenti, periodi formativi "
-"all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, "
-"altre strutture e iniziative di socializzazione visita il sito del Corso di "
-"Studio."
+"all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, altre "
+"strutture e iniziative di socializzazione visita il sito del Corso di Studio."
 
 #: templates/storage_cds_websites_prospect.html:738
 msgid "Go to the institutional site"
