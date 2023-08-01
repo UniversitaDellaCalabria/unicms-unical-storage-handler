@@ -404,3 +404,16 @@ CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2 = [
 ]
 
 CDS_WEBSITE_CURRENT_YEAR = ""
+
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = {
+    # 'regolamento_tasse': [
+        # 'Tax regulation',
+        # 'Regolamento tasse',
+        # 'https://www.unical.it/media/medias/2023/Regolamento_tasse_contributi_ed_esoneri.pdf'
+    # ],
+    # 'guida_esse3': [
+        # 'Esse3 guide',
+        # 'Guida Esse3',
+        # 'https://unical.esse3.cineca.it/Home.do'
+    # ]
+}

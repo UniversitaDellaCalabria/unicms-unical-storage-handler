@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-01 14:11+0200\n"
+"POT-Creation-Date: 2023-08-01 14:25+0200\n"
 "PO-Revision-Date: 2023-08-01 14:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -78,7 +78,8 @@ msgid "Laboratories"
 msgstr "Laboratori"
 
 #: settings.py:194 templates/storage_base.html:180
-#: templates/storage_patents_list.html:11 templates/storage_patents_list.html:20
+#: templates/storage_patents_list.html:11
+#: templates/storage_patents_list.html:20
 msgid "Patents"
 msgstr "Brevetti"
 
@@ -103,7 +104,8 @@ msgstr "Pubblicazioni"
 
 #: settings.py:198
 #: templates/blocks/collapse/unical_storage_collapse_research_group_list.html:7
-#: templates/storage_base.html:234 templates/storage_research_group_list.html:11
+#: templates/storage_base.html:234
+#: templates/storage_research_group_list.html:11
 #: templates/storage_research_group_list.html:20
 msgid "Research groups"
 msgstr "Gruppi di ricerca"
@@ -115,12 +117,14 @@ msgstr "Gruppi di ricerca"
 msgid "Research lines"
 msgstr "Linee di ricerca"
 
-#: settings.py:200 templates/storage_base.html:12 templates/storage_base.html:24
+#: settings.py:200 templates/storage_base.html:12
+#: templates/storage_base.html:24
 msgid "Open data"
 msgstr ""
 
 #: settings.py:201 templates/storage_base.html:198
-#: templates/storage_spinoff_list.html:11 templates/storage_spinoff_list.html:20
+#: templates/storage_spinoff_list.html:11
+#: templates/storage_spinoff_list.html:20
 msgid "Companies"
 msgstr "Imprese"
 
@@ -388,7 +392,7 @@ msgstr "Durata"
 #: templates/blocks/unical_storage_cds_main_info.html:61
 #: templates/blocks/unical_storage_cdsinfo.html:104
 #: templates/blocks/unical_storage_cdslist.html:277
-#: templates/storage_cds_websites_prospect.html:168
+#: templates/storage_cds_websites_prospect.html:175
 msgid "years"
 msgstr "anni"
 
@@ -932,7 +936,7 @@ msgstr "Attività Principale"
 
 #: templates/blocks/unical_storage_teacher_materials.html:60
 #: templates/blocks/unical_storage_teacher_news_list.html:66
-#: templates/storage_cds_websites_prospect.html:694
+#: templates/storage_cds_websites_prospect.html:701
 msgid "Close"
 msgstr "Chiudi"
 
@@ -1082,78 +1086,78 @@ msgstr ""
 msgid "Informations"
 msgstr "Durata"
 
-#: templates/storage_cds_websites_prospect.html:65
+#: templates/storage_cds_websites_prospect.html:72
 msgid "course in pills"
 msgstr "corso in pillole"
 
-#: templates/storage_cds_websites_prospect.html:82
+#: templates/storage_cds_websites_prospect.html:89
 msgid "what is studied"
 msgstr "cosa si studia"
 
-#: templates/storage_cds_websites_prospect.html:99
+#: templates/storage_cds_websites_prospect.html:106
 msgid "how to enroll"
 msgstr "come iscriversi"
 
-#: templates/storage_cds_websites_prospect.html:116
+#: templates/storage_cds_websites_prospect.html:123
 msgid "download materials"
 msgstr "scarica materiali"
 
-#: templates/storage_cds_websites_prospect.html:128
-#: templates/storage_cds_websites_prospect.html:134
+#: templates/storage_cds_websites_prospect.html:135
+#: templates/storage_cds_websites_prospect.html:141
 msgid "request info"
 msgstr "richiedi info"
 
-#: templates/storage_cds_websites_prospect.html:275
+#: templates/storage_cds_websites_prospect.html:282
 msgid "Who can access"
 msgstr "Chi può accedere"
 
-#: templates/storage_cds_websites_prospect.html:341
+#: templates/storage_cds_websites_prospect.html:348
 msgid "Taxes and contributions"
 msgstr "Tasse e contributi"
 
-#: templates/storage_cds_websites_prospect.html:529
+#: templates/storage_cds_websites_prospect.html:536
 msgid "Our ex students"
 msgstr "I nostri ex studenti"
 
-#: templates/storage_cds_websites_prospect.html:547
+#: templates/storage_cds_websites_prospect.html:554
 msgid "Click here"
 msgstr "Clicca qui"
 
-#: templates/storage_cds_websites_prospect.html:565
+#: templates/storage_cds_websites_prospect.html:572
 msgid "Student life"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:570
+#: templates/storage_cds_websites_prospect.html:577
 msgid "Student services"
 msgstr "Servizi agli studenti"
 
-#: templates/storage_cds_websites_prospect.html:575
+#: templates/storage_cds_websites_prospect.html:582
 msgid "Residential center"
 msgstr "Centro residenziale"
 
-#: templates/storage_cds_websites_prospect.html:589
+#: templates/storage_cds_websites_prospect.html:596
 msgid ""
-"On the largest and most equipped campus in Italy, you can experience a unique "
-"university community, sharing educational, recreational, sporting and "
+"On the largest and most equipped campus in Italy, you can experience a "
+"unique university community, sharing educational, recreational, sporting and "
 "cultural moments with colleagues and teachers. The Campus is equipped with "
 "study rooms, a sports centre, theatres, amphitheatres, cinemas, bars, "
 "refreshment points and other meeting spaces. A citadel that allows you to "
 "live an extraordinary human experience, as well as an educational one."
 msgstr ""
-"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di comunità "
-"universitaria unica, condividendo con colleghi e docenti momenti formativi, "
-"ludici, sportivi e culturali. Il Campus è dotato di aule studio, di un centro "
-"sportivo, teatri, anfiteatri, cinema, bar, punti ristoro e altri spazi "
-"aggregativi. Una cittadella che consente di vivere una straordinaria "
-"esperienza umana, oltre che formativa."
+"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di "
+"comunità universitaria unica, condividendo con colleghi e docenti momenti "
+"formativi, ludici, sportivi e culturali. Il Campus è dotato di aule studio, "
+"di un centro sportivo, teatri, anfiteatri, cinema, bar, punti ristoro e "
+"altri spazi aggregativi. Una cittadella che consente di vivere una "
+"straordinaria esperienza umana, oltre che formativa."
 
-#: templates/storage_cds_websites_prospect.html:594
-#: templates/storage_cds_websites_prospect.html:612
-#: templates/storage_cds_websites_prospect.html:630
+#: templates/storage_cds_websites_prospect.html:601
+#: templates/storage_cds_websites_prospect.html:619
+#: templates/storage_cds_websites_prospect.html:637
 msgid "Discover more"
 msgstr "Scopri di più"
 
-#: templates/storage_cds_websites_prospect.html:607
+#: templates/storage_cds_websites_prospect.html:614
 msgid ""
 "A citadel that hosts those who live on the Campus in the best possible way, "
 "because it offers multiple services for study and for individual and "
@@ -1164,10 +1168,10 @@ msgstr ""
 "Una cittadella che ospita nel migliore dei modi chi vive nel Campus, perché "
 "offre molteplici servizi per lo studio e per il benessere individuale e "
 "collettivo: biblioteche, centro per l’apprendimento linguistico, servizi di "
-"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, un "
-"ufficio postale, uno sportello bancario e uno spazio per il silenzio."
+"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, "
+"un ufficio postale, uno sportello bancario e uno spazio per il silenzio."
 
-#: templates/storage_cds_websites_prospect.html:625
+#: templates/storage_cds_websites_prospect.html:632
 msgid ""
 "It completes and enhances the offer of the University of Calabria and "
 "realizes the idea of ​​an Anglo-Saxon university campus. It is distributed in "
@@ -1185,41 +1189,42 @@ msgstr ""
 "sportive, con la presenza di sale tv, sale giochi e palestre; sono "
 "disponibili servizi di lavanderia e di noleggio bici."
 
-#: templates/storage_cds_websites_prospect.html:645
+#: templates/storage_cds_websites_prospect.html:652
 msgid "Request information for this course"
 msgstr "Richiedi informazioni per questo corso"
 
-#: templates/storage_cds_websites_prospect.html:684
+#: templates/storage_cds_websites_prospect.html:691
 msgid "Submit"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:692
+#: templates/storage_cds_websites_prospect.html:699
 msgid "Confirm"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:702
+#: templates/storage_cds_websites_prospect.html:709
 msgid "Do you want to confirm the entered data?"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:709
+#: templates/storage_cds_websites_prospect.html:716
 msgid "Yes, proceed"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:724
+#: templates/storage_cds_websites_prospect.html:731
 msgid "If you want more information on the Degree Course"
 msgstr "Se vuoi avere maggiori informazioni sul Corso di Laurea"
 
-#: templates/storage_cds_websites_prospect.html:727
+#: templates/storage_cds_websites_prospect.html:734
 msgid ""
 "For details on the contents of individual courses, training periods abroad, "
 "teachers, tutors, study rooms, laboratories, research centres, other "
 "structures and socialization initiatives, visit the Study Program website."
 msgstr ""
 "Per i dettagli sui contenuti dei singoli insegnamenti, periodi formativi "
-"all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, altre "
-"strutture e iniziative di socializzazione visita il sito del Corso di Studio."
+"all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, "
+"altre strutture e iniziative di socializzazione visita il sito del Corso di "
+"Studio."
 
-#: templates/storage_cds_websites_prospect.html:731
+#: templates/storage_cds_websites_prospect.html:738
 msgid "Go to the institutional site"
 msgstr "Vai al sito istituzionale"
 

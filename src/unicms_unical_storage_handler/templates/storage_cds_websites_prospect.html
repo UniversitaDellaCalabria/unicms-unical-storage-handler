@@ -35,6 +35,7 @@ Brochure - {{ block.super }}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as page_titlke %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS" as collapse_fields %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2" as collapse_fields_2 %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS" as course_docs %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
 {% include "includes/unical_storage_loading.html" %}
@@ -75,7 +76,7 @@ Brochure - {{ block.super }}
                                         </h2>
                                         <div id="collapse1l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading1l">
                                             <div class="accordion-body">
-                                                <span v-html="website.CDSIntro"></span>
+                                                <small v-html="website.CDSIntro"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +93,7 @@ Brochure - {{ block.super }}
                                         </h2>
                                         <div id="collapse2l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading2l">
                                             <div class="accordion-body">
-                                                <span v-html="website.CDSStudyPlan"></span>
+                                                <small v-html="website.CDSStudyPlan"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +110,7 @@ Brochure - {{ block.super }}
                                         </h2>
                                         <div id="collapse3l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading3l">
                                             <div class="accordion-body">
-                                                <span v-html="website.CDSEnrollmentMode"></span>
+                                                <small v-html="website.CDSEnrollmentMode"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -126,7 +127,25 @@ Brochure - {{ block.super }}
                                         </h2>
                                         <div id="collapse4l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading4l">
                                             <div class="accordion-body">
-                                                ... in progress ...
+                                                {% if course_docs %}
+                                                <ul>
+                                                {% for doc, values in course_docs.items %}
+                                                    <li>
+                                                        <a href="{{ values.2 }}" target="_blank" title="{% if LANGUAGE_CODE == 'it' %}{{ values.1 }}{% else %}{{ values.0 }}{% endif %}">
+                                                            <small>
+                                                                {% if LANGUAGE_CODE == 'it' %}
+                                                                    {{ values.1 }}
+                                                                {% else %}
+                                                                    {{ values.0 }}
+                                                                {% endif %}
+                                                            </small>
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                                </ul>
+                                                {% else %}
+                                                    {% trans "No items here" %}
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
