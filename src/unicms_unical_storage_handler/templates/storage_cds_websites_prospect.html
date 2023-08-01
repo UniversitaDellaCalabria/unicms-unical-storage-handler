@@ -19,8 +19,15 @@ Brochure - {{ block.super }}
 {% get_current_language as LANGUAGE_CODE %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
+{% get_allowed_website request.get_host as host %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
@@ -394,8 +401,8 @@ Brochure - {{ block.super }}
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-3 offset-lg-1">
-                    <div class="row mt-4" v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DirectorName && _cds_data.cds.OtherData.DirectorName.trim().length>0">
+                <div class="col-12 col-lg-3 offset-lg-1 my-5 my-lg-0">
+                    <div class="row" v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DirectorName && _cds_data.cds.OtherData.DirectorName.trim().length>0">
                         <div class="col-2">
                             <svg class="icon icon-muted">
                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
