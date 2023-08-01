@@ -40,10 +40,10 @@ Brochure - {{ block.super }}
             <div class="row">
                 <div class="col">
                     <div>
-                        <div class="row">
+                        <div class="row mb-lg-3">
                             <div class="col-12 col-lg-8">
                                 <div v-if="_cds_data.cds.CdSVideo">
-                                    <div class="ratio ratio-21x9">
+                                    <div class="ratio ratio-16x9">
                                         <iframe :title="_cds_data.cds.CdSVideo"
                                                 :src="youtubeNoCookie(_cds_data.cds.CdSVideo)"
                                                 allowfullscreen>
@@ -51,9 +51,9 @@ Brochure - {{ block.super }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4 mt-3 mt-lg-0">
+                            <div class="col-12 col-lg-4 mt-3 mt-lg-0 ps-lg-4">
                                 <ul style="list-style: none" class="ps-0">
-                                    <li class="mb-2 pb-1">
+                                    <li class="mb-2 pb-1 mb-lg-4 pb-lg-2">
                                         <a href="#" style="text-decoration: none" data-bs-trigger="focus" data-bs-toggle="popover" data-bs-placement="left" :data-bs-content="website.CDSIntro">
                                             <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
@@ -63,7 +63,7 @@ Brochure - {{ block.super }}
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="mb-2 pb-1">
+                                    <li class="mb-2 pb-1 mb-lg-4 pb-lg-2">
                                         <a href="#" style="text-decoration: none" data-bs-trigger="focus" data-bs-toggle="popover" data-bs-placement="left" :data-bs-content="website.CDSStudyPlan">
                                             <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-copy"></use>
@@ -73,7 +73,7 @@ Brochure - {{ block.super }}
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="mb-2 pb-1">
+                                    <li class="mb-2 pb-1 mb-lg-4 pb-lg-2">
                                         <a href="#" style="text-decoration: none" data-bs-trigger="focus" data-bs-toggle="popover" data-bs-placement="left" :data-bs-content="website.CDSEnrollmentMode">
                                             <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
@@ -83,7 +83,7 @@ Brochure - {{ block.super }}
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="mb-2 pb-1">
+                                    <li class="mb-2 pb-1 mb-lg-4 pb-lg-2">
                                         <a href="#" style="text-decoration: none">
                                             <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
@@ -137,7 +137,7 @@ Brochure - {{ block.super }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4 d-flex ">
+                            <div class="col-12 col-lg-4 d-flex ps-lg-4">
                                 <div class="card no-after mt-3" style="border:2px solid #b71918">
                                     <div class="card-body d-flex">
                                         <div class="row m-auto">
@@ -224,20 +224,22 @@ Brochure - {{ block.super }}
         <div class="container mt-3 py-5">
             <div class="row">
                 <div class="col-12 col-lg-8">
-                    <b>{% trans "short description" %}</b>&nbsp;/&nbsp;<span v-html="website.CDSIntro"></span>
+                    <span v-html="website.CDSIntro"></span>
 
                     <div class="mt-5">
                         <div id="accordionDiv1-lft" class="accordion accordion-left-icon">
                             <div v-for="name in collapse_fields" v-if="website[name] && (website[name].length > 0 || Object.keys(website[name]).length > 0)">
                                 <div class="accordion-item">
-                                    <div class="accordion-header" :id="'heading-' + name +'-lft'">
+                                    <div class="accordion-header accordion-header-white" :id="'heading-' + name +'-lft'" style="background: var(--dark_grey_unical)">
                                         <button class="accordion-button"
                                                 type="button"
                                                 data-bs-toggle="collapse"
                                                 :data-bs-target="'#collapse-' + name +'-lft'"
                                                 aria-expanded="false"
                                                 :aria-controls="'collapse-' + name +'-lft'">
-                                            [[ website_labels[name] ]]
+                                            <span class="text-white">
+                                                [[ website_labels[name] ]]
+                                            </span>
                                         </button>
                                     </div>
                                     <div :id="'collapse-' + name +'-lft'"
@@ -286,6 +288,9 @@ Brochure - {{ block.super }}
                                     </div>
                                 </div>
                             </div>
+
+                            <hr style="color: transparent">
+
                             <div v-for="name in collapse_fields_2" v-if="website[name] && (website[name].length > 0 || Object.keys(website[name]).length > 0)">
                                 <div class="accordion-item">
                                     <div class="accordion-header" :id="'heading-' + name +'-lft'">
