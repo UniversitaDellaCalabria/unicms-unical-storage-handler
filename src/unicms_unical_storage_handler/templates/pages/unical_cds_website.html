@@ -32,6 +32,7 @@
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 {% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
+{% storage_api_root "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
@@ -60,7 +61,9 @@
                     cds: {},
                     cds_labels: {},
                     is_loading: true,
-                    joint_degree_filter: {{ allowed_joint_degrees|safe }}
+                    joint_degree_filter: {{ allowed_joint_degrees|safe }},
+                    coordinator_data: {},
+                    deputy_coordinator_data: {}
                     {% block cds_website_extra_data %}
                     {% endblock cds_website_extra_data %}
                 }
@@ -76,6 +79,23 @@
                 containsHTML(s) {
                     return /<\/?[a-z][\s\S]*>/i.test(s)
                 },
+                getPersonData(coordinator_id, deputy_coordinator_id){
+                    if(coordinator_id)
+                        axios
+                            .get("{{ addressbook_api }}" + coordinator_id)
+                            .then(response => {
+                                this.coordinator_data = response.data.results
+                            }
+                        )
+
+                    if(deputy_coordinator_id)
+                        axios
+                            .get("{{ addressbook_api }}" + deputy_coordinator_id)
+                            .then(response => {
+                                this.deputy_coordinator_data = response.data.results
+                            }
+                        )
+                },
                 CallRegDid(regdidid) {
                     let cds_url = '{{ base_api }}{{ cds_api }}' + regdidid + '/?lang={{ LANGUAGE_CODE }}'
                     axios
@@ -83,6 +103,7 @@
                         .then(response => {
                             this.cds = response.data.results
                             _{{ cds_identifier }}_logo_mobile.cds = response.data.results
+                            this.getPersonData(response.data.results.OtherData.DirectorId,response.data.results.OtherData.DeputyDirectorId)
                             this.cds_labels = response.data.labels
                             this.is_loading = false
                             if (typeof _{{ cds_identifier }} != "undefined") {
