@@ -575,13 +575,15 @@ Brochure - {{ block.super }}
                         <div class="tab-pane p-4 pb-0 fade show active" id="studentLifeTab" role="tabpanel" aria-labelledby="studentLifeTab-tab">
                             <div class="row">
                                 <div class="col-12 col-lg-3">
-                                    <img src="{% static 'images/cds_websites/tab_1.jpg' %}" class="w-100"/>
+                                    <img src="{% static 'images/cds_websites/tab_1.jpg' %}" class="w-100 mb-4 mb-lg-0" style="border: 5px solid var(--bordeaux_unical)"/>
                                 </div>
                                 <div class="col-12 col-lg-9 ps-lg-3">
                                     {% trans "On the largest and most equipped campus in Italy, you can experience a unique university community, sharing educational, recreational, sporting and cultural moments with colleagues and teachers. The Campus is equipped with study rooms, a sports centre, theatres, amphitheatres, cinemas, bars, refreshment points and other meeting spaces. A citadel that allows you to live an extraordinary human experience, as well as an educational one." %}
                                     <p class="mt-4">
                                     <a href="/campus/vivere-il-campus/" target="_blank" class="btn btn-secondary">
-                                        {% trans "Discover more" %}
+                                        <svg class="icon icon-sm icon-muted me-2 icon-white">
+                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                                        </svg> {% trans "Discover more" %}
                                     </a>
                                 </p>
                                 </div>
@@ -591,13 +593,15 @@ Brochure - {{ block.super }}
                         <div class="tab-pane p-4 pb-0 fade" id="studentServicesTab" role="tabpanel" aria-labelledby="studentServicesTab-tab">
                             <div class="row">
                                 <div class="col-12 col-lg-3">
-                                    <img src="{% static 'images/cds_websites/tab_2.jpg' %}" class="w-100"/>
+                                    <img src="{% static 'images/cds_websites/tab_2.jpg' %}" class="w-100 mb-4 mb-lg-0" style="border: 5px solid var(--bordeaux_unical)"/>
                                 </div>
                                 <div class="col-12 col-lg-9 ps-lg-3">
                                     {% trans "A citadel that hosts those who live on the Campus in the best possible way, because it offers multiple services for study and for individual and collective well-being: libraries, a language learning centre, counseling and inclusion services. On the Campus there is also a health center, a post office, a bank branch and a space for silence." %}
                                     <p class="mt-4">
                                         <a href="/campus/servizi/" class="btn btn-secondary">
-                                            {% trans "Discover more" %}
+                                            <svg class="icon icon-sm icon-muted me-2 icon-white">
+                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                                            </svg> {% trans "Discover more" %}
                                         </a>
                                     </p>
                                 </div>
@@ -607,13 +611,15 @@ Brochure - {{ block.super }}
                         <div class="tab-pane p-4 pb-0 fade" id="residentialCenterTab" role="tabpanel" aria-labelledby="residentialCenterTab-tab">
                             <div class="row">
                                 <div class="col-12 col-lg-3">
-                                    <img src="{% static 'images/cds_websites/tab_3.jpg' %}" class="w-100"/>
+                                    <img src="{% static 'images/cds_websites/tab_3.jpg' %}" class="w-100 mb-4 mb-lg-0" style="border: 5px solid var(--bordeaux_unical)"/>
                                 </div>
                                 <div class="col-12 col-lg-9 ps-lg-3">
                                     {% trans "It completes and enhances the offer of the University of Calabria and realizes the idea of ​​an Anglo-Saxon university campus. It is distributed in 10 districts in which the university residences are located, consisting of apartments with double and single bedrooms, living room, kitchen and bathroom. In the neighborhoods there are common spaces for studying and for recreational and sporting activities, with the presence of TV rooms, games rooms and gyms; laundry and bike rental services are available." %}
                                     <p class="mt-4">
                                         <a href="/organizzazione/strutture/centro-residenziale/" class="btn btn-secondary">
-                                            {% trans "Discover more" %}
+                                            <svg class="icon icon-sm icon-muted me-2 icon-white">
+                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                                            </svg> {% trans "Discover more" %}
                                         </a>
                                     </p>
                                 </div>
