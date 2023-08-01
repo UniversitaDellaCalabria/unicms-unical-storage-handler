@@ -271,7 +271,10 @@ Brochure - {{ block.super }}
                                                 :data-bs-target="'#collapse-' + name +'-lft'"
                                                 aria-expanded="false"
                                                 :aria-controls="'collapse-' + name +'-lft'">
-                                            <span class="text-white">
+                                            <span class="text-white" v-if="name == 'CDSAdmission'">
+                                                {% trans "Who can access" %}
+                                            </span>
+                                            <span class="text-white" v-else>
                                                 [[ website_labels[name] ]]
                                             </span>
                                         </button>
@@ -334,7 +337,12 @@ Brochure - {{ block.super }}
                                                 :data-bs-target="'#collapse-' + name +'-lft'"
                                                 aria-expanded="false"
                                                 :aria-controls="'collapse-' + name +'-lft'">
-                                            [[ website_labels[name] ]]
+                                            <span v-if="name == 'CDSTaxes'">
+                                                {% trans "Taxes and contributions" %}
+                                            </span>
+                                            <span v-else>
+                                                [[ website_labels[name] ]]
+                                            </span>
                                         </button>
                                     </div>
                                     <div :id="'collapse-' + name +'-lft'"
