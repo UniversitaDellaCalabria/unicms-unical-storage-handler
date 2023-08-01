@@ -4,7 +4,7 @@
 
 
 {% block current_year %}
-{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as current_year %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
 initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
 {% endblock current_year %}
 
