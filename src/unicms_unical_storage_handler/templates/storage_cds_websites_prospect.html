@@ -9,6 +9,10 @@
 
 {% include "includes/unical_storage_loading.html" %}
 
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/unicms_storage_forms.css' %}" type="text/css">
+{% endblock extra_head %}
 
 {% block page_title %}
 Brochure - {{ block.super }}
@@ -737,7 +741,7 @@ Brochure - {{ block.super }}
                         {% trans "Request information for this course" %}
                     </p>
 
-                    <form method="post">
+                    <form method="post" class="light-form">
                         <div class="row">
                             {% for field in form %}
                                 {% if not forloop.counter0 or field.name == 'text'%}
