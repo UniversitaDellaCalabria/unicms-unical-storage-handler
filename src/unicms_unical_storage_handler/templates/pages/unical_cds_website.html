@@ -106,8 +106,13 @@
                             this.getPersonData(response.data.results.OtherData.DirectorId,response.data.results.OtherData.DeputyDirectorId)
                             this.cds_labels = response.data.labels
                             this.is_loading = false
+                            // automatic pages
                             if (typeof _{{ cds_identifier }} != "undefined") {
                                 _{{ cds_identifier }}.regdidid = regdidid
+                            }
+                            // hero slider block
+                            if (typeof _{{ cds_identifier }}_hero_slider != "undefined") {
+                                _{{ cds_identifier }}_hero_slider.regdidid = regdidid
                             }
                         }
                     )

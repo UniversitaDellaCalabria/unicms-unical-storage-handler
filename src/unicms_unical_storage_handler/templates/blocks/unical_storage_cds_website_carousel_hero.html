@@ -1,0 +1,133 @@
+{% load i18n %}
+{% load static %}
+
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% get_cds_website_webpath webpath.pk as cds_cod %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as prospect_page_path %}
+{% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
+
+
+<div class="customNavigation w-100" id="{{ cds_cod }}_customNavigation" style="position: relative; top: 45%">
+    <span class="{{ cds_cod }}_prev" id="{{ cds_cod }}_prev" style="cursor: pointer; position: relative; z-index: 10">
+        <span class="text-white fw-bold">
+            <svg class="icon icon-lg" style="color: var(--dark_grey_unical)" aria-labelledby="{{ cds_cod }}_carousel_prev">
+                <title id="{{ cds_cod }}_carousel_prev">{% trans "Previous" %}</title>
+                <use xlink:href="{% static '/svg/sprites.svg' %}#it-chevron-left"></use>
+            </svg>
+        </span>
+    </span>
+    <span class="{{ cds_cod }}_next float-end" id="{{ cds_cod }}_next" style="cursor: pointer; position: relative; z-index: 10">
+        <span class="text-white fw-bold">
+            <svg class="icon icon-lg" style="color: var(--dark_grey_unical)" aria-labelledby="{{ cds_cod }}_carousel_next">
+                <title id="{{ cds_cod }}_carousel_next">{% trans "Next" %}</title>
+                <use xlink:href="{% static '/svg/sprites.svg' %}#it-chevron-right"></use>
+            </svg>
+        </span>
+    </span>
+</div>
+
+<div id="_{{ cds_cod }}_hero_slider" class="owl-carousel owl-theme bordeaux-unical-bg" style="margin-top: -48px">
+    <div class="item" v-for="slide in slides">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 px-5">
+                    <a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ prospect_page_path }}/">
+                        <div class="it-hero-text-wrapper unical-hero-text-wrapper">
+                            <p class="h2 d-none d-lg-block lighter text-white font-serif" style="font-style: italic">
+                                [[ slide.SliderDescription ]]
+                            </p>
+                            <br>
+                            <p class="h4 d-none d-lg-block lighter text-white font-monospace">
+                                IL CORSO DI STUDI IN SINTESI
+                            </p>
+                            <p class="h3 d-block d-lg-none lighter text-white font-serif" style="font-style: italic">
+                                [[ slide.SliderDescription ]]
+                            </p>
+                            <br>
+                            <p class="h5 d-block d-lg-none lighter text-white font-monospace">
+                                IL CORSO DI STUDI IN SINTESI
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+var _{{ cds_cod }}_hero_slider = new Vue({
+    el: '[id="_{{ cds_cod }}_hero_slider"]',
+    data() {
+        return {
+            slides: {},
+            regdidid: null
+        }
+    },
+    mounted() {
+        this.callWebsite()
+    },
+    methods: {
+        callWebsite() {
+            let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
+            axios
+                .get(url)
+                .then(response => {
+                    this.slides = response.data.results.CDSSliders
+                }
+            )
+        },
+        setSlider(div_id, items=1, single=false, timeout=5000) {
+            let tablet_items = 2;
+            if(single) tablet_items = 1;
+            var owl_{{ cds_cod }} = $(div_id);
+            owl_{{ cds_cod }}.owlCarousel({
+                nav : true, // Show next and prev buttons
+                //rewind: true,
+                loop: true,
+                //slideSpeed : 300,
+                //paginationSpeed : 400,
+                autoplay: true,
+                autoplayTimeout: timeout,
+                dots: false,
+                margin: 12,
+                //dotsEach: false,
+                stagePadding: 0,
+
+                responsive : {
+                    // breakpoint from 0 up
+                    0 : {
+                        items: 1
+                    },
+                    // breakpoint from 481 up
+                    481 : {
+                        items: tablet_items
+                    },
+                    // breakpoint from 1024 up
+                    1024 : {
+                        items: items
+                    }
+                }
+              //lazyLoad : true,
+            });
+            $(".{{ cds_cod }}_next").click(function(){
+                owl_{{ cds_cod }}.trigger('next.owl.carousel');
+            });
+            $(".{{ cds_cod }}_prev").click(function(){
+                owl_{{ cds_cod }}.trigger('prev.owl.carousel');
+            });
+        },
+    },
+    watch: {
+        regdidid: function(val) {
+            this.setSlider(div_id='#_{{ cds_cod }}_hero_slider', items=1, single=true)
+        }
+    }
+})
+</script>
