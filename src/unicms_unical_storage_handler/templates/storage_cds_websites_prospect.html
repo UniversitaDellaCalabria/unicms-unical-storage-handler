@@ -74,7 +74,7 @@ Brochure - {{ block.super }}
                                                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
                                                 </svg>
                                                 <b style="color: var(--dark_grey_unical)">
-                                                    {% trans "course in pills" %}
+                                                    {% trans "course in brief" %}
                                                 </b>
                                             </button>
                                         </h2>
@@ -91,7 +91,7 @@ Brochure - {{ block.super }}
                                                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-copy"></use>
                                                 </svg>
                                                 <b style="color: var(--dark_grey_unical)">
-                                                    {% trans "what is studied" %}
+                                                    {% trans "subjects" %}
                                                 </b>
                                             </button>
                                         </h2>
@@ -302,7 +302,7 @@ Brochure - {{ block.super }}
                                                 aria-expanded="false"
                                                 :aria-controls="'collapse-' + name +'-lft'">
                                             <span class="text-white" v-if="name == 'CDSAdmission'">
-                                                {% trans "Who can access" %}
+                                                {% trans "Who is eligible for the course" %}
                                             </span>
                                             <span class="text-white" v-else>
                                                 [[ website_labels[name] ]]
@@ -368,7 +368,7 @@ Brochure - {{ block.super }}
                                                 aria-expanded="false"
                                                 :aria-controls="'collapse-' + name +'-lft'">
                                             <span v-if="name == 'CDSTaxes'">
-                                                {% trans "Taxes and contributions" %}
+                                                {% trans "Fees, contributions and excemptions" %}
                                             </span>
                                             <span v-else>
                                                 [[ website_labels[name] ]]
@@ -622,7 +622,7 @@ Brochure - {{ block.super }}
                     <div class="row">
                         <div class="col-12">
                             <p class="h4 mb-3">
-                                {% trans "Our ex students" %}
+                                {% trans "Discover the career of former students" %}
                             </p>
                         </div>
                     </div>
@@ -658,12 +658,12 @@ Brochure - {{ block.super }}
                     <ul class="nav nav-tabs nav-tabs-icon-text" id="tabList" role="tablist">
                         <li class="nav-item h3">
                             <a class="nav-link active" id="studentLife-tab" data-bs-toggle="tab" href="#studentLifeTab" role="tab" aria-controls="studentLifeTab" aria-selected="true">
-                                {% trans "Student life" %}
+                                {% trans "Life on Campus" %}
                             </a>
                         </li>
                         <li class="nav-item h3">
                             <a class="nav-link" id="studentServices-tab" data-bs-toggle="tab" href="#studentServicesTab" role="tab" aria-controls="studentServicesTab">
-                                {% trans "Student services" %}
+                                {% trans "Services to Students" %}
                             </a>
                         </li>
                         <li class="nav-item h3">
