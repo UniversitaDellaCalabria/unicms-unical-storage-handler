@@ -52,9 +52,9 @@
                                             <table class="table table-sm table-hover table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">[[ items.labels.StudyActivityName ]]</th>
-                                                        <th scope="col">[[ items.labels.StudyActivitySemester ]]</th>
-                                                        <th scope="col">[[ items.labels.StudyActivityECTS ]]</th>
+                                                        <th scope="col">{% trans "Teaching" %}</th>
+                                                        <th scope="col">{% trans "Period" %}</th>
+                                                        <th scope="col">{% trans "ETCS" %}</th>
                                                         <th scope="col" v-if="interclass_degree_class && degree_class">
                                                             [[ degree_class ]]
                                                         </th>
@@ -69,7 +69,7 @@
                                                         <td>
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                 [[ activity.StudyActivityName ]]
-                                                                <span v-if="items.StudyActivityCompulsory == 1">*</span>
+                                                                <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                             </a>
                                                         </td>
                                                         <td>[[ activity.StudyActivitySemester ]]</td>
@@ -139,9 +139,9 @@
                                                             <table class="table table-sm table-hover table-striped">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th scope="col">[[ items.labels.StudyActivityName ]]</th>
-                                                                        <th scope="col">[[ items.labels.StudyActivitySemester ]]</th>
-                                                                        <th scope="col">[[ items.labels.StudyActivityECTS ]]</th>
+                                                                        <th scope="col">{% trans "Teaching" %}</th>
+                                                                        <th scope="col">{% trans "Period" %}</th>
+                                                                        <th scope="col">{% trans "ETCS" %}</th>
                                                                         <th scope="col" v-if="interclass_degree_class && degree_class">
                                                                             [[ degree_class ]]
                                                                         </th>
@@ -156,7 +156,7 @@
                                                                         <td>
                                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                                 [[ activity.StudyActivityName ]]
-                                                                                <span v-if="items.StudyActivityCompulsory == 1">*</span>
+                                                                                <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                                             </a>
                                                                         </td>
                                                                         <td>[[ activity.StudyActivitySemester ]]</td>
@@ -221,6 +221,9 @@ regdidid: null
 {% if not url %}
 watch: {
     regdidid: function(val) {
+        this.academic_year = _cds_data.cds.AcademicYear
+        this.degree_class = _cds_data.cds.CourseClassCod
+        this.interclass_degree_class = _cds_data.cds.CourseInterClassCod
         this.url = "{{ base_api }}{{ cds_api }}" + val + "/studyplans/"
         this.CallURL(this.url, initial=false)
     }

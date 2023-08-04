@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-03 13:21+0200\n"
+"POT-Creation-Date: 2023-08-04 11:09+0200\n"
 "PO-Revision-Date: 2023-08-03 13:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -40,6 +40,7 @@ msgstr "Messaggio"
 
 #: settings.py:187
 #: templates/blocks/unical_storage_cds_website_menu_secondary.html:31
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:27
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:27
 #: templates/blocks/unical_storage_teacherinfo.html:250
 msgid "Teachings"
@@ -80,7 +81,8 @@ msgid "Laboratories"
 msgstr "Laboratori"
 
 #: settings.py:194 templates/storage_base.html:180
-#: templates/storage_patents_list.html:11 templates/storage_patents_list.html:20
+#: templates/storage_patents_list.html:11
+#: templates/storage_patents_list.html:20
 msgid "Patents"
 msgstr "Brevetti"
 
@@ -105,7 +107,8 @@ msgstr "Pubblicazioni"
 
 #: settings.py:198
 #: templates/blocks/collapse/unical_storage_collapse_research_group_list.html:7
-#: templates/storage_base.html:234 templates/storage_research_group_list.html:11
+#: templates/storage_base.html:234
+#: templates/storage_research_group_list.html:11
 #: templates/storage_research_group_list.html:20
 msgid "Research groups"
 msgstr "Gruppi di ricerca"
@@ -117,12 +120,14 @@ msgstr "Gruppi di ricerca"
 msgid "Research lines"
 msgstr "Linee di ricerca"
 
-#: settings.py:200 templates/storage_base.html:12 templates/storage_base.html:24
+#: settings.py:200 templates/storage_base.html:12
+#: templates/storage_base.html:24
 msgid "Open data"
 msgstr ""
 
 #: settings.py:201 templates/storage_base.html:198
-#: templates/storage_spinoff_list.html:11 templates/storage_spinoff_list.html:20
+#: templates/storage_spinoff_list.html:11
+#: templates/storage_spinoff_list.html:20
 msgid "Companies"
 msgstr "Imprese"
 
@@ -209,6 +214,7 @@ msgstr "prossimo"
 #: templates/blocks/collapse/includes/unical_storage_collapse_bottom.html:5
 #: templates/blocks/unical_storage_addressbook.html:327
 #: templates/blocks/unical_storage_addressbook_v2.html:183
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:330
 #: templates/blocks/unical_storage_cdslist.html:300
 #: templates/blocks/unical_storage_cdslist_areas.html:251
 #: templates/blocks/unical_storage_cdslist_regulations.html:267
@@ -442,6 +448,40 @@ msgstr ""
 msgid "Course in summary"
 msgstr "Il corso in sintesi"
 
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:40
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:106
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:196
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:262
+#: templates/blocks/unical_storage_cdsstudyplans.html:60
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:39
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:127
+#: templates/storage_cds_websites_studiare.html:192
+msgid "year"
+msgstr "anno"
+
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:121
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:142
+#: templates/blocks/unical_storage_studyactivity_list.html:169
+#: templates/blocks/unical_storage_studyactivity_list.html:288
+msgid "Teaching"
+msgstr "Insegnamento"
+
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:122
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:143
+#: templates/blocks/unical_storage_studyactivity_list.html:116
+msgid "Period"
+msgstr "Periodo"
+
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:123
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:144
+msgid "ETCS"
+msgstr ""
+
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:166
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:97
+msgid "Study paths"
+msgstr "Percorsi di studio"
+
 #: templates/blocks/unical_storage_cdsinfo.html:73
 msgid "Interclass degree"
 msgstr "Corso di laurea interclasse"
@@ -457,12 +497,12 @@ msgid "Download brochure"
 msgstr "Scarica la brochure"
 
 #: templates/blocks/unical_storage_cdsinfo.html:398
-#: templates/storage_cds_websites_studiare.html:134
+#: templates/storage_cds_websites_studiare.html:141
 msgid "Faculty"
 msgstr "Docenti"
 
 #: templates/blocks/unical_storage_cdsinfo.html:409
-#: templates/storage_cds_websites_studiare.html:144
+#: templates/storage_cds_websites_studiare.html:151
 msgid "Academic Courses"
 msgstr "Docenze Anno"
 
@@ -558,13 +598,6 @@ msgstr "Corso di studio"
 msgid "Type"
 msgstr "Tipologia"
 
-#: templates/blocks/unical_storage_cdsstudyplans.html:60
-#: templates/blocks/unical_storage_cdsstudyplans_v3.html:39
-#: templates/blocks/unical_storage_cdsstudyplans_v3.html:127
-#: templates/storage_cds_websites_studiare.html:185
-msgid "year"
-msgstr "anno"
-
 #: templates/blocks/unical_storage_cdsstudyplans_v2.html:59
 #: templates/blocks/unical_storage_phd_list.html:38
 #: templates/blocks/unical_storage_projects_list.html:39
@@ -572,10 +605,6 @@ msgstr "anno"
 #: templates/blocks/unical_storage_teacherstudyactivities.html:29
 msgid "Year"
 msgstr "Anno"
-
-#: templates/blocks/unical_storage_cdsstudyplans_v3.html:97
-msgid "Study paths"
-msgstr "Percorsi di studio"
 
 #: templates/blocks/unical_storage_departments_info.html:95
 #: templates/blocks/unical_storage_laboratory_list.html:219
@@ -669,7 +698,7 @@ msgstr "Modalità di erogazione"
 
 #: templates/blocks/unical_storage_high_formation_masters_list.html:219
 #: templates/blocks/unical_storage_studyactivity_list.html:42
-#: templates/storage_cds_websites_studiare.html:171
+#: templates/storage_cds_websites_studiare.html:178
 msgid "Academic Year"
 msgstr "Anno accademico"
 
@@ -886,10 +915,6 @@ msgstr "Si"
 msgid "Course year"
 msgstr "Anno del corso"
 
-#: templates/blocks/unical_storage_studyactivity_list.html:116
-msgid "Period"
-msgstr "Periodo"
-
 #: templates/blocks/unical_storage_studyactivity_list.html:125
 msgid "Annuity"
 msgstr "Annualità"
@@ -937,11 +962,6 @@ msgstr "Quarto trimestre"
 #: templates/blocks/unical_storage_studyactivity_list.html:136
 msgid "Semester"
 msgstr "Semestre"
-
-#: templates/blocks/unical_storage_studyactivity_list.html:169
-#: templates/blocks/unical_storage_studyactivity_list.html:288
-msgid "Teaching"
-msgstr "Insegnamento"
 
 #: templates/blocks/unical_storage_studyactivity_list.html:287
 msgid "Code"
@@ -1152,19 +1172,19 @@ msgstr "Centro residenziale"
 
 #: templates/storage_cds_websites_prospect.html:685
 msgid ""
-"On the largest and most equipped campus in Italy, you can experience a unique "
-"university community, sharing educational, recreational, sporting and "
+"On the largest and most equipped campus in Italy, you can experience a "
+"unique university community, sharing educational, recreational, sporting and "
 "cultural moments with colleagues and teachers. The Campus is equipped with "
 "study rooms, a sports centre, theatres, amphitheatres, cinemas, bars, "
 "refreshment points and other meeting spaces. A citadel that allows you to "
 "live an extraordinary human experience, as well as an educational one."
 msgstr ""
-"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di comunità "
-"universitaria unica, condividendo con colleghi e docenti momenti formativi, "
-"ludici, sportivi e culturali. Il Campus è dotato di aule studio, di un centro "
-"sportivo, teatri, anfiteatri, cinema, bar, punti ristoro e altri spazi "
-"aggregativi. Una cittadella che consente di vivere una straordinaria "
-"esperienza umana, oltre che formativa."
+"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di "
+"comunità universitaria unica, condividendo con colleghi e docenti momenti "
+"formativi, ludici, sportivi e culturali. Il Campus è dotato di aule studio, "
+"di un centro sportivo, teatri, anfiteatri, cinema, bar, punti ristoro e "
+"altri spazi aggregativi. Una cittadella che consente di vivere una "
+"straordinaria esperienza umana, oltre che formativa."
 
 #: templates/storage_cds_websites_prospect.html:690
 #: templates/storage_cds_websites_prospect.html:708
@@ -1183,8 +1203,8 @@ msgstr ""
 "Una cittadella che ospita nel migliore dei modi chi vive nel Campus, perché "
 "offre molteplici servizi per lo studio e per il benessere individuale e "
 "collettivo: biblioteche, centro per l’apprendimento linguistico, servizi di "
-"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, un "
-"ufficio postale, uno sportello bancario e uno spazio per il silenzio."
+"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, "
+"un ufficio postale, uno sportello bancario e uno spazio per il silenzio."
 
 #: templates/storage_cds_websites_prospect.html:721
 msgid ""
@@ -1235,14 +1255,15 @@ msgid ""
 "structures and socialization initiatives, visit the Study Program website."
 msgstr ""
 "Per i dettagli sui contenuti dei singoli insegnamenti, periodi formativi "
-"all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, altre "
-"strutture e iniziative di socializzazione visita il sito del Corso di Studio."
+"all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, "
+"altre strutture e iniziative di socializzazione visita il sito del Corso di "
+"Studio."
 
 #: templates/storage_cds_websites_prospect.html:827
 msgid "Go to the institutional site"
 msgstr "Vai al sito istituzionale"
 
-#: templates/storage_cds_websites_studiare.html:160
+#: templates/storage_cds_websites_studiare.html:167
 msgid "Orario delle lezioni"
 msgstr ""
 
