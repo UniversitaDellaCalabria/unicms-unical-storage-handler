@@ -245,6 +245,82 @@
                             </div>
                         </div>
 
+                        <div id="esamiUP">
+                            <h5 class="mt-5 mb-3">{% trans "Calendario esami" %}</h5>
+
+                            <div id="accordionDiv-exams-lft" class="accordion accordion-left-icon">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" id="heading-exams-lft">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapse-exams-lft"
+                                                aria-expanded="false"
+                                                aria-controls="collapse-exams-lft">
+                                            {% trans "Academic Year" %}&nbsp;[[ _cds_data.cds.AcademicYear ]]/[[ _cds_data.cds.AcademicYear +1 ]]
+                                        </button>
+                                    </div>
+                                    <div id="collapse-exams-lft"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDiv-exams-lft"
+                                         role="region"
+                                         aria-labelledby="heading-exams-lft">
+                                        <div class="accordion-body mt-3">
+                                            <div v-if="years">
+                                                <a v-for="y_index in years" class="no-color" @click="getEvents(y_index)" href="javascript:void(0)">
+                                                    <span
+                                                        class="badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100"
+                                                        :class="year == y_index ? 'selected' : ''">
+                                                        <h5>[[ y_index ]] {% trans "year" %}</h5>
+                                                    </span>
+                                                </a>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <loading-icon
+                                                    v-if="is_loading_up_exams"
+                                                    :loader_source="loader_source_up_exams">
+                                                </loading-icon>
+
+                                                <div v-else>
+                                                    <v-calendar
+                                                        class="custom-calendar"
+                                                        :masks="masks"
+                                                        :attributes="attributes"
+                                                        locale="{{ LANGUAGE_CODE }}">
+                                                        <template v-slot:day-content="{ day, attributes }">
+                                                            <div class="flex flex-col h-100 overflow-hidden" style="font-size: 0.875rem">
+                                                                <span class="day-label text-sm text-gray-900">[[ day.day ]]</span>
+                                                                <div class="overflow-auto">
+                                                                        <p :key="attr.key" v-for="attr in attributes"
+                                                                           class="rounded p-1 mt-0 mb-1 mx-1 text-white"
+                                                                           :class="attr.customData.class"
+                                                                           :style="'background: ' + attr.customData.background">
+                                                                            <span style="font-size: smaller;">
+                                                                                <!--[[ attr.customData.title ]]<br />-->
+                                                                                <b>[[ attr.customData.title ]]</b>
+                                                                                <br />
+                                                                                [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
+                                                                                <br />
+                                                                                [[ attr.customData.docente ]]
+                                                                                <br />
+                                                                                [[ attr.customData.aula ]]
+                                                                                <br />
+                                                                                [[ attr.customData.edificio ]]
+                                                                            </span>
+                                                                        </p>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </v-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
                         {% include "includes/unical_storage_cds_websites_right_static.html" %}
@@ -331,6 +407,7 @@
                 let year_index = 1
                 while(year_index <= _cds_data.cds.CdSDuration) {
                     impegniUP.years.push(year_index)
+                    esamiUP.years.push(year_index)
                     year_index += 1
                 }
             }
@@ -401,6 +478,103 @@
                         .then(response => {
                             this.events = response.data
                             this.is_loading_up = false
+                            response.data.forEach((item, index)=>{
+                                this.attributes.push(
+                                    {
+                                        key: index,
+                                        customData: {
+                                            class: 'bg-secondary text-white',
+                                            //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
+                                            title: item.insegnamento,
+                                            dataInizio: item.dataInizio,
+                                            dataFine: item.dataFine,
+                                            orarioInizio: item.orarioInizio,
+                                            orarioFine: item.orarioFine,
+                                            docente: item.docente,
+                                            aula: item.aula,
+                                            edificio: item.edificio,
+                                            background: this.colors_dict[item.insegnamento]
+                                        },
+                                        dates: { start: new Date(item.dataInizio),
+                                                 end: new Date(item.dataFine) }
+                                    }
+                                )
+                            })
+                        }
+                    )
+                },
+
+                switchPage(page) {
+                    this.attributes = [];
+                    this.getEvents();
+                },
+            } //methods
+        }) //end "new Vue"
+
+
+    var esamiUP = new Vue({
+            el: '[id="esamiUP"]',
+            data () {
+                return {
+                    events: [],
+                    years: [],
+                    year: 1,
+                    is_loading_up_exams: true,
+                    loader_source_up_exams: "ciao",
+                    colors: {
+                        0: "secondary",
+                        1: "danger",
+                        2: "info",
+                        3: "success",
+                        4: "warning",
+                    },
+                    colors_dict: {},
+                    attributes: [],
+                    url: '',
+                    masks: {weekdays: 'WWW',},
+                } //end return
+            }, //end data
+            mounted()  {
+                this.getEvents();
+            },
+            methods: {
+                //generateHex() {
+                    //let color = '#';
+                    //for (var i = 0; i < 6; i++) {
+                        //color += Math.floor(Math.random() * 10);
+                    //}
+                    //return color;
+                //},
+                lightenDarkenColor(col, amt) {
+                  var num = parseInt(col, 16);
+                  var r = (num >> 16) + amt;
+                  var b = ((num >> 8) & 0x00FF) + amt;
+                  var g = (num & 0x0000FF) + amt;
+                  var newColor = g | (b << 8) | (r << 16);
+                  return newColor.toString(16);
+                },
+                generateHex2(value) {
+                    let hash = 0;
+                    value.split('').forEach(char => {
+                        hash = char.charCodeAt(0) + ((hash << 5) - hash)
+                    })
+                    let colour = ''
+                    for (let i = 0; i < 3; i++) {
+                        let value = (hash >> (i * 8)) & 0xff
+                        colour += value.toString(16).padStart(2, '0')
+                    }
+                    return '#' + this.lightenDarkenColor(colour, -50)
+                },
+                getEvents(year=1) {
+                    this.attributes = []
+                    let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&year=' + year
+                    this.year = year
+                    this.is_loading_up_exams = true
+                    axios
+                        .get(up_url)
+                        .then(response => {
+                            this.events = response.data
+                            this.is_loading_up_exams = false
                             response.data.forEach((item, index)=>{
                                 this.attributes.push(
                                     {
