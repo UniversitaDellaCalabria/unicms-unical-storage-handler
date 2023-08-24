@@ -205,9 +205,9 @@
                                                         :masks="masks"
                                                         :attributes="attributes"
                                                         locale="{{ LANGUAGE_CODE }}"
+                                                        disable-page-swipe
                                                         {% comment %}
                                                         @update:from-page="switchPage"
-                                                        disable-page-swipe
                                                         is-expanded
                                                         v-if="attr.customData.dataInizio=[[ day.id ]]"
                                                         :href="'http://localhost/' + attr.customData.id"
@@ -287,6 +287,7 @@
                                                         class="custom-calendar"
                                                         :masks="masks"
                                                         :attributes="attributes"
+                                                        disable-page-swipe
                                                         locale="{{ LANGUAGE_CODE }}">
                                                         <template v-slot:day-content="{ day, attributes }">
                                                             <div class="flex flex-col h-100 overflow-hidden" style="font-size: 0.875rem">
@@ -339,7 +340,7 @@
     Vue.use(VueMarkdown);
 
     var _{{ cds_cod }} = new Vue({
-        el: '[id="_{{ cds_cod }}"]',
+        el: '#_{{ cds_cod }}',
         data() {
             return {
                 item: {},
@@ -416,196 +417,159 @@
 
 
     var impegniUP = new Vue({
-            el: '[id="impegniUP"]',
-            data () {
-                return {
-                    events: [],
-                    years: [],
-                    year: 1,
-                    is_loading_up: true,
-                    loader_source_up: "ciao",
-                    colors: {
-                        0: "secondary",
-                        1: "danger",
-                        2: "info",
-                        3: "success",
-                        4: "warning",
-                    },
-                    colors_dict: {},
-                    attributes: [],
-                    url: '',
-                    masks: {weekdays: 'WWW',},
-                } //end return
-            }, //end data
-            mounted()  {
+        el: '#impegniUP',
+        data () {
+            return {
+                events: [],
+                years: [],
+                year: 1,
+                is_loading_up: true,
+                loader_source_up: '',
+                //colors: {
+                    //0: "secondary",
+                    //1: "danger",
+                    //2: "info",
+                    //3: "success",
+                    //4: "warning",
+                //},
+                //colors_dict: {},
+                attributes: [],
+                url: '',
+                masks: {weekdays: 'WWW',},
+            } //end return
+        }, //end data
+        mounted()  {
+            this.getEvents();
+        },
+        methods: {
+            //generateHex() {
+                //let color = '#';
+                //for (var i = 0; i < 6; i++) {
+                    //color += Math.floor(Math.random() * 10);
+                //}
+                //return color;
+            //},
+            //lightenDarkenColor(col, amt) {
+              //var num = parseInt(col, 16);
+              //var r = (num >> 16) + amt;
+              //var b = ((num >> 8) & 0x00FF) + amt;
+              //var g = (num & 0x0000FF) + amt;
+              //var newColor = g | (b << 8) | (r << 16);
+              //return newColor.toString(16);
+            //},
+            //generateHex2(value) {
+                //let hash = 0;
+                //value.split('').forEach(char => {
+                    //hash = char.charCodeAt(0) + ((hash << 5) - hash)
+                //})
+                //let colour = ''
+                //for (let i = 0; i < 3; i++) {
+                    //let value = (hash >> (i * 8)) & 0xff
+                    //colour += value.toString(16).padStart(2, '0')
+                //}
+                //return '#' + this.lightenDarkenColor(colour, -50)
+            //},
+            getEvents(year=1) {
+                this.attributes = []
+                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&year=' + year
+                this.year = year
+                this.is_loading_up = true
+                axios
+                    .get(up_url)
+                    .then(response => {
+                        this.events = response.data
+                        this.is_loading_up = false
+                        response.data.forEach((item, index)=>{
+                            this.attributes.push(
+                                {
+                                    key: index,
+                                    customData: {
+                                        class: 'bg-secondary text-white',
+                                        //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
+                                        title: item.insegnamento,
+                                        dataInizio: item.dataInizio,
+                                        dataFine: item.dataFine,
+                                        orarioInizio: item.orarioInizio,
+                                        orarioFine: item.orarioFine,
+                                        docente: item.docente,
+                                        aula: item.aula,
+                                        edificio: item.edificio,
+                                        //background: this.colors_dict[item.insegnamento]
+                                    },
+                                    dates: { start: new Date(item.dataInizio),
+                                             end: new Date(item.dataFine) }
+                                }
+                            )
+                        })
+                    }
+                )
+            },
+            switchPage(page) {
+                this.attributes = [];
                 this.getEvents();
             },
-            methods: {
-                //generateHex() {
-                    //let color = '#';
-                    //for (var i = 0; i < 6; i++) {
-                        //color += Math.floor(Math.random() * 10);
-                    //}
-                    //return color;
-                //},
-                lightenDarkenColor(col, amt) {
-                  var num = parseInt(col, 16);
-                  var r = (num >> 16) + amt;
-                  var b = ((num >> 8) & 0x00FF) + amt;
-                  var g = (num & 0x0000FF) + amt;
-                  var newColor = g | (b << 8) | (r << 16);
-                  return newColor.toString(16);
-                },
-                generateHex2(value) {
-                    let hash = 0;
-                    value.split('').forEach(char => {
-                        hash = char.charCodeAt(0) + ((hash << 5) - hash)
-                    })
-                    let colour = ''
-                    for (let i = 0; i < 3; i++) {
-                        let value = (hash >> (i * 8)) & 0xff
-                        colour += value.toString(16).padStart(2, '0')
-                    }
-                    return '#' + this.lightenDarkenColor(colour, -50)
-                },
-                getEvents(year=1) {
-                    this.attributes = []
-                    let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&year=' + year
-                    this.year = year
-                    this.is_loading_up = true
-                    axios
-                        .get(up_url)
-                        .then(response => {
-                            this.events = response.data
-                            this.is_loading_up = false
-                            response.data.forEach((item, index)=>{
-                                this.attributes.push(
-                                    {
-                                        key: index,
-                                        customData: {
-                                            class: 'bg-secondary text-white',
-                                            //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
-                                            title: item.insegnamento,
-                                            dataInizio: item.dataInizio,
-                                            dataFine: item.dataFine,
-                                            orarioInizio: item.orarioInizio,
-                                            orarioFine: item.orarioFine,
-                                            docente: item.docente,
-                                            aula: item.aula,
-                                            edificio: item.edificio,
-                                            background: this.colors_dict[item.insegnamento]
-                                        },
-                                        dates: { start: new Date(item.dataInizio),
-                                                 end: new Date(item.dataFine) }
-                                    }
-                                )
-                            })
-                        }
-                    )
-                },
-
-                switchPage(page) {
-                    this.attributes = [];
-                    this.getEvents();
-                },
-            } //methods
-        }) //end "new Vue"
+        } //methods
+    }) //end "new Vue"
 
 
     var esamiUP = new Vue({
-            el: '[id="esamiUP"]',
-            data () {
-                return {
-                    events: [],
-                    years: [],
-                    year: 1,
-                    is_loading_up_exams: true,
-                    loader_source_up_exams: "ciao",
-                    colors: {
-                        0: "secondary",
-                        1: "danger",
-                        2: "info",
-                        3: "success",
-                        4: "warning",
-                    },
-                    colors_dict: {},
-                    attributes: [],
-                    url: '',
-                    masks: {weekdays: 'WWW',},
-                } //end return
-            }, //end data
-            mounted()  {
+        el: '#esamiUP',
+        data () {
+            return {
+                events: [],
+                years: [],
+                year: 1,
+                is_loading_up_exams: true,
+                loader_source_up_exams: "",
+                attributes: [],
+                url: '',
+                masks: {weekdays: 'WWW',},
+            } //end return
+        }, //end data
+        mounted()  {
+            this.getEvents();
+        },
+        methods: {
+            getEvents(year=1) {
+                this.attributes = []
+                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&year=' + year
+                this.year = year
+                this.is_loading_up_exams = true
+                axios
+                    .get(up_url)
+                    .then(response => {
+                        this.events = response.data
+                        this.is_loading_up_exams = false
+                        response.data.forEach((item, index)=>{
+                            this.attributes.push(
+                                {
+                                    key: index,
+                                    customData: {
+                                        class: 'bg-secondary text-white',
+                                        //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
+                                        title: item.insegnamento,
+                                        dataInizio: item.dataInizio,
+                                        dataFine: item.dataFine,
+                                        orarioInizio: item.orarioInizio,
+                                        orarioFine: item.orarioFine,
+                                        docente: item.docente,
+                                        aula: item.aula,
+                                        edificio: item.edificio,
+                                    },
+                                    dates: { start: new Date(item.dataInizio),
+                                             end: new Date(item.dataFine) }
+                                }
+                            )
+                        })
+                    }
+                )
+            },
+
+            switchPage(page) {
+                this.attributes = [];
                 this.getEvents();
             },
-            methods: {
-                //generateHex() {
-                    //let color = '#';
-                    //for (var i = 0; i < 6; i++) {
-                        //color += Math.floor(Math.random() * 10);
-                    //}
-                    //return color;
-                //},
-                lightenDarkenColor(col, amt) {
-                  var num = parseInt(col, 16);
-                  var r = (num >> 16) + amt;
-                  var b = ((num >> 8) & 0x00FF) + amt;
-                  var g = (num & 0x0000FF) + amt;
-                  var newColor = g | (b << 8) | (r << 16);
-                  return newColor.toString(16);
-                },
-                generateHex2(value) {
-                    let hash = 0;
-                    value.split('').forEach(char => {
-                        hash = char.charCodeAt(0) + ((hash << 5) - hash)
-                    })
-                    let colour = ''
-                    for (let i = 0; i < 3; i++) {
-                        let value = (hash >> (i * 8)) & 0xff
-                        colour += value.toString(16).padStart(2, '0')
-                    }
-                    return '#' + this.lightenDarkenColor(colour, -50)
-                },
-                getEvents(year=1) {
-                    this.attributes = []
-                    let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&year=' + year
-                    this.year = year
-                    this.is_loading_up_exams = true
-                    axios
-                        .get(up_url)
-                        .then(response => {
-                            this.events = response.data
-                            this.is_loading_up_exams = false
-                            response.data.forEach((item, index)=>{
-                                this.attributes.push(
-                                    {
-                                        key: index,
-                                        customData: {
-                                            class: 'bg-secondary text-white',
-                                            //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
-                                            title: item.insegnamento,
-                                            dataInizio: item.dataInizio,
-                                            dataFine: item.dataFine,
-                                            orarioInizio: item.orarioInizio,
-                                            orarioFine: item.orarioFine,
-                                            docente: item.docente,
-                                            aula: item.aula,
-                                            edificio: item.edificio,
-                                            background: this.colors_dict[item.insegnamento]
-                                        },
-                                        dates: { start: new Date(item.dataInizio),
-                                                 end: new Date(item.dataFine) }
-                                    }
-                                )
-                            })
-                        }
-                    )
-                },
-
-                switchPage(page) {
-                    this.attributes = [];
-                    this.getEvents();
-                },
-            } //methods
-        }) //end "new Vue"
+        } //methods
+    }) //end "new Vue"
 </script>
 {% endblock container %}
