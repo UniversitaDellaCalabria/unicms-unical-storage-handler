@@ -39,6 +39,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDYPLANS_API" as cds_websites_studyplans_api %}
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
 {% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
 
@@ -206,6 +207,205 @@
                         {% include "blocks/unical_storage_cdsstudyplans_v3.html" with uid="course_studyplans" full_page=full_page %}
                     </div>
 
+
+                    <!-- study plans new -->
+                    <div id="_{{ cds_cod }}_studyplans" class="mt-5">
+                        <loading-icon
+                            v-if="is_loading"
+                            :loader_source="loader_source">
+                        </loading-icon>
+                        <div v-else>
+                            <h5 class="mb-3">{% trans "Study plan" %} - [[ items.RegPlanDes ]]</h5>
+                            <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
+                                <div class="accordion-item" v-for="tab in items.PlanTabs">
+                                    <div class="accordion-header" :id="'heading-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="'#collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'"
+                                                aria-expanded="false"
+                                                :aria-controls="'collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
+                                            [[ tab.PlanTabDes ]] ([[ tab.PlanTabCod ]])
+                                        </button>
+                                    </div>
+                                    <div :id="'collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDiv00-lft"
+                                         role="region"
+                                         :aria-labelledby="'heading-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
+                                        <div class="accordion-body mt-3">
+                                            <div v-for="(duration_year, index) in items.CdSDuration">
+                                                <hr style="color: transparent" v-if="index > 0" />
+                                                <p class="h4">
+                                                    [[ duration_year ]] {% trans "Year" %}
+                                                </p>
+
+                                                <div v-for="required in tab.AfRequired">
+                                                    <div v-if="required.Year == duration_year">
+                                                        <b>
+                                                            [[ required.SceDes ]]
+                                                        </b>
+                                                        <div class="table-responsive">
+                                                            <small>
+                                                                <table class="table table-sm table-hover table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">{% trans "Teaching" %}</th>
+                                                                            <th scope="col">{% trans "SSD" %}</th>
+                                                                            <th scope="col">{% trans "Period" %}</th>
+                                                                            <th scope="col">{% trans "ETCS" %}</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="activity in required.Required">
+                                                                            <td>
+                                                                                [[ activity.AfCod || "-" ]]
+                                                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'">
+                                                                                    [[ activity.AfDescription ]]
+                                                                                </a>
+                                                                                <ul v-if="activity.AfSubModules.length > 0">
+                                                                                    <li v-for="module in activity.AfSubModules">
+                                                                                        [[ module.StudyActivityCod || "-" ]]
+                                                                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'">
+                                                                                            [[ module.StudyActivityName ]]
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </td>
+                                                                            <td>
+                                                                                [[ activity.SettCod || "-" ]]
+                                                                                <span v-for="module in activity.AfSubModules">
+                                                                                    <br>
+                                                                                    -
+                                                                                </span>
+                                                                            </td>
+                                                                            <td>
+                                                                                [[ activity.CycleDes ]]
+                                                                                <span v-for="module in activity.AfSubModules">
+                                                                                    <br>
+                                                                                    [[ module.StudyActivitySemester || "-" ]]
+                                                                                </span>
+                                                                            </td>
+                                                                            <td>
+                                                                                [[ activity.CreditValue || "-" ]]
+                                                                                <span v-for="module in activity.AfSubModules">
+                                                                                    <br>
+                                                                                    [[ module.StudyActivityCreditValue || "-" ]]
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div v-for="choice in tab.AfChoices">
+                                                    <div v-if="choice.Year == duration_year && choice.SceCodType != 'V'">
+                                                        <br>
+                                                        <b>
+                                                            [[ choice.SceDes ]]
+                                                        </b>
+                                                        <br>
+                                                        <span v-if="choice.OpzFlg">{% trans "Optional" %}</span>
+                                                        <span v-else>{% trans "Required" %}</span>
+                                                        <br>
+                                                        <span>[[ choice.RegSceCodDes ]]</span>
+                                                        <br>
+                                                        <div v-if="choice.VinId">
+                                                            <div v-for="vin in tab.AfChoices" v-if="vin.SceId == choice.VinId && vin.SceCodType == 'V'">
+                                                                <span>[[ vin.RegSceCodDes ]]: min [[ vin.MinUnt ]] / max [[ vin.MaxUnt ]]</span>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="table-responsive" v-if="choice.Choices.length > 0 ">
+                                                            <small>
+                                                                <table class="table table-sm table-hover table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">{% trans "Teaching" %}</th>
+                                                                            <th scope="col">{% trans "Period" %}</th>
+                                                                            <th scope="col">{% trans "ETCS" %}</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="activity in choice.Choices">
+                                                                            <td>
+                                                                                [[ activity.AfCod || "-" ]]
+                                                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'">
+                                                                                    [[ activity.AfDescription ]]
+                                                                                </a>
+                                                                                <span v-for="module in activity.AfSubModules">
+                                                                                    <br>
+                                                                                    [[ module.StudyActivityCod || "-" ]]
+                                                                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'">
+                                                                                        [[ module.StudyActivityName ]]
+                                                                                    </a>
+                                                                                </span>
+                                                                            </td>
+                                                                            <td>
+                                                                                [[ activity.CycleDes ]]
+                                                                                <span v-for="module in activity.AfSubModules">
+                                                                                    <br>
+                                                                                    [[ module.StudyActivitySemester ]]
+                                                                                </span>
+                                                                            </td>
+                                                                            <td>
+                                                                                [[ activity.CreditValue ]]
+                                                                                <span v-for="module in activity.AfSubModules">
+                                                                                    <br>
+                                                                                    [[ module.StudyActivityCreditValue ]]
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </small>
+                                                        </div>
+
+                                                        <div v-if="choice.FilAnd.length > 0 ">
+                                                            {% trans "Teachings must be chosen respecting these rules" %}
+                                                            <ul class="ps-0 list-unstyled">
+                                                                <li v-for="filter in choice.FilAnd" v-if="!filter.NotFlg">
+                                                                    <span>
+                                                                        <svg class="icon icon-sm icon-success">
+                                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                                                        </svg>
+                                                                    </span>
+                                                                    [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]]
+                                                                </li>
+
+                                                                <li v-for="filter in choice.FilAnd" v-if="filter.NotFlg">
+                                                                    <span>
+                                                                        <svg class="icon icon-sm icon-danger">
+                                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
+                                                                        </svg>
+                                                                    </span>
+                                                                    <span v-if="filter.TipoFiltroCod == 'CDS'">
+                                                                        [[ filter.TipoFiltroDes ]]: [[ filter.CdsSceFilAndNome ]] ([[ filter.CdsSceFilAndCod ]])
+                                                                    </span>
+                                                                    <span v-else>
+                                                                        [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]]
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
                 <div class="col-12 col-lg-3 offset-lg-1">
                     {% include "includes/unical_storage_cds_websites_right_static.html" %}
@@ -316,14 +516,39 @@ var _{{ cds_cod }} = new Vue({
 })
 
 var _cds_website_right_col_dynamic = new Vue({
-        el: '#_cds_website_right_col_dynamic',
-        data() {
-            return {
-                item: {},
-                cds: {},
-            }
+    el: '#_cds_website_right_col_dynamic',
+    data() {
+        return {
+            item: {},
+            cds: {},
+        }
+    },
+});
+
+var _{{ cds_cod }}_studyplans = new Vue({
+    el: '#_{{ cds_cod }}_studyplans',
+    data() {
+        return {
+            url: '',
+            is_loading: true,
+            loader_source: '',
+            items: {},
+        }
+    },
+    mounted() {
+        this.callStudyPlans()
+    },
+    methods: {
+        callStudyPlans() {
+            axios
+                .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=2023')
+                .then(response => {
+                    this.items = response.data.results[0]
+                    this.is_loading = false
+                })
         },
-    });
+    },
+})
 </script>
 {% endblock container %}
 

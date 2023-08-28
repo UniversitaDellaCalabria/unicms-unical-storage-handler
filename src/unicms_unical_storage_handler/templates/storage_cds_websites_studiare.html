@@ -406,11 +406,15 @@
                 teachers_list.academic_year = _cds_data.cds.AcademicYear
                 document.getElementById("cds_year").innerHTML = _cds_data.cds.AcademicYear + "/" + (_cds_data.cds.AcademicYear +1)
                 let year_index = 1
+
                 while(year_index <= _cds_data.cds.CdSDuration) {
                     impegniUP.years.push(year_index)
                     esamiUP.years.push(year_index)
                     year_index += 1
                 }
+
+                impegniUP.getEvents()
+                esamiUP.getEvents()
             }
         }
     })
@@ -439,7 +443,7 @@
             } //end return
         }, //end data
         mounted()  {
-            this.getEvents();
+            //this.getEvents();
         },
         methods: {
             //generateHex() {
@@ -471,7 +475,7 @@
             //},
             getEvents(year=1) {
                 this.attributes = []
-                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&year=' + year
+                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&academic_year=' + _cds_data.cds.AcademicYear + '&year=' + year
                 this.year = year
                 this.is_loading_up = true
                 axios
@@ -527,12 +531,12 @@
             } //end return
         }, //end data
         mounted()  {
-            this.getEvents();
+            //this.getEvents();
         },
         methods: {
             getEvents(year=1) {
                 this.attributes = []
-                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&year=' + year
+                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&academic_year=' + _cds_data.cds.AcademicYear + '&year=' + year
                 this.year = year
                 this.is_loading_up_exams = true
                 axios
