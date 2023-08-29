@@ -904,5 +904,6 @@ class CdsWebsitesRedirectHandler(BaseContentHandler):
                 break
 
     def as_view(self):
-        if self.webpath: return redirect(self.webpath.fullpath)
+        if self.webpath:
+            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}'))
         raise Http404()
