@@ -203,10 +203,11 @@
                         </div>
                     </div>
 
+                    {% comment %}
                     <div class="mt-5">
                         {% include "blocks/unical_storage_cdsstudyplans_v3.html" with uid="course_studyplans" full_page=full_page %}
                     </div>
-
+                    {% endcomment %}
 
                     <!-- study plans new -->
                     <div id="_{{ cds_cod }}_studyplans" class="mt-5">
@@ -215,7 +216,7 @@
                             :loader_source="loader_source">
                         </loading-icon>
                         <div v-else>
-                            <h5 class="mb-3">{% trans "Study plan" %} - [[ items.RegPlanDes ]]</h5>
+                            <h5 class="mb-3">{% trans "Study plan" %} ([[ items.RegPlanDes ]])</h5>
                             <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
                                 <div class="accordion-item" v-for="tab in items.PlanTabs">
                                     <div class="accordion-header" :id="'heading-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
@@ -234,14 +235,14 @@
                                          role="region"
                                          :aria-labelledby="'heading-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
                                         <div class="accordion-body mt-3">
-                                            <div v-for="(duration_year, index) in items.CdSDuration">
-                                                <hr style="color: transparent" v-if="index > 0" />
+                                            <div v-for="index in 10" v-if="tab.AfRequired.find(e => e.Year === index) || tab.AfChoices.find(e => e.Year === index)">
+                                                <hr style="color: transparent" v-if="index > 1" />
                                                 <p class="h4">
-                                                    [[ duration_year ]] {% trans "Year" %}
+                                                    [[ index ]] {% trans "Year" %}
                                                 </p>
 
                                                 <div v-for="required in tab.AfRequired">
-                                                    <div v-if="required.Year == duration_year">
+                                                    <div v-if="required.Year == index">
                                                         <b>
                                                             [[ required.SceDes ]]
                                                         </b>
@@ -302,7 +303,7 @@
                                                 </div>
 
                                                 <div v-for="choice in tab.AfChoices">
-                                                    <div v-if="choice.Year == duration_year && choice.SceCodType != 'V'">
+                                                    <div v-if="choice.Year == index && choice.SceCodType != 'V'">
                                                         <br>
                                                         <b>
                                                             [[ choice.SceDes ]]
@@ -311,12 +312,25 @@
                                                         <span v-if="choice.OpzFlg">{% trans "Optional" %}</span>
                                                         <span v-else>{% trans "Required" %}</span>
                                                         <br>
-                                                        <span>[[ choice.RegSceCodDes ]]</span>
-                                                        <br>
                                                         <div v-if="choice.VinId">
                                                             <div v-for="vin in tab.AfChoices" v-if="vin.SceId == choice.VinId && vin.SceCodType == 'V'">
-                                                                <span>[[ vin.RegSceCodDes ]]: min [[ vin.MinUnt ]] / max [[ vin.MaxUnt ]]</span>
+                                                                <span>[[ vin.RegSceCodDes ]]:</span>
+                                                                <span v-if="vin.MinUnt == vin.MaxUnt">
+                                                                    [[ vin.MaxUnt ]]
+                                                                </span>
+                                                                <span v-else>
+                                                                    min [[ vin.MinUnt ]] / max [[ vin.MaxUnt ]]
+                                                                </span>
                                                             </div>
+                                                        </div>
+                                                        <div v-else>
+                                                            <span>[[ choice.RegSceCodDes ]]:</span>
+                                                            <span v-if="choice.MinUnt == choice.MaxUnt">
+                                                                [[ choice.MaxUnt ]]
+                                                            </span>
+                                                            <span v-else>
+                                                                min [[ choice.MinUnt ]] / max [[ choice.MaxUnt ]]
+                                                            </span>
                                                         </div>
 
 
@@ -376,7 +390,6 @@
                                                                     </span>
                                                                     [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]]
                                                                 </li>
-
                                                                 <li v-for="filter in choice.FilAnd" v-if="filter.NotFlg">
                                                                     <span>
                                                                         <svg class="icon icon-sm icon-danger">
