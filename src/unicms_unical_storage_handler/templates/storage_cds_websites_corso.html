@@ -314,7 +314,7 @@
                                                         <br>
                                                         <div v-if="choice.VinId">
                                                             <div v-for="vin in tab.AfChoices" v-if="vin.SceId == choice.VinId && vin.SceCodType == 'V'">
-                                                                <span>[[ vin.RegSceCodDes ]]:</span>
+                                                                <span>[[ choice.RegSceCodDes ]] ([[ vin.RegSceCodDes ]]):</span>
                                                                 <span v-if="vin.MinUnt == vin.MaxUnt">
                                                                     [[ vin.MaxUnt ]]
                                                                 </span>
