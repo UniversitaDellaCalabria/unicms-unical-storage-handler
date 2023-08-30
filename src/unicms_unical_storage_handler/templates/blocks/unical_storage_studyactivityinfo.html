@@ -257,6 +257,7 @@
                         document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.StudyActivityName
                         document.title = this.item.StudyActivityName + " - " + this.item.StudyActivityCdSName;
                         let breadcrumbs = document.getElementsByClassName("{{ breadcrumb_item }}")
+                        console.log(breadcrumbs)
                         for(let item in breadcrumbs){
                             if(breadcrumbs[item].children[0].innerHTML == this.item.StudyActivityRegDidId){
                                 breadcrumbs[item].children[0].innerHTML = this.item.StudyActivityCdSName
@@ -266,9 +267,10 @@
                         {% endif %}
                     })
                     .catch(error => {
-                        for (var key in error.response.data) {
-                            this.errors[key] = error.response.data[key]
-                        }
+                        if(error.response)
+                            for (var key in error.response.data) {
+                                this.errors[key] = error.response.data[key]
+                            }
                         this.is_loading = false
                     });
             }

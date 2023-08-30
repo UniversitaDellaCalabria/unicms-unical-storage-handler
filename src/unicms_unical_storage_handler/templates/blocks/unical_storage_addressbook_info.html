@@ -161,9 +161,10 @@
                         {% endif %}
                     })
                     .catch(error => {
-                        for (var key in error.response.data) {
-                            this.errors[key] = error.response.data[key]
-                        }
+                        if(error.response)
+                            for (var key in error.response.data) {
+                                this.errors[key] = error.response.data[key]
+                            }
                         this.is_loading = false
                     });
             }

@@ -260,16 +260,26 @@
                                                                     <tbody>
                                                                         <tr v-for="activity in required.Required">
                                                                             <td>
-                                                                                [[ activity.AfCod || "-" ]]
+                                                                                [[ activity.AfCod || "-" ]]&nbsp;
+<!--
                                                                                 <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'">
+-->
+                                                                                <a :href="items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
                                                                                     [[ activity.AfDescription ]]
                                                                                 </a>
+                                                                                <span v-else>
+                                                                                    [[ activity.AfDescription ]]
+                                                                                </span>
                                                                                 <ul v-if="activity.AfSubModules.length > 0">
                                                                                     <li v-for="module in activity.AfSubModules">
-                                                                                        [[ module.StudyActivityCod || "-" ]]
-                                                                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'">
+                                                                                        [[ module.StudyActivityCod ]]
+                                                                                        <a :href="items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
                                                                                             [[ module.StudyActivityName ]]
                                                                                         </a>
+                                                                                        <span v-else>
+                                                                                            [[ module.StudyActivityName ]]
+                                                                                        </span>
+                                                                                        <span v-if="module.StudyActivityPartitionDescription">[[ module.StudyActivityPartitionDescription ]]</span>
                                                                                     </li>
                                                                                 </ul>
                                                                             </td>
@@ -348,15 +358,21 @@
                                                                         <tr v-for="activity in choice.Choices">
                                                                             <td>
                                                                                 [[ activity.AfCod || "-" ]]
-                                                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'">
+                                                                                <a :href="items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
                                                                                     [[ activity.AfDescription ]]
                                                                                 </a>
+                                                                                <span v-else>
+                                                                                    [[ activity.AfDescription ]]
+                                                                                </span>
                                                                                 <span v-for="module in activity.AfSubModules">
                                                                                     <br>
                                                                                     [[ module.StudyActivityCod || "-" ]]
-                                                                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'">
+                                                                                    <a :href="items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
                                                                                         [[ module.StudyActivityName ]]
                                                                                     </a>
+                                                                                    <span v-else>
+                                                                                        [[ module.StudyActivityName ]]
+                                                                                    </span>
                                                                                 </span>
                                                                             </td>
                                                                             <td>

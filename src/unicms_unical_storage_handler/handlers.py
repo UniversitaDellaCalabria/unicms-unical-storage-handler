@@ -790,6 +790,25 @@ class ActivitiesListViewHandler(BaseStorageHandler):
         return (root, leaf)
 
 
+class SingleActivityViewHandler(BaseStorageHandler):
+    template = "storage_activity.html"
+
+    def __init__(self, **kwargs):
+        super(SingleActivityViewHandler, self).__init__(**kwargs)
+        self.code = self.match_dict.get('code', '')
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        activities = ('#', CMS_STORAGE_ACTIVITIES_LABEL)
+        leaf = ('#', self.code)
+        return (root, activities, leaf)
+
+
 ####### CDS WEBSITES #######
 
 class CdsWebsiteBaseHandler(BaseContentHandler):
@@ -859,6 +878,30 @@ class CdsWebsitesCorsoHandler(CdsWebsiteBaseHandler):
         return [('#', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)]
 
 
+class CdsWebsitesCorsoActivityHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_website_activity.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesCorsoActivityHandler, self).__init__(**kwargs)
+        self.cdsid = self.match_dict.get('cdsid', '')
+        self.code = self.match_dict.get('code', '')
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        return super().as_view()
+
+    @property
+    def corso_url(self):
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH}//'
+        return sanitize_path(url)
+
+    @property
+    def breadcrumbs(self):
+        corso = (self.corso_url, CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
+        leaf = ('#', self.code)
+        return (corso, leaf)
+
+
 class CdsWebsitesIscriversiHandler(CdsWebsiteBaseHandler):
     template = "storage_cds_websites_iscriversi.html"
 
@@ -873,6 +916,30 @@ class CdsWebsitesStudiareHandler(CdsWebsiteBaseHandler):
     @property
     def breadcrumbs(self):
         return [('#', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)]
+
+
+class CdsWebsitesStudiareActivityHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_website_activity.html"
+
+    def __init__(self, **kwargs):
+        super(CdsWebsitesStudiareActivityHandler, self).__init__(**kwargs)
+        self.cdsid = self.match_dict.get('cdsid', '')
+        self.code = self.match_dict.get('code', '')
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        return super().as_view()
+
+    @property
+    def studiare_url(self):
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/'
+        return sanitize_path(url)
+
+    @property
+    def breadcrumbs(self):
+        studiare = (self.studiare_url, CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)
+        leaf = ('#', self.code)
+        return (studiare, leaf)
 
 
 class CdsWebsitesOpportunitaHandler(CdsWebsiteBaseHandler):

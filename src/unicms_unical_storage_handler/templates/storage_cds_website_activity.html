@@ -1,0 +1,38 @@
+{% extends this_string_will_be_replaced %}
+
+{% load i18n %}
+{% load static %}
+
+<!-- load custom template tags -->
+{% load unicms_contexts %}
+
+
+<!-- SEO  -->
+{% block page_title %}{% trans "Activity" %}{% endblock page_title %}
+
+{% block container %}
+{% breadcrumbs webpath=webpath leaf=handler %}
+
+<div class="container">
+    <div class="col-12 py-5 bd-content">
+        {% block centered_container %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 col-lg-8">
+                                {% include "blocks/unical_storage_studyactivityinfo.html" with url=url uid="id_1" change_breadcrumb=1 %}
+                            </div>
+                            <div class="col-12 col-lg-3 offset-lg-1">
+                                {% include "includes/unical_storage_cds_websites_right_contacts.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+</div>
+
+{% endblock container %}
+
