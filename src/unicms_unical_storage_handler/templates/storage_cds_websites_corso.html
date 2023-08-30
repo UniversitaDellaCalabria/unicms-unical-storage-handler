@@ -313,116 +313,212 @@
                                                 </div>
 
                                                 <div v-for="choice in tab.AfChoices">
-                                                    <div v-if="choice.Year == index && choice.SceCodType != 'V'">
-                                                        <br>
-                                                        <b>
-                                                            [[ choice.SceDes ]]
-                                                        </b>
-                                                        <br>
-                                                        <span v-if="choice.OpzFlg">{% trans "Optional" %}</span>
-                                                        <span v-else>{% trans "Required" %}</span>
-                                                        <br>
-                                                        <div v-if="choice.VinId">
-                                                            <div v-for="vin in tab.AfChoices" v-if="vin.SceId == choice.VinId && vin.SceCodType == 'V'">
-                                                                <span>[[ choice.RegSceCodDes ]] ([[ vin.RegSceCodDes ]]):</span>
-                                                                <span v-if="vin.MinUnt == vin.MaxUnt">
-                                                                    [[ vin.MaxUnt ]]
-                                                                </span>
-                                                                <span v-else>
-                                                                    min [[ vin.MinUnt ]] / max [[ vin.MaxUnt ]]
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div v-else>
-                                                            <span>[[ choice.RegSceCodDes ]]:</span>
+                                                    <div v-if="choice.Year == index && choice.SceCodType == 'V'">
+                                                        <div class="alert alert-info" role="alert">
+                                                            <b>{% trans "Insegnamenti a scelta" %} - [[ choice.RegSceCodDes ]]</b>
+                                                            <br>
                                                             <span v-if="choice.MinUnt == choice.MaxUnt">
                                                                 [[ choice.MaxUnt ]]
                                                             </span>
                                                             <span v-else>
                                                                 min [[ choice.MinUnt ]] / max [[ choice.MaxUnt ]]
                                                             </span>
-                                                        </div>
+                                                            <span v-if="choice.UmRegSceCodType == 'BLK'">{% trans "teachings" %}</span>
+                                                            <span v-else>{% trans "ETCS" %}</span>
+                                                            <span v-if="choice.OpzFlg">{% trans "optional" %}</span>
+                                                            <span v-else>{% trans "required" %}</span>
+                                                            <span>{% trans "choice between" %}</span>
 
+                                                            <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.VinId == choice.SceId && sub_choice.Choices.length > 0">
+                                                                <div>
+                                                                    <br>
+                                                                    <b>
+                                                                        [[ sub_choice.SceDes ]]
+                                                                    </b>
+                                                                    <div class="table-responsive">
+                                                                        <small>
+                                                                            <table class="table table-sm table-hover table-striped">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th scope="col">{% trans "Teaching" %}</th>
+                                                                                        <th scope="col">{% trans "Period" %}</th>
+                                                                                        <th scope="col">{% trans "ETCS" %}</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="activity in sub_choice.Choices">
+                                                                                        <td>
+                                                                                            [[ activity.AfCod || "-" ]]
+                                                                                            <a :href="items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                                                                [[ activity.AfDescription ]]
+                                                                                            </a>
+                                                                                            <span v-else>
+                                                                                                [[ activity.AfDescription ]]
+                                                                                            </span>
+                                                                                            <span v-for="module in activity.AfSubModules">
+                                                                                                <br>
+                                                                                                [[ module.StudyActivityCod || "-" ]]
+                                                                                                <a :href="items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                                                    [[ module.StudyActivityName ]]
+                                                                                                </a>
+                                                                                                <span v-else>
+                                                                                                    [[ module.StudyActivityName ]]
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            [[ activity.CycleDes ]]
+                                                                                            <span v-for="module in activity.AfSubModules">
+                                                                                                <br>
+                                                                                                [[ module.StudyActivitySemester ]]
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            [[ activity.CreditValue ]]
+                                                                                            <span v-for="module in activity.AfSubModules">
+                                                                                                <br>
+                                                                                                [[ module.StudyActivityCreditValue ]]
+                                                                                            </span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-                                                        <div class="table-responsive" v-if="choice.Choices.length > 0 ">
-                                                            <small>
-                                                                <table class="table table-sm table-hover table-striped">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th scope="col">{% trans "Teaching" %}</th>
-                                                                            <th scope="col">{% trans "Period" %}</th>
-                                                                            <th scope="col">{% trans "ETCS" %}</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="activity in choice.Choices">
-                                                                            <td>
-                                                                                [[ activity.AfCod || "-" ]]
-                                                                                <a :href="items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
-                                                                                    [[ activity.AfDescription ]]
-                                                                                </a>
-                                                                                <span v-else>
-                                                                                    [[ activity.AfDescription ]]
+                                                            <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.VinId == choice.SceId && sub_choice.FilAnd.length > 0">
+                                                                <div>
+                                                                    <br>
+                                                                    <b>
+                                                                        [[ sub_choice.SceDes ]]
+                                                                    </b>
+                                                                    <div v-if="sub_choice.FilAnd.length > 0 ">
+                                                                        <ul class="ps-0 list-unstyled">
+                                                                            <li v-for="filter in sub_choice.FilAnd" v-if="!filter.NotFlg">
+                                                                                <span>
+                                                                                    <svg class="icon icon-sm icon-success">
+                                                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                                                                    </svg>
                                                                                 </span>
-                                                                                <span v-for="module in activity.AfSubModules">
-                                                                                    <br>
-                                                                                    [[ module.StudyActivityCod || "-" ]]
-                                                                                    <a :href="items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
-                                                                                        [[ module.StudyActivityName ]]
+                                                                                [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
+                                                                            </li>
+                                                                            <li v-for="filter in sub_choice.FilAnd" v-if="filter.NotFlg">
+                                                                                <span>
+                                                                                    <svg class="icon icon-sm icon-danger">
+                                                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
+                                                                                    </svg>
+                                                                                </span>
+                                                                                <span v-if="filter.TipoFiltroCod == 'CDS'">
+                                                                                    [[ filter.TipoFiltroDes ]]: [[ filter.CdsSceFilAndNome ]] ([[ filter.CdsSceFilAndCod ]])
+                                                                                </span>
+                                                                                <span v-else>
+                                                                                    [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
+                                                                                </span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div v-if="choice.Year == index && choice.SceCodType != 'V' &! choice.VinId">
+                                                        <div class="alert alert-info" role="alert">
+                                                            <b>{% trans "Insegnamenti a scelta" %} - [[ choice.RegSceCodDes ]]</b>
+                                                            <br>
+                                                            <span v-if="choice.MinUnt == choice.MaxUnt">
+                                                                [[ choice.MaxUnt ]]
+                                                            </span>
+                                                            <span v-else>
+                                                                min [[ choice.MinUnt ]] / max [[ choice.MaxUnt ]]
+                                                            </span>
+                                                            <span v-if="choice.UmRegSceCodType == 'BLK'">{% trans "teachings" %}</span>
+                                                            <span v-else>{% trans "ETCS" %}</span>
+                                                            <span v-if="choice.OpzFlg">{% trans "optional" %}</span>
+                                                            <span v-else>{% trans "required" %}</span>
+                                                            <span>{% trans "choice between" %}</span>
+
+                                                            <div class="table-responsive" v-if="choice.Choices.length > 0 ">
+                                                                <small>
+                                                                    <table class="table table-sm table-hover table-striped">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">{% trans "Teaching" %}</th>
+                                                                                <th scope="col">{% trans "Period" %}</th>
+                                                                                <th scope="col">{% trans "ETCS" %}</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="activity in choice.Choices">
+                                                                                <td>
+                                                                                    [[ activity.AfCod || "-" ]]
+                                                                                    <a :href="items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                                                        [[ activity.AfDescription ]]
                                                                                     </a>
                                                                                     <span v-else>
-                                                                                        [[ module.StudyActivityName ]]
+                                                                                        [[ activity.AfDescription ]]
                                                                                     </span>
-                                                                                </span>
-                                                                            </td>
-                                                                            <td>
-                                                                                [[ activity.CycleDes ]]
-                                                                                <span v-for="module in activity.AfSubModules">
-                                                                                    <br>
-                                                                                    [[ module.StudyActivitySemester ]]
-                                                                                </span>
-                                                                            </td>
-                                                                            <td>
-                                                                                [[ activity.CreditValue ]]
-                                                                                <span v-for="module in activity.AfSubModules">
-                                                                                    <br>
-                                                                                    [[ module.StudyActivityCreditValue ]]
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </small>
+                                                                                    <span v-for="module in activity.AfSubModules">
+                                                                                        <br>
+                                                                                        [[ module.StudyActivityCod || "-" ]]
+                                                                                        <a :href="items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                                            [[ module.StudyActivityName ]]
+                                                                                        </a>
+                                                                                        <span v-else>
+                                                                                            [[ module.StudyActivityName ]]
+                                                                                        </span>
+                                                                                    </span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    [[ activity.CycleDes ]]
+                                                                                    <span v-for="module in activity.AfSubModules">
+                                                                                        <br>
+                                                                                        [[ module.StudyActivitySemester ]]
+                                                                                    </span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    [[ activity.CreditValue ]]
+                                                                                    <span v-for="module in activity.AfSubModules">
+                                                                                        <br>
+                                                                                        [[ module.StudyActivityCreditValue ]]
+                                                                                    </span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </small>
+                                                            </div>
+
+                                                            <div v-if="choice.FilAnd.length > 0 ">
+                                                                <ul class="ps-0 list-unstyled">
+                                                                    <li v-for="filter in choice.FilAnd" v-if="!filter.NotFlg">
+                                                                        <span>
+                                                                            <svg class="icon icon-sm icon-success">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                                                            </svg>
+                                                                        </span>
+                                                                        [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
+                                                                    </li>
+                                                                    <li v-for="filter in choice.FilAnd" v-if="filter.NotFlg">
+                                                                        <span>
+                                                                            <svg class="icon icon-sm icon-danger">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
+                                                                            </svg>
+                                                                        </span>
+                                                                        <span v-if="filter.TipoFiltroCod == 'CDS'">
+                                                                            [[ filter.TipoFiltroDes ]]: [[ filter.CdsSceFilAndNome ]] ([[ filter.CdsSceFilAndCod ]])
+                                                                        </span>
+                                                                        <span v-else>
+                                                                            [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
+                                                                        </span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
+
                                                         </div>
-
-                                                        <div v-if="choice.FilAnd.length > 0 ">
-                                                            {% trans "Teachings must be chosen respecting these rules" %}
-                                                            <ul class="ps-0 list-unstyled">
-                                                                <li v-for="filter in choice.FilAnd" v-if="!filter.NotFlg">
-                                                                    <span>
-                                                                        <svg class="icon icon-sm icon-success">
-                                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
-                                                                        </svg>
-                                                                    </span>
-                                                                    [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]]
-                                                                </li>
-                                                                <li v-for="filter in choice.FilAnd" v-if="filter.NotFlg">
-                                                                    <span>
-                                                                        <svg class="icon icon-sm icon-danger">
-                                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <span v-if="filter.TipoFiltroCod == 'CDS'">
-                                                                        [[ filter.TipoFiltroDes ]]: [[ filter.CdsSceFilAndNome ]] ([[ filter.CdsSceFilAndCod ]])
-                                                                    </span>
-                                                                    <span v-else>
-                                                                        [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]]
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -432,9 +528,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
                 <div class="col-12 col-lg-3 offset-lg-1">
                     {% include "includes/unical_storage_cds_websites_right_static.html" %}
