@@ -328,7 +328,7 @@
                                                             <span v-if="choice.OpzFlg">{% trans "optional" %}</span>
                                                             <span v-else>{% trans "required" %}</span>
                                                             <span>{% trans "choice between" %}</span>
-                                                            <hr>
+
                                                             <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.VinId == choice.SceId && sub_choice.Choices.length > 0">
                                                                 <div>
                                                                     <br>
@@ -441,7 +441,7 @@
                                                             <span v-if="choice.OpzFlg">{% trans "optional" %}</span>
                                                             <span v-else>{% trans "required" %}</span>
                                                             <span>{% trans "choice between" %}</span>
-                                                            <hr>
+
                                                             <div class="table-responsive" v-if="choice.Choices.length > 0 ">
                                                                 <small>
                                                                     <table class="table table-sm table-hover table-striped">
