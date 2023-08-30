@@ -398,7 +398,8 @@
                                                                         <ul class="ps-0 list-unstyled">
                                                                             <li v-for="filter in sub_choice.FilAnd" v-if="!filter.NotFlg">
                                                                                 <span>
-                                                                                    <svg class="icon icon-sm icon-success">
+                                                                                    <svg class="icon icon-sm icon-success" :aria-labelledby="filter.FilAndId + 'success'">
+                                                                                        <title :id="filter.FilAndId + 'success'">{% trans "Valid option" %}</title>
                                                                                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
                                                                                     </svg>
                                                                                 </span>
@@ -406,7 +407,8 @@
                                                                             </li>
                                                                             <li v-for="filter in sub_choice.FilAnd" v-if="filter.NotFlg">
                                                                                 <span>
-                                                                                    <svg class="icon icon-sm icon-danger">
+                                                                                    <svg class="icon icon-sm icon-danger" :aria-labelledby="filter.FilAndId + 'danger'">
+                                                                                        <title :id="filter.FilAndId + 'danger'">{% trans "Invalid option" %}</title>
                                                                                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
                                                                                     </svg>
                                                                                 </span>

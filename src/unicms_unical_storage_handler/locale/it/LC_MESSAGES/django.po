@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-30 13:48+0200\n"
-"PO-Revision-Date: 2023-08-30 13:49+0200\n"
+"POT-Creation-Date: 2023-08-30 13:57+0200\n"
+"PO-Revision-Date: 2023-08-30 13:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -464,8 +464,8 @@ msgstr "anno"
 #: templates/blocks/unical_storage_studyactivity_list.html:169
 #: templates/blocks/unical_storage_studyactivity_list.html:288
 #: templates/storage_cds_websites_corso.html:256
-#: templates/storage_cds_websites_corso.html:350
-#: templates/storage_cds_websites_corso.html:458
+#: templates/storage_cds_websites_corso.html:345
+#: templates/storage_cds_websites_corso.html:452
 msgid "Teaching"
 msgstr "Insegnamento"
 
@@ -477,8 +477,8 @@ msgstr "Insegnamento"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:143
 #: templates/blocks/unical_storage_studyactivity_list.html:116
 #: templates/storage_cds_websites_corso.html:258
-#: templates/storage_cds_websites_corso.html:351
-#: templates/storage_cds_websites_corso.html:459
+#: templates/storage_cds_websites_corso.html:346
+#: templates/storage_cds_websites_corso.html:453
 msgid "Period"
 msgstr "Periodo"
 
@@ -489,9 +489,10 @@ msgstr "Periodo"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:57
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:144
 #: templates/storage_cds_websites_corso.html:259
-#: templates/storage_cds_websites_corso.html:331
-#: templates/storage_cds_websites_corso.html:352
-#: templates/storage_cds_websites_corso.html:460
+#: templates/storage_cds_websites_corso.html:329
+#: templates/storage_cds_websites_corso.html:347
+#: templates/storage_cds_websites_corso.html:442
+#: templates/storage_cds_websites_corso.html:454
 msgid "ETCS"
 msgstr "CFU"
 
@@ -526,7 +527,7 @@ msgstr "Docenze Anno"
 
 #: templates/blocks/unical_storage_cdsinfo.html:566
 #: templates/includes/unical_storage_cds_websites_right_links.html:56
-#: templates/storage_cds_websites_corso.html:559
+#: templates/storage_cds_websites_corso.html:550
 msgid "Documents"
 msgstr "Documenti"
 
@@ -1118,40 +1119,38 @@ msgstr "Dipartimento di riferimento"
 msgid "Study plan"
 msgstr "Piano di studio"
 
-#: templates/storage_cds_websites_corso.html:322
-#: templates/storage_cds_websites_corso.html:438
+#: templates/storage_cds_websites_corso.html:320
+#: templates/storage_cds_websites_corso.html:433
 msgid "Insegnamenti a scelta"
 msgstr ""
 
-#: templates/storage_cds_websites_corso.html:330
+#: templates/storage_cds_websites_corso.html:328
+#: templates/storage_cds_websites_corso.html:441
 msgid "teachings"
 msgstr "insegnamenti"
 
-#: templates/storage_cds_websites_corso.html:332
-#: templates/storage_cds_websites_corso.html:448
+#: templates/storage_cds_websites_corso.html:330
+#: templates/storage_cds_websites_corso.html:443
 msgid "optional"
 msgstr "opzionali"
 
-#: templates/storage_cds_websites_corso.html:333
-#: templates/storage_cds_websites_corso.html:449
+#: templates/storage_cds_websites_corso.html:331
+#: templates/storage_cds_websites_corso.html:444
 msgid "required"
 msgstr "obbligatori"
 
-#: templates/storage_cds_websites_corso.html:334
+#: templates/storage_cds_websites_corso.html:332
+#: templates/storage_cds_websites_corso.html:445
 msgid "choice between"
 msgstr "a scelta tra"
 
-#: templates/storage_cds_websites_corso.html:446
-msgid "insegnamenti"
-msgstr ""
+#: templates/storage_cds_websites_corso.html:404
+msgid "Valid option"
+msgstr "Opzione valida"
 
-#: templates/storage_cds_websites_corso.html:447
-msgid "crediti"
-msgstr ""
-
-#: templates/storage_cds_websites_corso.html:450
-msgid "a scelta tra"
-msgstr ""
+#: templates/storage_cds_websites_corso.html:413
+msgid "Invalid option"
+msgstr "Opzione non valida"
 
 #: templates/storage_cds_websites_iscriversi.html:109
 #: templates/storage_cds_websites_iscriversi.html:168
