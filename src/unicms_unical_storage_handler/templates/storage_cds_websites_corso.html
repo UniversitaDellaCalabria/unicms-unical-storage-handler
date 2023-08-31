@@ -42,6 +42,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDYPLANS_API" as cds_websites_studyplans_api %}
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
 {% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
 
 {% include "includes/unical_storage_loading.html" %}
 
@@ -216,7 +217,7 @@
                             :loader_source="loader_source">
                         </loading-icon>
                         <div v-else>
-                            <h5 class="mb-3">{% trans "Study plan" %} ([[ items.RegPlanDes ]])</h5>
+                            <h5 class="mb-3">{% trans "Study plan" %}</h5>
                             <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
                                 <div class="accordion-item" v-for="tab in items.PlanTabs">
                                     <div class="accordion-header" :id="'heading-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
@@ -264,7 +265,7 @@
 <!--
                                                                                 <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'">
 -->
-                                                                                <a :href="items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                                                <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
                                                                                     [[ activity.AfDescription ]]
                                                                                 </a>
                                                                                 <span v-else>
@@ -273,7 +274,7 @@
                                                                                 <ul v-if="activity.AfSubModules.length > 0">
                                                                                     <li v-for="module in activity.AfSubModules">
                                                                                         [[ module.StudyActivityCod ]]
-                                                                                        <a :href="items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                                        <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
                                                                                             [[ module.StudyActivityName ]]
                                                                                         </a>
                                                                                         <span v-else>
@@ -349,7 +350,7 @@
                                                                                     <tr v-for="activity in sub_choice.Choices">
                                                                                         <td>
                                                                                             [[ activity.AfCod || "-" ]]
-                                                                                            <a :href="items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                                                            <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
                                                                                                 [[ activity.AfDescription ]]
                                                                                             </a>
                                                                                             <span v-else>
@@ -358,7 +359,7 @@
                                                                                             <span v-for="module in activity.AfSubModules">
                                                                                                 <br>
                                                                                                 [[ module.StudyActivityCod || "-" ]]
-                                                                                                <a :href="items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
                                                                                                     [[ module.StudyActivityName ]]
                                                                                                 </a>
                                                                                                 <span v-else>
@@ -456,7 +457,7 @@
                                                                             <tr v-for="activity in choice.Choices">
                                                                                 <td>
                                                                                     [[ activity.AfCod || "-" ]]
-                                                                                    <a :href="items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                                                    <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
                                                                                         [[ activity.AfDescription ]]
                                                                                     </a>
                                                                                     <span v-else>
@@ -465,7 +466,7 @@
                                                                                     <span v-for="module in activity.AfSubModules">
                                                                                         <br>
                                                                                         [[ module.StudyActivityCod || "-" ]]
-                                                                                        <a :href="items.RegDidId + '/{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                                        <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
                                                                                             [[ module.StudyActivityName ]]
                                                                                         </a>
                                                                                         <span v-else>
@@ -628,6 +629,7 @@ var _{{ cds_cod }} = new Vue({
                 .get(url)
                 .then(response => {
                     this.callCdsByYear(value)
+                    _{{ cds_cod }}_studyplans.callStudyPlans(value)
                 }
             )
         },
@@ -663,9 +665,10 @@ var _{{ cds_cod }}_studyplans = new Vue({
         this.callStudyPlans()
     },
     methods: {
-        callStudyPlans() {
+        callStudyPlans(year={{ current_year }}) {
+            this.is_loading = true
             axios
-                .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=2023')
+                .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
                 .then(response => {
                     this.items = response.data.results[0]
                     this.is_loading = false

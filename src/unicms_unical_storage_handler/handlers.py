@@ -883,7 +883,6 @@ class CdsWebsitesCorsoActivityHandler(CdsWebsiteBaseHandler):
 
     def __init__(self, **kwargs):
         super(CdsWebsitesCorsoActivityHandler, self).__init__(**kwargs)
-        self.cdsid = self.match_dict.get('cdsid', '')
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
@@ -923,7 +922,6 @@ class CdsWebsitesStudiareActivityHandler(CdsWebsiteBaseHandler):
 
     def __init__(self, **kwargs):
         super(CdsWebsitesStudiareActivityHandler, self).__init__(**kwargs)
-        self.cdsid = self.match_dict.get('cdsid', '')
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):

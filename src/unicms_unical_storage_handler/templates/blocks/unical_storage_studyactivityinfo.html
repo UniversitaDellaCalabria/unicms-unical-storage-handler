@@ -257,7 +257,6 @@
                         document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.StudyActivityName
                         document.title = this.item.StudyActivityName + " - " + this.item.StudyActivityCdSName;
                         let breadcrumbs = document.getElementsByClassName("{{ breadcrumb_item }}")
-                        console.log(breadcrumbs)
                         for(let item in breadcrumbs){
                             if(breadcrumbs[item].children[0].innerHTML == this.item.StudyActivityRegDidId){
                                 breadcrumbs[item].children[0].innerHTML = this.item.StudyActivityCdSName

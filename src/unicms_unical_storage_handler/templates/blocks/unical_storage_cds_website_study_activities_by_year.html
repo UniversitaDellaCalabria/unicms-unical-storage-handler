@@ -70,7 +70,7 @@
 <!--
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
 -->
-                                                            <a :href="activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                            <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                 [[ activity.StudyActivityName ]]
                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                             </a>
@@ -136,7 +136,7 @@
                                                         <tbody>
                                                             <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
                                                                 <td>
-                                                                    <a :href="activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                    <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                         [[ activity.StudyActivityName ]]
                                                                         <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                                     </a>
@@ -226,7 +226,7 @@
                                                                 <tbody>
                                                                     <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
                                                                         <td>
-                                                                            <a :href="activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                            <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                                 [[ activity.StudyActivityName ]]
                                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                                             </a>
@@ -292,7 +292,7 @@
                                                                         <tbody>
                                                                             <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
                                                                                 <td>
-                                                                                    <a :href="activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                                    <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                                         [[ activity.StudyActivityName ]]
                                                                                         <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                                                     </a>
