@@ -24,7 +24,7 @@
     <div v-else-if="Object.keys(teachings_dictionary).length == _cds_data.cds.CdSDuration">
         <div v-if="teachings_dictionary[1].length == 1">
 
-            <h5 class="mt-4 mb-3">{% trans "Teachings" %}</h5>
+            <h5 class="mt-4 mb-3">{% trans "Teachings" %} - [[ academic_year ]]/[[ academic_year + 1 ]]</h5>
 
             <div :id="'studyPlanAccordionInnerDiv{{ id }}-1-lft'"
                  class="accordion accordion-left-icon">
@@ -166,7 +166,7 @@
             </div>
         </div>
         <div v-else>
-            <h5 class="mt-4 mb-3">{% trans "Teachings" %} - {% trans "Study paths" %}</h5>
+            <h5 class="mt-4 mb-3">{% trans "Teachings" %} - {% trans "Study paths" %} - [[ academic_year ]]/[[ academic_year + 1 ]]</h5>
             <div :id="'studyPlanAccordionDiv{{ id }}-lft'" class="accordion accordion-left-icon">
                 <div v-for="(item, index) in teachings_dictionary[1]" class="accordion-item">
                     <div class="accordion-header" :id="'studyPlanHeading-{{ id }}-' + index + '-lft'">
@@ -381,7 +381,7 @@ getTeachingsInYear(year, index) {
 getYears() {
     let count = _cds_data.cds.CdSDuration
     for(let i=1; i<=count; i++) {
-        let year = _cds_data.cds.AcademicYear - i + 1
+        let year = ({{ year }} || _cds_data.cds.AcademicYear) - i + 1
         this.getTeachingsInYear(year, i)
     }
     this.is_loading = false
@@ -393,7 +393,7 @@ getYears() {
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 watch: {
     regdidid: function(val) {
-        this.academic_year = _cds_data.cds.AcademicYear
+        this.academic_year = ({{ year }} || _cds_data.cds.AcademicYear)
         this.degree_class = _cds_data.cds.CourseClassCod
         this.interclass_degree_class = _cds_data.cds.CourseInterClassCod
         this.url = "{{ base_api }}{{ cds_api }}" + val + "/studyplans/"

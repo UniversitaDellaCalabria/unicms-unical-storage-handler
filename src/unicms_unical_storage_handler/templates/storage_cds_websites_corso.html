@@ -678,8 +678,3 @@ var _{{ cds_cod }}_studyplans = new Vue({
 })
 </script>
 {% endblock container %}
-
-{% block cds_website_callURL %}
-{% storage_settings_value "CURRENT_YEAR" as current_year %}
-this.CallURL(null, "{{ current_year }}");
-{% endblock cds_website_callURL %}
