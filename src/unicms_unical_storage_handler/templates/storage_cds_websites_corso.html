@@ -216,7 +216,7 @@
                             v-if="is_loading"
                             :loader_source="loader_source">
                         </loading-icon>
-                        <div v-else>
+                        <div v-else v-if="items && 'PlanTabs' in items">
                             <h5 class="mb-3">{% trans "Study plan" %}</h5>
                             <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
                                 <div class="accordion-item" v-for="tab in items.PlanTabs">
@@ -619,7 +619,8 @@ var _{{ cds_cod }} = new Vue({
             axios
                 .get(cds_year_url)
                 .then(response => {
-                    _cds_data.CallURL(response.data.results[0]['RegDidId'])
+                    if(response.data.results.length>0 && 'RegDidId' in response.data.results[0])
+                        _cds_data.CallURL(response.data.results[0]['RegDidId'])
                 }
             )
         },
