@@ -329,10 +329,6 @@
 
     </div>
 
-    <div v-else>
-        {% trans "No items here" %}
-    </div>
-
 </div>
 {% endblock content %}
 
@@ -374,8 +370,9 @@ getTeachingsInYear(year, index) {
     axios
         .get(url)
         .then(response => {
-            let regdidid = response.data.results[0].RegDidId
-            this.setTeachingDictionary(regdidid, index)
+            let results = response.data.results[0]
+            if('RegDidId' in results)
+                this.setTeachingDictionary(response.data.results[0].RegDidId, index)
         })
 },
 getYears() {
