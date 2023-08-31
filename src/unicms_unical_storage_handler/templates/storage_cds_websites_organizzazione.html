@@ -49,25 +49,27 @@
                         <p class="h1 lighter">{{ page_title }}</p>
                         <div class="row mt-5" id="_{{ cds_cod }}" >
 
-                            <p>
-                                <b>[[ _cds_data.cds_labels['DirectorName'] ]]</b>:
-                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DirectorId +'/'" v-if="_cds_data.cds.OtherData.DirectorId">
-                                    [[ _cds_data.cds.OtherData.DirectorName ]]
-                                </a>
-                                <span v-else>
-                                    [[ _cds_data.cds.OtherData.DirectorName ]]
-                                </span>
-                            </p>
+                            <div v-if="_cds_data.cds.OtherData">
+                                <p v-if="'DirectorId' in _cds_data.cds.OtherData">
+                                    <b>[[ _cds_data.cds_labels['DirectorName'] ]]</b>:
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DirectorId +'/'" v-if="_cds_data.cds.OtherData.DirectorId">
+                                        [[ _cds_data.cds.OtherData.DirectorName ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ _cds_data.cds.OtherData.DirectorName ]]
+                                    </span>
+                                </p>
 
-                            <p>
-                                <b>[[ _cds_data.cds_labels['DeputyDirectorName'] ]]</b>:
-                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DeputyDirectorId +'/'" v-if="_cds_data.cds.OtherData.DeputyDirectorId">
-                                    [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
-                                </a>
-                                <span v-else>
-                                    [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
-                                </span>
-                            </p>
+                                <p v-if="'DeputyDirectorId' in _cds_data.cds.OtherData">
+                                    <b>[[ _cds_data.cds_labels['DeputyDirectorName'] ]]</b>:
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DeputyDirectorId +'/'" v-if="_cds_data.cds.OtherData.DeputyDirectorId">
+                                        [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
+                                    </span>
+                                </p>
+                            </div>
 
                             <div id="accordionDivGroups-lft" class="accordion accordion-left-icon" >
                                 <div class="accordion-item" v-for="gruppo in _cds_data.cds.CdsOrganizations">
