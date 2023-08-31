@@ -427,6 +427,19 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div v-if="choice.Choices.length==0 && choice.FilAnd.length==0 && choice.RegSceCodType != 'V'">
+                                                                <ul class="ps-0 list-unstyled">
+                                                                    <li>
+                                                                        <span>
+                                                                            <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
+                                                                                <title id="no-choice-success">{% trans "Valid option" %}</title>
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                                                            </svg>
+                                                                        </span>
+                                                                         Tipologia del CDS: [[ _cds_data.cds.CourseTypeDescription ]] ([[ _cds_data.cds.CourseType ]])
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -522,7 +535,19 @@
                                                                     </li>
                                                                 </ul>
                                                             </div>
-
+                                                            <div v-if="choice.Choices.length==0 && choice.FilAnd.length==0 && choice.RegSceCodType != 'V'">
+                                                                <ul class="ps-0 list-unstyled">
+                                                                    <li>
+                                                                        <span>
+                                                                            <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
+                                                                                <title id="no-choice-success">{% trans "Valid option" %}</title>
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                                                            </svg>
+                                                                        </span>
+                                                                         Tipologia del CDS: [[ _cds_data.cds.CourseTypeDescription ]] ([[ _cds_data.cds.CourseType ]])
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
 
                                                         </div>
                                                     </div>
