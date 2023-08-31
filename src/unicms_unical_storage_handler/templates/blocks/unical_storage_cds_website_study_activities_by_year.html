@@ -21,312 +21,313 @@
         :loader_source="loader_source">
     </loading-icon>
 
-    <div v-else-if="Object.keys(teachings_dictionary).length == _cds_data.cds.CdSDuration">
-        <div v-if="teachings_dictionary[1].length == 1">
+    <div v-else>
+        <div v-if="Object.keys(teachings_dictionary).length == _cds_data.cds.CdSDuration">
+            <div v-if="teachings_dictionary[1].length == 1">
 
-            <h5 class="mt-4 mb-3">{% trans "Teachings" %} - [[ academic_year ]]/[[ academic_year + 1 ]]</h5>
+                <h5 class="mt-4 mb-3">{% trans "Teachings" %} - [[ academic_year ]]/[[ academic_year + 1 ]]</h5>
 
-            <div :id="'studyPlanAccordionInnerDiv{{ id }}-1-lft'"
-                 class="accordion accordion-left-icon">
-                <div v-for="(value, label, index2) in teachings_dictionary[1][0].StudyActivities">
-                    <div class="accordion-item" v-if="index2 == 0">
-                        <div class="accordion-header" :id="'heading-{{ id }}-1' + index2 + '-lft'">
+                <div :id="'studyPlanAccordionInnerDiv{{ id }}-1-lft'"
+                     class="accordion accordion-left-icon">
+                    <div v-for="(value, label, index2) in teachings_dictionary[1][0].StudyActivities">
+                        <div class="accordion-item" v-if="index2 == 0">
+                            <div class="accordion-header" :id="'heading-{{ id }}-1' + index2 + '-lft'">
+                                <button class="accordion-button"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        :data-bs-target="'#collapse-{{ id }}-1' + index2 +'-lft'"
+                                        aria-expanded="false"
+                                        :aria-controls="'collapse-{{ id }}-1' + index2 +'-lft'">
+                                [[ label ]] {% trans "year" %}
+                                </button>
+                            </div>
+                            <div :id="'collapse-{{ id }}-1' + index2 +'-lft'"
+                                 class="accordion-collapse collapse"
+                                 :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
+                                 role="region"
+                                 :aria-labelledby="'heading-{{ id }}-1' + index2 + '-lft'">
+                                <div class="accordion-body">
+                                    <div class="it-list-wrapper">
+                                        <div class="table-responsive">
+                                            <small>
+                                                <table class="table table-sm table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">{% trans "Teaching" %}</th>
+                                                            <th scope="col">{% trans "Period" %}</th>
+                                                            <th scope="col">{% trans "ETCS" %}</th>
+                                                            <th scope="col" v-if="interclass_degree_class && degree_class">
+                                                                [[ degree_class ]]
+                                                            </th>
+                                                            <th scope="col" v-else-if="degree_class"></th>
+                                                            <th scope="col" v-if="interclass_degree_class">
+                                                                [[ interclass_degree_class ]]
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                            <td>
+    <!--
+                                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+    -->
+                                                                <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                    [[ activity.StudyActivityName ]]
+                                                                    <span v-if="activity.StudyActivityCompulsory == 1">*</span>
+                                                                </a>
+                                                            </td>
+                                                            <td>[[ activity.StudyActivitySemester ]]</td>
+                                                            <td>[[ activity.StudyActivityECTS ]]</td>
+                                                            <td v-if="degree_class">
+                                                                [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                            </td>
+                                                            <td v-if="interclass_degree_class">
+                                                                [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-for="year_index in _cds_data.cds.CdSDuration" v-if="year_index > 1">
+                        <div v-for="path_name in teachings_dictionary[year_index]" class="accordion-item" v-if="path_name.StudyPlanCOD == teachings_dictionary[1][0].StudyPlanCOD">
+
+                            <div v-for="(value, label, index3) in path_name.StudyActivities">
+                                <div class="accordion-item" v-if="index3 == (year_index-1)">
+                                    <div class="accordion-header" :id="'heading-{{ id }}-1' + year_index + '-lft'">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="'#collapse-{{ id }}-1' + year_index +'-lft'"
+                                                aria-expanded="false"
+                                                :aria-controls="'collapse-{{ id }}-1' + year_index +'-lft'">
+                                        [[ label ]] {% trans "year" %}
+                                        </button>
+                                    </div>
+                                    <div :id="'collapse-{{ id }}-1' + year_index +'-lft'"
+                                         class="accordion-collapse collapse"
+                                         :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
+                                         role="region"
+                                         :aria-labelledby="'heading-{{ id }}-1' + year_index + '-lft'">
+                                        <div class="accordion-body">
+                                            <div class="it-list-wrapper">
+                                                <div class="table-responsive">
+                                                    <small>
+                                                        <table class="table table-sm table-hover table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">{% trans "Teaching" %}</th>
+                                                                    <th scope="col">{% trans "Period" %}</th>
+                                                                    <th scope="col">{% trans "ETCS" %}</th>
+                                                                    <th scope="col" v-if="interclass_degree_class && degree_class">
+                                                                        [[ degree_class ]]
+                                                                    </th>
+                                                                    <th scope="col" v-else-if="degree_class"></th>
+                                                                    <th scope="col" v-if="interclass_degree_class">
+                                                                        [[ interclass_degree_class ]]
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                                    <td>
+                                                                        <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                            [[ activity.StudyActivityName ]]
+                                                                            <span v-if="activity.StudyActivityCompulsory == 1">*</span>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>[[ activity.StudyActivitySemester ]]</td>
+                                                                    <td>[[ activity.StudyActivityECTS ]]</td>
+                                                                    <td v-if="degree_class">
+                                                                        [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                                    </td>
+                                                                    <td v-if="interclass_degree_class">
+                                                                        [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div v-else>
+                <h5 class="mt-4 mb-3">{% trans "Teachings" %} - {% trans "Study paths" %} - [[ academic_year ]]/[[ academic_year + 1 ]]</h5>
+                <div :id="'studyPlanAccordionDiv{{ id }}-lft'" class="accordion accordion-left-icon">
+                    <div v-for="(item, index) in teachings_dictionary[1]" class="accordion-item">
+                        <div class="accordion-header" :id="'studyPlanHeading-{{ id }}-' + index + '-lft'">
                             <button class="accordion-button"
                                     type="button"
                                     data-bs-toggle="collapse"
-                                    :data-bs-target="'#collapse-{{ id }}-1' + index2 +'-lft'"
+                                    :data-bs-target="'#studyPlanAccordion-{{ id }}-' + index +'-lft'"
                                     aria-expanded="false"
-                                    :aria-controls="'collapse-{{ id }}-1' + index2 +'-lft'">
-                            [[ label ]] {% trans "year" %}
+                                    :aria-controls="'studyPlanAccordion-{{ id }}-' + index +'-lft'">
+                                [[ item.StudyPlanName ]]
                             </button>
                         </div>
-                        <div :id="'collapse-{{ id }}-1' + index2 +'-lft'"
+                        <div :id="'studyPlanAccordion-{{ id }}-' + index +'-lft'"
                              class="accordion-collapse collapse"
-                             :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
+                             :data-bs-parent="'#studyPlanAccordionDiv{{ id }}-lft'"
                              role="region"
-                             :aria-labelledby="'heading-{{ id }}-1' + index2 + '-lft'">
+                             aria-labelledby="'studyPlanHeading-{{ id }}-' + index + '-lft'">
                             <div class="accordion-body">
-                                <div class="it-list-wrapper">
-                                    <div class="table-responsive">
-                                        <small>
-                                            <table class="table table-sm table-hover table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">{% trans "Teaching" %}</th>
-                                                        <th scope="col">{% trans "Period" %}</th>
-                                                        <th scope="col">{% trans "ETCS" %}</th>
-                                                        <th scope="col" v-if="interclass_degree_class && degree_class">
-                                                            [[ degree_class ]]
-                                                        </th>
-                                                        <th scope="col" v-else-if="degree_class"></th>
-                                                        <th scope="col" v-if="interclass_degree_class">
-                                                            [[ interclass_degree_class ]]
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
-                                                        <td>
-<!--
-                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
--->
-                                                            <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
-                                                                [[ activity.StudyActivityName ]]
-                                                                <span v-if="activity.StudyActivityCompulsory == 1">*</span>
-                                                            </a>
-                                                        </td>
-                                                        <td>[[ activity.StudyActivitySemester ]]</td>
-                                                        <td>[[ activity.StudyActivityECTS ]]</td>
-                                                        <td v-if="degree_class">
-                                                            [[ activity.StudyActivityTeachingUnitType || "-" ]]
-                                                        </td>
-                                                        <td v-if="interclass_degree_class">
-                                                            [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div v-for="year_index in _cds_data.cds.CdSDuration" v-if="year_index > 1">
-                    <div v-for="path_name in teachings_dictionary[year_index]" class="accordion-item" v-if="path_name.StudyPlanCOD == teachings_dictionary[1][0].StudyPlanCOD">
-
-                        <div v-for="(value, label, index3) in path_name.StudyActivities">
-                            <div class="accordion-item" v-if="index3 == (year_index-1)">
-                                <div class="accordion-header" :id="'heading-{{ id }}-1' + year_index + '-lft'">
-                                    <button class="accordion-button"
-                                            type="button"
-                                            data-bs-toggle="collapse"
-                                            :data-bs-target="'#collapse-{{ id }}-1' + year_index +'-lft'"
-                                            aria-expanded="false"
-                                            :aria-controls="'collapse-{{ id }}-1' + year_index +'-lft'">
-                                    [[ label ]] {% trans "year" %}
-                                    </button>
-                                </div>
-                                <div :id="'collapse-{{ id }}-1' + year_index +'-lft'"
-                                     class="accordion-collapse collapse"
-                                     :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
-                                     role="region"
-                                     :aria-labelledby="'heading-{{ id }}-1' + year_index + '-lft'">
-                                    <div class="accordion-body">
-                                        <div class="it-list-wrapper">
-                                            <div class="table-responsive">
-                                                <small>
-                                                    <table class="table table-sm table-hover table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">{% trans "Teaching" %}</th>
-                                                                <th scope="col">{% trans "Period" %}</th>
-                                                                <th scope="col">{% trans "ETCS" %}</th>
-                                                                <th scope="col" v-if="interclass_degree_class && degree_class">
-                                                                    [[ degree_class ]]
-                                                                </th>
-                                                                <th scope="col" v-else-if="degree_class"></th>
-                                                                <th scope="col" v-if="interclass_degree_class">
-                                                                    [[ interclass_degree_class ]]
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
-                                                                <td>
-                                                                    <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
-                                                                        [[ activity.StudyActivityName ]]
-                                                                        <span v-if="activity.StudyActivityCompulsory == 1">*</span>
-                                                                    </a>
-                                                                </td>
-                                                                <td>[[ activity.StudyActivitySemester ]]</td>
-                                                                <td>[[ activity.StudyActivityECTS ]]</td>
-                                                                <td v-if="degree_class">
-                                                                    [[ activity.StudyActivityTeachingUnitType || "-" ]]
-                                                                </td>
-                                                                <td v-if="interclass_degree_class">
-                                                                    [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </small>
+                                <div :id="'studyPlanAccordionInnerDiv{{ id }}-' + index + '-lft'"
+                                     class="accordion accordion-left-icon">
+                                    <div v-for="(value, label, index2) in item.StudyActivities">
+                                        <div class="accordion-item" v-if="index2 == 0">
+                                            <div class="accordion-header" :id="'heading-{{ id }}-' + index + index2 + '-lft'">
+                                                <button class="accordion-button"
+                                                        type="button"
+                                                        data-bs-toggle="collapse"
+                                                        :data-bs-target="'#collapse-{{ id }}-' + index + index2 +'-lft'"
+                                                        aria-expanded="false"
+                                                        :aria-controls="'collapse-{{ id }}-' + index + index2 +'-lft'">
+                                                [[ label ]] {% trans "year" %}
+                                                </button>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div v-else>
-            <h5 class="mt-4 mb-3">{% trans "Teachings" %} - {% trans "Study paths" %} - [[ academic_year ]]/[[ academic_year + 1 ]]</h5>
-            <div :id="'studyPlanAccordionDiv{{ id }}-lft'" class="accordion accordion-left-icon">
-                <div v-for="(item, index) in teachings_dictionary[1]" class="accordion-item">
-                    <div class="accordion-header" :id="'studyPlanHeading-{{ id }}-' + index + '-lft'">
-                        <button class="accordion-button"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                :data-bs-target="'#studyPlanAccordion-{{ id }}-' + index +'-lft'"
-                                aria-expanded="false"
-                                :aria-controls="'studyPlanAccordion-{{ id }}-' + index +'-lft'">
-                            [[ item.StudyPlanName ]]
-                        </button>
-                    </div>
-                    <div :id="'studyPlanAccordion-{{ id }}-' + index +'-lft'"
-                         class="accordion-collapse collapse"
-                         :data-bs-parent="'#studyPlanAccordionDiv{{ id }}-lft'"
-                         role="region"
-                         aria-labelledby="'studyPlanHeading-{{ id }}-' + index + '-lft'">
-                        <div class="accordion-body">
-                            <div :id="'studyPlanAccordionInnerDiv{{ id }}-' + index + '-lft'"
-                                 class="accordion accordion-left-icon">
-                                <div v-for="(value, label, index2) in item.StudyActivities">
-                                    <div class="accordion-item" v-if="index2 == 0">
-                                        <div class="accordion-header" :id="'heading-{{ id }}-' + index + index2 + '-lft'">
-                                            <button class="accordion-button"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    :data-bs-target="'#collapse-{{ id }}-' + index + index2 +'-lft'"
-                                                    aria-expanded="false"
-                                                    :aria-controls="'collapse-{{ id }}-' + index + index2 +'-lft'">
-                                            [[ label ]] {% trans "year" %}
-                                            </button>
-                                        </div>
-                                        <div :id="'collapse-{{ id }}-' + index + index2 +'-lft'"
-                                             class="accordion-collapse collapse"
-                                             :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
-                                             role="region"
-                                             :aria-labelledby="'heading-{{ id }}-' + index + index2 + '-lft'">
-                                            <div class="accordion-body">
-                                                <div class="it-list-wrapper">
-                                                    <div class="table-responsive">
-                                                        <small>
-                                                            <table class="table table-sm table-hover table-striped">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th scope="col">{% trans "Teaching" %}</th>
-                                                                        <th scope="col">{% trans "Period" %}</th>
-                                                                        <th scope="col">{% trans "ETCS" %}</th>
-                                                                        <th scope="col" v-if="interclass_degree_class && degree_class">
-                                                                            [[ degree_class ]]
-                                                                        </th>
-                                                                        <th scope="col" v-else-if="degree_class"></th>
-                                                                        <th scope="col" v-if="interclass_degree_class">
-                                                                            [[ interclass_degree_class ]]
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
-                                                                        <td>
-                                                                            <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
-                                                                                [[ activity.StudyActivityName ]]
-                                                                                <span v-if="activity.StudyActivityCompulsory == 1">*</span>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>[[ activity.StudyActivitySemester ]]</td>
-                                                                        <td>[[ activity.StudyActivityECTS ]]</td>
-                                                                        <td v-if="degree_class">
-                                                                            [[ activity.StudyActivityTeachingUnitType || "-" ]]
-                                                                        </td>
-                                                                        <td v-if="interclass_degree_class">
-                                                                            [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div v-for="year_index in _cds_data.cds.CdSDuration" v-if="year_index > 1">
-                                    <div v-for="path_name in teachings_dictionary[year_index]" class="accordion-item" v-if="path_name.StudyPlanCOD == item.StudyPlanCOD">
-
-                                        <div v-for="(value, label, index3) in path_name.StudyActivities">
-                                            <div class="accordion-item" v-if="index3 == (year_index-1)">
-                                                <div class="accordion-header" :id="'heading-{{ id }}-' + index + year_index + '-lft'">
-                                                    <button class="accordion-button"
-                                                            type="button"
-                                                            data-bs-toggle="collapse"
-                                                            :data-bs-target="'#collapse-{{ id }}-' + index + year_index +'-lft'"
-                                                            aria-expanded="false"
-                                                            :aria-controls="'collapse-{{ id }}-' + index + year_index +'-lft'">
-                                                    [[ label ]] {% trans "year" %}
-                                                    </button>
-                                                </div>
-                                                <div :id="'collapse-{{ id }}-' + index + year_index +'-lft'"
-                                                     class="accordion-collapse collapse"
-                                                     :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
-                                                     role="region"
-                                                     :aria-labelledby="'heading-{{ id }}-' + index + year_index + '-lft'">
-                                                    <div class="accordion-body">
-                                                        <div class="it-list-wrapper">
-                                                            <div class="table-responsive">
-                                                                <small>
-                                                                    <table class="table table-sm table-hover table-striped">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">{% trans "Teaching" %}</th>
-                                                                                <th scope="col">{% trans "Period" %}</th>
-                                                                                <th scope="col">{% trans "ETCS" %}</th>
-                                                                                <th scope="col" v-if="interclass_degree_class && degree_class">
-                                                                                    [[ degree_class ]]
-                                                                                </th>
-                                                                                <th scope="col" v-else-if="degree_class"></th>
-                                                                                <th scope="col" v-if="interclass_degree_class">
-                                                                                    [[ interclass_degree_class ]]
-                                                                                </th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
-                                                                                <td>
-                                                                                    <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
-                                                                                        [[ activity.StudyActivityName ]]
-                                                                                        <span v-if="activity.StudyActivityCompulsory == 1">*</span>
-                                                                                    </a>
-                                                                                </td>
-                                                                                <td>[[ activity.StudyActivitySemester ]]</td>
-                                                                                <td>[[ activity.StudyActivityECTS ]]</td>
-                                                                                <td v-if="degree_class">
-                                                                                    [[ activity.StudyActivityTeachingUnitType || "-" ]]
-                                                                                </td>
-                                                                                <td v-if="interclass_degree_class">
-                                                                                    [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </small>
-                                                            </div>
+                                            <div :id="'collapse-{{ id }}-' + index + index2 +'-lft'"
+                                                 class="accordion-collapse collapse"
+                                                 :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
+                                                 role="region"
+                                                 :aria-labelledby="'heading-{{ id }}-' + index + index2 + '-lft'">
+                                                <div class="accordion-body">
+                                                    <div class="it-list-wrapper">
+                                                        <div class="table-responsive">
+                                                            <small>
+                                                                <table class="table table-sm table-hover table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">{% trans "Teaching" %}</th>
+                                                                            <th scope="col">{% trans "Period" %}</th>
+                                                                            <th scope="col">{% trans "ETCS" %}</th>
+                                                                            <th scope="col" v-if="interclass_degree_class && degree_class">
+                                                                                [[ degree_class ]]
+                                                                            </th>
+                                                                            <th scope="col" v-else-if="degree_class"></th>
+                                                                            <th scope="col" v-if="interclass_degree_class">
+                                                                                [[ interclass_degree_class ]]
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                                            <td>
+                                                                                <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                                    [[ activity.StudyActivityName ]]
+                                                                                    <span v-if="activity.StudyActivityCompulsory == 1">*</span>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td>[[ activity.StudyActivitySemester ]]</td>
+                                                                            <td>[[ activity.StudyActivityECTS ]]</td>
+                                                                            <td v-if="degree_class">
+                                                                                [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                                            </td>
+                                                                            <td v-if="interclass_degree_class">
+                                                                                [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </small>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
+
+                                    <div v-for="year_index in _cds_data.cds.CdSDuration" v-if="year_index > 1">
+                                        <div v-for="path_name in teachings_dictionary[year_index]" class="accordion-item" v-if="path_name.StudyPlanCOD == item.StudyPlanCOD">
+
+                                            <div v-for="(value, label, index3) in path_name.StudyActivities">
+                                                <div class="accordion-item" v-if="index3 == (year_index-1)">
+                                                    <div class="accordion-header" :id="'heading-{{ id }}-' + index + year_index + '-lft'">
+                                                        <button class="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                :data-bs-target="'#collapse-{{ id }}-' + index + year_index +'-lft'"
+                                                                aria-expanded="false"
+                                                                :aria-controls="'collapse-{{ id }}-' + index + year_index +'-lft'">
+                                                        [[ label ]] {% trans "year" %}
+                                                        </button>
+                                                    </div>
+                                                    <div :id="'collapse-{{ id }}-' + index + year_index +'-lft'"
+                                                         class="accordion-collapse collapse"
+                                                         :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-lft'"
+                                                         role="region"
+                                                         :aria-labelledby="'heading-{{ id }}-' + index + year_index + '-lft'">
+                                                        <div class="accordion-body">
+                                                            <div class="it-list-wrapper">
+                                                                <div class="table-responsive">
+                                                                    <small>
+                                                                        <table class="table table-sm table-hover table-striped">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col">{% trans "Teaching" %}</th>
+                                                                                    <th scope="col">{% trans "Period" %}</th>
+                                                                                    <th scope="col">{% trans "ETCS" %}</th>
+                                                                                    <th scope="col" v-if="interclass_degree_class && degree_class">
+                                                                                        [[ degree_class ]]
+                                                                                    </th>
+                                                                                    <th scope="col" v-else-if="degree_class"></th>
+                                                                                    <th scope="col" v-if="interclass_degree_class">
+                                                                                        [[ interclass_degree_class ]]
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                                                    <td>
+                                                                                        <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                                            [[ activity.StudyActivityName ]]
+                                                                                            <span v-if="activity.StudyActivityCompulsory == 1">*</span>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                    <td>[[ activity.StudyActivitySemester ]]</td>
+                                                                                    <td>[[ activity.StudyActivityECTS ]]</td>
+                                                                                    <td v-if="degree_class">
+                                                                                        [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                                                    </td>
+                                                                                    <td v-if="interclass_degree_class">
+                                                                                        [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
 </div>
@@ -381,7 +382,6 @@ getYears() {
         let year = ({{ year }} || _cds_data.cds.AcademicYear) - i + 1
         this.getTeachingsInYear(year, i)
     }
-    this.is_loading = false
 },
 {% endblock extra_methods %}
 
@@ -395,6 +395,7 @@ watch: {
         this.interclass_degree_class = _cds_data.cds.CourseInterClassCod
         this.url = "{{ base_api }}{{ cds_api }}" + val + "/studyplans/"
         this.getYears()
+        this.is_loading = false
     }
 }
 {% endblock extra_sections %}
