@@ -137,32 +137,6 @@
                             {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="study_activities" full_page=full_page year=cds_website_current_year %}
                         </div>
 
-                        <!-- teachers block import -->
-                        <h5 class="mt-5 mb-3">{% trans "Faculty" %}</h5>
-                        <div id="accordionDiv3-lft" class="accordion accordion-left-icon">
-                            <div class="accordion-item">
-                                <div class="accordion-header" id="heading-teachers-lft">
-                                    <button class="accordion-button"
-                                            type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#collapse-teachers-lft"
-                                            aria-expanded="false"
-                                            aria-controls="collapse-teachers-lft">
-                                        {% trans "Academic Courses" %}&nbsp;<span id="cds_year"></span>
-                                    </button>
-                                </div>
-                                <div id="collapse-teachers-lft"
-                                     class="accordion-collapse collapse"
-                                     data-bs-parent="#accordionDiv3-lft"
-                                     role="region"
-                                     aria-labelledby="heading-teachers-lft">
-                                    <div class="accordion-body mt-3">
-                                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with uid="teachers_list" mark_contract_teachers=1 %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div id="impegniUP">
                             <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
 
@@ -318,6 +292,32 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- teachers block import -->
+                        <h5 class="mt-5 mb-3">{% trans "Faculty" %}</h5>
+                        <div id="accordionDiv3-lft" class="accordion accordion-left-icon">
+                            <div class="accordion-item">
+                                <div class="accordion-header" id="heading-teachers-lft">
+                                    <button class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapse-teachers-lft"
+                                            aria-expanded="false"
+                                            aria-controls="collapse-teachers-lft">
+                                        {% trans "Academic Courses" %}&nbsp;<span id="cds_year"></span>
+                                    </button>
+                                </div>
+                                <div id="collapse-teachers-lft"
+                                     class="accordion-collapse collapse"
+                                     data-bs-parent="#accordionDiv3-lft"
+                                     role="region"
+                                     aria-labelledby="heading-teachers-lft">
+                                    <div class="accordion-body mt-3">
+                                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with uid="teachers_list" mark_contract_teachers=1 %}
                                     </div>
                                 </div>
                             </div>
