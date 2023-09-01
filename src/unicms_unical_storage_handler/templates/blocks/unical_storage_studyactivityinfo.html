@@ -138,7 +138,10 @@
                             [[ item.StudyActivitySSDCod ]] - [[ item.StudyActivitySSD ]]
                         </td>
                         <td v-else-if="Array.isArray(value)">
-                            <ul>
+                            <span v-if="value.length==1">
+                                [[ value[0] ]]
+                            </span>
+                            <ul v-else>
                                 <li v-for="subvalue in value">
                                     [[ subvalue ]]
                                 </li>
