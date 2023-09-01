@@ -37,17 +37,25 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
 {% if cds_identifier %}
-    <div id="_cds_data">
-        <p class="h5 text-white">
-            [[ cds.CourseTypeDescription ]] <span v-if="cds.CourseInterClassCod">{% trans "interclass" %}</span>
-            <span v-for="joint in joint_degree_filter"
-                  v-if="cds.JointDegree == joint.COD && cds.JointDegree != 'N'">
-                &nbsp;- [[ joint.name ]]
-            </span>
-        </p>
-        <p class="h2 text-white">
-            ([[ cds.CourseClassCod ]]<span v-if="cds.CourseInterClassCod">/[[ cds.CourseInterClassCod ]]</span>) [[ cds.CdSName ]]
-        </p>
+    <div id="_cds_data" class="w-100">
+        <div v-if="is_loading">
+            <div class="progress progress-indeterminate my-3">
+              <span class="visually-hidden">{% trans "Loading data" %}</span>
+              <div class="progress-bar" role="progressbar"></div>
+            </div>
+        </div>
+        <div v-else>
+            <p class="h5 text-white">
+                [[ cds.CourseTypeDescription ]] <span v-if="cds.CourseInterClassCod">{% trans "interclass" %}</span>
+                <span v-for="joint in joint_degree_filter"
+                      v-if="cds.JointDegree == joint.COD && cds.JointDegree != 'N'">
+                    &nbsp;- [[ joint.name ]]
+                </span>
+            </p>
+            <p class="h2 text-white">
+                ([[ cds.CourseClassCod ]]<span v-if="cds.CourseInterClassCod">/[[ cds.CourseInterClassCod ]]</span>) [[ cds.CdSName ]]
+            </p>
+        </div>
     </div>
     <script>
         Vue.use(VueMarkdown);
@@ -61,6 +69,7 @@
                     cds: {},
                     cds_labels: {},
                     is_loading: true,
+                    loader_source: '',
                     joint_degree_filter: {{ allowed_joint_degrees|safe }},
                     coordinator_data: {},
                     deputy_coordinator_data: {}
@@ -106,6 +115,7 @@
                             this.getPersonData(response.data.results.OtherData.DirectorId,response.data.results.OtherData.DeputyDirectorId)
                             this.cds_labels = response.data.labels
                             this.is_loading = false
+                            _{{ cds_identifier }}_logo_mobile.is_loading = false
                             // automatic pages
                             if (typeof _{{ cds_identifier }} != "undefined") {
                                 _{{ cds_identifier }}.regdidid = regdidid
@@ -145,17 +155,25 @@
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 
 {% if cds_identifier %}
-    <div id="_{{ cds_identifier }}_logo_mobile">
-        <p class="h5 text-white">
-            [[ cds.CourseTypeDescription ]] <span v-if="cds.CourseInterClassCod">{% trans "interclass" %}</span>
-            <span v-for="joint in joint_degree_filter"
-                  v-if="cds.JointDegree == joint.COD && cds.JointDegree != 'N'">
-                &nbsp;- [[ joint.name ]]
-            </span>
-        </p>
-        <p class="h2 text-white">
-            ([[ cds.CourseClassCod ]]<span v-if="cds.CourseInterClassCod">/[[ cds.CourseInterClassCod ]]</span>) [[ cds.CdSName ]]
-        </p>
+    <div id="_{{ cds_identifier }}_logo_mobile" class="w-100">
+        <div v-if="is_loading">
+            <div class="progress progress-indeterminate my-3">
+              <span class="visually-hidden">{% trans "Loading data" %}</span>
+              <div class="progress-bar" role="progressbar"></div>
+            </div>
+        </div>
+        <div v-else>
+            <p class="h5 text-white">
+                [[ cds.CourseTypeDescription ]] <span v-if="cds.CourseInterClassCod">{% trans "interclass" %}</span>
+                <span v-for="joint in joint_degree_filter"
+                      v-if="cds.JointDegree == joint.COD && cds.JointDegree != 'N'">
+                    &nbsp;- [[ joint.name ]]
+                </span>
+            </p>
+            <p class="h2 text-white">
+                ([[ cds.CourseClassCod ]]<span v-if="cds.CourseInterClassCod">/[[ cds.CourseInterClassCod ]]</span>) [[ cds.CdSName ]]
+            </p>
+        </div>
     </div>
     <script>
         var _{{ cds_identifier }}_logo_mobile = new Vue({
@@ -164,6 +182,7 @@
                 return {
                     item: {},
                     cds: {},
+                    is_loading: true,
                     joint_degree_filter: {{ allowed_joint_degrees|safe }}
                 }
             },
