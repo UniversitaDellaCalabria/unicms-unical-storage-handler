@@ -149,18 +149,18 @@
                         {% if not is_cds_website %}
                         <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom">
                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityID +'/'">
-                                a[[ item.StudyActivityBorrowedFrom.StudyActivityName ]]
+                                [[ item.StudyActivityBorrowedFrom.StudyActivityName ]] ([[ item.StudyActivityBorrowedFrom.StudyActivityCdSName ]])
                             </a>
                         </td>
                         {% else %}
                         <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom && _cds_data.cds.CdSCod == item.StudyActivityBorrowedFrom.StudyActivityCdSCod">
                             <a :href="replaceActivityCode(item.StudyActivityBorrowedFrom.StudyActivityID)">
-                                b[[ item.StudyActivityBorrowedFrom.StudyActivityName ]]
+                                [[ item.StudyActivityBorrowedFrom.StudyActivityName ]] ([[ item.StudyActivityBorrowedFrom.StudyActivityCdSName ]])
                             </a>
                         </td>
                         <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom && _cds_data.cds.CdSCod != item.StudyActivityBorrowedFrom.StudyActivityCdSCod">
                             <a target="_blank" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityID +'/'">
-                                [[ item.StudyActivityBorrowedFrom.StudyActivityName ]]
+                                [[ item.StudyActivityBorrowedFrom.StudyActivityName ]] ([[ item.StudyActivityBorrowedFrom.StudyActivityCdSName ]])
                             </a>
                         </td>
                         {% endif %}
