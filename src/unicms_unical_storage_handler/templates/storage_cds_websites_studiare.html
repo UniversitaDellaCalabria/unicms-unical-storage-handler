@@ -56,13 +56,27 @@
                 <div class="row">
                     <div class="col-12 col-lg-8">
                         <p class="h1 lighter">{{ page_title }}</p>
+
+                        <!-- Insegnamenti -->
+                        {% comment %}
+                        <div class="mt-5">
+                            {% include "blocks/unical_storage_cdsstudyplans_v3.html" with uid="course_studyplans" full_page=full_page %}
+                        </div>
+                        {% endcomment %}
+
+                        <div class="mt-5">
+                            {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="study_activities" full_page=full_page year=cds_website_current_year %}
+                        </div>
+                        <!-- END insegnamenti -->
+
+                        <!-- Attività curriculari (topic 8) -->
                         <div class="row" id="_{{ cds_cod }}">
                             <loading-icon
                                 v-if="is_loading"
                                 :loader_source="loader_source">
                             </loading-icon>
                             <div v-for="allowed_topic in allowed_topics" v-else>
-                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId)">
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId) && topic.TopicId == 8">
                                     <p class="h4 lighter mt-5">
                                         [[ topic.TopicDescription ]]
                                     </p>
@@ -126,17 +140,9 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- END attività curriculari -->
 
-                        {% comment %}
-                        <div class="mt-5">
-                            {% include "blocks/unical_storage_cdsstudyplans_v3.html" with uid="course_studyplans" full_page=full_page %}
-                        </div>
-                        {% endcomment %}
-
-                        <div class="mt-5">
-                            {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="study_activities" full_page=full_page year=cds_website_current_year %}
-                        </div>
-
+                        <!-- Orario lezioni -->
                         <div id="impegniUP">
                             <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
 
@@ -219,7 +225,9 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- END Orario lezioni -->
 
+                        <!-- Calendario esami -->
                         <div id="esamiUP">
                             <h5 class="mt-5 mb-3">{% trans "Calendario esami" %}</h5>
 
@@ -296,8 +304,82 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- END calendario esami -->
 
-                        <!-- teachers block import -->
+                        <!-- Piano di studio (topic 7) + Prova finale (topi 9) -->
+                        <div class="row" id="_{{ cds_cod }}_1">
+                            <loading-icon
+                                v-if="is_loading"
+                                :loader_source="loader_source">
+                            </loading-icon>
+                            <div v-for="allowed_topic in allowed_topics" v-else>
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId) && topic.TopicId != 8">
+                                    <p class="h4 lighter mt-5">
+                                        [[ topic.TopicDescription ]]
+                                    </p>
+                                    <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
+                                        <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
+
+                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object)">
+                                                <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
+                                                    <button class="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            :data-bs-target="'#collapse-' + article.ID +'-lft'"
+                                                            aria-expanded="false"
+                                                            :aria-controls="'collapse-' + article.ID +'-lft'">
+                                                        <span v-if="article.Title">
+                                                            [[ article.Title ]]
+                                                        </span>
+                                                        <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                [[ article.CdsObject.Object.title ]]
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                [[ article.CdsObject.Object.name ]]
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div :id="'collapse-' + article.ID +'-lft'"
+                                                     class="accordion-collapse collapse"
+                                                     :data-bs-parent="'#accordionDiv-' + allowed_topic +'-lft'"
+                                                     role="region"
+                                                     :aria-labelledby="'heading-' + article.ID +'-lft'">
+                                                    <div class="accordion-body">
+                                                        <span v-if="article.CdsArticle">
+                                                            <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                        <span v-else-if="article.CdsObject">
+                                                            <span v-html="article.CdsObject.ObjectText"></span>
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                <span v-html="article.CdsObject.Object.content"></span>
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                <a :href="article.CdsObject.Object.get_absolute_url">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </a>
+                                                            </span>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END piano di studio + prova finale -->
+
+                        <!-- Docenti -->
                         <h5 class="mt-5 mb-3">{% trans "Faculty" %}</h5>
                         <div id="accordionDiv3-lft" class="accordion accordion-left-icon">
                             <div class="accordion-item">
@@ -322,6 +404,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- END Docenti -->
 
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
@@ -339,6 +422,23 @@
 
 <script>
     Vue.use(VueMarkdown);
+
+    var _{{ cds_cod }}_1 = new Vue({
+        el: '#_{{ cds_cod }}_1',
+        data() {
+            return {
+                item: {},
+                allowed_topics: {{ page_topics|get_value:'studiare'|safe }},
+                empty_topics: [],
+                topics: {},
+                topic_articles: {},
+                labels: {},
+                url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
+                is_loading: true,
+                loader_source: '{{ url }}',
+            }
+        }
+    })
 
     var _{{ cds_cod }} = new Vue({
         el: '#_{{ cds_cod }}',
@@ -377,13 +477,18 @@
                     .get(url)
                     .then(response => {
                         this.topic_articles = response.data.results
+                        _{{ cds_cod }}_1.topic_articles = response.data.results
                         this.allowed_topics.forEach(
                             topic => {
                                 let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
-                                if(!found) this.empty_topics.push(topic)
+                                if(!found){
+                                    this.empty_topics.push(topic)
+                                    _{{ cds_cod }}_1.empty_topics.push(topic)
+                                }
                             }
                         )
                         this.is_loading = false
+                        _{{ cds_cod }}_1.is_loading = false
                     }
                 )
             },
@@ -393,6 +498,7 @@
                     .get(url)
                     .then(response => {
                         this.topics = response.data.results
+                        _{{ cds_cod }}_1.topics = response.data.results
                     }
                 )
             },
@@ -419,6 +525,8 @@
             }
         }
     })
+
+
 
 
     var impegniUP = new Vue({

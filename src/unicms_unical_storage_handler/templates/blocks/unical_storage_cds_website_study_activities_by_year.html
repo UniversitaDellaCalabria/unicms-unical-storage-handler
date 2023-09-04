@@ -372,7 +372,7 @@ getTeachingsInYear(year, index) {
         .get(url)
         .then(response => {
             let results = response.data.results[0]
-            if('RegDidId' in results)
+            if(results && 'RegDidId' in results)
                 this.setTeachingDictionary(response.data.results[0].RegDidId, index)
         })
 },
