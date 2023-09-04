@@ -76,16 +76,28 @@
 
                         <!-- Root activity -->
                         <td v-else-if="name === 'StudyActivityRoot' && item.StudyActivityRoot">
+                            {% if not is_cds_website %}
                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityRoot.StudyActivityID +'/'">
                                 [[ item.StudyActivityRoot.StudyActivityName ]]
                             </a>
+                            {% else %}
+                            <a :href="replaceActivityCode(item.StudyActivityRoot.StudyActivityID)">
+                                [[ item.StudyActivityRoot.StudyActivityName ]]
+                            </a>
+                            {% endif %}
 
                             <!-- Father activity -->
                             <ul v-if="item.StudyActivityFather">
                                 <li>
+                                    {% if not is_cds_website %}
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityFather.StudyActivityID +'/'">
                                         [[ item.StudyActivityFather.StudyActivityName ]]
                                     </a>
+                                    {% else %}
+                                    <a :href="replaceActivityCode(item.StudyActivityFather.StudyActivityID)">
+                                        [[ item.StudyActivityFather.StudyActivityName ]]
+                                    </a>
+                                    {% endif %}
                                 </li>
                             </ul>
                         </td>
@@ -94,20 +106,38 @@
                         <td v-else-if="name === 'StudyActivitiesModules' && item.StudyActivitiesModules">
                             <ul>
                                 <li v-for="(valueProfile, nameProfile) in value">
+                                    {% if not is_cds_website %}
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + valueProfile.StudyActivityID +'/'">
                                         [[ valueProfile.StudyActivityName ]]
                                         <span v-if="valueProfile.StudyActivityPartitionDescription">
                                             ([[ valueProfile.StudyActivityPartitionDescription ]])
                                         </span>
                                     </a>
+                                    {% else %}
+                                    <a :href="replaceActivityCode(valueProfile.StudyActivityID)">
+                                        [[ valueProfile.StudyActivityName ]]
+                                        <span v-if="valueProfile.StudyActivityPartitionDescription">
+                                            ([[ valueProfile.StudyActivityPartitionDescription ]])
+                                        </span>
+                                    </a>
+                                    {% endif %}
                                     <ul v-if="valueProfile.StudyActivityGroups">
                                         <li v-for="(subValueProfile, subNameProfile) in valueProfile.StudyActivityGroups">
+                                            {% if not is_cds_website %}
                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + subValueProfile.StudyActivityID +'/'">
                                                 [[ subValueProfile.StudyActivityName ]]
                                                 <span v-if="subValueProfile.StudyActivityPartitionDescription">
                                                     ([[ subValueProfile.StudyActivityPartitionDescription ]])
                                                 </span>
                                             </a>
+                                            {% else %}
+                                            <a :href="replaceActivityCode(subValueProfile.StudyActivityID)">
+                                                [[ subValueProfile.StudyActivityName ]]
+                                                <span v-if="subValueProfile.StudyActivityPartitionDescription">
+                                                    ([[ subValueProfile.StudyActivityPartitionDescription ]])
+                                                </span>
+                                            </a>
+                                            {% endif %}
                                         </li>
                                     </ul>
 
@@ -116,19 +146,41 @@
                         </td>
 
                         <!-- StudyActivitiesBorrowedFromThis activity -->
+                        {% if not is_cds_website %}
                         <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom">
                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityID +'/'">
+                                a[[ item.StudyActivityBorrowedFrom.StudyActivityName ]]
+                            </a>
+                        </td>
+                        {% else %}
+                        <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom && _cds_data.cds.CdSCod == item.StudyActivityBorrowedFrom.StudyActivityCdSCod">
+                            <a :href="replaceActivityCode(item.StudyActivityBorrowedFrom.StudyActivityID)">
+                                b[[ item.StudyActivityBorrowedFrom.StudyActivityName ]]
+                            </a>
+                        </td>
+                        <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom && _cds_data.cds.CdSCod != item.StudyActivityBorrowedFrom.StudyActivityCdSCod">
+                            <a target="_blank" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityID +'/'">
                                 [[ item.StudyActivityBorrowedFrom.StudyActivityName ]]
                             </a>
                         </td>
+                        {% endif %}
 
                         <!-- Modules activities -->
                         <td v-else-if="name === 'StudyActivitiesBorrowedFromThis' && item.StudyActivitiesBorrowedFromThis">
                             <ul>
                                 <li v-for="borrow in item.StudyActivitiesBorrowedFromThis">
+                                    {% if not is_cds_website %}
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + borrow.StudyActivityRegDidId +'/{{ activity_prefix }}/' + borrow.StudyActivityID +'/'">
                                         [[ borrow.StudyActivityName ]]
                                     </a>
+                                    {% else %}
+                                    <a v-if="_cds_data.cds.CdSCod == borrow.StudyActivityCdSCod" :href="replaceActivityCode(borrow.StudyActivityID)">
+                                        [[ borrow.StudyActivityName ]]
+                                    </a>
+                                    <a v-else target="_blank" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + borrow.StudyActivityRegDidId +'/{{ activity_prefix }}/' + borrow.StudyActivityID +'/'">
+                                        [[ borrow.StudyActivityName ]]
+                                    </a>
+                                    {% endif %}
                                 </li>
                             </ul>
                         </td>
@@ -249,6 +301,11 @@
             this.CallURL();
         },
         methods: {
+            replaceActivityCode(new_code){
+                let url = window.location.href
+                if(url.charAt(url.length - 1) == "/") url = url.slice(0,-1)
+                return url.replace(/\/[^\/]*$/, '/' + new_code +'/')
+            },
             CallURL() {
                 axios
                     .get(this.url)

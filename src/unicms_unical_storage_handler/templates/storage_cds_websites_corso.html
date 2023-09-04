@@ -66,16 +66,16 @@
                         <div v-else>
 
                             <p class="h3 lighter">
-                                [[ _cds_data.cds.CourseTypeDescription ]] <span v-if="_cds_data.cds.CourseInterClassCod">{% trans "interclass" %}</span>
+                                [[ _cds_data.fixed_cds.CourseTypeDescription ]] <span v-if="_cds_data.fixed_cds.CourseInterClassCod">{% trans "interclass" %}</span>
                             </p>
                             <p class="h3">
-                                [[ _cds_data.cds.CdSName ]]
+                                [[ _cds_data.fixed_cds.CdSName ]]
                             </p>
                             <p class="h5 lighter">
-                                [[ _cds_data.cds.CourseClassCod ]] / [[ _cds_data.cds.CourseClassName ]]
+                                [[ _cds_data.fixed_cds.CourseClassCod ]] / [[ _cds_data.fixed_cds.CourseClassName ]]
                             </p>
-                            <p class="h5 lighter" v-if="_cds_data.cds.CourseInterClassCod">
-                                [[ _cds_data.cds.CourseInterClassCod ]] / [[ _cds_data.cds.CourseInterClassDes ]]
+                            <p class="h5 lighter" v-if="_cds_data.fixed_cds.CourseInterClassCod">
+                                [[ _cds_data.fixed_cds.CourseInterClassCod ]] / [[ _cds_data.fixed_cds.CourseInterClassDes ]]
                             </p>
 
 
@@ -85,14 +85,14 @@
                             </p>
 -->
                             <p class="h5 mt-4">
-                                <b>[[ _cds_data.cds.DepartmentName ]]</b>
+                                <b>[[ _cds_data.fixed_cds.DepartmentName ]]</b>
                             </p>
 
                             <p class="h5 lighter mt-4">
                                 {% trans "Language" %}
                             </p>
                             <p class="h5">
-                                <b v-for="(lang, index) in _cds_data.cds.CdSLanguage">
+                                <b v-for="(lang, index) in _cds_data.fixed_cds.CdSLanguage">
                                     <span v-if="index > 0">, </span>
                                     [[ lang ]]
                                 </b>
@@ -101,7 +101,7 @@
                             {% comment %}
                             <hr class="my-5"/>
                             <div>
-                                <vue-markdown :emoji=false :source='_cds_data.cds.CdSIntro'></vue-markdown>
+                                <vue-markdown :emoji=false :source='_cds_data.fixed_cds.CdSIntro'></vue-markdown>
                             </div>
                             {% endcomment %}
 
@@ -203,17 +203,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else>
-                                {% include "includes/unical_storage_empty.html" with url=url_regdid %}
-                            </div>
                         </div>
                     </div>
-
-                    {% comment %}
-                    <div class="mt-5">
-                        {% include "blocks/unical_storage_cdsstudyplans_v3.html" with uid="course_studyplans" full_page=full_page %}
-                    </div>
-                    {% endcomment %}
 
                     <!-- study plans new -->
                     <div id="_{{ cds_cod }}_studyplans" class="mt-5">
@@ -221,7 +212,7 @@
                             v-if="is_loading"
                             :loader_source="loader_source">
                         </loading-icon>
-                        <div v-else v-if="items && 'PlanTabs' in items">
+                        <div v-else-if="items && 'PlanTabs' in items">
                             <h5 class="mb-3">{% trans "Study plan" %}</h5>
                             <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
                                 <div class="accordion-item" v-for="tab in items.PlanTabs">

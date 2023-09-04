@@ -67,7 +67,9 @@
                     item: {},
                     labels: {},
                     cds: {},
+                    fixed_cds: {},
                     cds_labels: {},
+                    fixed_cds_labels: {},
                     is_loading: true,
                     loader_source: '',
                     joint_degree_filter: {{ allowed_joint_degrees|safe }},
@@ -105,7 +107,7 @@
                             }
                         )
                 },
-                CallRegDid(regdidid) {
+                CallRegDid(regdidid, update_fixed=false) {
                     let cds_url = '{{ base_api }}{{ cds_api }}' + regdidid + '/?lang={{ LANGUAGE_CODE }}'
                     axios
                         .get(cds_url)
@@ -114,6 +116,10 @@
                             _{{ cds_identifier }}_logo_mobile.cds = response.data.results
                             this.getPersonData(response.data.results.OtherData.DirectorId,response.data.results.OtherData.DeputyDirectorId)
                             this.cds_labels = response.data.labels
+                            if(update_fixed){
+                                this.fixed_cds = response.data.results
+                                this.fixed_cds_labels = response.data.labels
+                            }
                             this.is_loading = false
                             _{{ cds_identifier }}_logo_mobile.is_loading = false
                             // automatic pages
@@ -132,8 +138,11 @@
                     axios
                         .get(url)
                         .then(response => {
-                            if(!regdidid) regdidid = response.data.results[0]['RegDidId']
-                            this.CallRegDid(regdidid)
+                            if(!regdidid) {
+                                regdidid = response.data.results[0]['RegDidId']
+                                this.CallRegDid(regdidid, true)
+                            }
+                            else this.CallRegDid(regdidid)
                             {% block cds_website_extra_main %}
                             {% endblock cds_website_extra_main %}
                         }

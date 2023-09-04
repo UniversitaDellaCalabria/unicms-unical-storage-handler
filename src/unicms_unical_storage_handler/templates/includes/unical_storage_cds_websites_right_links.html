@@ -8,8 +8,8 @@
 
 
 <div id="_cds_website_right_col_links">
-    <div v-if="_cds_data.cds.CdSDoc">
-        <a :href="_cds_data.cds.CdSDoc" target="_blank">
+    <div v-if="_cds_data.fixed_cds.CdSDoc">
+        <a :href="_cds_data.fixed_cds.CdSDoc" target="_blank">
             <div class="row">
                 <div class="col-3">
                     <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
@@ -27,8 +27,8 @@
         </a>
     </div>
 
-    <div v-if="_cds_data.cds.CdSSatisfactionSurvey" class="mt-4">
-        <a target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.cds.CdSSatisfactionSurvey">
+    <div v-if="_cds_data.fixed_cds.CdSSatisfactionSurvey" class="mt-4">
+        <a target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.fixed_cds.CdSSatisfactionSurvey">
         <div class="row">
             <div class="col-3">
                 <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
@@ -38,7 +38,7 @@
             <div class="col m-auto align-middle">
                 <ul class="mb-0 ps-0 list-unstyled">
                     <li>
-                        <small><b>[[ _cds_data.cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
+                        <small><b>[[ _cds_data.fixed_cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
                     </li>
                 </ul>
             </div>
@@ -47,7 +47,7 @@
     </div>
 
     {% if not hide_ordinamento %}
-    <div v-if="_cds_data.cds.TeachingSystem" class="mt-4">
+    <div v-if="_cds_data.fixed_cds.TeachingSystem" class="mt-4">
         <div class="background-light-grey px-2 py-3 mb-2 w-100">
             <div class="row">
                 <div class="col-2">
@@ -60,9 +60,9 @@
                 </div>
                 <div class="col m-auto align-middle">
                     <ul class="mb-0 ps-0 list-unstyled">
-                        <li v-if="_cds_data.cds.TeachingSystem">
-                            <a class="no-color" target="_blank" :href="_cds_data.cds.TeachingSystem">
-                                <small><b>[[ _cds_data.cds_labels['TeachingSystem'] ]]</b></small>
+                        <li v-if="_cds_data.fixed_cds.TeachingSystem">
+                            <a class="no-color" target="_blank" :href="_cds_data.fixed_cds.TeachingSystem">
+                                <small><b>[[ _cds_data.fixed_cds_labels['TeachingSystem'] ]]</b></small>
                             </a>
                         </li>
                     </ul>
