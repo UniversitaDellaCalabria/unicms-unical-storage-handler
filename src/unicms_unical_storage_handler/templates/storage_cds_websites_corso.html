@@ -346,11 +346,10 @@
                                                                     <span v-else>{% trans "required" %}</span>
                                                                     <span>{% trans "choice between" %}</span>
                                                                 </div>
-
+                                                                <br>
                                                                 <!-- scelte del vincolo innestato -->
                                                                 <div v-for="vin_sub_choice in tab.AfChoices" v-if="vin_sub_choice.VinId == vin_choice.SceId && vin_sub_choice.Choices.length > 0">
                                                                     <div>
-                                                                        <br>
                                                                         <b>
                                                                             [[ vin_sub_choice.SceDes ]]
                                                                         </b>
