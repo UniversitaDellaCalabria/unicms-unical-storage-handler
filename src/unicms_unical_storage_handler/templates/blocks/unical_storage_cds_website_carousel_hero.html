@@ -14,7 +14,7 @@
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
 
 
-<div class="customNavigation w-100" id="{{ cds_cod }}_customNavigation" style="position: relative; top: 45%">
+<div class="customNavigation w-100" id="{{ cds_cod }}_customNavigation" style="position: relative; top: 45%; display: none">
     <span class="{{ cds_cod }}_prev" id="{{ cds_cod }}_prev" style="cursor: pointer; position: relative; z-index: 10">
         <span class="text-white fw-bold">
             <svg class="icon icon-lg" style="color: var(--dark_grey_unical)" aria-labelledby="{{ cds_cod }}_carousel_prev">
@@ -122,6 +122,9 @@ var _{{ cds_cod }}_hero_slider = new Vue({
             $(".{{ cds_cod }}_prev").click(function(){
                 owl_{{ cds_cod }}.trigger('prev.owl.carousel');
             });
+
+            if(this.slides.length > 0)
+                document.getElementById("{{ cds_cod }}_customNavigation").style.display = "block"
         },
     },
     watch: {
