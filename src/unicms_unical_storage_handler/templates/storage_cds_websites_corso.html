@@ -207,7 +207,7 @@
                     </div>
 
                     <!-- study plans new -->
-                    <div id="_{{ cds_cod }}_studyplans" class="mt-5">
+                    <div id="course_studyplans" class="mt-5">
                         <loading-icon
                             v-if="is_loading"
                             :loader_source="loader_source">
@@ -816,7 +816,7 @@ var _cds_website_right_col_dynamic = new Vue({
 });
 
 var _{{ cds_cod }}_studyplans = new Vue({
-    el: '#_{{ cds_cod }}_studyplans',
+    el: '#course_studyplans',
     data() {
         return {
             url: '',
@@ -829,6 +829,12 @@ var _{{ cds_cod }}_studyplans = new Vue({
         this.callStudyPlans()
     },
     methods: {
+        scrollPage() {
+            let urlParams = new URLSearchParams(window.location.search)
+            let div_id = urlParams.get('scroll')
+            let div = document.getElementById(div_id)
+            if(div) div.scrollIntoView()
+        },
         callStudyPlans(year={{ current_year }}) {
             this.is_loading = true
             axios
@@ -836,6 +842,7 @@ var _{{ cds_cod }}_studyplans = new Vue({
                 .then(response => {
                     this.items = response.data.results[0]
                     this.is_loading = false
+                    this.scrollPage()
                 })
         },
     },
