@@ -312,7 +312,7 @@
                                                 <!-- choices -->
                                                 <div v-for="choice in tab.AfChoices">
                                                     <!-- vincoli principali -->
-                                                    <div v-if="choice.Year == index && choice.SceCodType == 'V' && choice.VinId == null">
+                                                    <div v-if="choice.SceCodType == 'V' && choice.VinId == null && tab.AfChoices.some(e => e.VinId === choice.SceId ) && tab.AfChoices.some(e => e.Year === index )">
                                                         <div class="alert alert-info" role="alert">
                                                             <b>{% trans "Insegnamenti a scelta" %} - [[ choice.RegSceCodDes ]]</b>
                                                             <br>
