@@ -582,12 +582,7 @@
                 //}
                 //return '#' + this.lightenDarkenColor(colour, -50)
             //},
-            scrollPage() {
-                let urlParams = new URLSearchParams(window.location.search)
-                let div_id = urlParams.get('scroll')
-                let div = document.getElementById(div_id)
-                if(div) div.scrollIntoView()
-            },
+            {% include "includes/unical_storage_cds_websites_scroll.html" %}
             getEvents(year=1) {
                 this.attributes = []
                 let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year

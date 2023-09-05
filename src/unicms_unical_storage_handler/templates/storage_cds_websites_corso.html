@@ -829,12 +829,7 @@ var _{{ cds_cod }}_studyplans = new Vue({
         this.callStudyPlans()
     },
     methods: {
-        scrollPage() {
-            let urlParams = new URLSearchParams(window.location.search)
-            let div_id = urlParams.get('scroll')
-            let div = document.getElementById(div_id)
-            if(div) div.scrollIntoView()
-        },
+        {% include "includes/unical_storage_cds_websites_scroll.html" %}
         callStudyPlans(year={{ current_year }}) {
             this.is_loading = true
             axios
