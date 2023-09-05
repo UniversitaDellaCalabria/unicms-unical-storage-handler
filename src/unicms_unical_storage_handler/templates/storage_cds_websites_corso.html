@@ -368,34 +368,35 @@
                                                                                             <td>
                                                                                                 [[ activity.AfCod || "-" ]]
                                                                                                 <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
-                                                                                                    [[ activity.AfDescription ]]
+                                                                                                    [[ activity.AfDescription || "-" ]]
                                                                                                 </a>
                                                                                                 <span v-else>
-                                                                                                    [[ activity.AfDescription ]]
+                                                                                                    [[ activity.AfDescription || "-" ]]
                                                                                                 </span>
+                                                                                                <ul v-if="activity.AfSubModules.length > 0">
+                                                                                                    <li v-for="module in activity.AfSubModules">
+                                                                                                        [[ module.StudyActivityCod || "-" ]]
+                                                                                                        <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                                                            [[ module.StudyActivityName || "-" ]]
+                                                                                                        </a>
+                                                                                                        <span v-else>
+                                                                                                            [[ module.StudyActivityName || "-" ]]
+                                                                                                        </span>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                [[ activity.CycleDes || "-" ]]
                                                                                                 <span v-for="module in activity.AfSubModules">
                                                                                                     <br>
-                                                                                                    [[ module.StudyActivityCod || "-" ]]
-                                                                                                    <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
-                                                                                                        [[ module.StudyActivityName ]]
-                                                                                                    </a>
-                                                                                                    <span v-else>
-                                                                                                        [[ module.StudyActivityName ]]
-                                                                                                    </span>
+                                                                                                    [[ module.StudyActivitySemester || "-" ]]
                                                                                                 </span>
                                                                                             </td>
                                                                                             <td>
-                                                                                                [[ activity.CycleDes ]]
+                                                                                                [[ activity.CreditValue || "-" ]]
                                                                                                 <span v-for="module in activity.AfSubModules">
                                                                                                     <br>
-                                                                                                    [[ module.StudyActivitySemester ]]
-                                                                                                </span>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                [[ activity.CreditValue ]]
-                                                                                                <span v-for="module in activity.AfSubModules">
-                                                                                                    <br>
-                                                                                                    [[ module.StudyActivityCreditValue ]]
+                                                                                                    [[ module.StudyActivityCreditValue || "-" ]]
                                                                                                 </span>
                                                                                             </td>
                                                                                         </tr>
@@ -481,34 +482,35 @@
                                                                                         <td>
                                                                                             [[ activity.AfCod || "-" ]]
                                                                                             <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
-                                                                                                [[ activity.AfDescription ]]
+                                                                                                [[ activity.AfDescription || "-" ]]
                                                                                             </a>
                                                                                             <span v-else>
-                                                                                                [[ activity.AfDescription ]]
+                                                                                                [[ activity.AfDescription || "-" ]]
                                                                                             </span>
+                                                                                            <ul v-if="activity.AfSubModules.length > 0">
+                                                                                                <li v-for="module in activity.AfSubModules">
+                                                                                                    [[ module.StudyActivityCod || "-" ]]
+                                                                                                    <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                                                        [[ module.StudyActivityName || "-" ]]
+                                                                                                    </a>
+                                                                                                    <span v-else>
+                                                                                                        [[ module.StudyActivityName || "-" ]]
+                                                                                                    </span>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            [[ activity.CycleDes || "-" ]]
                                                                                             <span v-for="module in activity.AfSubModules">
                                                                                                 <br>
-                                                                                                [[ module.StudyActivityCod || "-" ]]
-                                                                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
-                                                                                                    [[ module.StudyActivityName ]]
-                                                                                                </a>
-                                                                                                <span v-else>
-                                                                                                    [[ module.StudyActivityName ]]
-                                                                                                </span>
+                                                                                                [[ module.StudyActivitySemester || "-" ]]
                                                                                             </span>
                                                                                         </td>
                                                                                         <td>
-                                                                                            [[ activity.CycleDes ]]
+                                                                                            [[ activity.CreditValue || "-" ]]
                                                                                             <span v-for="module in activity.AfSubModules">
                                                                                                 <br>
-                                                                                                [[ module.StudyActivitySemester ]]
-                                                                                            </span>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            [[ activity.CreditValue ]]
-                                                                                            <span v-for="module in activity.AfSubModules">
-                                                                                                <br>
-                                                                                                [[ module.StudyActivityCreditValue ]]
+                                                                                                [[ module.StudyActivityCreditValue || "-" ]]
                                                                                             </span>
                                                                                         </td>
                                                                                     </tr>
@@ -605,34 +607,35 @@
                                                                                 <td>
                                                                                     [[ activity.AfCod || "-" ]]
                                                                                     <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
-                                                                                        [[ activity.AfDescription ]]
+                                                                                        [[ activity.AfDescription || "-" ]]
                                                                                     </a>
                                                                                     <span v-else>
-                                                                                        [[ activity.AfDescription ]]
+                                                                                        [[ activity.AfDescription || "-" ]]
                                                                                     </span>
+                                                                                    <ul v-if="activity.AfSubModules.length > 0">
+                                                                                        <li v-for="module in activity.AfSubModules">
+                                                                                            [[ module.StudyActivityCod || "-" ]]
+                                                                                            <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                                                [[ module.StudyActivityName || "-" ]]
+                                                                                            </a>
+                                                                                            <span v-else>
+                                                                                                [[ module.StudyActivityName || "-" ]]
+                                                                                            </span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </td>
+                                                                                <td>
+                                                                                    [[ activity.CycleDes || "-" ]]
                                                                                     <span v-for="module in activity.AfSubModules">
                                                                                         <br>
-                                                                                        [[ module.StudyActivityCod || "-" ]]
-                                                                                        <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
-                                                                                            [[ module.StudyActivityName ]]
-                                                                                        </a>
-                                                                                        <span v-else>
-                                                                                            [[ module.StudyActivityName ]]
-                                                                                        </span>
+                                                                                        [[ module.StudyActivitySemester || "-" ]]
                                                                                     </span>
                                                                                 </td>
                                                                                 <td>
-                                                                                    [[ activity.CycleDes ]]
+                                                                                    [[ activity.CreditValue || "-" ]]
                                                                                     <span v-for="module in activity.AfSubModules">
                                                                                         <br>
-                                                                                        [[ module.StudyActivitySemester ]]
-                                                                                    </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    [[ activity.CreditValue ]]
-                                                                                    <span v-for="module in activity.AfSubModules">
-                                                                                        <br>
-                                                                                        [[ module.StudyActivityCreditValue ]]
+                                                                                        [[ module.StudyActivityCreditValue || "-" ]]
                                                                                     </span>
                                                                                 </td>
                                                                             </tr>
