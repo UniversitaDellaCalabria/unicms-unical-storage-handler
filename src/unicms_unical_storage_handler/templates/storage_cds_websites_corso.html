@@ -31,7 +31,7 @@
 {% storage_settings_value "CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH" as activity_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
-{% storage_settings_value "CDS_INFO_FIELDS" as fields_to_show %}
+{% storage_settings_value "CDS_WEBSITE_COURSE_INFO_FIELDS" as fields_to_show %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
@@ -56,7 +56,10 @@
                 <div class="col-12 col-lg-8">
                     <p class="h1 lighter">{{ page_title }}</p>
                     <div class="row  mt-5" id="_{{ cds_cod }}">
+
+<!--
                         <hr />
+-->
 
                         <loading-icon
                             v-if="_cds_data.is_loading"
@@ -65,6 +68,7 @@
 
                         <div v-else>
 
+                            {% comment %}
                             <p class="h3 lighter">
                                 [[ _cds_data.fixed_cds.CourseTypeDescription ]] <span v-if="_cds_data.fixed_cds.CourseInterClassCod">{% trans "interclass" %}</span>
                             </p>
@@ -97,6 +101,7 @@
                                     [[ lang ]]
                                 </b>
                             </p>
+                            {% endcomment %}
 
                             {% comment %}
                             <hr class="my-5"/>
@@ -105,7 +110,7 @@
                             </div>
                             {% endcomment %}
 
-                            <div class="col-sm form-group my-5">
+                            <div class="col-sm form-group">
                                 <div>
 
                                     <div class="w-30 mt-3">

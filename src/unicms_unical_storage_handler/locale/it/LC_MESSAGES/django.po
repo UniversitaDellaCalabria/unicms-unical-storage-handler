@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-31 16:25+0200\n"
-"PO-Revision-Date: 2023-08-31 16:26+0200\n"
+"POT-Creation-Date: 2023-09-12 10:06+0200\n"
+"PO-Revision-Date: 2023-09-12 10:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -161,27 +161,27 @@ msgstr "Titolo congiunto"
 msgid "Double title"
 msgstr "Doppio titolo"
 
-#: settings.py:396
+#: settings.py:401
 msgid "Brochure"
 msgstr ""
 
-#: settings.py:397
+#: settings.py:402
 msgid "Course"
 msgstr "Corso"
 
-#: settings.py:398
+#: settings.py:403
 msgid "Enroll"
 msgstr "Iscriversi"
 
-#: settings.py:399
+#: settings.py:404
 msgid "Study"
 msgstr "Studiare"
 
-#: settings.py:400
+#: settings.py:405
 msgid "Opportunities"
 msgstr "Opportunità"
 
-#: settings.py:401
+#: settings.py:406
 #: templates/blocks/collapse/unical_storage_collapse_structure_list.html:7
 #: templates/blocks/unical_storage_high_formation_master_info.html:559
 msgid "Organization"
@@ -237,7 +237,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_teacherresearchlines.html:39
 #: templates/blocks/unical_storage_teacherslist.html:163
 #: templates/blocks/unical_storage_teacherstudyactivities.html:140
-#: templates/storage_cds_websites_prospect.html:151
+#: templates/storage_cds_websites_prospect.html:149
 msgid "No items here"
 msgstr "Nessun risultato"
 
@@ -355,7 +355,7 @@ msgstr "Tipo struttura"
 #: templates/blocks/unical_storage_studyactivity_list.html:124
 #: templates/blocks/unical_storage_teacherslist.html:66
 #: templates/blocks/unical_storage_teacherslist.html:93
-#: templates/storage_cds_websites_corso.html:112
+#: templates/storage_cds_websites_corso.html:120
 msgid "Choose an option"
 msgstr "Scegli un'opzione"
 
@@ -391,14 +391,13 @@ msgid "Duration"
 msgstr "Durata"
 
 #: templates/blocks/unical_storage_cds_main_info.html:61
-#: templates/blocks/unical_storage_cdsinfo.html:104
+#: templates/blocks/unical_storage_cdsinfo.html:106
 #: templates/blocks/unical_storage_cdslist.html:277
-#: templates/storage_cds_websites_prospect.html:198
+#: templates/storage_cds_websites_prospect.html:196
 msgid "years"
 msgstr "anni"
 
 #: templates/blocks/unical_storage_cds_main_info.html:66
-#: templates/storage_cds_websites_corso.html:90
 msgid "Language"
 msgstr "Lingua"
 
@@ -449,8 +448,8 @@ msgstr "Il corso in sintesi"
 #: templates/blocks/unical_storage_cdsstudyplans.html:60
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:39
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:127
-#: templates/storage_cds_websites_studiare.html:193
-#: templates/storage_cds_websites_studiare.html:277
+#: templates/storage_cds_websites_studiare.html:173
+#: templates/storage_cds_websites_studiare.html:259
 msgid "year"
 msgstr "anno"
 
@@ -462,9 +461,10 @@ msgstr "anno"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:142
 #: templates/blocks/unical_storage_studyactivity_list.html:169
 #: templates/blocks/unical_storage_studyactivity_list.html:288
-#: templates/storage_cds_websites_corso.html:260
-#: templates/storage_cds_websites_corso.html:349
-#: templates/storage_cds_websites_corso.html:469
+#: templates/storage_cds_websites_corso.html:258
+#: templates/storage_cds_websites_corso.html:368
+#: templates/storage_cds_websites_corso.html:482
+#: templates/storage_cds_websites_corso.html:607
 msgid "Teaching"
 msgstr "Insegnamento"
 
@@ -475,9 +475,10 @@ msgstr "Insegnamento"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:56
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:143
 #: templates/blocks/unical_storage_studyactivity_list.html:116
-#: templates/storage_cds_websites_corso.html:262
-#: templates/storage_cds_websites_corso.html:350
-#: templates/storage_cds_websites_corso.html:470
+#: templates/storage_cds_websites_corso.html:260
+#: templates/storage_cds_websites_corso.html:369
+#: templates/storage_cds_websites_corso.html:483
+#: templates/storage_cds_websites_corso.html:608
 msgid "Period"
 msgstr "Periodo"
 
@@ -487,55 +488,60 @@ msgstr "Periodo"
 #: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:283
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:57
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:144
-#: templates/storage_cds_websites_corso.html:263
+#: templates/storage_cds_websites_corso.html:261
 #: templates/storage_cds_websites_corso.html:333
 #: templates/storage_cds_websites_corso.html:351
-#: templates/storage_cds_websites_corso.html:459
-#: templates/storage_cds_websites_corso.html:471
+#: templates/storage_cds_websites_corso.html:370
+#: templates/storage_cds_websites_corso.html:484
+#: templates/storage_cds_websites_corso.html:597
+#: templates/storage_cds_websites_corso.html:609
 msgid "ETCS"
 msgstr "CFU"
 
 #: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:170
-#: templates/blocks/unical_storage_cdsstudyplans_v3.html:97
-msgid "Study paths"
-msgstr "Percorsi di studio"
+msgid "for"
+msgstr "per"
 
-#: templates/blocks/unical_storage_cdsinfo.html:73
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:170
+msgid "study paths"
+msgstr "percorsi di studio"
+
+#: templates/blocks/unical_storage_cdsinfo.html:75
 msgid "Interclass degree"
 msgstr "Corso di laurea interclasse"
 
-#: templates/blocks/unical_storage_cdsinfo.html:117
+#: templates/blocks/unical_storage_cdsinfo.html:119
 #: templates/blocks/unical_storage_structure_list.html:103
 msgid "Website"
 msgstr "Sito web"
 
-#: templates/blocks/unical_storage_cdsinfo.html:260
-#: templates/blocks/unical_storage_cdsinfo.html:265
+#: templates/blocks/unical_storage_cdsinfo.html:262
+#: templates/blocks/unical_storage_cdsinfo.html:267
 msgid "Download brochure"
 msgstr "Scarica la brochure"
 
-#: templates/blocks/unical_storage_cdsinfo.html:398
-#: templates/storage_cds_websites_studiare.html:142
+#: templates/blocks/unical_storage_cdsinfo.html:400
+#: templates/storage_cds_websites_studiare.html:385
 msgid "Faculty"
 msgstr "Docenti"
 
-#: templates/blocks/unical_storage_cdsinfo.html:409
-#: templates/storage_cds_websites_studiare.html:152
+#: templates/blocks/unical_storage_cdsinfo.html:411
+#: templates/storage_cds_websites_studiare.html:395
 msgid "Academic Courses"
 msgstr "Docenze Anno"
 
-#: templates/blocks/unical_storage_cdsinfo.html:566
+#: templates/blocks/unical_storage_cdsinfo.html:568
 #: templates/includes/unical_storage_cds_websites_right_links.html:56
-#: templates/storage_cds_websites_corso.html:579
+#: templates/storage_cds_websites_corso.html:719
 msgid "Documents"
 msgstr "Documenti"
 
-#: templates/blocks/unical_storage_cdsinfo.html:575
+#: templates/blocks/unical_storage_cdsinfo.html:577
 #: templates/includes/unical_storage_cds_websites_right_links.html:22
 msgid "Study course brochure"
 msgstr "Brochure del corso"
 
-#: templates/blocks/unical_storage_cdsinfo.html:588
+#: templates/blocks/unical_storage_cdsinfo.html:590
 #: templates/storage_high_formation_master_info.html:35
 #: templates/storage_high_formation_masters_list.html:35
 msgid "Digital services"
@@ -621,9 +627,13 @@ msgstr "Tipologia"
 #: templates/blocks/unical_storage_projects_list.html:39
 #: templates/blocks/unical_storage_publications_list.html:38
 #: templates/blocks/unical_storage_teacherstudyactivities.html:29
-#: templates/storage_cds_websites_corso.html:247
+#: templates/storage_cds_websites_corso.html:245
 msgid "Year"
 msgstr "Anno"
+
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:97
+msgid "Study paths"
+msgstr "Percorsi di studio"
 
 #: templates/blocks/unical_storage_departments_info.html:95
 #: templates/blocks/unical_storage_laboratory_list.html:219
@@ -717,8 +727,8 @@ msgstr "Modalità di erogazione"
 
 #: templates/blocks/unical_storage_high_formation_masters_list.html:219
 #: templates/blocks/unical_storage_studyactivity_list.html:42
-#: templates/storage_cds_websites_studiare.html:179
-#: templates/storage_cds_websites_studiare.html:263
+#: templates/storage_cds_websites_studiare.html:159
+#: templates/storage_cds_websites_studiare.html:245
 msgid "Academic Year"
 msgstr "Anno accademico"
 
@@ -827,7 +837,7 @@ msgstr "Attività di ateneo"
 #: templates/blocks/unical_storage_phd_activities_list.html:151
 #: templates/blocks/unical_storage_studyactivity_list.html:259
 #: templates/blocks/unical_storage_studyactivity_list.html:289
-#: templates/storage_cds_websites_corso.html:261
+#: templates/storage_cds_websites_corso.html:259
 msgid "SSD"
 msgstr ""
 
@@ -994,7 +1004,7 @@ msgstr "Attività Principale"
 
 #: templates/blocks/unical_storage_teacher_materials.html:60
 #: templates/blocks/unical_storage_teacher_news_list.html:66
-#: templates/storage_cds_websites_prospect.html:790
+#: templates/storage_cds_websites_prospect.html:788
 msgid "Close"
 msgstr "Chiudi"
 
@@ -1069,6 +1079,8 @@ msgid "Back to previous page"
 msgstr "Torna alla pagina precedente"
 
 #: templates/includes/unical_storage_loading.html:14
+#: templates/pages/unical_cds_website.html:43
+#: templates/pages/unical_cds_website.html:170
 msgid "Loading data"
 msgstr "Caricamento dati"
 
@@ -1077,8 +1089,8 @@ msgstr "Caricamento dati"
 msgid "University of Calabria"
 msgstr ""
 
-#: templates/pages/unical_cds_website.html:42
-#: templates/pages/unical_cds_website.html:150
+#: templates/pages/unical_cds_website.html:49
+#: templates/pages/unical_cds_website.html:176
 msgid "interclass"
 msgstr "interclasse"
 
@@ -1115,46 +1127,50 @@ msgstr "Vedi lista"
 msgid "People"
 msgstr "Persone"
 
-#: templates/storage_cds_websites_corso.html:83
-msgid "Referral Department"
-msgstr "Dipartimento di riferimento"
-
-#: templates/storage_cds_websites_corso.html:225
+#: templates/storage_cds_websites_corso.html:223
 msgid "Study plan"
 msgstr "Piano di studio"
 
 #: templates/storage_cds_websites_corso.html:324
-#: templates/storage_cds_websites_corso.html:450
+#: templates/storage_cds_websites_corso.html:342
+#: templates/storage_cds_websites_corso.html:588
 msgid "Insegnamenti a scelta"
 msgstr ""
 
 #: templates/storage_cds_websites_corso.html:332
-#: templates/storage_cds_websites_corso.html:458
+#: templates/storage_cds_websites_corso.html:350
+#: templates/storage_cds_websites_corso.html:596
 msgid "teachings"
 msgstr "insegnamenti"
 
 #: templates/storage_cds_websites_corso.html:334
-#: templates/storage_cds_websites_corso.html:460
+#: templates/storage_cds_websites_corso.html:352
+#: templates/storage_cds_websites_corso.html:598
 msgid "optional"
 msgstr "opzionali"
 
 #: templates/storage_cds_websites_corso.html:335
-#: templates/storage_cds_websites_corso.html:461
+#: templates/storage_cds_websites_corso.html:353
+#: templates/storage_cds_websites_corso.html:599
 msgid "required"
 msgstr "obbligatori"
 
 #: templates/storage_cds_websites_corso.html:336
-#: templates/storage_cds_websites_corso.html:462
+#: templates/storage_cds_websites_corso.html:354
+#: templates/storage_cds_websites_corso.html:600
 msgid "choice between"
 msgstr "a scelta tra"
 
-#: templates/storage_cds_websites_corso.html:408
-#: templates/storage_cds_websites_corso.html:437
-#: templates/storage_cds_websites_corso.html:545
+#: templates/storage_cds_websites_corso.html:429
+#: templates/storage_cds_websites_corso.html:458
+#: templates/storage_cds_websites_corso.html:543
+#: templates/storage_cds_websites_corso.html:572
+#: templates/storage_cds_websites_corso.html:684
 msgid "Valid option"
 msgstr "Opzione valida"
 
-#: templates/storage_cds_websites_corso.html:417
+#: templates/storage_cds_websites_corso.html:438
+#: templates/storage_cds_websites_corso.html:552
 msgid "Invalid option"
 msgstr "Opzione non valida"
 
@@ -1183,60 +1199,60 @@ msgstr ""
 msgid "Open ticket"
 msgstr ""
 
-#: templates/storage_cds_websites_iscriversi.html:225
+#: templates/storage_cds_websites_iscriversi.html:253
 msgid "Informations"
 msgstr "Informazioni"
 
-#: templates/storage_cds_websites_prospect.html:77
+#: templates/storage_cds_websites_prospect.html:75
 msgid "course in brief"
 msgstr "corso in pillole"
 
-#: templates/storage_cds_websites_prospect.html:94
+#: templates/storage_cds_websites_prospect.html:92
 msgid "subjects"
 msgstr "cosa si studia"
 
-#: templates/storage_cds_websites_prospect.html:111
+#: templates/storage_cds_websites_prospect.html:109
 msgid "how to enroll"
 msgstr "come iscriversi"
 
-#: templates/storage_cds_websites_prospect.html:128
+#: templates/storage_cds_websites_prospect.html:126
 msgid "download materials"
 msgstr "scarica materiali"
 
-#: templates/storage_cds_websites_prospect.html:158
-#: templates/storage_cds_websites_prospect.html:164
+#: templates/storage_cds_websites_prospect.html:156
+#: templates/storage_cds_websites_prospect.html:162
 msgid "request info"
 msgstr "richiedi info"
 
-#: templates/storage_cds_websites_prospect.html:305
+#: templates/storage_cds_websites_prospect.html:303
 msgid "Who is eligible for the course"
 msgstr "Chi può accedere al corso"
 
-#: templates/storage_cds_websites_prospect.html:371
+#: templates/storage_cds_websites_prospect.html:369
 msgid "Fees, contributions and excemptions"
 msgstr "Tasse e contributi"
 
-#: templates/storage_cds_websites_prospect.html:625
+#: templates/storage_cds_websites_prospect.html:623
 msgid "Discover the career of former students"
 msgstr "Scopri la carriera degli ex studenti del corso"
 
-#: templates/storage_cds_websites_prospect.html:643
+#: templates/storage_cds_websites_prospect.html:641
 msgid "Click here"
 msgstr "Clicca qui"
 
-#: templates/storage_cds_websites_prospect.html:661
+#: templates/storage_cds_websites_prospect.html:659
 msgid "Life on Campus"
 msgstr "Vita nel Campus"
 
-#: templates/storage_cds_websites_prospect.html:666
+#: templates/storage_cds_websites_prospect.html:664
 msgid "Services to students"
 msgstr "Servizi agli studenti"
 
-#: templates/storage_cds_websites_prospect.html:671
+#: templates/storage_cds_websites_prospect.html:669
 msgid "Residential center"
 msgstr "Centro residenziale"
 
-#: templates/storage_cds_websites_prospect.html:685
+#: templates/storage_cds_websites_prospect.html:683
 msgid ""
 "On the largest and most equipped campus in Italy, you can experience a unique "
 "university community, sharing educational, recreational, sporting and "
@@ -1252,13 +1268,13 @@ msgstr ""
 "aggregativi. Una cittadella che consente di vivere una straordinaria "
 "esperienza umana, oltre che formativa."
 
-#: templates/storage_cds_websites_prospect.html:690
-#: templates/storage_cds_websites_prospect.html:708
-#: templates/storage_cds_websites_prospect.html:726
+#: templates/storage_cds_websites_prospect.html:688
+#: templates/storage_cds_websites_prospect.html:706
+#: templates/storage_cds_websites_prospect.html:724
 msgid "Discover more"
 msgstr "Scopri di più"
 
-#: templates/storage_cds_websites_prospect.html:703
+#: templates/storage_cds_websites_prospect.html:701
 msgid ""
 "A citadel that hosts those who live on the Campus in the best possible way, "
 "because it offers multiple services for study and for individual and "
@@ -1272,7 +1288,7 @@ msgstr ""
 "counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, un "
 "ufficio postale, uno sportello bancario e uno spazio per il silenzio."
 
-#: templates/storage_cds_websites_prospect.html:721
+#: templates/storage_cds_websites_prospect.html:719
 msgid ""
 "It completes and enhances the offer of the University of Calabria and "
 "realizes the idea of ​​an Anglo-Saxon university campus. It is distributed in "
@@ -1290,31 +1306,31 @@ msgstr ""
 "sportive, con la presenza di sale tv, sale giochi e palestre; sono "
 "disponibili servizi di lavanderia e di noleggio bici."
 
-#: templates/storage_cds_websites_prospect.html:741
+#: templates/storage_cds_websites_prospect.html:739
 msgid "Request information for this course"
 msgstr "Richiedi informazioni per questo corso"
 
-#: templates/storage_cds_websites_prospect.html:780
+#: templates/storage_cds_websites_prospect.html:778
 msgid "Submit"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:788
+#: templates/storage_cds_websites_prospect.html:786
 msgid "Confirm"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:798
+#: templates/storage_cds_websites_prospect.html:796
 msgid "Do you want to confirm the entered data?"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:805
+#: templates/storage_cds_websites_prospect.html:803
 msgid "Yes, proceed"
 msgstr ""
 
-#: templates/storage_cds_websites_prospect.html:820
+#: templates/storage_cds_websites_prospect.html:818
 msgid "If you want more information on the Degree Course"
 msgstr "Se vuoi avere maggiori informazioni sul Corso di Laurea"
 
-#: templates/storage_cds_websites_prospect.html:823
+#: templates/storage_cds_websites_prospect.html:821
 msgid ""
 "For details on the contents of individual courses, training periods abroad, "
 "teachers, tutors, study rooms, laboratories, research centres, other "
@@ -1324,15 +1340,15 @@ msgstr ""
 "all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, altre "
 "strutture e iniziative di socializzazione visita il sito del Corso di Studio."
 
-#: templates/storage_cds_websites_prospect.html:827
+#: templates/storage_cds_websites_prospect.html:825
 msgid "Go to the institutional site"
 msgstr "Vai al sito istituzionale"
 
-#: templates/storage_cds_websites_studiare.html:168
+#: templates/storage_cds_websites_studiare.html:148
 msgid "Orario delle lezioni"
 msgstr ""
 
-#: templates/storage_cds_websites_studiare.html:252
+#: templates/storage_cds_websites_studiare.html:234
 msgid "Calendario esami"
 msgstr ""
 
@@ -1398,6 +1414,9 @@ msgstr "Dettaglio della struttura"
 #: templates/storage_teachers_info.html:12
 msgid "Teacher detail"
 msgstr "Dettaglio docente"
+
+#~ msgid "Referral Department"
+#~ msgstr "Dipartimento di riferimento"
 
 #~ msgid "Teachings must be chosen respecting these rules"
 #~ msgstr "Gli insegnamenti devono essere scelti rispettando queste regole"

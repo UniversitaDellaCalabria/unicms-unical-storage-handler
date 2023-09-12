@@ -228,6 +228,11 @@ CDS_INFO_FIELDS = [#'CdSGoals',
                    'CdSProfiles',
                    #'CdSFinalTest', 'CdSFinalTestMode',
                    'CdSSatisfactionSurvey',]
+CDS_WEBSITE_COURSE_INFO_FIELDS = [#'CdSGoals',
+                                  # 'CdSAccess', 'CdSAdmission',
+                                  'CdSProfiles',
+                                  #'CdSFinalTest', 'CdSFinalTestMode',
+                                  'CdSSatisfactionSurvey',]
 
 # FIELDS TO HIDE IN BLOCKS
 

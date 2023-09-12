@@ -6,7 +6,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH" as cds_corso_path %}
-
+{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
 
 <div class="row">
     <div class="col-12 col-lg-auto">
@@ -28,9 +28,10 @@
                     <svg class="icon me-2">
                         <use xlink:href="{% static '/svg/sprites.svg' %}#it-arrow-right-circle"></use>
                     </svg>
-                    {% trans "Teachings" %}
+                    {% trans "Teachings" %} {{ cds_website_current_year }}/{{ cds_website_current_year|add:1 }}</span>
                 </span>
             </a>
         </div>
     </div>
 </div>
+</script>
