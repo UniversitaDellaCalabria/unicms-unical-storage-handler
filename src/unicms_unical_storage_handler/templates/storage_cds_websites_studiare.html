@@ -83,7 +83,7 @@
                                     <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
                                         <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
 
-                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object)">
+                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object && ((article.CdsObject.ClassObjectId == 'WebPath' && article.CdsObject.ObjectText) || article.CdsObject.ClassObjectId != 'WebPath'))">
                                                 <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
                                                     <button class="accordion-button"
                                                             type="button"
@@ -135,6 +135,33 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- href button -->
+                                            <div v-else-if="article.CdsObject && article.CdsObject.ClassObjectId == 'WebPath' &! article.CdsObject.ObjectText">
+                                                <div class="accordion-header accordion-header-href" :id="'static-heading-' + article.ID +'-lft'">
+                                                    <a class="no-color"
+                                                       target="_blank"
+                                                       :title="article.CdsObject.Object.name"
+                                                       :href="article.CdsObject.Object.get_absolute_url">
+                                                        <button class="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                aria-expanded="false">
+                                                            <span v-if="article.Title">
+                                                                [[ article.Title ]]
+                                                            </span>
+                                                            <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                                <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                    [[ article.CdsObject.Object.title ]]
+                                                                </span>
+                                                                <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <!-- end href button -->
                                         </div>
                                     </div>
                                 </div>
