@@ -408,11 +408,11 @@
 
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
-                        {% include "includes/unical_storage_cds_websites_right_static.html" %}
+                        {% include "includes/unical_storage_cds_website_right_static.html" %}
                         <hr style="color: transparent" class="my-3" />
-                        {% include "includes/unical_storage_cds_websites_right_contacts.html" %}
+                        {% include "includes/unical_storage_cds_website_right_contacts.html" %}
                         <hr class="my-3" />
-                        {% include "includes/unical_storage_cds_websites_right_links.html" %}
+                        {% include "includes/unical_storage_cds_website_right_links.html" %}
                     </div>
                 </div>
             </div>
@@ -582,7 +582,7 @@
                 //}
                 //return '#' + this.lightenDarkenColor(colour, -50)
             //},
-            {% include "includes/unical_storage_cds_websites_scroll.html" %}
+            {% include "includes/unical_storage_cds_website_scroll.html" %}
             getEvents(year=1) {
                 this.attributes = []
                 let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year

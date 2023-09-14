@@ -13,6 +13,8 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as prospect_page_path %}
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
 
+{% include "includes/unical_storage_loading.html" %}
+
 
 <div class="customNavigation w-100" id="{{ cds_cod }}_customNavigation" style="position: relative; top: 45%; display: none">
     <span class="{{ cds_cod }}_prev" id="{{ cds_cod }}_prev" style="cursor: pointer; position: relative; z-index: 10">
@@ -33,29 +35,32 @@
     </span>
 </div>
 
-<div id="_{{ cds_cod }}_hero_slider" class="owl-carousel owl-theme bordeaux-unical-bg" style="margin-top: -48px">
-    <div class="item" v-for="slide in slides">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 px-5">
-                    <a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ prospect_page_path }}/">
-                        <div class="it-hero-text-wrapper unical-hero-text-wrapper">
-                            <p class="h2 d-none d-lg-block lighter text-white font-serif" style="font-style: italic">
-                                [[ slide.SliderDescription ]]
-                            </p>
-                            <br>
-                            <p class="h4 d-none d-lg-block lighter text-white font-monospace">
-                                IL CORSO DI STUDI IN SINTESI
-                            </p>
-                            <p class="h3 d-block d-lg-none lighter text-white font-serif" style="font-style: italic">
-                                [[ slide.SliderDescription ]]
-                            </p>
-                            <br>
-                            <p class="h5 d-block d-lg-none lighter text-white font-monospace">
-                                IL CORSO DI STUDI IN SINTESI
-                            </p>
-                        </div>
-                    </a>
+<div id="_{{ cds_cod }}_hero_slider">
+    <loading-icon v-if="is_loading"></loading-icon>
+    <div id="_{{ cds_cod }}_hero_slider_slider" class="owl-carousel owl-theme bordeaux-unical-bg" style="margin-top: -48px; display: none">
+        <div class="item" v-for="slide in slides">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 px-5">
+                        <a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ prospect_page_path }}/">
+                            <div class="it-hero-text-wrapper unical-hero-text-wrapper">
+                                <p class="h2 d-none d-lg-block lighter text-white font-serif" style="font-style: italic">
+                                    [[ slide.SliderDescription ]]
+                                </p>
+                                <br>
+                                <p class="h4 d-none d-lg-block lighter text-white font-monospace">
+                                    IL CORSO DI STUDI IN SINTESI
+                                </p>
+                                <p class="h3 d-block d-lg-none lighter text-white font-serif" style="font-style: italic">
+                                    [[ slide.SliderDescription ]]
+                                </p>
+                                <br>
+                                <p class="h5 d-block d-lg-none lighter text-white font-monospace">
+                                    IL CORSO DI STUDI IN SINTESI
+                                </p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,7 +72,8 @@ var _{{ cds_cod }}_hero_slider = new Vue({
     data() {
         return {
             slides: {},
-            regdidid: null
+            regdidid: null,
+            is_loading: true
         }
     },
     mounted() {
@@ -125,11 +131,12 @@ var _{{ cds_cod }}_hero_slider = new Vue({
 
             if(this.slides.length > 0)
                 document.getElementById("{{ cds_cod }}_customNavigation").style.display = "block"
+                document.getElementById("_{{ cds_cod }}_hero_slider_slider").style.display = "block"
         },
     },
     watch: {
         regdidid: function(val) {
-            this.setSlider(div_id='#_{{ cds_cod }}_hero_slider', items=1, single=true)
+            this.setSlider(div_id='#_{{ cds_cod }}_hero_slider_slider', items=1, single=true)
         }
     }
 })
