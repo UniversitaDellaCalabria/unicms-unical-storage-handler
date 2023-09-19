@@ -21,6 +21,9 @@
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 
 
+
+
+
 <div id="{{ id }}">
 
     <loading-icon
@@ -37,6 +40,14 @@
         </h1>
         <h3 class="lighter">[[ item.StudyActivityCdSName ]] ([[ item.StudyActivityPdsDes ]])</h3>
         <h5 class="lighter">[[ item.StudyActivityCod ]]</h5>
+        <p style="text-align: right" class="d-print-none">
+            <a id="print" onclick="print_page()">
+                <svg class="icon" style="fill: var(--bordeaux_unical)" aria-labelledby="{{ id }}_label">
+                <title id="{{ id }}_label">{% trans "Print" %}</title>
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-print"></use>
+                </svg>
+            </a>
+        </p>
         <hr class="my-4 bordeaux-unical-bg">
         <div class="table-responsive">
             <table class="table table-sm table-hover table-striped">
@@ -240,7 +251,17 @@
                 </tbody>
             </table>
 
-            <div id="collapseDiv1-lft" class="accordion accordion-left-icon">
+            <div class="d-none d-print-block">
+                <div v-for="name in fields_to_collapse" v-if="item[name] != null" class="mt-4">
+                    <b>
+                        [[ labels[name] ]]
+                    </b>
+                    <div style="white-space: pre-line" class="mt-2">
+                        <span>[[ item[name] ]]</span>
+                    </div>
+                </div>
+            </div>
+            <div id="collapseDiv1-lft" class="accordion accordion-left-icon d-print-none">
                 <div v-for="name in fields_to_collapse" v-if="item[name] != null">
                     <div class="accordion-item">
                         <div class="accordion-header"
@@ -269,7 +290,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div v-else>
@@ -332,7 +352,19 @@
                             }
                         this.is_loading = false
                     });
-            }
+            },
         }
     })
+
+function print_page() {
+    // hide all other sections
+    document.getElementsByClassName('it-header-wrapper')[0].classList.add('d-print-none');
+    document.getElementsByClassName('breadcrumb-container')[0].classList.add('d-print-none');
+    document.getElementsByClassName('it-footer')[0].classList.add('d-print-none');
+
+    // browser print
+    window.print();
+
+    return false;
+}
 </script>
