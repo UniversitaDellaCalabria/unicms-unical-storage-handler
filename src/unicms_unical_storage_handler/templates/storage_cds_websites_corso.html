@@ -402,13 +402,15 @@ var _{{ cds_cod }}_studyplans = new Vue({
                 .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
                 .then(response => {
                     let curricula = []
-                    response.data.results[0].PlanTabs.forEach(
-                        function (plantab) {
-                            if (!curricula.includes(plantab.PdsDes)) {
-                                curricula.push(plantab.PdsDes);
+                    if(response.data.results.length > 0) {
+                        response.data.results[0].PlanTabs.forEach(
+                            function (plantab) {
+                                if (!curricula.includes(plantab.PdsDes)) {
+                                    curricula.push(plantab.PdsDes);
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                     this.curricula = curricula
                     this.items = response.data.results[0]
                     this.is_loading = false
