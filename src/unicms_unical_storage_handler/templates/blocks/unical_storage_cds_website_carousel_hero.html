@@ -7,6 +7,8 @@
 {% get_cds_website_webpath webpath.pk as cds_cod %}
 {% get_current_language as LANGUAGE_CODE %}
 
+{% settings_value "CAROUSEL_HERO_AUTOPLAY_TIMEOUT" as carousel_timeout %}
+
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
@@ -86,7 +88,7 @@ var _{{ cds_cod }}_hero_slider = new Vue({
                 }
             )
         },
-        setSlider(div_id, items=1, single=false, timeout=5000) {
+        setSlider(div_id, items=1, single=false, timeout={{ carousel_timeout|default:5000 }}) {
             let tablet_items = 2;
             if(single) tablet_items = 1;
             var owl_{{ cds_cod }} = $(div_id);

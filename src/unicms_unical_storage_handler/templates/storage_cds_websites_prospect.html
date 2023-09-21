@@ -26,6 +26,7 @@ Brochure - {{ block.super }}
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% settings_value "CAROUSEL_HERO_AUTOPLAY_TIMEOUT" as carousel_timeout %}
 
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
@@ -857,7 +858,7 @@ Brochure - {{ block.super }}
                     }
                 )
             },
-            setSlider(div_id, items=1, single=false, timeout=5000) {
+            setSlider(div_id, items=1, single=false, timeout={{ carousel_timeout|default:5000 }}) {
                 let tablet_items = 2;
                 if(single) tablet_items = 1;
                 $(div_id).owlCarousel({
@@ -900,7 +901,7 @@ Brochure - {{ block.super }}
         watch: {
             regdidid: function(val) {
                 this.setSlider(div_id='#CdsSlider', items=1, single=true)
-                this.setSlider(div_id='#CdsExStudents', items=3, timeout=7000)
+                this.setSlider(div_id='#CdsExStudents', items=3, timeout=({{ carousel_timeout|default:5000 }} + 2000))
 
                 //var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
                 //var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
