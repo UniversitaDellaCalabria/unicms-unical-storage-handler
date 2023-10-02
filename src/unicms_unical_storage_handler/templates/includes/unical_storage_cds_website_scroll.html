@@ -1,0 +1,6 @@
+scrollPage() {
+    let urlParams = new URLSearchParams(window.location.search)
+    let div_id = urlParams.get('scroll')
+    let div = document.getElementById(div_id)
+    if(div) div.scrollIntoView()
+},

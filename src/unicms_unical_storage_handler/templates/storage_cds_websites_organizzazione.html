@@ -1,0 +1,204 @@
+{% extends "pages/unical_cds_website.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% load unicms_contexts %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<!-- SEO  -->
+{% block page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL" as page_title %}
+{{ page_title }} - {{ block.super }}
+{% endblock page_title %}
+
+
+{% block container %}
+
+<script src="{% static 'js/vue-markdown.js' %}"></script>
+
+
+{% get_current_language as LANGUAGE_CODE %}
+{% breadcrumbs webpath=webpath leaf=handler %}
+
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL" as page_title %}
+{% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
+{% get_allowed_website request.get_host as host %}
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<div class="col-12 py-5 bd-content">
+    <div>
+        {% block centered_container %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <p class="h1 lighter">{{ page_title }}</p>
+                        <div class="row mt-5" id="_{{ cds_cod }}" >
+
+                            <div v-if="_cds_data.cds.OtherData">
+                                <p v-if="'DirectorId' in _cds_data.cds.OtherData">
+                                    <b>[[ _cds_data.cds_labels['DirectorName'] ]]</b>:
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DirectorId +'/'" v-if="_cds_data.cds.OtherData.DirectorId">
+                                        [[ _cds_data.cds.OtherData.DirectorName ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ _cds_data.cds.OtherData.DirectorName ]]
+                                    </span>
+                                </p>
+
+                                <p v-if="'DeputyDirectorId' in _cds_data.cds.OtherData">
+                                    <b>[[ _cds_data.cds_labels['DeputyDirectorName'] ]]</b>:
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DeputyDirectorId +'/'" v-if="_cds_data.cds.OtherData.DeputyDirectorId">
+                                        [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div id="accordionDivGroups-lft" class="accordion accordion-left-icon" >
+                                <div class="accordion-item" v-for="gruppo in _cds_data.cds.CdsOrganizations">
+                                    <div class="accordion-header" :id="'heading-' + gruppo.id +'-lft'">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="'#collapse-' + gruppo.id +'-lft'"
+                                                aria-expanded="false"
+                                                :aria-controls="'collapse-' + gruppo.id +'-lft'">
+                                            [[ gruppo.DescrBreveIt ]]
+                                        </button>
+                                    </div>
+                                    <div :id="'collapse-' + gruppo.id +'-lft'"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDivGroups-lft"
+                                         role="region"
+                                         :aria-labelledby="'heading-' + gruppo.id +'-lft'">
+                                        <div class="accordion-body mt-3">
+
+                                            <ul>
+                                                <li v-for="member in gruppo.Members">
+                                                    [[ member.Cognome ]] [[ member.Nome ]]
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-if="_cds_data.cds.OfficesData" id="accordionDivOffices-lft" class="accordion accordion-left-icon mt-4">
+                                <div class="accordion-item" v-for="office in _cds_data.cds.OfficesData">
+                                    <div class="accordion-header" :id="'heading-office' + office.id +'-lft'">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="'#collapse-office' + office.id +'-lft'"
+                                                aria-expanded="false"
+                                                :aria-controls="'collapse-office' + office.id +'-lft'">
+                                            [[ office.OfficeName ]]
+                                        </button>
+                                    </div>
+                                    <div :id="'collapse-office' + office.id +'-lft'"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDivOffices-lft"
+                                         role="region"
+                                         :aria-labelledby="'heading-office' + office.id +'-lft'">
+                                        <div class="accordion-body">
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.OfficeDirector && office.OfficeDirectorName">
+                                                        [[ office.OfficeDirectorName ]]
+                                                    </a>
+                                                    <span v-else-if="office.OfficeDirectorName">
+                                                        [[ office.OfficeDirectorName ]]
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
+                                                    </svg>
+                                                    [[ office.TelOffice ]]
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.Email && office.Email.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                                                    </svg>
+                                                    <a :href="'email:'+office.Email">
+                                                        [[ office.Email ]]
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.Floor && office.Floor.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                                                    </svg>
+                                                    [[ _cds_data.cds_labels['Floor'] ]] [[ office.Floor ]]
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                                                    </svg>
+                                                    [[ office.Timetables ]]
+                                                </div>
+                                            </div>
+                                            <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
+                                                <div class="col">
+                                                    <svg class="icon icon-sm icon-muted me-2">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                    </svg>
+                                                    <a :href="office.OnlineCounter" target="_blank" rel="noreferrer noopener">
+                                                        [[ _cds_data.cds_labels['OnlineCounter'] ]]
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 offset-lg-1">
+                        {% include "includes/unical_storage_cds_website_right_static.html" %}
+                        <hr style="color: transparent" class="my-3" />
+                        {% include "includes/unical_storage_cds_website_right_links.html" %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+</div>
+
+<script>
+    Vue.use(VueMarkdown);
+
+    var _{{ cds_cod }} = new Vue({
+        el: '#_{{ cds_cod }}',
+        data() {
+            return {}
+        },
+    })
+</script>
+{% endblock container %}

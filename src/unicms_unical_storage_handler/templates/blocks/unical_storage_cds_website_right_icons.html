@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as prospect_page_path %}
+{% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
+
+
+<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ prospect_page_path }}/">
+    <div class="row">
+        <div class="col-3">
+            <img src="{% static 'images/corso_in_sintesi.png' %}" style="border-radius: 50%; width: 64px" />
+        </div>
+        <div class="col m-auto align-middle">
+            <ul class="mb-0 ps-0 list-unstyled">
+                <li>
+                    <small><b>{% trans "Course in summary" %}</b></small>
+                </li>
+            </ul>
+        </div>
+    </div>
+</a>
+
+<hr style="color: transparent" class="my-3" />
+
+{% include "includes/unical_storage_cds_website_right_links.html" %}

@@ -14,6 +14,7 @@
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
 {% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+{% storage_settings_value "DIDACTIC_REGULATION_START_YEAR" as didactic_regulation_start_year %}
 
 
 <div id="{{ id }}">
@@ -24,11 +25,7 @@
             <div class="col-12">
 
                 {% block academic_year_select %}
-                <loading-icon
-                    v-if="is_loading_academicyears"
-                    :loader_source="loader_source_academicyears">
-                </loading-icon>
-                <div class="form-group mb-3 row" v-else>
+                <div class="form-group mb-3 row">
                     <div class="col">
                         <label for="{{ id }}_academic_year_input">
                             {% trans "Year of registration" %}
@@ -42,11 +39,10 @@
                               <option value="" v-if="initial_academic_year==''">
                                   - {% trans 'Choose an option' %} -
                               </option>
-                              <option v-for="item in academic_years_filter"
-                                      v-if="item.AcademicYear != '{{ cds_exclude_year }}'"
-                                      :value="item.AcademicYear"
-                                      :selected="item.AcademicYear == selected_academic_year">
-                                  [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]
+                              <option v-for="item in range({{ didactic_regulation_start_year }}, {{ cds_exclude_year }})"
+                                      :value="item"
+                                      :selected="item == selected_academic_year">
+                                  [[ item ]]/[[ item + 1 ]]
                               </option>
                             </select>
                         </div>
@@ -54,119 +50,6 @@
                 </div>
                 {% endblock academic_year_select %}
 
-                {% comment %}
-                <div class="card-wrapper card-space">
-                    <div class="card card-bg no-after">
-                        <div class="card-body">
-                            {% block filters_search %}
-                            {% include "includes/unical_storage_search_input.html" with id=id %}
-                            {% endblock filters_search %}
-
-                            {% block filters_cdslist %}
-                            <div class="form-group mb-0">
-
-                                <!-- type & Academic year & language -->
-                                <div class="row">
-
-                                    {% block filters_coursetype %}
-                                    <loading-icon
-                                        v-if="is_loading_degreetypes"
-                                        :loader_source="loader_source_degreetypes">
-                                    </loading-icon>
-
-                                    <div class="col-sm form-group mb-0" v-else>
-                                        <div>
-                                            <label for="{{ id }}_cds_type">
-                                                {% trans "Course type" %}
-                                            </label>
-                                            <div class="w-30 mt-5">
-                                                <select id="{{ id }}_coursetype_input"
-                                                        title="{% trans 'Choose an option' %}"
-                                                        name="{{ id }}_coursetype_input"
-                                                        class="form-control"
-                                                        @change="{{ id }}.search()">
-                                                    <option value="">- {% trans 'Choose an option' %} -</option>
-                                                    <option v-for="degree in course_types"
-                                                            v-if="allowed_course_types.length==0 || allowed_course_types.includes(degree.CourseType)"
-                                                            :value="degree.CourseType"
-                                                            :selected="degree.CourseType == selected_coursetype">
-                                                        [[ degree.CourseTypeDescription ]]
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endblock filters_coursetype %}
-
-                                    <loading-icon
-                                        v-if="is_loading_academicyears"
-                                        :loader_source="loader_source_academicyears">
-                                    </loading-icon>
-
-                                    <div class="col-sm form-group mb-0" v-else>
-                                        <div>
-                                            <label for="{{ id }}_academic_year_input">
-                                                {% trans "Academic Year" %}
-                                            </label>
-                                            <div class="w-30 mt-5">
-                                                <select id="{{ id }}_academic_year_input"
-                                                        title="{% trans 'Choose an option' %}"
-                                                        name="{{ id }}_academic_year_input"
-                                                        class="form-control"
-                                                        @change="{{ id }}.search()">
-                                                  <option value="" v-if="initial_academic_year==''">
-                                                      - {% trans 'Choose an option' %} -
-                                                  </option>
-                                                  <option v-for="item in academic_years_filter"
-                                                          :value="item.AcademicYear"
-                                                          :selected="item.AcademicYear == selected_academic_year">
-                                                      [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]
-                                                  </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {% block filters_language %}
-                                    <div class="col-sm form-group mb-0">
-                                        <div>
-                                            <label for="{{ id }}_cds_language_input">
-                                                {% trans "Course of study language" %}
-                                            </label>
-                                            <div class="w-30 mt-5">
-                                                <select id="{{ id }}_cds_language_input"
-                                                        title="{% trans 'Choose an option' %}"
-                                                        name="{{ id }}_cds_language_input"
-                                                        class="form-control"
-                                                        @change="{{ id }}.search()">
-                                                    <option value="">- {% trans 'Choose an option' %} -</option>
-                                                    <option v-for="item in cds_languages_filter"
-                                                            :value="item"
-                                                            :selected="item == selected_language">
-                                                        [[ item ]]
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endblock filters_language %}
-                                </div>
-
-                                <!-- Cds department & Joint Degree -->
-                                <div class="row">
-
-                                    {% block filters_department %}
-                                    {% endblock filters_department %}
-
-                                    {% block filters_jointdegree %}
-                                    {% endblock filters_jointdegree %}
-                                </div>
-                            </div>
-                            {% endblock filters_cdslist %}
-                        </div>
-                    </div>
-                </div>
-                {% endcomment %}
             </div>
         </div>
 
@@ -194,8 +77,7 @@
                     <ul class="list-unstyled mt-3">
                         <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
                             <a class="no-color"
-                               {% block cds_area_item_link %}:href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"{% endblock cds_area_item_link %}
-                               {% if request.get_host != host %}target="_blank"{% endif %}>
+                               {% block cds_area_item_link %}:href="item.DidacticRegulation"{% endblock cds_area_item_link %} target="_blank">
                                 <small>
                                 <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
                                 <b v-if="item.RegDidId == 21540">
@@ -307,7 +189,6 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% storage_api_root "CMS_STORAGE_DEGREETYPES_API" as degreetypes_api %}
 {% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
-{% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
 {% storage_api_root "CMS_STORAGE_CDS_AREAS_API" as cds_areas_api %}
 
 {% block current_year %}
@@ -336,7 +217,6 @@ loader_source_academicyears: '{{ academicyears_api }}?lang={{ LANGUAGE_CODE }}',
 loader_source_departments: '{{ departments_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 loader_source_cds_areas: '{{ cds_areas_api }}?lang={{ LANGUAGE_CODE }}',
 
-academic_years_filter: [],
 departments_filter: [],
 cds_languages_filter: {{ allowed_languages|safe }},
 joint_degree_filter: {{ allowed_joint_degrees|safe }}
@@ -356,7 +236,6 @@ if (get_coursetype != null){
 }
 
 this.callDegreeTypes();
-this.callAcademicYears();
 this.callDepartments();
 this.callCdSAreas();
 
@@ -401,14 +280,6 @@ callDegreeTypes() {
             this.is_loading_degreetypes = false
         })
 },
-callAcademicYears() {
-    axios
-        .get(this.loader_source_academicyears)
-        .then(response => {
-            this.academic_years_filter = response.data.results;
-            this.is_loading_academicyears = false
-        })
-},
 callDepartments() {
     axios
         .get(this.loader_source_departments)
@@ -427,6 +298,9 @@ callCdSAreas()  {
 },
 arrayLower(list, item) {
     return list.toString().toLowerCase().includes(item.toLowerCase())
+},
+range : function (start, end) {
+    return Array(end - start).fill().map((val, i) => end - i - 1)
 }
 {% endblock extra_methods %}
 </script>

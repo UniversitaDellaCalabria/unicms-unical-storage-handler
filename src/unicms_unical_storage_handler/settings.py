@@ -228,6 +228,11 @@ CDS_INFO_FIELDS = [#'CdSGoals',
                    'CdSProfiles',
                    #'CdSFinalTest', 'CdSFinalTestMode',
                    'CdSSatisfactionSurvey',]
+CDS_WEBSITE_COURSE_INFO_FIELDS = [#'CdSGoals',
+                                  # 'CdSAccess', 'CdSAdmission',
+                                  'CdSProfiles',
+                                  #'CdSFinalTest', 'CdSFinalTestMode',
+                                  'CdSSatisfactionSurvey',]
 
 # FIELDS TO HIDE IN BLOCKS
 
@@ -329,6 +334,9 @@ CURRENT_YEAR = ""
 # HIGH FORMATION ACADEMIC YEAR
 HIGH_FORMATION_YEAR = ""
 
+# DIDACTIC REGULATION YEAR
+DIDACTIC_REGULATION_START_YEAR = ""
+
 # breadcrumb last item class
 BREADCRUMB_ITEM = "breadcrumb-item"
 BREADCRUMB_LAST = f"{BREADCRUMB_ITEM} active"
@@ -345,41 +353,52 @@ CMS_WEBPATH_CDS = {} # {id_webpath: cds_cod}
 CMS_STORAGE_CDS_WEBSITES_BASE_PATH = 'cds'
 
 # paths
+CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH = 'redirect'
 CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH = 'brochure'
 CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH = 'corso'
 CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_VIEW_PREFIX_PATH = 'iscriversi'
-CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH = 'studiare'
 CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_VIEW_PREFIX_PATH = 'opportunita'
 CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_VIEW_PREFIX_PATH = 'organizzazione'
+CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH = 'studiare'
 
 # regexps
-CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_CDS_WEBSITES_CORSO_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_CDS_WEBSITES_CORSO_ACTIVITY_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH})/{CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH}/(?P<code>[a-z0-9\-]*)(/)?$' # noqa
 CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_VIEW_PREFIX_PATH})(/)?$' # noqa
-CMS_STORAGE_CDS_WEBSITES_STUDIARE_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_VIEW_PREFIX_PATH})(/)?$' # noqa
 CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_CDS_WEBSITES_REDIRECT_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/(?P<cds_cod>[0-9]*)/({CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_CDS_WEBSITES_STUDIARE_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH})(/)?$' # noqa
+CMS_STORAGE_CDS_WEBSITES_STUDIARE_ACTIVITY_URL_VIEW_REGEXP = f'^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_STORAGE_CDS_WEBSITES_BASE_PATH})/({CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH})/{CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH}/(?P<code>[a-z0-9\-]*)(/)?$' # noqa
 
 CMS_STORAGE_HANDLERS_PATHS += [
-                                CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_CORSO_URL_VIEW_REGEXP,
+                                CMS_STORAGE_CDS_WEBSITES_CORSO_ACTIVITY_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_URL_VIEW_REGEXP,
-                                CMS_STORAGE_CDS_WEBSITES_STUDIARE_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_URL_VIEW_REGEXP,
-                                CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_URL_VIEW_REGEXP
+                                CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_URL_VIEW_REGEXP,
+                                CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP,
+                                CMS_STORAGE_CDS_WEBSITES_REDIRECT_URL_VIEW_REGEXP,
+                                CMS_STORAGE_CDS_WEBSITES_STUDIARE_URL_VIEW_REGEXP,
+                                CMS_STORAGE_CDS_WEBSITES_STUDIARE_ACTIVITY_URL_VIEW_REGEXP,
                               ]
 
-CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesProspectHandler'] = CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesCorsoHandler'] = CMS_STORAGE_CDS_WEBSITES_CORSO_URL_VIEW_REGEXP
+CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesCorsoActivityHandler'] = CMS_STORAGE_CDS_WEBSITES_CORSO_ACTIVITY_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesIscriversiHandler'] = CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_URL_VIEW_REGEXP
-CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesStudiareHandler'] = CMS_STORAGE_CDS_WEBSITES_STUDIARE_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesOpportunitaHandler'] = CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesOrganizzazioneHandler'] = CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_URL_VIEW_REGEXP
+CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesProspectHandler'] = CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP
+CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesRedirectHandler'] = CMS_STORAGE_CDS_WEBSITES_REDIRECT_URL_VIEW_REGEXP
+CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesStudiareHandler'] = CMS_STORAGE_CDS_WEBSITES_STUDIARE_URL_VIEW_REGEXP
+CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesStudiareActivityHandler'] = CMS_STORAGE_CDS_WEBSITES_STUDIARE_ACTIVITY_URL_VIEW_REGEXP
 
 # APIs
 CMS_STORAGE_CDS_WEBSITES_API = 'cds-websites/'
 CMS_STORAGE_CDS_WEBSITES_TOPICS_API = 'cds-websites-topic/'
 CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API = 'cds-websites-topic-articles/'
+CMS_STORAGE_CDS_WEBSITES_STUDYPLANS_API = 'cds-websites-studyplans/'
 
 # labels (for breadcrumbs and page title)
 CMS_STORAGE_CDS_WEBSITES_PROSPECT_LABEL = _("Brochure")
@@ -390,3 +409,26 @@ CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL = _("Opportunities")
 CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL = _("Organization")
 
 CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS = {}
+
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS = [
+    'CDSAdmission', 'CDSGoals', 'CDSJobOpportunities'
+]
+
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2 = [
+    'CDSTaxes', 'CDSScholarships', 'CDSConcessions'
+]
+
+CDS_WEBSITE_CURRENT_YEAR = ""
+
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = {
+    # 'regolamento_tasse': [
+        # 'Tax regulation',
+        # 'Regolamento tasse',
+        # 'https://www.unical.it/media/medias/2023/Regolamento_tasse_contributi_ed_esoneri.pdf'
+    # ],
+    # 'guida_esse3': [
+        # 'Esse3 guide',
+        # 'Guida Esse3',
+        # 'https://unical.esse3.cineca.it/Home.do'
+    # ]
+}

@@ -80,7 +80,7 @@ Vue.component('list-panel', {
 {% endblock component %}
 
 var {{ id }} = new Vue({
-    el: '[id="{{ id }}"]',
+    el: '#{{ id }}',
     data() {
         return {
             parameters: {{ id }}_encodeQueryData(),
@@ -107,7 +107,6 @@ var {{ id }} = new Vue({
         {% endblock extra_before_mount %}
     },
     mounted() {
-
         {% block extra_mounted %}
         {% endblock extra_mounted %}
 
@@ -159,7 +158,9 @@ var {{ id }} = new Vue({
 
         {% block extra_methods %}
         {% endblock extra_methods %}
-    }
+    },
+    {% block extra_sections %}
+    {% endblock extra_sections %}
 })
 </script>
 {% endblock scripts %}

@@ -1,0 +1,86 @@
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as prospect_page_path %}
+{% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
+
+
+<div id="_cds_website_right_col_links">
+    <div v-if="_cds_data.fixed_cds.CdSDoc">
+        <a :href="_cds_data.fixed_cds.CdSDoc" target="_blank">
+            <div class="row">
+                <div class="col-3">
+                    <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
+                    </svg>
+                </div>
+                <div class="col m-auto align-middle">
+                    <ul class="mb-0 ps-0 list-unstyled">
+                        <li>
+                            <small><b>{% trans "Study course brochure" %}</b></small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div v-if="_cds_data.fixed_cds.CdSSatisfactionSurvey" class="mt-4">
+        <a target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.fixed_cds.CdSSatisfactionSurvey">
+        <div class="row">
+            <div class="col-3">
+                <svg class="m-auto icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-chart-line"></use>
+                </svg>
+            </div>
+            <div class="col m-auto align-middle">
+                <ul class="mb-0 ps-0 list-unstyled">
+                    <li>
+                        <small><b>[[ _cds_data.fixed_cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    {% if not hide_ordinamento %}
+    <div v-if="_cds_data.fixed_cds.TeachingSystem" class="mt-4">
+        <div class="background-light-grey px-2 py-3 mb-2 w-100">
+            <div class="row">
+                <div class="col-2">
+                    <b>
+                        <svg class="icon" aria-labelledby="info_menu">
+                            <title id="doc_menu">{% trans "Documents" %}</title>
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
+                        </svg>
+                    </b>
+                </div>
+                <div class="col m-auto align-middle">
+                    <ul class="mb-0 ps-0 list-unstyled">
+                        <li v-if="_cds_data.fixed_cds.TeachingSystem">
+                            <a class="no-color" target="_blank" :href="_cds_data.fixed_cds.TeachingSystem">
+                                <small><b>[[ _cds_data.fixed_cds_labels['TeachingSystem'] ]]</b></small>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+<script>
+var _cds_website_right_col_links = new Vue({
+    el: '#_cds_website_right_col_links',
+    data() {
+        return {
+            item: {},
+            cds: {},
+        }
+    },
+});
+</script>

@@ -110,7 +110,6 @@
         </div>
         {% endblock filters_teacherslist %}
 
-
         <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
 
         <loading-icon
@@ -207,6 +206,7 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_api_root "CMS_STORAGE_ROLES_API" as roles_api %}
 {% storage_settings_value "CONTRACT_TEACHER_ROLES" as contract_teacher_roles %}
 {% storage_settings_value "ALLOWED_TEACHER_ROLES" as allowed_teacher_roles %}
+{% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 
 contract_teacher_roles: {{ contract_teacher_roles|safe }},
 
@@ -226,6 +226,8 @@ selected_search: this.getItemFromSession("{{ id }}", 'search'),
 
 allowed_roles: {{ allowed_teacher_roles|safe }},
 
+cds_cod: null,
+academic_year: null,
 {% endblock extra_data %}
 
 {% block extra_mounted %}
@@ -256,9 +258,6 @@ for(const param in session_params){
 this.parameters = {{ id }}_encodeQueryData(params_dict)
 {% endblock extra_mounted %}
 
-{% comment %}
-CallURL is blank because the method is called by CdS studyplans template!
-{% endcomment %}
 {% block call_url %}
     {% if teachers_full_page %}
         {{ block.super }}
@@ -283,3 +282,14 @@ callRoles() {
         })
 },
 {% endblock extra_methods %}
+
+{% block extra_sections %}
+{% if not teachers_full_page %}
+watch: {
+    cds_cod: function(val) {
+        this.url = "{{teachers_api}}" + this.parameters + "&cds=" + this.cds_cod + "&year=" + this.academic_year
+        this.CallURL(this.url, true);
+    }
+}
+{% endif %}
+{% endblock extra_sections %}

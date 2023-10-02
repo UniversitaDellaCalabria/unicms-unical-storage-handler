@@ -1,7 +1,9 @@
-{% extends this_string_will_be_replaced %}
+{% extends "pages/unical_cds_website.html" %}
 
 {% load static %}
 {% load i18n %}
+
+{% load unicms_pages %}
 
 {% load unicms_contexts %}
 {% load unicms_storage_handler %}
@@ -11,30 +13,11 @@
 
 
 <!-- SEO  -->
-{% block page_title %}{% trans "Laboratory detail" %}{% endblock page_title %}
+{% block page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as page_title %}
+{{ page_title }} - {{ block.super }}
+{% endblock page_title %}
 
-
-{% block header_center_logo %}
-<div id="_{{ cds_cod }}_logo">
-    <p class="h5 text-white">
-        [[ item.CDSCourseClassName ]]
-    </p>
-    <p class="h2 text-white">
-        [[ item.CDSName ]]
-    </p>
-</div>
-{% endblock header_center_logo %}
-
-{% block unical_mobile_logo %}
-<div id="_{{ cds_cod }}_logo_mobile">
-    <p class="h5 text-white">
-        [[ item.CDSCourseClassName ]]
-    </p>
-    <p class="h2 text-white">
-        [[ item.CDSName ]]
-    </p>
-</div>
-{% endblock unical_mobile_logo %}
 
 {% block container %}
 
@@ -48,6 +31,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS_RIGHT_COLUMN" as page_topics_right_column %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
@@ -55,15 +39,16 @@
 {% include "includes/unical_storage_loading.html" %}
 
 
-<div class="container" id="_{{ cds_cod }}">
-    <div class="col-12 py-5 bd-content">
+<div class="col-12 py-5 bd-content">
+    <div>
         {% block centered_container %}
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-8">
                         <p class="h1 lighter">{{ page_title }}</p>
-                        <div class="row">
+                        <div class="row" id="_{{ cds_cod }}">
                             <loading-icon
+                                class="mt-5"
                                 v-if="is_loading"
                                 :loader_source="loader_source">
                             </loading-icon>
@@ -74,8 +59,8 @@
                                     </p>
                                     <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
                                         <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
-
-                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object)">
+                                            <!-- collapse item -->
+                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object && ((article.CdsObject.ClassObjectId == 'WebPath' && article.CdsObject.ObjectText) || article.CdsObject.ClassObjectId != 'WebPath'))">
                                                 <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
                                                     <button class="accordion-button"
                                                             type="button"
@@ -83,7 +68,17 @@
                                                             :data-bs-target="'#collapse-' + article.ID +'-lft'"
                                                             aria-expanded="false"
                                                             :aria-controls="'collapse-' + article.ID +'-lft'">
-                                                        [[ article.Title ]]
+                                                        <span v-if="article.Title">
+                                                            [[ article.Title ]]
+                                                        </span>
+                                                        <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                [[ article.CdsObject.Object.title ]]
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                [[ article.CdsObject.Object.name ]]
+                                                            </span>
+                                                        </span>
                                                     </button>
                                                 </div>
                                                 <div :id="'collapse-' + article.ID +'-lft'"
@@ -93,12 +88,56 @@
                                                      :aria-labelledby="'heading-' + article.ID +'-lft'">
                                                     <div class="accordion-body">
                                                         <span v-if="article.CdsArticle">
-                                                            <vue-markdown :emoji=false>
-                                                                [[ article.CdsArticle.ArticleDescription ]]
-                                                            </vue-markdown>
-                                                            <div v-for="other_data in article.CdsArticle.OtherData">
-                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
-                                                                <div>[[ other_data.Text ]]</div>
+                                                            <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <div class="mt-3">
+                                                                    <p class="h6" v-if="other_data.Title">[[ other_data.Title ]]</p>
+                                                                    <div v-if="other_data.Text && other_data.TypeID == 4">[[ other_data.Text ]]</div>
+                                                                    <a :href="other_data.Link" target="_blank" v-if="other_data.Link">
+                                                                        <div v-if="other_data.TypeID == 1">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-file"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Download" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 2">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Open" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 3">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-video"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Watch video" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 5">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <div v-if="other_data.Text">[[ other_data.Text ]]</div>
+                                                                            <div v-else>{% trans "Open URL" %}</div>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 6">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Send email" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 7">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-tool"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Open ticket" %}</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </span>
                                                         <span v-else-if="article.CdsObject">
@@ -107,16 +146,90 @@
                                                                 <span v-html="article.CdsObject.Object.content"></span>
                                                             </span>
                                                             <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                                <a :href="article.CdsObject.Object.get_full_path">[[ article.CdsObject.Object.name ]]</a>
+                                                                <a :href="article.CdsObject.Object.get_absolute_url">[[ article.CdsObject.Object.name ]]</a>
                                                             </span>
-                                                            <div v-for="other_data in article.CdsObject.OtherData">
-                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
-                                                                <div>[[ other_data.Text ]]</div>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <div class="mt-3">
+                                                                    <p class="h6" v-if="other_data.Title">[[ other_data.Title ]]</p>
+                                                                    <div v-if="other_data.Text && other_data.TypeID == 4">[[ other_data.Text ]]</div>
+                                                                    <a :href="other_data.Link" target="_blank" v-if="other_data.Link">
+                                                                        <div v-if="other_data.TypeID == 1">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-file"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Download" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 2">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Open" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 3">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-video"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Watch video" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 5">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <div v-if="other_data.Text">[[ other_data.Text ]]</div>
+                                                                            <div v-else>{% trans "Open URL" %}</div>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 6">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Send email" %}</span>
+                                                                        </div>
+                                                                        <div v-else-if="other_data.TypeID == 7">
+                                                                            <svg class="icon">
+                                                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-tool"></use>
+                                                                            </svg>
+                                                                            <span v-if="other_data.Text">[[ other_data.Text ]]</span>
+                                                                            <span v-else>{% trans "Open ticket" %}</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- end collapse item -->
+                                            <!-- href button -->
+                                            <div v-else-if="article.CdsObject && article.CdsObject.ClassObjectId == 'WebPath' &! article.CdsObject.ObjectText">
+                                                <div class="accordion-header accordion-header-href" :id="'static-heading-' + article.ID +'-lft'">
+                                                    <a class="no-color"
+                                                       target="_blank"
+                                                       :title="article.CdsObject.Object.name"
+                                                       :href="article.CdsObject.Object.get_absolute_url">
+                                                        <button class="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                aria-expanded="false">
+                                                            <span v-if="article.Title">
+                                                                [[ article.Title ]]
+                                                            </span>
+                                                            <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                                <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                    [[ article.CdsObject.Object.title ]]
+                                                                </span>
+                                                                <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <!-- end href button -->
                                         </div>
                                     </div>
                                 </div>
@@ -124,169 +237,29 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
-                        <div class="row mt-4">
-                            <div class="col">
-                                <img src="{% static 'images/corso_in_sintesi.png' %}" class="w-100"/>
-                            </div>
-                        </div>
-                        <div class="row mt-4" v-if="cds.OtherData && cds.OtherData.DirectorName && cds.OtherData.DirectorName.trim().length>0">
-                            <div class="col-12"><hr></div>
-                            <div class="col-2">
-                                <svg class="icon icon-muted">
-                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                                </svg>
-                            </div>
-                            <div class="col-9 align-left">
-                                <small>
-                                    <b>[[ cds_labels['DirectorName'] ]]</b>
-                                    <br>
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + cds.OtherData.DirectorId +'/'" v-if="cds.OtherData.DirectorId">
-                                        [[ cds.OtherData.DirectorName ]]
-                                    </a>
-                                    <span v-else>
-                                        [[ cds.OtherData.DirectorName ]]
-                                    </span>
-                                </small>
-                            </div>
-                        </div>
+                        {% include "includes/unical_storage_cds_website_right_static.html" %}
+                        <hr style="color: transparent" class="my-3" />
+                        {% include "includes/unical_storage_cds_website_right_contacts.html" %}
+                        <hr class="my-3" />
+                        {% include "includes/unical_storage_cds_website_right_links.html" %}
 
-                        <div v-if="cds.OtherData && cds.OtherData.DeputyDirectorName && cds.OtherData.DeputyDirectorName.trim().length>0" class="row">
-                            <div class="col-12"><hr></div>
-                            <div class="col-2">
-                                <svg class="icon icon-muted">
-                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                                </svg>
-                            </div>
-                            <div class="col-9 align-left">
-                                <small>
-                                    <b>[[ cds_labels['DeputyDirectorName'] ]]</b>
-                                    <br>
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + cds.OtherData.DeputyDirectorId +'/'" v-if="cds.OtherData.DeputyDirectorId">
-                                        [[ cds.OtherData.DeputyDirectorName ]]
-                                    </a>
-                                    <span v-else>
-                                        [[ cds.OtherData.DeputyDirectorName ]]
-                                    </span>
-                                </small>
-                            </div>
-                        </div>
-
-                        <div v-if="cds.OfficesData" v-for="office in cds.OfficesData" class="row">
-                            <div class="col-12"><hr></div>
-                            <div class="col-2">
-                                <svg class="icon icon-muted">
-                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
-                                </svg>
-                            </div>
-                            <div class="col-9 align-left">
-                                <small>
-                                    <b>[[ office.OfficeName ]]</b>
-                                    <div class="mt-2">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.OfficeDirector && office.OfficeDirectorName">
-                                                    [[ office.OfficeDirectorName ]]
-                                                </a>
-                                                <span v-else-if="office.OfficeDirectorName">
-                                                    [[ office.OfficeDirectorName ]]
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                [[ office.TelOffice ]]
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="office.Email && office.Email.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                <a :href="'email:'+office.Email">
-                                                    [[ office.Email ]]
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="office.Floor && office.Floor.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                [[ labels['Floor'] ]] [[ office.Floor ]]
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                [[ office.Timetables ]]
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                <a :href="office.OnlineCounter" target="_blank" rel="noreferrer noopener">
-                                                    [[ cds_labels['OnlineCounter'] ]]
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </small>
-                            </div>
-                        </div>
-
-                        <div v-if="cds.CdSDoc || cds.CdSSatisfactionSurvey" class="mt-4">
-                            <div v-if="cds.CdSDoc">
+                        <div id="_cds_website_right_col_dynamic" class="mt-4">
+                            <div v-if="_{{ cds_cod }}.topic_articles_right_column && _{{ cds_cod }}.empty_topics_right_column.length == 0">
                                 <div class="background-light-grey px-2 py-3 mb-2 w-100">
                                     <div class="row">
                                         <div class="col-2">
                                             <b>
-                                                <svg class="icon" aria-labelledby="doc_menu">
-                                                    <title id="doc_menu">{% trans "Documents" %}</title>
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
+                                                <svg class="icon" aria-labelledby="info_menu">
+                                                    <title id="info_menu">{% trans "Informations" %}</title>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
                                                 </svg>
                                             </b>
                                         </div>
                                         <div class="col m-auto align-middle">
                                             <ul class="mb-0 ps-0 list-unstyled">
-                                                <li>
-                                                    <a :href="cds.CdSDoc" class="no-color" target="_blank">
-                                                        <small><b>{% trans "Study course brochure" %}</b></small>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div v-if="cds.CdSSatisfactionSurvey">
-                                <div class="background-light-grey px-2 py-3 mb-2 w-100">
-                                    <div class="row">
-                                        <div class="col-2 text-center" style="font-size: x-large">
-                                            <span style="font-weight: 400" title='{% trans "Digital services" %}'>@</span>
-                                        </div>
-                                        <div class="col m-auto align-middle">
-                                            <ul class="mb-0 ps-0 list-unstyled">
-                                                <li>
-                                                    <a class="no-color" target="_blank" :href="'{{ almalaurea_link }}' + cds.CdSSatisfactionSurvey">
-                                                        <small><b>[[ cds_labels['CdSSatisfactionSurvey'] ]]</b></small>
+                                                <li v-for="right_article in _{{ cds_cod }}.topic_articles_right_column"  v-if="right_article.CdsArticle || (right_article.CdsObject && right_article.CdsObject.Object)">
+                                                    <a class="no-color" target="_blank" :href="right_article.CdsObject.Object.get_absolute_url">
+                                                        <small><b>[[ right_article.Title ]]</b></small>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -295,7 +268,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -305,35 +277,19 @@
 
 <script>
     Vue.use(VueMarkdown);
-    var _{{ cds_cod }}_logo = new Vue({
-        el: '[id="_{{ cds_cod }}_logo"]',
-        data() {
-            return {
-                item: {},
-            }
-        },
-    });
-
-    var _{{ cds_cod }}_logo_mobile = new Vue({
-        el: '[id="_{{ cds_cod }}_logo_mobile"]',
-        data() {
-            return {
-                item: {},
-            }
-        },
-    });
 
     var _{{ cds_cod }} = new Vue({
-        el: '[id="_{{ cds_cod }}"]',
+        el: '#_{{ cds_cod }}',
         data() {
             return {
                 item: {},
-                cds: {},
-                cds_labels: {},
                 allowed_topics: {{ page_topics|get_value:'iscriversi'|safe }},
+                allowed_topics_right_column: {{ page_topics_right_column|get_value:'iscriversi'|safe }},
                 empty_topics: [],
+                empty_topics_right_column: [],
                 topics: {},
                 topic_articles: {},
+                topic_articles_right_column: {},
                 labels: {},
                 url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
                 is_loading: true,
@@ -342,36 +298,13 @@
             }
         },
         mounted() {
-            this.CallURL();
+            //this.CallURL();
             this.CallTopics();
             this.CallTopicArticles();
+            this.CallTopicArticlesRight();
             //this.CallCds();
         },
         methods: {
-            CallURL() {
-                axios
-                    .get(this.url)
-                    .then(response => {
-                        this.item = response.data.results;
-                        this.labels = response.data.labels;
-                        _{{ cds_cod }}_logo.item = response.data.results
-                        _{{ cds_cod }}_logo_mobile.item = response.data.results
-                        {% if change_breadcrumb %}
-                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.LaboratoryName
-                        document.title = this.item.LaboratoryName
-                        {% endif %}
-
-                        let cds_url = '{{ base_api }}{{ cds_api }}'+response.data.results['RegDidId']+'/?lang={{ LANGUAGE_CODE }}'
-                        axios
-                            .get(cds_url)
-                            .then(response => {
-                                this.cds = response.data.results
-                                this.cds_labels = response.data.labels
-                            }
-                        )
-
-                    })
-            },
             CallTopicArticles() {
                 let url = '{{ base_api }}{{ page_topic_articles }}?lang={{ LANGUAGE_CODE }}&page_size=200&cds_cod={{ cds_cod }}&topic_id=' + this.allowed_topics
                 axios
@@ -388,6 +321,21 @@
                     }
                 )
             },
+            CallTopicArticlesRight() {
+                let url = '{{ base_api }}{{ page_topic_articles }}?lang={{ LANGUAGE_CODE }}&page_size=200&cds_cod={{ cds_cod }}&topic_id=' + this.allowed_topics_right_column
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.topic_articles_right_column = response.data.results
+                        this.allowed_topics_right_column.forEach(
+                            topic => {
+                                let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
+                                if(!found) this.empty_topics_right_column.push(topic)
+                            }
+                        )
+                    }
+                )
+            },
             CallTopics() {
                 let url = '{{ base_api }}{{ topics_api }}?lang={{ LANGUAGE_CODE }}&page_size=200'
                 axios
@@ -397,17 +345,17 @@
                     }
                 )
             },
-            CallCds() {
-                let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_cod }}'
-                axios
-                    .get(url)
-                    .then(response => {
-                        this.cds = response.data.results[0]
-                        this.cds_labels = response.data.labels
-                    }
-                )
-            },
         }
     })
+
+    var _cds_website_right_col_dynamic = new Vue({
+        el: '#_cds_website_right_col_dynamic',
+        data() {
+            return {
+                item: {},
+                cds: {},
+            }
+        },
+    });
 </script>
 {% endblock container %}

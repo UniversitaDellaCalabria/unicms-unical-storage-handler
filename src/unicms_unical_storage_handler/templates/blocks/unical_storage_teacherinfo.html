@@ -37,8 +37,8 @@
     </loading-icon>
     <div v-else-if="Object.keys(item).length">
         <div class="row">
-            <div class="col-2 d-flex">
-                <img :src="item.PhotoPath" class="w-100" style="height: fit-content; border-radius: 50%" v-if="item.PhotoPath && item.PhotoPath != ''" />
+            <div class="col-2">
+                <img :src="item.PhotoPath" class="w-100" style="border-radius: 50%" v-if="item.PhotoPath && item.PhotoPath != ''" />
                 <img src="{% static 'images/user.avif' %}" class="w-100" style="height: fit-content;" v-else />
             </div>
             <div class="col my-0 ms-2">
@@ -437,9 +437,10 @@
                         {% endif %}
                     })
                     .catch(error => {
-                        for (var key in error.response.data) {
-                            this.errors[key] = error.response.data[key]
-                        }
+                        if(error.response)
+                            for (var key in error.response.data) {
+                                this.errors[key] = error.response.data[key]
+                            }
                         this.is_loading = false
                         document.getElementById("{{ id }}_collapse-3-lft").style.display = "none";
                     });

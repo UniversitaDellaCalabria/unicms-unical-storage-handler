@@ -3,43 +3,152 @@
 {% load i18n %}
 {% load static %}
 {% load unicms_storage_handler %}
+{% load unicms_template_unical %}
+
+
+{% block extra_head %}
+{{ block.super }}
+<script src="{% static 'js/vue-markdown.js' %}"></script>
+{% endblock extra_head %}
+
+{% block header_center_url %}{{ webpath.fullpath }}{{ cds_base_path }}{% endblock header_center_url %}
+{% block unical_department_header_slim_org_url %}{{ webpath.fullpath }}{{ cds_base_path }}{% endblock unical_department_header_slim_org_url %}
+
+{% block unical_top_bar_text %}
+<image src="{% unicms_template_unical_static_path 'images/logo_unical_white.svg' %}" alt="{% trans 'University of Calabria' %}" class="w-75"/>
+{% endblock unical_top_bar_text %}
+
+{% block unical_top_bar_text_mobile %}
+<image src="{% unicms_template_unical_static_path 'images/logo_unical_white.svg' %}" alt="{% trans 'University of Calabria' %}" class="w-75"/>
+{% endblock unical_top_bar_text_mobile %}
 
 
 {% block header_center_logo %}
 
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
+{% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
+{% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
+{% storage_api_root "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
+
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
 {% if cds_identifier %}
-    <div id="_cds_identifier_logo">
-        <p class="h5 text-white">
-            [[ item.CDSCourseClassName ]]
-        </p>
-        <p class="h2 text-white">
-            [[ item.CDSName ]]
-        </p>
+    <div id="_cds_data" class="w-100">
+        <div v-if="is_loading">
+            <div class="progress progress-indeterminate my-3">
+              <span class="visually-hidden">{% trans "Loading data" %}</span>
+              <div class="progress-bar" role="progressbar"></div>
+            </div>
+        </div>
+        <div v-else>
+            <p class="h5 text-white">
+                [[ cds.CourseTypeDescription ]] <span v-if="cds.CourseInterClassCod">{% trans "interclass" %}</span>
+                <span v-for="joint in joint_degree_filter"
+                      v-if="cds.JointDegree == joint.COD && cds.JointDegree != 'N'">
+                    &nbsp;- [[ joint.name ]]
+                </span>
+            </p>
+            <p class="h2 text-white">
+                ([[ cds.CourseClassCod ]]<span v-if="cds.CourseInterClassCod">/[[ cds.CourseInterClassCod ]]</span>) [[ cds.CdSName ]]
+            </p>
+        </div>
     </div>
     <script>
-        var _cds_identifier_logo = new Vue({
-            el: '[id="_cds_identifier_logo"]',
+        Vue.use(VueMarkdown);
+
+        var _cds_data = new Vue({
+            el: '#_cds_data',
             data() {
                 return {
                     item: {},
+                    cds: {},
+                    fixed_cds: {},
+                    cds_labels: {},
+                    fixed_cds_labels: {},
+                    is_loading: true,
+                    loader_source: '',
+                    joint_degree_filter: {{ allowed_joint_degrees|safe }},
+                    coordinator_data: {},
+                    deputy_coordinator_data: {}
+                    {% block cds_website_extra_data %}
+                    {% endblock cds_website_extra_data %}
                 }
             },
             mounted() {
+                {% block cds_website_callURL %}
                 this.CallURL();
+                {% endblock cds_website_callURL %}
+                {% block cds_website_extra_mounted %}
+                {% endblock cds_website_extra_mounted %}
             },
             methods: {
-                CallURL() {
-                    let url = 'https://pp.storage.unical.it/api/ricerca/cds-websites/{{ cds_identifier }}/?lang={{ LANGUAGE_CODE }}';
+                containsHTML(s) {
+                    return /<\/?[a-z][\s\S]*>/i.test(s)
+                },
+                getPersonData(coordinator_id, deputy_coordinator_id){
+                    if(coordinator_id)
+                        axios
+                            .get("{{ addressbook_api }}" + coordinator_id)
+                            .then(response => {
+                                this.coordinator_data = response.data.results
+                            }
+                        )
+
+                    if(deputy_coordinator_id)
+                        axios
+                            .get("{{ addressbook_api }}" + deputy_coordinator_id)
+                            .then(response => {
+                                this.deputy_coordinator_data = response.data.results
+                            }
+                        )
+                },
+                CallRegDid(regdidid, update_fixed=false) {
+                    let cds_url = '{{ base_api }}{{ cds_api }}' + regdidid + '/?lang={{ LANGUAGE_CODE }}'
+                    axios
+                        .get(cds_url)
+                        .then(response => {
+                            this.cds = response.data.results
+                            _{{ cds_identifier }}_logo_mobile.cds = response.data.results
+                            this.getPersonData(response.data.results.OtherData.DirectorId,response.data.results.OtherData.DeputyDirectorId)
+                            this.cds_labels = response.data.labels
+                            if(update_fixed){
+                                this.fixed_cds = response.data.results
+                                this.fixed_cds_labels = response.data.labels
+                            }
+                            this.is_loading = false
+                            _{{ cds_identifier }}_logo_mobile.is_loading = false
+                            // automatic pages
+                            if (typeof _{{ cds_identifier }} != "undefined") {
+                                _{{ cds_identifier }}.regdidid = regdidid
+                            }
+                            // hero slider block
+                            if (typeof _{{ cds_identifier }}_hero_slider != "undefined") {
+                                _{{ cds_identifier }}_hero_slider.regdidid = regdidid
+                            }
+                        }
+                    )
+                },
+                CallURL(regdidid=null, year="{{ current_year }}") {
+                    let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_identifier }}&academicyear=' + year
                     axios
                         .get(url)
                         .then(response => {
-                            this.item = response.data.results;
-                            _cds_identifier_logo_mobile.item = response.data.results;
+                            if(!regdidid) {
+                                regdidid = response.data.results[0]['RegDidId']
+                                this.CallRegDid(regdidid, true)
+                            }
+                            else this.CallRegDid(regdidid)
+                            {% block cds_website_extra_main %}
+                            {% endblock cds_website_extra_main %}
                         }
                     )
-                }
+                },
+                {% block cds_website_extra_methods %}
+                {% endblock cds_website_extra_methods %}
             }
         });
     </script>
@@ -48,25 +157,41 @@
 {% endif %}
 {% endblock header_center_logo %}
 
-
 {% block unical_mobile_logo %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
+
 {% if cds_identifier %}
-    <div id="_cds_identifier_logo_mobile">
-        <p class="h5 text-white">
-            [[ item.CDSCourseClassName ]]
-        </p>
-        <p class="h2 text-white">
-            [[ item.CDSName ]]
-        </p>
+    <div id="_{{ cds_identifier }}_logo_mobile" class="w-100">
+        <div v-if="is_loading">
+            <div class="progress progress-indeterminate my-3">
+              <span class="visually-hidden">{% trans "Loading data" %}</span>
+              <div class="progress-bar" role="progressbar"></div>
+            </div>
+        </div>
+        <div v-else>
+            <p class="h5 text-white">
+                [[ cds.CourseTypeDescription ]] <span v-if="cds.CourseInterClassCod">{% trans "interclass" %}</span>
+                <span v-for="joint in joint_degree_filter"
+                      v-if="cds.JointDegree == joint.COD && cds.JointDegree != 'N'">
+                    &nbsp;- [[ joint.name ]]
+                </span>
+            </p>
+            <p class="h2 text-white">
+                ([[ cds.CourseClassCod ]]<span v-if="cds.CourseInterClassCod">/[[ cds.CourseInterClassCod ]]</span>) [[ cds.CdSName ]]
+            </p>
+        </div>
     </div>
     <script>
-        var _cds_identifier_logo_mobile = new Vue({
-            el: '[id="_cds_identifier_logo_mobile"]',
+        var _{{ cds_identifier }}_logo_mobile = new Vue({
+            el: '#_{{ cds_identifier }}_logo_mobile',
             data() {
                 return {
                     item: {},
+                    cds: {},
+                    is_loading: true,
+                    joint_degree_filter: {{ allowed_joint_degrees|safe }}
                 }
             },
         });
@@ -74,4 +199,57 @@
 {% else %}
     {{ block.super }}
 {% endif %}
+
 {% endblock unical_mobile_logo %}
+
+{% block menu_main %}
+
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
+
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_VIEW_PREFIX_PATH" as cds_iscriversi_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_VIEW_PREFIX_PATH" as cds_opportunita_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH" as cds_corso_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_VIEW_PREFIX_PATH" as cds_organizzazione_path %}
+
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as cds_iscriversi_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as cds_studiare_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL" as cds_opportunita_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL" as cds_corso_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL" as cds_organizzazione_label %}
+
+{% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% if cds_identifier %}
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1 ps-lg-0" href="{{ webpath.fullpath }}">
+            Home
+        </a>
+    </li>
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_corso_path }}/">
+            <span>{{ cds_corso_label }}</span>
+        </a>
+    </li>
+     <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_iscriversi_path }}/">
+            <span>{{ cds_iscriversi_label }}</span>
+        </a>
+    </li>
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">
+            <span>{{ cds_studiare_label }}</span>
+        </a>
+    </li>
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_opportunita_path }}/">
+            <span>{{ cds_opportunita_label }}</span>
+        </a>
+    </li>
+    <li class="nav-item megamenu">
+        <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_organizzazione_path }}/">
+            <span>{{ cds_organizzazione_label }}</span>
+        </a>
+    </li>
+{% endif %}
+{{ block.super }}
+{% endblock menu_main %}

@@ -1,0 +1,717 @@
+{% extends "pages/unical_cds_website.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% load unicms_pages %}
+
+{% load unicms_contexts %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<!-- SEO  -->
+{% block page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as page_title %}
+{{ page_title }} - {{ block.super }}
+{% endblock page_title %}
+
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/unicms_storage_calendar.css' %}" type="text/css">
+<!-- Link VCalendar Javascript (Plugin automatically installed) -->
+<script src="https://unpkg.com/v-calendar"></script>
+{% endblock extra_head %}
+
+
+{% block container %}
+
+<script src="{% static 'js/vue-markdown.js' %}"></script>
+
+
+{% get_current_language as LANGUAGE_CODE %}
+{% breadcrumbs webpath=webpath leaf=handler %}
+
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as page_title %}
+{% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
+{% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
+{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<div class="col-12 py-5 bd-content">
+    <div>
+        {% block centered_container %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <p class="h1 lighter">{{ page_title }}</p>
+
+                        <!-- Insegnamenti -->
+                        {% comment %}
+                        <div class="mt-5">
+                            {% include "blocks/unical_storage_cdsstudyplans_v3.html" with uid="course_studyplans" full_page=full_page %}
+                        </div>
+                        {% endcomment %}
+
+                        <div class="mt-5">
+                            {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="study_activities" full_page=full_page year=cds_website_current_year %}
+                        </div>
+                        <!-- END insegnamenti -->
+
+                        <!-- Attività curriculari (topic 8) -->
+                        <div class="row" id="_{{ cds_cod }}">
+                            <loading-icon
+                                v-if="is_loading"
+                                :loader_source="loader_source">
+                            </loading-icon>
+                            <div v-for="allowed_topic in allowed_topics" v-else>
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId) && topic.TopicId == 8">
+                                    <p class="h4 lighter mt-5">
+                                        [[ topic.TopicDescription ]]
+                                    </p>
+                                    <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
+                                        <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
+
+                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object && ((article.CdsObject.ClassObjectId == 'WebPath' && article.CdsObject.ObjectText) || article.CdsObject.ClassObjectId != 'WebPath'))">
+                                                <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
+                                                    <button class="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            :data-bs-target="'#collapse-' + article.ID +'-lft'"
+                                                            aria-expanded="false"
+                                                            :aria-controls="'collapse-' + article.ID +'-lft'">
+                                                        <span v-if="article.Title">
+                                                            [[ article.Title ]]
+                                                        </span>
+                                                        <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                [[ article.CdsObject.Object.title ]]
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                [[ article.CdsObject.Object.name ]]
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div :id="'collapse-' + article.ID +'-lft'"
+                                                     class="accordion-collapse collapse"
+                                                     :data-bs-parent="'#accordionDiv-' + allowed_topic +'-lft'"
+                                                     role="region"
+                                                     :aria-labelledby="'heading-' + article.ID +'-lft'">
+                                                    <div class="accordion-body">
+                                                        <span v-if="article.CdsArticle">
+                                                            <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                        <span v-else-if="article.CdsObject">
+                                                            <span v-html="article.CdsObject.ObjectText"></span>
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                <span v-html="article.CdsObject.Object.content"></span>
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                <a :href="article.CdsObject.Object.get_absolute_url">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </a>
+                                                            </span>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- href button -->
+                                            <div v-else-if="article.CdsObject && article.CdsObject.ClassObjectId == 'WebPath' &! article.CdsObject.ObjectText">
+                                                <div class="accordion-header accordion-header-href" :id="'static-heading-' + article.ID +'-lft'">
+                                                    <a class="no-color"
+                                                       target="_blank"
+                                                       :title="article.CdsObject.Object.name"
+                                                       :href="article.CdsObject.Object.get_absolute_url">
+                                                        <button class="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                aria-expanded="false">
+                                                            <span v-if="article.Title">
+                                                                [[ article.Title ]]
+                                                            </span>
+                                                            <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                                <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                    [[ article.CdsObject.Object.title ]]
+                                                                </span>
+                                                                <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <!-- end href button -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END attività curriculari -->
+
+                        <!-- Orario lezioni -->
+                        <div id="impegniUP">
+                            <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
+
+                            <div id="accordionDiv-study-lft" class="accordion accordion-left-icon">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" id="heading-study-lft">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapse-study-lft"
+                                                aria-expanded="false"
+                                                aria-controls="collapse-study-lft">
+                                            {% trans "Academic Year" %} {{ cds_website_current_year }}/{{ cds_website_current_year|add:1 }}
+                                        </button>
+                                    </div>
+                                    <div id="collapse-study-lft"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDiv-study-lft"
+                                         role="region"
+                                         aria-labelledby="heading-study-lft">
+                                        <div class="accordion-body mt-3">
+                                            <div v-if="years">
+                                                <a v-for="y_index in years" class="no-color" @click="getEvents(y_index)" href="javascript:void(0)">
+                                                    <span
+                                                        class="badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100"
+                                                        :class="year == y_index ? 'selected' : ''">
+                                                        <h5>[[ y_index ]] {% trans "year" %}</h5>
+                                                    </span>
+                                                </a>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <loading-icon
+                                                    v-if="is_loading_up"
+                                                    :loader_source="loader_source_up">
+                                                </loading-icon>
+
+                                                <div v-else>
+                                                    <v-calendar
+                                                        class="custom-calendar"
+                                                        :masks="masks"
+                                                        :attributes="attributes"
+                                                        locale="{{ LANGUAGE_CODE }}"
+                                                        disable-page-swipe
+                                                        {% comment %}
+                                                        @update:from-page="switchPage"
+                                                        is-expanded
+                                                        v-if="attr.customData.dataInizio=[[ day.id ]]"
+                                                        :href="'http://localhost/' + attr.customData.id"
+                                                        {% endcomment %}>
+                                                        <template v-slot:day-content="{ day, attributes }">
+                                                            <div class="flex flex-col h-100 overflow-hidden" style="font-size: 0.875rem">
+                                                                <span class="day-label text-sm text-gray-900">[[ day.day ]]</span>
+                                                                <div class="overflow-auto">
+                                                                        <p :key="attr.key" v-for="attr in attributes"
+                                                                           class="rounded p-1 mt-0 mb-1 mx-1 text-white"
+                                                                           :class="attr.customData.class"
+                                                                           :style="'background: ' + attr.customData.background">
+                                                                            <span style="font-size: smaller;">
+                                                                                <!--[[ attr.customData.title ]]<br />-->
+                                                                                <b>[[ attr.customData.title ]]</b>
+                                                                                <br />
+                                                                                [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
+                                                                                <br />
+                                                                                [[ attr.customData.docente ]]
+                                                                                <br />
+                                                                                [[ attr.customData.aula ]]
+                                                                                <br />
+                                                                                [[ attr.customData.edificio ]]
+                                                                            </span>
+                                                                        </p>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </v-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Orario lezioni -->
+
+                        <!-- Calendario esami -->
+                        <div id="esamiUP">
+                            <h5 class="mt-5 mb-3">{% trans "Calendario esami" %}</h5>
+
+                            <div id="accordionDiv-exams-lft" class="accordion accordion-left-icon">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" id="heading-exams-lft">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapse-exams-lft"
+                                                aria-expanded="false"
+                                                aria-controls="collapse-exams-lft">
+                                            {% trans "Academic Year" %} {{ cds_website_current_year }}/{{ cds_website_current_year|add:1 }}
+                                        </button>
+                                    </div>
+                                    <div id="collapse-exams-lft"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDiv-exams-lft"
+                                         role="region"
+                                         aria-labelledby="heading-exams-lft">
+                                        <div class="accordion-body mt-3">
+                                            <div v-if="years">
+                                                <a v-for="y_index in years" class="no-color" @click="getEvents(y_index)" href="javascript:void(0)">
+                                                    <span
+                                                        class="badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100"
+                                                        :class="year == y_index ? 'selected' : ''">
+                                                        <h5>[[ y_index ]] {% trans "year" %}</h5>
+                                                    </span>
+                                                </a>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <loading-icon
+                                                    v-if="is_loading_up_exams"
+                                                    :loader_source="loader_source_up_exams">
+                                                </loading-icon>
+
+                                                <div v-else>
+                                                    <v-calendar
+                                                        class="custom-calendar"
+                                                        :masks="masks"
+                                                        :attributes="attributes"
+                                                        disable-page-swipe
+                                                        locale="{{ LANGUAGE_CODE }}">
+                                                        <template v-slot:day-content="{ day, attributes }">
+                                                            <div class="flex flex-col h-100 overflow-hidden" style="font-size: 0.875rem">
+                                                                <span class="day-label text-sm text-gray-900">[[ day.day ]]</span>
+                                                                <div class="overflow-auto">
+                                                                        <p :key="attr.key" v-for="attr in attributes"
+                                                                           class="rounded p-1 mt-0 mb-1 mx-1 text-white"
+                                                                           :class="attr.customData.class"
+                                                                           :style="'background: ' + attr.customData.background">
+                                                                            <span style="font-size: smaller;">
+                                                                                <!--[[ attr.customData.title ]]<br />-->
+                                                                                <b>[[ attr.customData.title ]]</b>
+                                                                                <br />
+                                                                                [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
+                                                                                <br />
+                                                                                [[ attr.customData.docente ]]
+                                                                                <br />
+                                                                                [[ attr.customData.aula ]]
+                                                                                <br />
+                                                                                [[ attr.customData.edificio ]]
+                                                                            </span>
+                                                                        </p>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </v-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END calendario esami -->
+
+                        <!-- Piano di studio (topic 7) + Prova finale (topi 9) -->
+                        <div class="row" id="_{{ cds_cod }}_1">
+                            <loading-icon
+                                v-if="is_loading"
+                                :loader_source="loader_source">
+                            </loading-icon>
+                            <div v-for="allowed_topic in allowed_topics" v-else>
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId) && topic.TopicId != 8">
+                                    <p class="h4 lighter mt-5">
+                                        [[ topic.TopicDescription ]]
+                                    </p>
+                                    <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
+                                        <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
+
+                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object)">
+                                                <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
+                                                    <button class="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            :data-bs-target="'#collapse-' + article.ID +'-lft'"
+                                                            aria-expanded="false"
+                                                            :aria-controls="'collapse-' + article.ID +'-lft'">
+                                                        <span v-if="article.Title">
+                                                            [[ article.Title ]]
+                                                        </span>
+                                                        <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                [[ article.CdsObject.Object.title ]]
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                [[ article.CdsObject.Object.name ]]
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div :id="'collapse-' + article.ID +'-lft'"
+                                                     class="accordion-collapse collapse"
+                                                     :data-bs-parent="'#accordionDiv-' + allowed_topic +'-lft'"
+                                                     role="region"
+                                                     :aria-labelledby="'heading-' + article.ID +'-lft'">
+                                                    <div class="accordion-body">
+                                                        <span v-if="article.CdsArticle">
+                                                            <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                        <span v-else-if="article.CdsObject">
+                                                            <span v-html="article.CdsObject.ObjectText"></span>
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                <span v-html="article.CdsObject.Object.content"></span>
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                <a :href="article.CdsObject.Object.get_absolute_url">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </a>
+                                                            </span>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END piano di studio + prova finale -->
+
+                        <!-- Docenti -->
+                        <h5 class="mt-5 mb-3">{% trans "Faculty" %}</h5>
+                        <div id="accordionDiv3-lft" class="accordion accordion-left-icon">
+                            <div class="accordion-item">
+                                <div class="accordion-header" id="heading-teachers-lft">
+                                    <button class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapse-teachers-lft"
+                                            aria-expanded="false"
+                                            aria-controls="collapse-teachers-lft">
+                                        {% trans "Academic Courses" %}&nbsp;<span id="cds_year"></span>
+                                    </button>
+                                </div>
+                                <div id="collapse-teachers-lft"
+                                     class="accordion-collapse collapse"
+                                     data-bs-parent="#accordionDiv3-lft"
+                                     role="region"
+                                     aria-labelledby="heading-teachers-lft">
+                                    <div class="accordion-body mt-3">
+                                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with uid="teachers_list" mark_contract_teachers=1 %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Docenti -->
+
+                    </div>
+                    <div class="col-12 col-lg-3 offset-lg-1">
+                        {% include "includes/unical_storage_cds_website_right_static.html" %}
+                        <hr style="color: transparent" class="my-3" />
+                        {% include "includes/unical_storage_cds_website_right_contacts.html" %}
+                        <hr class="my-3" />
+                        {% include "includes/unical_storage_cds_website_right_links.html" %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+</div>
+
+<script>
+    Vue.use(VueMarkdown);
+
+    var _{{ cds_cod }}_1 = new Vue({
+        el: '#_{{ cds_cod }}_1',
+        data() {
+            return {
+                item: {},
+                allowed_topics: {{ page_topics|get_value:'studiare'|safe }},
+                empty_topics: [],
+                topics: {},
+                topic_articles: {},
+                labels: {},
+                url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
+                is_loading: true,
+                loader_source: '{{ url }}',
+            }
+        }
+    })
+
+    var _{{ cds_cod }} = new Vue({
+        el: '#_{{ cds_cod }}',
+        data() {
+            return {
+                item: {},
+                allowed_topics: {{ page_topics|get_value:'studiare'|safe }},
+                empty_topics: [],
+                topics: {},
+                topic_articles: {},
+                labels: {},
+                url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
+                is_loading: true,
+                loader_source: '{{ url }}',
+                regdidid: null,
+                teachers: [],
+                teachers_labels: {},
+                teachers_is_loading: true
+                //teachers.next_page: null,
+                //teachers.previous_page: null,
+                //teachers.labels: null,
+                //teachers.is_loading: true,
+                //fields_to_not_show: {{ fields_to_hide|safe }},
+            }
+        },
+        mounted() {
+            //this.CallURL();
+            this.CallTopics();
+            this.CallTopicArticles();
+            //this.CallCds();
+        },
+        methods: {
+            CallTopicArticles() {
+                let url = '{{ base_api }}{{ page_topic_articles }}?lang={{ LANGUAGE_CODE }}&page_size=200&cds_cod={{ cds_cod }}&topic_id=' + this.allowed_topics
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.topic_articles = response.data.results
+                        _{{ cds_cod }}_1.topic_articles = response.data.results
+                        this.allowed_topics.forEach(
+                            topic => {
+                                let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
+                                if(!found){
+                                    this.empty_topics.push(topic)
+                                    _{{ cds_cod }}_1.empty_topics.push(topic)
+                                }
+                            }
+                        )
+                        this.is_loading = false
+                        _{{ cds_cod }}_1.is_loading = false
+                    }
+                )
+            },
+            CallTopics() {
+                let url = '{{ base_api }}{{ topics_api }}?lang={{ LANGUAGE_CODE }}&page_size=200'
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.topics = response.data.results
+                        _{{ cds_cod }}_1.topics = response.data.results
+                    }
+                )
+            },
+        },
+        watch: {
+            regdidid: function(val) {
+                //course_studyplans.regdidid = this.regdidid
+
+                study_activities.regdidid = this.regdidid
+
+                teachers_list.cds_cod = "{{ cds_cod }}"
+                teachers_list.academic_year = {{ cds_website_current_year }}
+                document.getElementById("cds_year").innerHTML = "{{ cds_website_current_year }} / {{ cds_website_current_year|add:1 }}"
+                let year_index = 1
+
+                while(year_index <= _cds_data.cds.CdSDuration) {
+                    impegniUP.years.push(year_index)
+                    esamiUP.years.push(year_index)
+                    year_index += 1
+                }
+
+                impegniUP.getEvents()
+                esamiUP.getEvents()
+            }
+        }
+    })
+
+
+
+
+    var impegniUP = new Vue({
+        el: '#impegniUP',
+        data () {
+            return {
+                events: [],
+                years: [],
+                year: 1,
+                is_loading_up: true,
+                loader_source_up: '',
+                //colors: {
+                    //0: "secondary",
+                    //1: "danger",
+                    //2: "info",
+                    //3: "success",
+                    //4: "warning",
+                //},
+                //colors_dict: {},
+                attributes: [],
+                url: '',
+                masks: {weekdays: 'WWW',},
+            } //end return
+        }, //end data
+        mounted()  {
+            //this.getEvents();
+        },
+        methods: {
+            //generateHex() {
+                //let color = '#';
+                //for (var i = 0; i < 6; i++) {
+                    //color += Math.floor(Math.random() * 10);
+                //}
+                //return color;
+            //},
+            //lightenDarkenColor(col, amt) {
+              //var num = parseInt(col, 16);
+              //var r = (num >> 16) + amt;
+              //var b = ((num >> 8) & 0x00FF) + amt;
+              //var g = (num & 0x0000FF) + amt;
+              //var newColor = g | (b << 8) | (r << 16);
+              //return newColor.toString(16);
+            //},
+            //generateHex2(value) {
+                //let hash = 0;
+                //value.split('').forEach(char => {
+                    //hash = char.charCodeAt(0) + ((hash << 5) - hash)
+                //})
+                //let colour = ''
+                //for (let i = 0; i < 3; i++) {
+                    //let value = (hash >> (i * 8)) & 0xff
+                    //colour += value.toString(16).padStart(2, '0')
+                //}
+                //return '#' + this.lightenDarkenColor(colour, -50)
+            //},
+            {% include "includes/unical_storage_cds_website_scroll.html" %}
+            getEvents(year=1) {
+                this.attributes = []
+                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year
+                this.year = year
+                this.is_loading_up = true
+                axios
+                    .get(up_url)
+                    .then(response => {
+                        this.events = response.data
+                        this.is_loading_up = false
+                        response.data.forEach((item, index)=>{
+                            this.attributes.push(
+                                {
+                                    key: index,
+                                    customData: {
+                                        class: 'bg-secondary text-white',
+                                        //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
+                                        title: item.insegnamento,
+                                        dataInizio: item.dataInizio,
+                                        dataFine: item.dataFine,
+                                        orarioInizio: item.orarioInizio,
+                                        orarioFine: item.orarioFine,
+                                        docente: item.docente,
+                                        aula: item.aula,
+                                        edificio: item.edificio,
+                                        //background: this.colors_dict[item.insegnamento]
+                                    },
+                                    dates: { start: new Date(item.dataInizio),
+                                             end: new Date(item.dataFine) }
+                                }
+                            )
+                        })
+                        this.scrollPage()
+                    }
+                )
+            },
+            switchPage(page) {
+                this.attributes = [];
+                this.getEvents();
+            },
+        } //methods
+    }) //end "new Vue"
+
+
+    var esamiUP = new Vue({
+        el: '#esamiUP',
+        data () {
+            return {
+                events: [],
+                years: [],
+                year: 1,
+                is_loading_up_exams: true,
+                loader_source_up_exams: "",
+                attributes: [],
+                url: '',
+                masks: {weekdays: 'WWW',},
+            } //end return
+        }, //end data
+        mounted()  {
+            //this.getEvents();
+        },
+        methods: {
+            getEvents(year=1) {
+                this.attributes = []
+                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year
+                this.year = year
+                this.is_loading_up_exams = true
+                axios
+                    .get(up_url)
+                    .then(response => {
+                        this.events = response.data
+                        this.is_loading_up_exams = false
+                        response.data.forEach((item, index)=>{
+                            this.attributes.push(
+                                {
+                                    key: index,
+                                    customData: {
+                                        class: 'bg-secondary text-white',
+                                        //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
+                                        title: item.insegnamento,
+                                        dataInizio: item.dataInizio,
+                                        dataFine: item.dataFine,
+                                        orarioInizio: item.orarioInizio,
+                                        orarioFine: item.orarioFine,
+                                        docente: item.docente,
+                                        aula: item.aula,
+                                        edificio: item.edificio,
+                                    },
+                                    dates: { start: new Date(item.dataInizio),
+                                             end: new Date(item.dataFine) }
+                                }
+                            )
+                        })
+                    }
+                )
+            },
+
+            switchPage(page) {
+                this.attributes = [];
+                this.getEvents();
+            },
+        } //methods
+    }) //end "new Vue"
+</script>
+{% endblock container %}

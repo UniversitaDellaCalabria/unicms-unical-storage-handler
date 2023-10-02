@@ -1,16 +1,24 @@
+import requests
 import urllib
+
+from datetime import datetime, timezone
 
 from django.conf import settings
 from django.http import (HttpResponse,
                          Http404)
+from django.middleware.csrf import get_token
+from django.shortcuts import get_object_or_404, redirect
 from django.template import Template, Context
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.csrf import get_token
 
 from cms.contexts.handlers import BaseContentHandler
 from cms.contexts.models import WebPath
 from cms.contexts.utils import contextualize_template, sanitize_path
 from cms.pages.models import Page
 
+from . forms import CdsWebsiteContactForm
 from . settings import *
 
 
@@ -782,11 +790,30 @@ class ActivitiesListViewHandler(BaseStorageHandler):
         return (root, leaf)
 
 
+class SingleActivityViewHandler(BaseStorageHandler):
+    template = "storage_activity.html"
+
+    def __init__(self, **kwargs):
+        super(SingleActivityViewHandler, self).__init__(**kwargs)
+        self.code = self.match_dict.get('code', '')
+
+    def as_view(self):
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
+        activities = ('#', CMS_STORAGE_ACTIVITIES_LABEL)
+        leaf = ('#', self.code)
+        return (root, activities, leaf)
+
+
 ####### CDS WEBSITES #######
 
-class BaseCdsWebsiteStorageHandler(BaseContentHandler):
+class CdsWebsiteBaseHandler(BaseContentHandler):
     def __init__(self, **kwargs):
-        super(BaseCdsWebsiteStorageHandler, self).__init__(**kwargs)
+        super(CdsWebsiteBaseHandler, self).__init__(**kwargs)
         self.match_dict = self.match.groupdict()
         self.webpath = WebPath.objects.filter(site=self.website,
                                               fullpath=self.match_dict.get('webpath', ''),
@@ -807,7 +834,8 @@ class BaseCdsWebsiteStorageHandler(BaseContentHandler):
                      'page': self.page,
                      'path': self.match_dict.get('webpath', '/'),
                      'handler': self,
-                     'cds_cod': self.cds_cod
+                     'cds_cod': self.cds_cod,
+                     'csrf': get_token(self.request)
         }
 
     def as_view(self):
@@ -816,109 +844,131 @@ class BaseCdsWebsiteStorageHandler(BaseContentHandler):
                                                       self.page)
         template = Template(ext_template_sources)
         context = Context(self.data)
+
         return HttpResponse(template.render(context), status=200)
 
     @property
     def get_base_url(self):
         return self.webpath.get_full_path()
 
-    # @property
-    # def breadcrumbs(self):
-        # leaf = ('#', CMS_STORAGE_ROOT_LABEL)
-        # return (leaf,)
 
-
-class CdsWebsitesProspectHandler(BaseCdsWebsiteStorageHandler):
+class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
     template = "storage_cds_websites_prospect.html"
 
     def __init__(self, **kwargs):
         super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
-
-    def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
-        return super().as_view()
+        if self.request.POST:
+            form = CdsWebsiteContactForm(data=self.request.POST)
+            if form.is_valid():
+                print(form.data)
+        else:
+            form = CdsWebsiteContactForm()
+        self.data['form'] = form
 
     @property
     def breadcrumbs(self):
         return [('#', CMS_STORAGE_CDS_WEBSITES_PROSPECT_LABEL)]
 
 
-class CdsWebsitesCorsoHandler(BaseCdsWebsiteStorageHandler):
+class CdsWebsitesCorsoHandler(CdsWebsiteBaseHandler):
     template = "storage_cds_websites_corso.html"
-
-    def __init__(self, **kwargs):
-        super(CdsWebsitesCorsoHandler, self).__init__(**kwargs)
-
-    def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
-        return super().as_view()
 
     @property
     def breadcrumbs(self):
         return [('#', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)]
 
 
-class CdsWebsitesIscriversiHandler(BaseCdsWebsiteStorageHandler):
-    template = "storage_cds_websites_iscriversi.html"
+class CdsWebsitesCorsoActivityHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_website_activity.html"
 
     def __init__(self, **kwargs):
-        super(CdsWebsitesIscriversiHandler, self).__init__(**kwargs)
+        super(CdsWebsitesCorsoActivityHandler, self).__init__(**kwargs)
+        self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['cds_cod'] = self.cds_cod
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
         return super().as_view()
+
+    @property
+    def corso_url(self):
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH}//'
+        return sanitize_path(url)
+
+    @property
+    def breadcrumbs(self):
+        corso = (self.corso_url, CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
+        leaf = ('#', self.code)
+        return (corso, leaf)
+
+
+class CdsWebsitesIscriversiHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_websites_iscriversi.html"
 
     @property
     def breadcrumbs(self):
         return [('#', CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL)]
 
 
-class CdsWebsitesStudiareHandler(BaseCdsWebsiteStorageHandler):
-    template = "storage_cds_websites_corso.html"
-
-    def __init__(self, **kwargs):
-        super(CdsWebsitesStudiareHandler, self).__init__(**kwargs)
-
-    def as_view(self):
-        # self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}{self.code}/'
-        self.data['cds'] = self.cds_cod
-        return super().as_view()
+class CdsWebsitesStudiareHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_websites_studiare.html"
 
     @property
     def breadcrumbs(self):
         return [('#', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)]
 
 
-class CdsWebsitesOpportunitaHandler(BaseCdsWebsiteStorageHandler):
-    template = "storage_cds_websites_corso.html"
+class CdsWebsitesStudiareActivityHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_website_activity.html"
 
     def __init__(self, **kwargs):
-        super(CdsWebsitesOpportunitaHandler, self).__init__(**kwargs)
+        super(CdsWebsitesStudiareActivityHandler, self).__init__(**kwargs)
+        self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        # self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}{self.code}/'
-        self.data['cds'] = self.cds_cod
+        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
         return super().as_view()
+
+    @property
+    def studiare_url(self):
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/'
+        return sanitize_path(url)
+
+    @property
+    def breadcrumbs(self):
+        studiare = (self.studiare_url, CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)
+        leaf = ('#', self.code)
+        return (studiare, leaf)
+
+
+class CdsWebsitesOpportunitaHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_websites_opportunita.html"
 
     @property
     def breadcrumbs(self):
         return [('#', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)]
 
 
-class CdsWebsitesOrganizzazioneHandler(BaseCdsWebsiteStorageHandler):
-    template = "storage_cds_websites_corso.html"
-
-    def __init__(self, **kwargs):
-        super(CdsWebsitesOrganizzazioneHandler, self).__init__(**kwargs)
-
-    def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_WEBSITES_API}{self.cds_cod}/'
-        return super().as_view()
+class CdsWebsitesOrganizzazioneHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_websites_organizzazione.html"
 
     @property
     def breadcrumbs(self):
         return [('#', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)]
 
 
+class CdsWebsitesRedirectHandler(BaseContentHandler):
+    def __init__(self, **kwargs):
+        super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
+        path_dict = getattr(settings, 'CMS_WEBPATH_CDS', {})
+        self.webpath = None
+        for path in path_dict:
+            if path_dict[path] == kwargs['cds_cod']:
+                self.webpath = get_object_or_404(WebPath,
+                                                 pk=path,
+                                                 is_active=True)
+                break
 
+    def as_view(self):
+        if self.webpath:
+            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}'))
+        raise Http404()
