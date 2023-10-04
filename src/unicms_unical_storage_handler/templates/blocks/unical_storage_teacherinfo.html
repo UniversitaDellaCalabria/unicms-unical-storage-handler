@@ -437,10 +437,12 @@
                         {% endif %}
                     })
                     .catch(error => {
-                        if(error.response)
+                        if(error.response){
                             for (var key in error.response.data) {
                                 this.errors[key] = error.response.data[key]
                             }
+                        }
+                        {{ id }}_head.is_loading = false;
                         this.is_loading = false
                         document.getElementById("{{ id }}_collapse-3-lft").style.display = "none";
                     });
