@@ -555,46 +555,57 @@
             </div>
         </div>
 
-        <div v-if="item.CdSDoc || item.CdSSatisfactionSurvey" class="mt-4">
-            <div v-if="item.CdSDoc">
-                <div class="background-light-grey px-2 py-3 mb-2 w-100">
-                    <div class="row">
-                        <div class="col-2">
-                            <b>
-                                <svg class="icon" aria-labelledby="doc_menu">
-                                    <title id="doc_menu">{% trans "Documents" %}</title>
-                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
-                                </svg>
-                            </b>
-                        </div>
-                        <div class="col m-auto align-middle">
-                            <ul class="mb-0 ps-0 list-unstyled">
-                                <li>
-                                    <a :href="item.CdSDoc" class="no-color" target="_blank">
-                                        <small><b>{% trans "Study course brochure" %}</b></small>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+        <div v-if="item.CdSDoc || item.CdSSatisfactionSurvey || item.StudyManifesto || item.DidacticRegulation || item.TeachingSystem" class="mt-4">
+            <div class="background-light-grey px-2 py-3 mb-2 w-100" v-if="item.CdSDoc || item.StudyManifesto || item.DidacticRegulation || item.TeachingSystem">
+                <div class="row">
+                    <div class="col-2">
+                        <b>
+                            <svg class="icon" aria-labelledby="doc_menu">
+                                <title id="doc_menu">{% trans "Documents" %}</title>
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
+                            </svg>
+                        </b>
+                    </div>
+                    <div class="col m-auto align-middle">
+                        <ul class="mb-0 ps-0 list-unstyled">
+                            <li v-if="item.CdSDoc">
+                                <a :href="item.CdSDoc" class="no-color" target="_blank">
+                                    <small><b>{% trans "Study course brochure" %}</b></small>
+                                </a>
+                            </li>
+                            <li>
+                                <a :href="item.StudyManifesto" class="no-color" target="_blank">
+                                    <small><b>[[ labels.StudyManifesto ]]</b></small>
+                                </a>
+                            </li>
+                            <li>
+                                <a :href="item.DidacticRegulation" class="no-color" target="_blank">
+                                    <small><b>[[ labels.DidacticRegulation ]]</b></small>
+                                </a>
+                            </li>
+                            <li>
+                                <a :href="item.TeachingSystem" class="no-color" target="_blank">
+                                    <small><b>[[ labels.TeachingSystem ]]</b></small>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <div v-if="item.CdSSatisfactionSurvey">
-                <div class="background-light-grey px-2 py-3 mb-2 w-100">
-                    <div class="row">
-                        <div class="col-2 text-center" style="font-size: x-large">
-                            <span style="font-weight: 400" title='{% trans "Digital services" %}'>@</span>
-                        </div>
-                        <div class="col m-auto align-middle">
-                            <ul class="mb-0 ps-0 list-unstyled">
-                                <li>
-                                    <a class="no-color" target="_blank" :href="'{{ almalaurea_link }}' + item.CdSSatisfactionSurvey">
-                                        <small><b>[[ labels['CdSSatisfactionSurvey'] ]]</b></small>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+            <div class="background-light-grey px-2 py-3 mb-2 w-100" v-if="item.CdSSatisfactionSurvey">
+                <div class="row">
+                    <div class="col-2 text-center" style="font-size: x-large">
+                        <span style="font-weight: 400" title='{% trans "Digital services" %}'>@</span>
+                    </div>
+                    <div class="col m-auto align-middle">
+                        <ul class="mb-0 ps-0 list-unstyled">
+                            <li>
+                                <a class="no-color" target="_blank" :href="'{{ almalaurea_link }}' + item.CdSSatisfactionSurvey">
+                                    <small><b>[[ labels['CdSSatisfactionSurvey'] ]]</b></small>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
