@@ -940,6 +940,26 @@ class CdsWebsitesStudiareActivityHandler(CdsWebsiteBaseHandler):
         return (studiare, leaf)
 
 
+class CdsWebsitesStudiareCalendarHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_websites_studiare_calendari.html"
+
+    @property
+    def breadcrumbs(self):
+        studiare_url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/'
+        return [(sanitize_path(studiare_url), CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL),
+                ('#', CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_LABEL)]
+
+
+class CdsWebsitesStudiareScheduleHandler(CdsWebsiteBaseHandler):
+    template = "storage_cds_websites_studiare_orari.html"
+
+    @property
+    def breadcrumbs(self):
+        studiare_url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/'
+        return [(sanitize_path(studiare_url), CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL),
+                ('#', CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL)]
+
+
 class CdsWebsitesOpportunitaHandler(CdsWebsiteBaseHandler):
     template = "storage_cds_websites_opportunita.html"
 
