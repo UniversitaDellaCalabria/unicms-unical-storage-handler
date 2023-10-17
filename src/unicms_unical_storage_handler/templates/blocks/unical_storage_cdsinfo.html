@@ -114,7 +114,7 @@
 
                                 <div class="col-12 col-md-auto">
                                     <small>
-                                        <a :href="[[ item.CdsUrl ]]" target="_blank" rel="noopener noreferrer">
+                                        <a :href="'/{{ cms_path_prefix }}{{ cds_websites_basepath }}/' + item.CdSCod +'/{{ cds_websites_redirect_path }}/'">
                                             <b>{% trans "Website" %} >></b>
                                         </a>
                                     </small>
