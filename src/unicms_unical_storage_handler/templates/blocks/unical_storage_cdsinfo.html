@@ -114,7 +114,7 @@
 
                                 <div class="col-12 col-md-auto">
                                     <small>
-                                        <a :href="'/{{ cms_path_prefix }}{{ cds_websites_basepath }}/' + item.CdSCod +'/{{ cds_websites_redirect_path }}/'">
+                                        <a :href="[[ item.CdsUrl ]]" target="_blank" rel="noopener noreferrer">
                                             <b>{% trans "Website" %} >></b>
                                         </a>
                                     </small>
@@ -570,22 +570,22 @@
                         <ul class="mb-0 ps-0 list-unstyled">
                             <li v-if="item.CdSDoc">
                                 <a :href="item.CdSDoc" class="no-color" target="_blank">
-                                    <small><b>{% trans "Study course brochure" %}</b></small>
+                                    <small><b>- {% trans "Study course brochure" %}</b></small>
                                 </a>
                             </li>
                             <li>
                                 <a :href="item.StudyManifesto" class="no-color" target="_blank">
-                                    <small><b>[[ labels.StudyManifesto ]]</b></small>
+                                    <small><b>- [[ labels.StudyManifesto ]]</b></small>
                                 </a>
                             </li>
                             <li>
                                 <a :href="item.DidacticRegulation" class="no-color" target="_blank">
-                                    <small><b>[[ labels.DidacticRegulation ]]</b></small>
+                                    <small><b>- [[ labels.DidacticRegulation ]]</b></small>
                                 </a>
                             </li>
                             <li>
                                 <a :href="item.TeachingSystem" class="no-color" target="_blank">
-                                    <small><b>[[ labels.TeachingSystem ]]</b></small>
+                                    <small><b>- [[ labels.TeachingSystem ]]</b></small>
                                 </a>
                             </li>
                         </ul>

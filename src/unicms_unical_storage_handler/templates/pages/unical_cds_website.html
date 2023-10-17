@@ -211,12 +211,16 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_VIEW_PREFIX_PATH" as cds_opportunita_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH" as cds_corso_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_VIEW_PREFIX_PATH" as cds_organizzazione_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_VIEW_PREFIX_PATH" as cds_studiare_calendar_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_VIEW_PREFIX_PATH" as cds_studiare_schedule_path %}
 
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as cds_iscriversi_label %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as cds_studiare_label %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL" as cds_opportunita_label %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL" as cds_corso_label %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL" as cds_organizzazione_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_LABEL" as studiare_calendar_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL" as studiare_schedule_label %}
 
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
 {% if cds_identifier %}
@@ -239,6 +243,46 @@
         <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">
             <span>{{ cds_studiare_label }}</span>
         </a>
+
+        <span data-toggle="dropdown"
+              aria-expanded="false"
+              class="megamenu-dropdown-arrow m-lg-auto pb-lg-1"
+              role="navigation"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              id="item_studiare_dropdpown">
+            <svg class="icon icon-xs float-xs-end">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-expand"></use>
+            </svg>
+        </span>
+
+        <div class="dropdown-menu" role="region" aria-labelledby="item_studiare_dropdpown">
+            <div class="row p-md-3 p-0">
+                <!-- If previous item has child, render new col, else add items in stack -->
+                <div class="col-lg-3">
+                    <div class="link-list-wrapper">
+                        <ul class="link-list">
+                            <li>
+                                <a class="list-item pb-2 {% if not forloop.first %}pt-2{% endif %} pt-lg-0" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/{{ cds_studiare_calendar_path }}/">
+                                    <span class="text-dark">{{ studiare_calendar_label }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="link-list-wrapper">
+                        <ul class="link-list">
+                            <li>
+                                <a class="list-item pb-2 {% if not forloop.first %}pt-2{% endif %} pt-lg-0" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/{{ cds_studiare_schedule_path }}/">
+                                    <span class="text-dark">{{ studiare_schedule_label }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </li>
     <li class="nav-item megamenu">
         <a class="nav-link pe-lg-1" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_opportunita_path }}/">
