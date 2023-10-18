@@ -172,8 +172,7 @@
                         <!-- END attività curriculari -->
 
                         <!-- Orario lezioni -->
-                        <div id="impegniUP">
-                            <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
+                        <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
 
                             <div id="accordionDiv-study-lft" class="accordion accordion-left-icon">
                                 <div class="accordion-item">
@@ -191,12 +190,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <!-- END Orario lezioni -->
 
                         <!-- Calendario esami -->
-                        <div id="esamiUP">
-                            <h5 class="mt-5 mb-3">{% trans "Calendario esami" %}</h5>
+                        <h5 class="mt-5 mb-3">{% trans "Calendario esami" %}</h5>
 
                             <div id="accordionDiv-exams-lft" class="accordion accordion-left-icon">
                                 <div class="accordion-item">
@@ -214,7 +211,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <!-- END calendario esami -->
 
                         <!-- Piano di studio (topic 7) + Prova finale (topi 9) -->
@@ -425,177 +421,18 @@
                 document.getElementById("cds_year").innerHTML = "{{ cds_website_current_year }} / {{ cds_website_current_year|add:1 }}"
                 let year_index = 1
 
-                while(year_index <= _cds_data.cds.CdSDuration) {
-                    impegniUP.years.push(year_index)
-                    esamiUP.years.push(year_index)
-                    year_index += 1
-                }
+                //while(year_index <= _cds_data.cds.CdSDuration) {
+                    //impegniUP.years.push(year_index)
+                    //esamiUP.years.push(year_index)
+                    //year_index += 1
+                //}
 
-                impegniUP.getEvents()
-                esamiUP.getEvents()
+                //impegniUP.getEvents()
+                //esamiUP.getEvents()
             }
         }
     })
 
 
-
-
-    var impegniUP = new Vue({
-        el: '#impegniUP',
-        data () {
-            return {
-                events: [],
-                years: [],
-                year: 1,
-                is_loading_up: true,
-                loader_source_up: '',
-                //colors: {
-                    //0: "secondary",
-                    //1: "danger",
-                    //2: "info",
-                    //3: "success",
-                    //4: "warning",
-                //},
-                //colors_dict: {},
-                attributes: [],
-                url: '',
-                masks: {weekdays: 'WWW',},
-            } //end return
-        }, //end data
-        mounted()  {
-            //this.getEvents();
-        },
-        methods: {
-            //generateHex() {
-                //let color = '#';
-                //for (var i = 0; i < 6; i++) {
-                    //color += Math.floor(Math.random() * 10);
-                //}
-                //return color;
-            //},
-            //lightenDarkenColor(col, amt) {
-              //var num = parseInt(col, 16);
-              //var r = (num >> 16) + amt;
-              //var b = ((num >> 8) & 0x00FF) + amt;
-              //var g = (num & 0x0000FF) + amt;
-              //var newColor = g | (b << 8) | (r << 16);
-              //return newColor.toString(16);
-            //},
-            //generateHex2(value) {
-                //let hash = 0;
-                //value.split('').forEach(char => {
-                    //hash = char.charCodeAt(0) + ((hash << 5) - hash)
-                //})
-                //let colour = ''
-                //for (let i = 0; i < 3; i++) {
-                    //let value = (hash >> (i * 8)) & 0xff
-                    //colour += value.toString(16).padStart(2, '0')
-                //}
-                //return '#' + this.lightenDarkenColor(colour, -50)
-            //},
-            {% include "includes/unical_storage_cds_website_scroll.html" %}
-            getEvents(year=1) {
-                this.attributes = []
-                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year
-                this.year = year
-                this.is_loading_up = true
-                axios
-                    .get(up_url)
-                    .then(response => {
-                        this.events = response.data
-                        this.is_loading_up = false
-                        response.data.forEach((item, index)=>{
-                            this.attributes.push(
-                                {
-                                    key: index,
-                                    customData: {
-                                        class: 'bg-secondary text-white',
-                                        //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
-                                        title: item.insegnamento,
-                                        dataInizio: item.dataInizio,
-                                        dataFine: item.dataFine,
-                                        orarioInizio: item.orarioInizio,
-                                        orarioFine: item.orarioFine,
-                                        docente: item.docente,
-                                        aula: item.aula,
-                                        edificio: item.edificio,
-                                        //background: this.colors_dict[item.insegnamento]
-                                    },
-                                    dates: { start: new Date(item.dataInizio),
-                                             end: new Date(item.dataFine) }
-                                }
-                            )
-                        })
-                        this.scrollPage()
-                    }
-                )
-            },
-            switchPage(page) {
-                this.attributes = [];
-                this.getEvents();
-            },
-        } //methods
-    }) //end "new Vue"
-
-
-    var esamiUP = new Vue({
-        el: '#esamiUP',
-        data () {
-            return {
-                events: [],
-                years: [],
-                year: 1,
-                is_loading_up_exams: true,
-                loader_source_up_exams: "",
-                attributes: [],
-                url: '',
-                masks: {weekdays: 'WWW',},
-            } //end return
-        }, //end data
-        mounted()  {
-            //this.getEvents();
-        },
-        methods: {
-            getEvents(year=1) {
-                this.attributes = []
-                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year
-                this.year = year
-                this.is_loading_up_exams = true
-                axios
-                    .get(up_url)
-                    .then(response => {
-                        this.events = response.data
-                        this.is_loading_up_exams = false
-                        response.data.forEach((item, index)=>{
-                            this.attributes.push(
-                                {
-                                    key: index,
-                                    customData: {
-                                        class: 'bg-secondary text-white',
-                                        //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
-                                        title: item.insegnamento,
-                                        dataInizio: item.dataInizio,
-                                        dataFine: item.dataFine,
-                                        orarioInizio: item.orarioInizio,
-                                        orarioFine: item.orarioFine,
-                                        docente: item.docente,
-                                        aula: item.aula,
-                                        edificio: item.edificio,
-                                    },
-                                    dates: { start: new Date(item.dataInizio),
-                                             end: new Date(item.dataFine) }
-                                }
-                            )
-                        })
-                    }
-                )
-            },
-
-            switchPage(page) {
-                this.attributes = [];
-                this.getEvents();
-            },
-        } //methods
-    }) //end "new Vue"
 </script>
 {% endblock container %}
