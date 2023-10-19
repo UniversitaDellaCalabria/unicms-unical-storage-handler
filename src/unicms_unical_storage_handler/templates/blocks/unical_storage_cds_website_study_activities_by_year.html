@@ -371,9 +371,9 @@ getTeachingsInYear(year, index) {
     axios
         .get(url)
         .then(response => {
-            let results = response.data.results[0]
-            if(results && 'RegDidId' in results)
+            if(response.data.results && response.data.results.length > 0){
                 this.setTeachingDictionary(response.data.results[0].RegDidId, index)
+            }
         })
 },
 getYears() {
@@ -393,7 +393,6 @@ watch: {
         this.academic_year = ({{ year }} || _cds_data.cds.AcademicYear)
         this.degree_class = _cds_data.cds.CourseClassCod
         this.interclass_degree_class = _cds_data.cds.CourseInterClassCod
-        this.url = "{{ base_api }}{{ cds_api }}" + val + "/studyplans/"
         this.getYears()
         this.is_loading = false
     }
