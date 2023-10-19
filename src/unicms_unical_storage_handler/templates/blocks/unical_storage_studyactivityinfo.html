@@ -19,10 +19,8 @@
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "BREADCRUMB_ITEM" as breadcrumb_item %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
-
-
-
-
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 
 <div id="{{ id }}">
 
@@ -32,14 +30,23 @@
     </loading-icon>
 
     <div v-else-if="Object.keys(item).length">
+        <h3 class="lighter">COD: [[ item.StudyActivityCod ]]</h3>
         <h1 class="lighter">
             [[ item.StudyActivityName ]]
             <span v-if="item.StudyActivityPartitionDes">
                 ([[ item.StudyActivityPartitionDes ]])
             </span>
         </h1>
-        <h3 class="lighter">[[ item.StudyActivityCdSName ]] ([[ item.StudyActivityPdsDes ]])</h3>
-        <h5 class="lighter">[[ item.StudyActivityCod ]]</h5>
+        <h3 class="lighter">
+
+        </h3>
+        <h5 class="lighter">
+            {% if not is_cds_website %}
+                [[ cds.CdSCod ]] - [[ cds.CdSName ]]<br>[[ cds.CourseTypeDescription ]]
+            {% else %}
+                [[ _cds_data.cds.CdSCod ]] - [[ _cds_data.cds.CdSName ]]<br>[[ _cds_data.cds.CourseTypeDescription ]]
+            {% endif %} ([[ item.StudyActivityPdsDes ]])
+        </h5>
         <p style="text-align: right" class="d-print-none">
             <a id="print" onclick="print_page()">
                 <svg class="icon" style="fill: var(--bordeaux_unical)" aria-labelledby="{{ id }}_label">
@@ -315,6 +322,8 @@
                                      'StudyActivityTextbooks',
                                      'StudyActivityWorkload'],
                 fields_to_not_show: {{ fields_to_hide|safe }},
+                cds_regdid: null,
+                cds: {}
             }
         },
         mounted() {
@@ -326,6 +335,13 @@
                 if(url.charAt(url.length - 1) == "/") url = url.slice(0,-1)
                 return url.replace(/\/[^\/]*$/, '/' + new_code +'/')
             },
+            callCdS() {
+                axios
+                    .get("{{ base_api }}{{ cds_api }}" + this.cds_regdid + "/")
+                    .then(response => {
+                        this.cds = response.data.results;
+                    })
+            },
             CallURL() {
                 axios
                     .get(this.url)
@@ -333,6 +349,7 @@
                         this.item = response.data.results;
                         this.labels = response.data.labels;
                         this.is_loading = false
+                        this.cds_regdid = response.data.results.StudyActivityRegDidId
                         {% if change_breadcrumb %}
                         document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.StudyActivityName
                         document.title = this.item.StudyActivityName + " - " + this.item.StudyActivityCdSName;
@@ -353,7 +370,14 @@
                         this.is_loading = false
                     });
             },
+        },
+        {% if not is_cds_website %}
+        watch: {
+            cds_regdid: function(val){
+                this.callCdS()
+            }
         }
+        {% endif %}
     })
 
 function print_page() {
