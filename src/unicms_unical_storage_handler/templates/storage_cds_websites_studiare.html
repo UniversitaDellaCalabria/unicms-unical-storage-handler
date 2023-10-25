@@ -60,32 +60,26 @@
                         <p class="h1 lighter">{{ page_title }}</p>
 
                         <!-- Insegnamenti -->
-                        {% comment %}
-                        <div class="mt-5">
-                            {% include "blocks/unical_storage_cdsstudyplans_v3.html" with uid="course_studyplans" full_page=full_page %}
-                        </div>
-                        {% endcomment %}
-
                         <div class="mt-5">
                             {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="study_activities" full_page=full_page year=cds_website_current_year %}
                         </div>
                         <!-- END insegnamenti -->
 
-                        <!-- Attività curriculari (topic 8) -->
+                        <!-- Piano di studio (topic 7) + Piani di tudio (topi 8) -->
                         <div class="row" id="_{{ cds_cod }}">
                             <loading-icon
                                 v-if="is_loading"
                                 :loader_source="loader_source">
                             </loading-icon>
                             <div v-for="allowed_topic in allowed_topics" v-else>
-                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId) && topic.TopicId == 8">
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId) && topic.TopicId != 9">
                                     <p class="h4 lighter mt-5">
                                         [[ topic.TopicDescription ]]
                                     </p>
                                     <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
                                         <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
 
-                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object && ((article.CdsObject.ClassObjectId == 'WebPath' && article.CdsObject.ObjectText) || article.CdsObject.ClassObjectId != 'WebPath'))">
+                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object)">
                                                 <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
                                                     <button class="accordion-button"
                                                             type="button"
@@ -169,7 +163,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- END attività curriculari -->
+                        <!-- END piano di studio + Piani di studio -->
 
                         <!-- Orario lezioni -->
                         <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
@@ -213,14 +207,14 @@
                             </div>
                         <!-- END calendario esami -->
 
-                        <!-- Piano di studio (topic 7) + Prova finale (topi 9) -->
+                        <!-- Prova finale (topi 9) -->
                         <div class="row" id="_{{ cds_cod }}_1">
                             <loading-icon
                                 v-if="is_loading"
                                 :loader_source="loader_source">
                             </loading-icon>
                             <div v-for="allowed_topic in allowed_topics" v-else>
-                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId) && topic.TopicId != 8">
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId) && topic.TopicId == 9">
                                     <p class="h4 lighter mt-5">
                                         [[ topic.TopicDescription ]]
                                     </p>
@@ -279,12 +273,39 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- href button -->
+                                            <div v-else-if="article.CdsObject && article.CdsObject.ClassObjectId == 'WebPath' &! article.CdsObject.ObjectText">
+                                                <div class="accordion-header accordion-header-href" :id="'static-heading-' + article.ID +'-lft'">
+                                                    <a class="no-color"
+                                                       target="_blank"
+                                                       :title="article.CdsObject.Object.name"
+                                                       :href="article.CdsObject.Object.get_absolute_url">
+                                                        <button class="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                aria-expanded="false">
+                                                            <span v-if="article.Title">
+                                                                [[ article.Title ]]
+                                                            </span>
+                                                            <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                                <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                    [[ article.CdsObject.Object.title ]]
+                                                                </span>
+                                                                <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <!-- end href button -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- END piano di studio + prova finale -->
+                        <!-- END Prova finale -->
 
                         <!-- Docenti -->
                         <h5 class="mt-5 mb-3">{% trans "Faculty" %}</h5>
