@@ -179,6 +179,105 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Topic -->
+                        <div class="row" id="_{{ cds_cod }}_1">
+                            <loading-icon
+                                v-if="is_loading"
+                                :loader_source="loader_source">
+                            </loading-icon>
+                            <div v-for="allowed_topic in allowed_topics" v-else>
+                                <div v-for="topic in topics" v-if="topic.TopicId == allowed_topic &! empty_topics.includes(topic.TopicId)">
+                                    <p class="h4 lighter mt-5">
+                                        [[ topic.TopicDescription ]]
+                                    </p>
+                                    <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
+                                        <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
+
+                                            <div class="accordion-item" v-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object)">
+                                                <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
+                                                    <button class="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            :data-bs-target="'#collapse-' + article.ID +'-lft'"
+                                                            aria-expanded="false"
+                                                            :aria-controls="'collapse-' + article.ID +'-lft'">
+                                                        <span v-if="article.Title">
+                                                            [[ article.Title ]]
+                                                        </span>
+                                                        <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                [[ article.CdsObject.Object.title ]]
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                [[ article.CdsObject.Object.name ]]
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div :id="'collapse-' + article.ID +'-lft'"
+                                                     class="accordion-collapse collapse"
+                                                     :data-bs-parent="'#accordionDiv-' + allowed_topic +'-lft'"
+                                                     role="region"
+                                                     :aria-labelledby="'heading-' + article.ID +'-lft'">
+                                                    <div class="accordion-body">
+                                                        <span v-if="article.CdsArticle">
+                                                            <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                        <span v-else-if="article.CdsObject">
+                                                            <span v-html="article.CdsObject.ObjectText"></span>
+                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                <span v-html="article.CdsObject.Object.content"></span>
+                                                            </span>
+                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                <a :href="article.CdsObject.Object.get_absolute_url">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </a>
+                                                            </span>
+                                                            <div v-for="other_data in article.OtherData">
+                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <div>[[ other_data.Text ]]</div>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- href button -->
+                                            <div v-else-if="article.CdsObject && article.CdsObject.ClassObjectId == 'WebPath' &! article.CdsObject.ObjectText">
+                                                <div class="accordion-header accordion-header-href" :id="'static-heading-' + article.ID +'-lft'">
+                                                    <a class="no-color"
+                                                       target="_blank"
+                                                       :title="article.CdsObject.Object.name"
+                                                       :href="article.CdsObject.Object.get_absolute_url">
+                                                        <button class="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                aria-expanded="false">
+                                                            <span v-if="article.Title">
+                                                                [[ article.Title ]]
+                                                            </span>
+                                                            <span v-else="article.CdsObject && article.CdsObject.Object">
+                                                                <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
+                                                                    [[ article.CdsObject.Object.title ]]
+                                                                </span>
+                                                                <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
+                                                                    [[ article.CdsObject.Object.name ]]
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <!-- end href button -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Prova finale -->
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
                         {% include "includes/unical_storage_cds_website_right_static.html" %}
@@ -198,6 +297,62 @@
         el: '#_{{ cds_cod }}',
         data() {
             return {}
+        },
+    })
+
+    var _{{ cds_cod }}_1 = new Vue({
+        el: '#_{{ cds_cod }}_1',
+        data() {
+            return {
+                item: {},
+                allowed_topics: {{ page_topics|get_value:'organizzazione'|safe }},
+                empty_topics: [],
+                topics: {},
+                topic_articles: {},
+                labels: {},
+                url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
+                is_loading: true,
+                loader_source: '{{ url }}',
+            }
+        },
+        mounted() {
+            //this.CallURL();
+            this.CallTopics();
+            this.CallTopicArticles();
+            //this.CallCds();
+        },
+        methods: {
+            CallTopicArticles() {
+                let url = '{{ base_api }}{{ page_topic_articles }}?lang={{ LANGUAGE_CODE }}&page_size=200&cds_cod={{ cds_cod }}&topic_id=' + this.allowed_topics
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.topic_articles = response.data.results
+                        _{{ cds_cod }}_1.topic_articles = response.data.results
+                        this.allowed_topics.forEach(
+                            topic => {
+                                let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
+                                if(!found){
+                                    this.empty_topics.push(topic)
+                                    _{{ cds_cod }}_1.empty_topics.push(topic)
+                                }
+                            }
+                        )
+                        this.is_loading = false
+                        _{{ cds_cod }}_1.is_loading = false
+                    }
+                )
+            },
+            CallTopics() {
+                let url = '{{ base_api }}{{ topics_api }}?lang={{ LANGUAGE_CODE }}&page_size=200'
+                axios
+                    .get(url)
+                    .then(response => {
+                        this.topics = response.data.results
+                        _{{ cds_cod }}_1.topics = response.data.results
+                    }
+                )
+            },
         },
     })
 </script>
