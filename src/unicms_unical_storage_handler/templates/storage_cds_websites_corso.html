@@ -55,6 +55,10 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <p class="h1 lighter">{{ page_title }}</p>
+                    <div class="row  mt-5" id="_{{ cds_cod }}_1">
+                        [[ item.CDSIntro ]]
+                    </div>
+
                     <div class="row  mt-5" id="_{{ cds_cod }}">
 
 <!--
@@ -369,6 +373,29 @@ var _{{ cds_cod }} = new Vue({
         //}
     //}
 })
+
+var _cds_website_text = new Vue({
+    el: '#_{{ cds_cod }}_1',
+    data() {
+        return {
+            item: {},
+        }
+    },
+    mounted() {
+        this.callWebsite()
+    },
+    methods: {
+        callWebsite() {
+            let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
+            axios
+                .get(url)
+                .then(response => {
+                    this.item = response.data.results
+                }
+            )
+        },
+    }
+});
 
 var _cds_website_right_col_dynamic = new Vue({
     el: '#_cds_website_right_col_dynamic',
