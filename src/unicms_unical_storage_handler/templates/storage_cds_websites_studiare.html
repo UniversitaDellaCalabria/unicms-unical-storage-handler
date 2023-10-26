@@ -38,12 +38,14 @@
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as page_title %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_VIEW_PREFIX_PATH" as calendar_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_VIEW_PREFIX_PATH" as schedule_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH" as corso_path %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 {% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 {% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
@@ -159,6 +161,21 @@
                                             </div>
                                             <!-- end href button -->
                                         </div>
+                                        <!-- Link a pagina CORSO per visualizzare i piani di studio -->
+                                        <div class="accordion-item" v-if="topic.TopicId == 7">
+                                            <div class="accordion-header accordion-header-href" id="heading-study-lft">
+                                                <a class="no-color" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ corso_path }}/">
+                                                    <button class="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#collapse-study-lft"
+                                                            aria-expanded="false"
+                                                            aria-controls="collapse-study-lft">
+                                                        {% trans "Consult the page with study plans" %}
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +183,7 @@
                         <!-- END piano di studio + Piani di studio -->
 
                         <!-- Orario lezioni -->
-                        <h5 class="mt-5 mb-3">{% trans "Orario delle lezioni" %}</h5>
+                        <h5 class="mt-5 mb-3">{% trans "Class schedule" %}</h5>
 
                             <div id="accordionDiv-study-lft" class="accordion accordion-left-icon">
                                 <div class="accordion-item">
@@ -187,7 +204,7 @@
                         <!-- END Orario lezioni -->
 
                         <!-- Calendario esami -->
-                        <h5 class="mt-5 mb-3">{% trans "Calendario esami" %}</h5>
+                        <h5 class="mt-5 mb-3">{% trans "Exam calendar" %}</h5>
 
                             <div id="accordionDiv-exams-lft" class="accordion accordion-left-icon">
                                 <div class="accordion-item">
