@@ -442,3 +442,12 @@ CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = {
         # 'https://unical.esse3.cineca.it/Home.do'
     # ]
 }
+
+CMS_STORAGE_CDS_WEBSITES_CAROUSEL_BACKGROUNDS_URL = {
+    # "Socio-Economica": "#",
+    # "Umanistica": "#",
+    # "Scienze": "#",
+    # "Ingegneria e Tecnologia": "#",
+    # "Medico Sanitaria": "#",
+    # "Formazione di Educatori e Insegnanti": "#",
+}
