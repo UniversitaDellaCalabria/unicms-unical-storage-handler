@@ -22,10 +22,30 @@
     </loading-icon>
 
     <div v-else>
-        <div v-if="Object.keys(teachings_dictionary) != 0">
+
+        <div v-if="Object.keys(teachings_dictionary) != 0 && '1' in teachings_dictionary">
             <div v-if="teachings_dictionary[1].length == 1">
 
-                <h5 class="mt-4 mb-3">{% trans "Teachings" %} [[ academic_year ]]/[[ academic_year + 1 ]]</h5>
+                <p class="h5" class="mt-4 mb-3">{% trans "Teachings" %} [[ academic_year ]]/[[ academic_year + 1 ]]</p>
+
+                <div class="alert alert-info mt-4" role="alert" v-if="_cds_data.cds.CdsPeriods.length > 0">
+                    <p class="h6">
+                        {% trans "Teaching periods" %}
+                    </p>
+                    <ul>
+                        <li v-for="period in _cds_data.cds.CdsPeriods">
+                            [[ period.Description ]]:
+                            [[ new Date(period.Start).toLocaleString("{{ LANGUAGE_CODE }}",
+                                                                    {day: '2-digit',
+                                                                     month: '2-digit',
+                                                                     year: 'numeric'}) ]] -
+                            [[ new Date(period.End).toLocaleString("{{ LANGUAGE_CODE }}",
+                                                                    {day: '2-digit',
+                                                                     month: '2-digit',
+                                                                     year: 'numeric'}) ]]
+                        </li>
+                    </ul>
+                </div>
 
                 <div :id="'studyPlanAccordionInnerDiv{{ id }}-1-lft'"
                      class="accordion accordion-left-icon">
@@ -167,7 +187,7 @@
                 </div>
             </div>
             <div v-else>
-                <h5 class="mt-4 mb-3">{% trans "Teachings" %} [[ academic_year ]]/[[ academic_year + 1 ]] ({% trans "for" %} {% trans "study paths" %})</h5>
+                <p class="h5" class="mt-4 mb-3">{% trans "Teachings" %} [[ academic_year ]]/[[ academic_year + 1 ]] ({% trans "for" %} {% trans "study paths" %})</p>
                 <div :id="'studyPlanAccordionDiv{{ id }}-lft'" class="accordion accordion-left-icon">
                     <div v-for="(item, index) in teachings_dictionary[1]" class="accordion-item">
                         <div class="accordion-header" :id="'studyPlanHeading-{{ id }}-' + index + '-lft'">
