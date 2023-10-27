@@ -118,7 +118,7 @@
                                                                 <div>[[ other_data.Text ]]</div>
                                                             </div>
                                                         </span>
-                                                        <span v-else-if="article.CdsObject">
+                                                        <span v-else-if="article.CdsObject && article.CdsObject.Object">
                                                             <span v-html="article.CdsObject.ObjectText"></span>
                                                             <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
                                                                 <span v-html="article.CdsObject.Object.content"></span>
