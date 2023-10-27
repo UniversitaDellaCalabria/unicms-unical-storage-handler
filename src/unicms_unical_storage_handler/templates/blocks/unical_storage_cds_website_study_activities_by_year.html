@@ -23,7 +23,7 @@
 
     <div v-else>
 
-        <div v-if="Object.keys(teachings_dictionary) != 0 && '1' in teachings_dictionary">
+        <div v-if="Object.keys(teachings_dictionary).length == _cds_data.cds.CdSDuration">
             <div v-if="teachings_dictionary[1].length == 1">
 
                 <p class="h5" class="mt-4 mb-3">{% trans "Teachings" %} [[ academic_year ]]/[[ academic_year + 1 ]]</p>
