@@ -58,7 +58,7 @@
                                     <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
                                         <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
                                             <!-- href button -->
-                                            <div if="article.CdsObject && article.CdsObject.ClassObjectId == 'WebPath' &! article.CdsObject.ObjectText">
+                                            <div if="article.CdsObject && article.CdsObject.Object && article.CdsObject.ClassObjectId == 'WebPath' &! article.CdsObject.ObjectText">
                                                 <div class="accordion-header accordion-header-href" :id="'static-heading-' + article.ID +'-lft'">
                                                     <a class="no-color"
                                                        target="_blank"
