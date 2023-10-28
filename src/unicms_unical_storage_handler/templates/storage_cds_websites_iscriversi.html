@@ -73,13 +73,8 @@
                                                             <span v-if="article.Title">
                                                                 [[ article.Title ]]
                                                             </span>
-                                                            <span v-else="article.CdsObject && article.CdsObject.Object">
-                                                                <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
-                                                                    [[ article.CdsObject.Object.title ]]
-                                                                </span>
-                                                                <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                                    [[ article.CdsObject.Object.name ]]
-                                                                </span>
+                                                            <span v-else">
+                                                                [[ article.CdsObject.Object.name ]]
                                                             </span>
                                                         </button>
                                                     </a>
