@@ -60,7 +60,7 @@
                         <!-- Orario lezioni -->
                         <div id="impegniUP" class="mt-5">
                             <div v-if="years">
-                                <a v-for="y_index in years" class="no-color" @click="getEvents(y_index)" href="javascript:void(0)">
+                                <a v-for="y_index in years" class="no-color" @click="resetCalendar(y_index)" href="javascript:void(0)">
                                     <span
                                         class="badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100"
                                         :class="year == y_index ? 'selected' : ''">
@@ -75,15 +75,16 @@
                                     :loader_source="loader_source_up">
                                 </loading-icon>
 
-                                <div v-else>
+                                <div :style="'display: ' + css_display">
                                     <v-calendar
+                                        ref="calendar"
                                         class="custom-calendar"
                                         :masks="masks"
                                         :attributes="attributes"
                                         locale="{{ LANGUAGE_CODE }}"
                                         disable-page-swipe
-                                        {% comment %}
                                         @update:from-page="switchPage"
+                                        {% comment %}
                                         is-expanded
                                         v-if="attr.customData.dataInizio=[[ day.id ]]"
                                         :href="'http://localhost/' + attr.customData.id"
@@ -141,69 +142,36 @@
                 year: 1,
                 is_loading_up: true,
                 loader_source_up: '',
-                //colors: {
-                    //0: "secondary",
-                    //1: "danger",
-                    //2: "info",
-                    //3: "success",
-                    //4: "warning",
-                //},
-                //colors_dict: {},
                 attributes: [],
                 regdidid: null,
                 url: '',
                 masks: {weekdays: 'WWW',},
+                css_display: 'none'
             } //end return
         }, //end data
         mounted()  {
             //this.getEvents();
         },
         methods: {
-            //generateHex() {
-                //let color = '#';
-                //for (var i = 0; i < 6; i++) {
-                    //color += Math.floor(Math.random() * 10);
-                //}
-                //return color;
-            //},
-            //lightenDarkenColor(col, amt) {
-              //var num = parseInt(col, 16);
-              //var r = (num >> 16) + amt;
-              //var b = ((num >> 8) & 0x00FF) + amt;
-              //var g = (num & 0x0000FF) + amt;
-              //var newColor = g | (b << 8) | (r << 16);
-              //return newColor.toString(16);
-            //},
-            //generateHex2(value) {
-                //let hash = 0;
-                //value.split('').forEach(char => {
-                    //hash = char.charCodeAt(0) + ((hash << 5) - hash)
-                //})
-                //let colour = ''
-                //for (let i = 0; i < 3; i++) {
-                    //let value = (hash >> (i * 8)) & 0xff
-                    //colour += value.toString(16).padStart(2, '0')
-                //}
-                //return '#' + this.lightenDarkenColor(colour, -50)
-            //},
             {% include "includes/unical_storage_cds_website_scroll.html" %}
-            getEvents(year=1) {
+            getEvents(date_month={% now "m" %}, date_year={% now "Y" %}, year=1) {
                 this.attributes = []
-                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year
+                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year + '&date_year=' + date_year +'&date_month=' + date_month
                 this.year = year
                 this.is_loading_up = true
+                this.css_display = 'none'
                 axios
                     .get(up_url)
                     .then(response => {
                         this.events = response.data
                         this.is_loading_up = false
+                        this.css_display = 'block'
                         response.data.forEach((item, index)=>{
                             this.attributes.push(
                                 {
                                     key: index,
                                     customData: {
                                         class: 'bg-secondary text-white',
-                                        //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
                                         title: item.insegnamento,
                                         dataInizio: item.dataInizio,
                                         dataFine: item.dataFine,
@@ -212,7 +180,6 @@
                                         docente: item.docente,
                                         aula: item.aula,
                                         edificio: item.edificio,
-                                        //background: this.colors_dict[item.insegnamento]
                                     },
                                     dates: { start: new Date(item.dataInizio),
                                              end: new Date(item.dataFine) }
@@ -224,14 +191,18 @@
                 )
             },
             switchPage(page) {
-                this.attributes = [];
-                this.getEvents();
+                // if there is a real page switch
+                if(!page.hasOwnProperty('date'))
+                    this.getEvents(date_month=page.month, date_year=page.year, year=this.year)
+            },
+            resetCalendar(year) {
+                const calendar = this.$refs.calendar
+                this.getEvents(date_month={% now "m" %}, date_year={% now "Y" %}, year)
+                calendar.move({ month: {% now "m" %}, year: {% now "Y" %} })
             },
         }, //methods
         watch: {
             regdidid: function(val) {
-                //course_studyplans.regdidid = this.regdidid
-
                 let year_index = 1
 
                 while(year_index <= _cds_data.cds.CdSDuration) {
