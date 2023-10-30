@@ -57,11 +57,10 @@
                     <div class="col-12 col-lg-8">
                         <p class="h1 lighter">{{ page_title }}</p>
 
-                        <!-- Calendario esami -->
-                        <div id="esamiUP" class="mt-5">
-
+                        <!-- Orario lezioni -->
+                        <div id="impegniUP" class="mt-5">
                             <div v-if="years">
-                                <a v-for="y_index in years" class="no-color" @click="getEvents(y_index)" href="javascript:void(0)">
+                                <a v-for="y_index in years" class="no-color" @click="resetCalendar(y_index)" href="javascript:void(0)">
                                     <span
                                         class="badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100"
                                         :class="year == y_index ? 'selected' : ''">
@@ -72,17 +71,24 @@
 
                             <div class="mt-3">
                                 <loading-icon
-                                    v-if="is_loading_up_exams"
-                                    :loader_source="loader_source_up_exams">
+                                    v-if="is_loading_up"
+                                    :loader_source="loader_source_up">
                                 </loading-icon>
 
-                                <div v-else>
+                                <div :style="'display: ' + css_display">
                                     <v-calendar
+                                        ref="calendar"
                                         class="custom-calendar"
                                         :masks="masks"
                                         :attributes="attributes"
+                                        locale="{{ LANGUAGE_CODE }}"
                                         disable-page-swipe
-                                        locale="{{ LANGUAGE_CODE }}">
+                                        @update:from-page="switchPage"
+                                        {% comment %}
+                                        is-expanded
+                                        v-if="attr.customData.dataInizio=[[ day.id ]]"
+                                        :href="'http://localhost/' + attr.customData.id"
+                                        {% endcomment %}>
                                         <template v-slot:day-content="{ day, attributes }">
                                             <div class="flex flex-col h-100 overflow-hidden" style="font-size: 0.875rem">
                                                 <span class="day-label text-sm text-gray-900">[[ day.day ]]</span>
@@ -111,7 +117,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- END calendario esami -->
+                        <!-- END Orario lezioni -->
                     </div>
                     <div class="col-12 col-lg-3 offset-lg-1">
                         {% include "includes/unical_storage_cds_website_right_static.html" %}
@@ -128,41 +134,44 @@
     Vue.use(VueMarkdown);
 
     var _{{ cds_cod }} = new Vue({
-        el: '#esamiUP',
+        el: '#impegniUP',
         data () {
             return {
                 events: [],
                 years: [],
                 year: 1,
-                is_loading_up_exams: true,
-                loader_source_up_exams: "",
+                is_loading_up: true,
+                loader_source_up: '',
                 attributes: [],
                 regdidid: null,
                 url: '',
                 masks: {weekdays: 'WWW',},
+                css_display: 'none'
             } //end return
         }, //end data
         mounted()  {
             //this.getEvents();
         },
         methods: {
-            getEvents(year=1) {
+            {% include "includes/unical_storage_cds_website_scroll.html" %}
+            getEvents(date_month={% now "m" %}, date_year={% now "Y" %}, year=1) {
                 this.attributes = []
-                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year
+                let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/exams/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year + '&date_year=' + date_year +'&date_month=' + date_month
                 this.year = year
-                this.is_loading_up_exams = true
+                this.is_loading_up = true
+                this.css_display = 'none'
                 axios
                     .get(up_url)
                     .then(response => {
                         this.events = response.data
-                        this.is_loading_up_exams = false
+                        this.is_loading_up = false
+                        this.css_display = 'block'
                         response.data.forEach((item, index)=>{
                             this.attributes.push(
                                 {
                                     key: index,
                                     customData: {
                                         class: 'bg-secondary text-white',
-                                        //class: 'bg-' +  colors_dict[item.insegnamento] +' text-white',
                                         title: item.insegnamento,
                                         dataInizio: item.dataInizio,
                                         dataFine: item.dataFine,
@@ -177,19 +186,23 @@
                                 }
                             )
                         })
+                        this.scrollPage()
                     }
                 )
             },
-
             switchPage(page) {
-                this.attributes = [];
-                this.getEvents();
+                // if there is a real page switch
+                if(!page.hasOwnProperty('date'))
+                    this.getEvents(date_month=page.month, date_year=page.year, year=this.year)
+            },
+            resetCalendar(year) {
+                const calendar = this.$refs.calendar
+                this.getEvents(date_month={% now "m" %}, date_year={% now "Y" %}, year)
+                calendar.move({ month: {% now "m" %}, year: {% now "Y" %} })
             },
         }, //methods
         watch: {
             regdidid: function(val) {
-                //course_studyplans.regdidid = this.regdidid
-
                 let year_index = 1
 
                 while(year_index <= _cds_data.cds.CdSDuration) {
