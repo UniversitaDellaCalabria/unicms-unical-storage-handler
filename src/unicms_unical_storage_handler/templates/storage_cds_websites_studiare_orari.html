@@ -35,13 +35,19 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_VIEW_PREFIX_PATH" as cds_studiare_calendar_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_VIEW_PREFIX_PATH" as cds_studiare_schedule_path %}
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPICS_API" as topics_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS" as page_topics %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API" as page_topic_articles %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL" as page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL" as page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_LABEL" as calendar_label %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL" as schedule_label %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 {% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 {% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
@@ -55,19 +61,31 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-8">
-                        <p class="h1 lighter">{{ page_title }}</p>
+                        <p class="h1 lighter mb-4">
+                            <a class="no-color" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">
+                                {{ page_title }}
+                            </a>
+                        </p>
+
+                        <hr class="my-4" style="color: var(--bordeaux_unical)">
+
+                        <a class="no-color" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/{{ cds_studiare_schedule_path }}/">
+                            <span class="selected badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100">
+                                <p class="h5">
+                                    <b>{{ schedule_label }}</b>
+                                </p>
+                            </span>
+                        </a>
+                        <a class="no-color" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/{{ cds_studiare_calendar_path }}/">
+                            <span class="badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100">
+                                <p class="h5">
+                                    <b>{{ calendar_label }}</b>
+                                </p>
+                            </span>
+                        </a>
 
                         <!-- Orario lezioni -->
                         <div id="impegniUP" class="mt-5">
-                            <div v-if="years">
-                                <a v-for="y_index in years" class="no-color" @click="resetCalendar(y_index)" href="javascript:void(0)">
-                                    <span
-                                        class="badge badge-grey-unical badge-left-text-unical square-corners my-1 me-3 ms-0 pe-5 p-2 mw-100"
-                                        :class="year == y_index ? 'selected' : ''">
-                                        <h5>[[ y_index ]] {% trans "year" %}</h5>
-                                    </span>
-                                </a>
-                            </div>
 
                             <div class="mt-3">
                                 <loading-icon
@@ -76,6 +94,18 @@
                                 </loading-icon>
 
                                 <div :style="'display: ' + css_display">
+                                    <div v-if="years" class="mb-3">
+                                        <select id="up_years"
+                                                name="academic_year_input"
+                                                class="form-control"
+                                                 @change="resetCalendar($event.target.value)">
+                                          <option v-for="y_index in years"
+                                                  :value="y_index"
+                                                  :selected="year == y_index">
+                                              [[ y_index ]] {% trans "year" %}
+                                          </option>
+                                        </select>
+                                    </div>
                                     <v-calendar
                                         ref="calendar"
                                         class="custom-calendar"
