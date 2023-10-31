@@ -1,7 +1,11 @@
 {% load i18n %}
 {% load static %}
+{% load unicms_storage_handler %}
 
 {% include "includes/unical_storage_loading.html" %}
+
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_DEPARTMENTS_API" as department_api %}
 
 <div id="_cds_website_info_icons">
     <loading-icon v-if="_cds_data.is_loading"></loading-icon>
@@ -11,7 +15,14 @@
                 <svg class="icon icon-xl p-2 me-3" style="background: #fff; fill: var(--bordeaux_unical); border: 1px solid #000; border-radius: 50%">
                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-pa"></use>
                 </svg>
-                <div class="d-inline-block w-75 align-middle">[[ _cds_data.fixed_cds.DepartmentName ]]</div>
+                <div class="d-inline-block w-75 align-middle">
+                    <a :href="department_url" class="no-color" target="_blank" v-if="department_url" title="{% trans 'Website' %}">
+                        [[ _cds_data.fixed_cds.DepartmentName ]]
+                    </a>
+                    <span v-else>
+                        [[ _cds_data.fixed_cds.DepartmentName ]]
+                    </span>
+                </div>
             </div>
             <div class="col-12 col-lg-4 mb-3">
                 <svg class="icon icon-xl p-2 me-3" style="background: #fff; fill: var(--bordeaux_unical); border: 1px solid #000; border-radius: 50%">
@@ -68,7 +79,26 @@
 var _cds_website_info_icons = new Vue({
     el: '#_cds_website_info_icons',
     data() {
-        return {}
+        return {
+            department_url: null,
+            department_cod: null
+        }
     },
+    methods: {
+        getDepartment() {
+            let url = '{{ base_api }}{{ department_api }}' + this.department_cod +'/'
+            axios
+                .get(url)
+                .then(response => {
+                    this.department_url = response.data.results.DepartmentURL
+                }
+            )
+        },
+    }, //methods
+    watch: {
+        department_cod: function(val) {
+            this.getDepartment()
+        }
+    }
 });
 </script>
