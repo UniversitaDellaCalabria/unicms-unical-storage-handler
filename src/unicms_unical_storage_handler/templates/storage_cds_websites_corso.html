@@ -43,6 +43,8 @@
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
 {% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
 
 {% include "includes/unical_storage_loading.html" %}
 
@@ -293,7 +295,8 @@
                                         <b>Modifica del piano di studio:</b>
                                         lo studente può modificare il piano di studio prima dell’inizio di ogni semestre,
                                         nella relativa finestra temporale stabilita dal Dipartimento.
-                                        Seguire le indicazioni nella pagina “Studiare” del sito.
+                                        Seguire le indicazioni nella pagina
+                                        "<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">Studiare</a>" del sito.
                                         Per maggiori dettagli, consultare il Regolamento didattico del corso e il Manifesto degli studi.
                                     </li>
                                 </ul>
