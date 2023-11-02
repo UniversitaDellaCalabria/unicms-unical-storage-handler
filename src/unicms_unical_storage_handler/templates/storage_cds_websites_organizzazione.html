@@ -127,23 +127,23 @@
                                     </div>
                                 </div>
 
-                                <div id="accordionDivGroups-lft" class="accordion accordion-left-icon" v-if="_cds_data.cds.CdsOrganizations.length > 0">
-                                    <div class="accordion-item" v-for="gruppo in _cds_data.cds.CdsOrganizations">
-                                        <div class="accordion-header" :id="'heading-' + gruppo.id +'-lft'">
+                                <div id="accordionDivGroups-lft" class="accordion accordion-left-icon" v-if="_cds_data.cds.CdsOrganizations && _cds_data.cds.CdsOrganizations.length > 0">
+                                    <div class="accordion-item" v-for="(gruppo, index) in _cds_data.cds.CdsOrganizations">
+                                        <div class="accordion-header" :id="'heading-' + index +'-lft'">
                                             <button class="accordion-button"
                                                     type="button"
                                                     data-bs-toggle="collapse"
-                                                    :data-bs-target="'#collapse-' + gruppo.id +'-lft'"
+                                                    :data-bs-target="'#collapse-' + index +'-lft'"
                                                     aria-expanded="false"
-                                                    :aria-controls="'collapse-' + gruppo.id +'-lft'">
+                                                    :aria-controls="'collapse-' + index +'-lft'">
                                                 [[ gruppo.DescrBreveIt ]]
                                             </button>
                                         </div>
-                                        <div :id="'collapse-' + gruppo.id +'-lft'"
+                                        <div :id="'collapse-' + index +'-lft'"
                                              class="accordion-collapse collapse"
                                              data-bs-parent="#accordionDivGroups-lft"
                                              role="region"
-                                             :aria-labelledby="'heading-' + gruppo.id +'-lft'">
+                                             :aria-labelledby="'heading-' + index +'-lft'">
                                             <div class="accordion-body mt-3">
 
                                                 <ul>
@@ -158,22 +158,22 @@
                                 </div>
 
                                 <div v-if="_cds_data.cds.OfficesData" id="accordionDivOffices-lft" class="accordion accordion-left-icon mt-4">
-                                    <div class="accordion-item" v-for="office in _cds_data.cds.OfficesData">
-                                        <div class="accordion-header" :id="'heading-office' + office.id +'-lft'">
+                                    <div class="accordion-item" v-for="(office, index) in _cds_data.cds.OfficesData">
+                                        <div class="accordion-header" :id="'heading-office' + index +'-lft'">
                                             <button class="accordion-button"
                                                     type="button"
                                                     data-bs-toggle="collapse"
-                                                    :data-bs-target="'#collapse-office' + office.id +'-lft'"
+                                                    :data-bs-target="'#collapse-office' + index +'-lft'"
                                                     aria-expanded="false"
-                                                    :aria-controls="'collapse-office' + office.id +'-lft'">
+                                                    :aria-controls="'collapse-office' + index +'-lft'">
                                                 [[ office.OfficeName ]]
                                             </button>
                                         </div>
-                                        <div :id="'collapse-office' + office.id +'-lft'"
+                                        <div :id="'collapse-office' + index +'-lft'"
                                              class="accordion-collapse collapse"
                                              data-bs-parent="#accordionDivOffices-lft"
                                              role="region"
-                                             :aria-labelledby="'heading-office' + office.id +'-lft'">
+                                             :aria-labelledby="'heading-office' + index +'-lft'">
                                             <div class="accordion-body">
 
                                                 <div class="row">
