@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Livello_1" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 161.45 161.45">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #ac1a1d;
+        stroke-miterlimit: 10;
+        stroke-width: 4px;
+      }
+
+      .cls-2 {
+        fill: #ac1a1d;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <path class="cls-2" d="m80.73,4.11c42.25,0,76.62,34.37,76.62,76.62s-34.37,76.62-76.62,76.62S4.11,122.97,4.11,80.73,38.48,4.11,80.73,4.11m0-4C36.2.11.11,36.2.11,80.73s36.09,80.62,80.62,80.62,80.62-36.09,80.62-80.62S125.25.11,80.73.11h0Z"/>
+  <g>
+    <polygon class="cls-1" points="123.49 66.47 80.73 37.96 37.96 66.47 37.96 123.49 123.49 123.49 123.49 66.47"/>
+    <rect class="cls-1" x="66.47" y="94.98" width="28.51" height="28.51"/>
+  </g>
+</svg>

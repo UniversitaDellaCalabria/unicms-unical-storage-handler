@@ -12,64 +12,65 @@
     <div class="p-4 dark-grey-background" v-else>
         <div class="row">
             <div class="col-12 col-lg-4 mb-3">
-                <svg class="icon icon-xl p-2 me-3" style="background: #fff; fill: var(--bordeaux_unical); border: 1px solid #000; border-radius: 50%">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-pa"></use>
-                </svg>
+                <img class="me-3" src="{% static 'images/dipartimento.svg' %}" width="64" height="64" />
                 <div class="d-inline-block w-75 align-middle">
-                    <a :href="department_url" class="no-color" target="_blank" v-if="department_url" title="{% trans 'Website' %}">
-                        [[ _cds_data.fixed_cds.DepartmentName ]]
-                    </a>
-                    <span v-else>
-                        [[ _cds_data.fixed_cds.DepartmentName ]]
-                    </span>
+                    <b>
+                        <a :href="department_url" class="no-color" target="_blank" v-if="department_url" title="{% trans 'Website' %}">
+                            [[ _cds_data.fixed_cds.DepartmentName ]]
+                        </a>
+                        <span v-else>
+                            [[ _cds_data.fixed_cds.DepartmentName ]]
+                        </span>
+                    </b>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mb-3">
-                <svg class="icon icon-xl p-2 me-3" style="background: #fff; fill: var(--bordeaux_unical); border: 1px solid #000; border-radius: 50%">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-bookmark"></use>
-                </svg>
+                <img class="me-3" src="{% static 'images/classe_laurea.svg' %}" width="64" height="64"/>
                 <div class="d-inline-block w-75 align-middle">
-                    ([[ _cds_data.cds.CourseClassCod ]]) [[ _cds_data.cds.CourseClassName ]]
-                    <span v-if="_cds_data.fixed_cds.CourseInterClassCod">
-                        <br>([[ _cds_data.fixed_cds.CourseInterClassCod ]]) [[ _cds_data.fixed_cds.CourseInterClassDes ]]
-                    </span>
+                    <b>
+                        ([[ _cds_data.cds.CourseClassCod ]]) [[ _cds_data.cds.CourseClassName ]]
+                        <span v-if="_cds_data.fixed_cds.CourseInterClassCod">
+                            <br>
+                            <b>([[ _cds_data.fixed_cds.CourseInterClassCod ]])</b> [[ _cds_data.fixed_cds.CourseInterClassDes ]]
+                        </span>
+                    </b>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mb-3">
-                <svg class="icon icon-xl p-2 me-3" style="background: #fff; fill: var(--bordeaux_unical); border: 1px solid #000; border-radius: 50%">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                </svg>
+                <img class="me-3" src="{% static 'images/durata.svg' %}" width="64" height="64"/>
                 <div class="d-inline-block w-75 align-middle">
-                    [[ _cds_data.cds_labels.CdSDuration ]]<br>[[ _cds_data.cds.CdSDuration ]] {% trans "years" %}
+                    [[ _cds_data.cds_labels.CdSDuration ]]
+                    <br>
+                    <b>[[ _cds_data.cds.CdSDuration ]] {% trans "years" %}</b>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mb-3 mb-lg-0">
-                <svg class="icon icon-xl p-2 me-3" style="background: #fff; fill: var(--bordeaux_unical); border: 1px solid #000; border-radius: 50%">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-horn"></use>
-                </svg>
+                <img class="me-3" src="{% static 'images/modalita.svg' %}" width="64" height="64"/>
                 <div class="d-inline-block w-75 align-middle">
-                    [[ _cds_data.cds_labels.ErogationMode ]]<br>[[ _cds_data.cds.ErogationMode ]]
+                    [[ _cds_data.cds_labels.ErogationMode ]]
+                    <br>
+                    <b>[[ _cds_data.cds.ErogationMode ]]</b>
                 </div>
             </div>
             <div class="col-12 col-lg-4 mb-3 mb-lg-0">
-                <svg class="icon icon-xl p-2 me-3" style="background: #fff; fill: var(--bordeaux_unical); border: 1px solid #000; border-radius: 50%">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-chart-line"></use>
-                </svg>
+                <img class="me-3" src="{% static 'images/cfu.svg' %}" width="64" height="64"/>
                 <div class="d-inline-block w-75 align-middle">
-                    {% trans "ETCS" %}<br>[[ _cds_data.cds.CdSECTS ]]
+                    {% trans "ETCS" %}
+                    <br>
+                    <b>[[ _cds_data.cds.CdSECTS ]]</b>
                 </div>
             </div>
             <div class="col-12 col-lg-4">
-                <svg class="icon icon-xl p-2 me-3" style="background: #fff; fill: var(--bordeaux_unical); border: 1px solid #000; border-radius: 50%">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-hearing"></use>
-                </svg>
+                <img class="me-3" src="{% static 'images/lingua.svg' %}" width="64" height="64"/>
                 <div class="d-inline-block w-75 align-middle">
                     {% trans "Language" %}
                     <br>
-                    <span v-for="(lang, index)  in _cds_data.cds.CdSLanguage">
-                        <span v-if="index > 0">, </span>
-                            [[ lang ]]
-                    </span>
+                    <b>
+                        <span v-for="(lang, index)  in _cds_data.cds.CdSLanguage">
+                            <span v-if="index > 0">, </span>
+                                [[ lang ]]
+                        </span>
+                    </b>
                 </div>
             </div>
         </div>
