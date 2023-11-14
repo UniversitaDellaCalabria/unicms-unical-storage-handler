@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Livello_1" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 161.45 161.45">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 4px;
+      }
+
+      .cls-1, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+
+      .cls-4 {
+        fill: #b71918;
+      }
+
+      .cls-4, .cls-3 {
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <rect class="cls-4" x=".2" y=".01" width="161.05" height="161.05" rx="80.53" ry="80.53"/>
+  <g>
+    <polygon class="cls-2" points="62.41 124.66 25.27 111.07 25.27 36.79 62.41 50.38 62.41 124.66"/>
+    <polygon class="cls-2" points="62.41 124.66 25.27 111.07 25.27 36.79 62.41 50.38 62.41 124.66"/>
+    <polygon class="cls-2" points="62.41 124.66 99.55 111.07 99.55 36.79 62.41 50.38 62.41 124.66"/>
+    <polygon class="cls-2" points="136.69 124.66 99.55 111.07 99.55 36.79 136.69 50.38 136.69 124.66"/>
+  </g>
+  <g>
+    <line class="cls-2" x1="80.73" y1="95.78" x2="80.73" y2="156.93"/>
+    <polygon class="cls-3" points="64.37 143.67 67.3 140.94 80.72 155.39 94.15 140.94 97.08 143.67 80.72 161.26 64.37 143.67"/>
+  </g>
+  <circle class="cls-1" cx="80.73" cy="91.39" r="10.66"/>
+</svg>
