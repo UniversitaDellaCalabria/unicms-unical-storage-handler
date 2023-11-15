@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-15 12:30+0100\n"
-"PO-Revision-Date: 2023-11-15 12:31+0100\n"
+"POT-Creation-Date: 2023-11-15 13:21+0100\n"
+"PO-Revision-Date: 2023-11-15 13:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -462,21 +462,8 @@ msgid "Website"
 msgstr "Sito web"
 
 #: templates/blocks/unical_storage_cds_website_info_icons.html:58
-#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:77
-#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:146
-#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:256
-#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:322
-#: templates/blocks/unical_storage_cdsstudyplans_v3.html:57
-#: templates/blocks/unical_storage_cdsstudyplans_v3.html:144
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:40
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:112
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:130
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:149
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:263
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:376
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:388
-msgid "ETCS"
-msgstr "CFU"
+msgid "University credits"
+msgstr "Crediti formativi"
 
 #: templates/blocks/unical_storage_cds_website_right_icons.html:18
 msgid "Course in summary"
@@ -529,6 +516,22 @@ msgstr "Insegnamento"
 #: templates/includes/unical_storage_cds_website_studyplan_accordion.html:387
 msgid "Period"
 msgstr "Periodo"
+
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:77
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:146
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:256
+#: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:322
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:57
+#: templates/blocks/unical_storage_cdsstudyplans_v3.html:144
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:40
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:112
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:130
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:149
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:263
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:376
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:388
+msgid "ETCS"
+msgstr "CFU"
 
 #: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:189
 msgid "for"
