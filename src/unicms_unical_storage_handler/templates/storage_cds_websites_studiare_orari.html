@@ -118,12 +118,12 @@
                                                        name="search_teaching"
                                                        placeholder="{% trans 'Teaching' %}"
                                                        v-model="search_teaching"
-                                                       v-on:keyup.enter="getEvents()">
+                                                       v-on:keyup.enter="getEvents(year)">
 
                                                 <button class="btn btn-primary"
                                                         type="button"
                                                         id="search_teaching-button"
-                                                        @click="getEvents()">
+                                                        @click="getEvents(year)">
                                                     {% trans "Search" %}
                                                 </button>
                                             </div>
@@ -135,12 +135,12 @@
                                                        name="search_teacher"
                                                        placeholder="{% trans 'Teacher' %}"
                                                        v-model="search_teacher"
-                                                       v-on:keyup.enter="getEvents()">
+                                                       v-on:keyup.enter="getEvents(year)">
 
                                                 <button class="btn btn-primary"
                                                         type="button"
                                                         id="search_teacher-button"
-                                                        @click="getEvents()">
+                                                        @click="getEvents(year)">
                                                     {% trans "Search" %}
                                                 </button>
                                             </div>
@@ -152,12 +152,12 @@
                                                        name="search_location"
                                                        placeholder="{% trans 'Location' %}"
                                                        v-model="search_location"
-                                                       v-on:keyup.enter="getEvents()">
+                                                       v-on:keyup.enter="getEvents(year)">
 
                                                 <button class="btn btn-primary"
                                                         type="button"
                                                         id="search_location-button"
-                                                        @click="getEvents()">
+                                                        @click="getEvents(year)">
                                                     {% trans "Search" %}
                                                 </button>
                                             </div>
@@ -331,6 +331,8 @@
                 events: {},
                 years: [],
                 year: 1,
+                date_month: {% now "m" %},
+                date_year: {% now "Y" %},
                 is_loading_up: true,
                 loader_source_up: '',
                 attributes: [],
@@ -348,7 +350,11 @@
         },
         methods: {
             {% include "includes/unical_storage_cds_website_scroll.html" %}
-            getEvents(date_month={% now "m" %}, date_year={% now "Y" %}, year=1) {
+            getEvents(year=null, date_month=null, date_year=null) {
+
+                if(!year) year = this.year
+                if(!date_month) date_month = this.date_month
+                if(!date_year) date_year = this.date_year
 
                 if(this.$refs.calendar!='undefined')
                     this.$refs.calendar.move({ month: date_month,
@@ -402,10 +408,12 @@
             switchPage(page) {
                 // if there is a real page switch
                 if(!page.hasOwnProperty('date'))
-                    this.getEvents(date_month=page.month, date_year=page.year, year=this.year)
+                    this.date_month = page.month
+                    this.date_year = page.year
+                    this.getEvents(year=this.year)
             },
             resetCalendar(year) {
-                this.getEvents(date_month={% now "m" %}, date_year={% now "Y" %}, year)
+                this.getEvents(year=year)
             },
         }, //methods
         watch: {
