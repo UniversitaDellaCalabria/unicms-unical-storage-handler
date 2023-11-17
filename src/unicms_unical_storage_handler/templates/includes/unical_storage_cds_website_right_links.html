@@ -8,6 +8,7 @@
 
 
 <div id="_cds_website_right_col_links">
+    {% comment %}
     <div v-if="_cds_data.fixed_cds.CdSDoc">
         <a :href="_cds_data.fixed_cds.CdSDoc" target="_blank">
             <div class="row">
@@ -24,6 +25,7 @@
             </div>
         </a>
     </div>
+    {% endcomment %}
 
     <div v-if="_cds_data.fixed_cds.CdSSatisfactionSurvey" class="mt-4">
         <a target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.fixed_cds.CdSSatisfactionSurvey">
