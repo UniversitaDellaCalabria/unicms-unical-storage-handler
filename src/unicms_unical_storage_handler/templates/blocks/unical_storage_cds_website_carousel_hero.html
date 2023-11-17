@@ -46,7 +46,7 @@
                     <a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ prospect_page_path }}/" style="text-decoration: none; text-shadow: 2px 2px 3px #000">
                         <div class="it-hero-text-wrapper unical-hero-text-wrapper">
                             <p class="h2 d-none d-lg-block lighter text-white font-serif" style="font-style: italic">
-                                [[ slide.SliderDescription ]] [[ AreaCds ]]
+                                [[ slide.SliderDescription ]]
                             </p>
                             <br class="d-none d-lg-block">
                             <p class="h4 d-none d-lg-block lighter text-white font-monospace">
@@ -79,6 +79,9 @@ var _{{ cds_cod }}_hero_slider = new Vue({
     },
     mounted() {
         this.callWebsite()
+    },
+    updated() {
+        this.setSlider(div_id='#_{{ cds_cod }}_hero_slider', items=1, single=true)
     },
     methods: {
         callWebsite() {
@@ -142,10 +145,5 @@ var _{{ cds_cod }}_hero_slider = new Vue({
             }
         },
     },
-    watch: {
-        AreaCds: function(val) {
-            this.setSlider(div_id='#_{{ cds_cod }}_hero_slider', items=1, single=true)
-        }
-    }
 })
 </script>
