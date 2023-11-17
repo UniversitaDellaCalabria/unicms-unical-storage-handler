@@ -259,7 +259,7 @@ Brochure - {{ block.super }}
         </div>
         {% endblock %}
 
-        <div class="row mt-3 py-5" style="background: var(--light_grey)" v-if="website.CDSSliders">
+        <div class="row mt-3 py-5" style="background: var(--light_grey)" v-if="website.CDSSliders && website.CDSSliders.length > 0">
             <div class="col">
                 <div class="container">
                     <div class="row">
@@ -613,7 +613,7 @@ Brochure - {{ block.super }}
         </div>
 
 
-        <div class="row mt-3 py-5" style="background: var(--light_grey)" v-if="website.CDSSliders">
+        <div class="row mt-3 py-5" style="background: var(--light_grey)" v-if="website.CDSExStudents && website.CDSExStudents.length > 0">
             <div class="col">
                 <div class="container">
                     <div class="row">
@@ -845,6 +845,10 @@ Brochure - {{ block.super }}
         mounted() {
             this.callWebsite()
         },
+        updated() {
+            this.setSlider(div_id='#CdsSlider', items=1, single=true)
+            this.setSlider(div_id='#CdsExStudents', items=3, timeout=({{ carousel_timeout|default:5000 }} + 2000))
+        },
         methods: {
             callWebsite() {
                 let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
@@ -896,20 +900,6 @@ Brochure - {{ block.super }}
                 return value.replace("youtube.com", "youtube-nocookie.com")
             }
         },
-        watch: {
-            regdidid: function(val) {
-                this.setSlider(div_id='#CdsSlider', items=1, single=true)
-                this.setSlider(div_id='#CdsExStudents', items=3, timeout=({{ carousel_timeout|default:5000 }} + 2000))
-
-                //var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-                //var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                    //return new bootstrap.Popover(popoverTriggerEl, options={html: true},)
-                //})
-                //var popover = new bootstrap.Popover(document.querySelector('.popover-dismiss'), {
-                    //trigger: 'focus',
-                //})
-            }
-        }
     })
 </script>
 {% endblock container %}
