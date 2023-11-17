@@ -1,6 +1,5 @@
 import logging
 
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 
@@ -382,12 +381,12 @@ CMS_STORAGE_HANDLERS_PATHS += [
                                 CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_URL_VIEW_REGEXP,
-                                CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_REDIRECT_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_STUDIARE_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_STUDIARE_ACTIVITY_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_URL_VIEW_REGEXP,
                                 CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_URL_VIEW_REGEXP,
+                                CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP
                               ]
 
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesCorsoHandler'] = CMS_STORAGE_CDS_WEBSITES_CORSO_URL_VIEW_REGEXP
@@ -395,12 +394,12 @@ CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsi
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesIscriversiHandler'] = CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesOpportunitaHandler'] = CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesOrganizzazioneHandler'] = CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_URL_VIEW_REGEXP
-CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesProspectHandler'] = CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesRedirectHandler'] = CMS_STORAGE_CDS_WEBSITES_REDIRECT_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesStudiareHandler'] = CMS_STORAGE_CDS_WEBSITES_STUDIARE_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesStudiareActivityHandler'] = CMS_STORAGE_CDS_WEBSITES_STUDIARE_ACTIVITY_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesStudiareCalendarHandler'] = CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_URL_VIEW_REGEXP
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesStudiareScheduleHandler'] = CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_URL_VIEW_REGEXP
+CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesProspectHandler'] = CMS_STORAGE_CDS_WEBSITES_PROSPECT_URL_VIEW_REGEXP
 
 # APIs
 CMS_STORAGE_CDS_WEBSITES_API = 'cds-websites/'
@@ -428,7 +427,7 @@ CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2 = [
     'CDSTaxes', 'CDSScholarships', 'CDSConcessions'
 ]
 
-CDS_WEBSITE_CURRENT_YEAR = ""
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE = True
 
 CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = {
     # 'regolamento_tasse': [
@@ -451,3 +450,5 @@ CMS_STORAGE_CDS_WEBSITES_CAROUSEL_BACKGROUNDS_URL = {
     # "Medico Sanitaria": "#",
     # "Formazione di Educatori e Insegnanti": "#",
 }
+
+CDS_WEBSITE_CURRENT_YEAR = ""

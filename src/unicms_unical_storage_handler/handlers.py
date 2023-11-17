@@ -84,6 +84,8 @@ CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEB
 CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)
 CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)
 
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE', CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE)
+
 
 class BaseStorageHandler(BaseContentHandler):
     template = "storage_base.html"
@@ -853,9 +855,13 @@ class CdsWebsiteBaseHandler(BaseContentHandler):
 
 
 class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
+
     template = "storage_cds_websites_prospect.html"
 
     def __init__(self, **kwargs):
+        if not CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE:
+            raise Http404
+
         super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
         if self.request.POST:
             form = CdsWebsiteContactForm(data=self.request.POST)
