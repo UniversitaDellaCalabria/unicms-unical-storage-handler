@@ -165,6 +165,33 @@
                                         </div>
                                     </div>
                                     {% endblock ssd %}
+                                    {% block cycle %}
+                                    <loading-icon
+                                        v-if="is_loading_cycle"
+                                        :loader_source="loader_source_cycle">
+                                    </loading-icon>
+                                    <div class="col-sm form-group mb-0">
+                                        <div>
+                                            <label for="{{ id }}_cycle_input">
+                                                {% trans "Cycle" %}
+                                            </label>
+                                            <div class="w-30 mt-5">
+                                                <select id="{{ id }}_cycle_input"
+                                                        title="{% trans 'Choose an option' %}"
+                                                        name="{{ id }}_cycle_input"
+                                                        class="form-control"
+                                                        @change="{{ id }}.search()">
+                                                    <option value="">- {% trans 'Choose an option' %} -</option>
+                                                    <option v-for="key in Object.keys(cycle_filter)"
+                                                            :value="key"
+                                                            :selected="key == selected_cycle_id">
+                                                        [[ cycle_filter[key] ]]
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endblock cycle %}
                                 </div>
                             </div>
                             {% endblock filters_phdactivitieslist %}
@@ -207,6 +234,12 @@
                                         <small>
                                             [[ labels['ReferentPhd'] ]] >
                                             <b>[[ item.ReferentPhd ]]</b>
+                                        </small>
+                                    </div>
+                                    <div class="col-12 col-md-auto" v-if="item.Cycle">
+                                        <small>
+                                            [[ labels['Cycle'] ]] >
+                                            <b>[[ item.Cycle ]]</b>
                                         </small>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.SSD">
@@ -280,6 +313,10 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
     let search = document.getElementById('{{ id }}_search')
     if (search && search.value) dict['search'] = search.value
 
+    // cycle
+    let cycle = document.getElementById('{{ id }}_cycle_input')
+    if (cycle && cycle.value) dict['cycle'] = cycle.value
+
     // teacher
     let teacher = document.getElementById('{{ id }}_teacher')
     if (teacher && teacher.value) dict['teacher'] = teacher.value
@@ -312,9 +349,11 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_api_root "CMS_STORAGE_REF_PHD_API" as phd_api %}
 {% storage_api_root "CMS_STORAGE_REF_STRUCTURES_API" as structures_api %}
 {% storage_api_root "CMS_STORAGE_REF_SSD_API" as ssd_api %}
+{% storage_api_root "CMS_STORAGE_REF_CYCLE_API" as cycles_api %}
 
 initial_year: {{ id }}_get_param('year') || '',
 
+selected_cycle_id: this.getItemFromSession("{{ id }}", 'cycle'),
 selected_ssd_id: this.getItemFromSession("{{ id }}", 'ssd'),
 selected_structure_id: this.getItemFromSession("{{ id }}", 'structure'),
 selected_phd_id: this.getItemFromSession("{{ id }}", 'phd'),
@@ -326,21 +365,25 @@ selected_teacher: this.getItemFromSession("{{ id }}", 'teacher'),
 is_loading_phd: true,
 is_loading_structures: true,
 is_loading_ssd: true,
+is_loading_cycle: true,
 
 loader_source_structures: '{{ structures_api }}?lang={{ LANGUAGE_CODE }}',
 loader_source_phd: '{{ phd_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 loader_source_ssd: '{{ ssd_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
+loader_source_cycle: '{{ cycles_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 
 
 structures_filter: [],
 phd_filter: [],
 ssd_filter: [],
+cycle_filter: [],
 {% endblock extra_data %}
 
 {% block extra_mounted %}
 this.callStructures();
 this.callPhD();
 this.callSSD();
+this.callCycles();
 
 this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
 {% endblock extra_mounted %}
@@ -392,6 +435,14 @@ callSSD() {
         .then(response => {
             this.ssd_filter = response.data.results;
             this.is_loading_ssd = false
+        })
+},
+callCycles() {
+    axios
+        .get(this.loader_source_cycles)
+        .then(response => {
+            this.cycle_filter = response.data;
+            this.is_loading_cycle = false
         })
 },
 {% endblock extra_methods %}
