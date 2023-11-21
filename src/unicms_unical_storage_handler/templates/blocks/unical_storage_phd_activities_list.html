@@ -143,7 +143,7 @@
                                         v-if="is_loading_ssd"
                                         :loader_source="loader_source_ssd">
                                     </loading-icon>
-                                    <div class="col-sm form-group mb-0">
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_ssd_input">
                                                 {% trans "SSD" %}
@@ -165,12 +165,13 @@
                                         </div>
                                     </div>
                                     {% endblock ssd %}
+
                                     {% block cycle %}
                                     <loading-icon
                                         v-if="is_loading_cycle"
                                         :loader_source="loader_source_cycle">
                                     </loading-icon>
-                                    <div class="col-sm form-group mb-0">
+                                    <div class="col-sm form-group mb-0" v-else>
                                         <div>
                                             <label for="{{ id }}_cycle_input">
                                                 {% trans "Cycle" %}
@@ -360,8 +361,6 @@ selected_phd_id: this.getItemFromSession("{{ id }}", 'phd'),
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 selected_teacher: this.getItemFromSession("{{ id }}", 'teacher'),
 
-
-
 is_loading_phd: true,
 is_loading_structures: true,
 is_loading_ssd: true,
@@ -370,8 +369,7 @@ is_loading_cycle: true,
 loader_source_structures: '{{ structures_api }}?lang={{ LANGUAGE_CODE }}',
 loader_source_phd: '{{ phd_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 loader_source_ssd: '{{ ssd_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
-loader_source_cycle: '{{ cycles_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
-
+loader_source_cycles: '{{ cycles_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 
 structures_filter: [],
 phd_filter: [],
