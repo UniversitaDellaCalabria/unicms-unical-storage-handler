@@ -1,0 +1,304 @@
+{% extends "bases/unical_storage_list.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+
+{% block content %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% get_allowed_website request.get_host as host %}
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
+{% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+{% storage_settings_value "TEACHING_SYSTEM_START_YEAR" as teaching_system_start_year %}
+
+
+<div id="{{ id }}">
+    <div v-if="(initial_items && initial_items.length) || parameters">
+        <div class="row">
+            <div class="col-12">
+
+                {% block academic_year_select %}
+                <div class="form-group mb-3 row">
+                    <div class="col">
+                        <label for="{{ id }}_academic_year_input">
+                            {% trans "Year of registration" %}
+                        </label>
+                        <div class="mt-5">
+                            <select id="{{ id }}_academic_year_input"
+                                    title="{% trans 'Choose an option' %}"
+                                    name="{{ id }}_academic_year_input"
+                                    class="form-control"
+                                    @change="{{ id }}.search()">
+                              <option value="" v-if="initial_academic_year==''">
+                                  - {% trans 'Choose an option' %} -
+                              </option>
+                              <option v-for="item in range({{ teaching_system_start_year }}, {{ cds_exclude_year }})"
+                                      :value="item"
+                                      :selected="item == selected_academic_year">
+                                  [[ item ]]/[[ item + 1 ]]
+                              </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                {% endblock academic_year_select %}
+
+            </div>
+        </div>
+
+
+        <loading-icon
+            v-if="is_loading"
+            :loader_source="loader_source">
+        </loading-icon>
+
+        <div v-else>
+            <div class="card-columns card-columns-2">
+                <div class="card d-inline-block" v-for="area in cds_areas" v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
+                    <b class="bordeaux-unical-color">
+                        {% if LANGUAGE_CODE == 'it' %}
+                            Area
+                        {% endif %}
+                        <span v-if="area.AreaCds == 'Medico Sanitaria'">
+                            Medico-Sanitaria
+                        </span>
+                        <span v-else>[[ area.AreaCds ]]</span>
+                        {% if LANGUAGE_CODE != 'it' %}
+                            {% trans "Course Area" %}
+                        {% endif %}
+                    </b>
+                    <ul class="list-unstyled mt-3">
+                        <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
+                            <a class="no-color"
+                               {% block cds_area_item_link %}:href="item.TeachingSystem"{% endblock cds_area_item_link %} target="_blank">
+                                <small>
+                                <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
+                                <b v-if="item.RegDidId == 21540">
+                                {% if LANGUAGE_CODE != 'it' %}
+                                    (inter-university)
+                                {% else %}
+                                    (interateneo)
+                                {% endif %}
+                                </b>
+                                <span>
+                                    - [[ item.CourseType ]]
+                                </span>
+                                <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
+                                    ([[ item.ErogationMode ]])
+                                </span>
+                                <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
+                                    <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                        <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
+                                    </span>
+                                    <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
+                                </span>
+                                </small>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <div>
+            <small>
+                <ul class="list-unstyled">
+                    <li>L – {% trans "Bachelor's degree" %}</li>
+                    <li>LM – {% trans "Master's degree (2 years)" %}</li>
+                    <li>LM5 – {% trans "Single-cycle master's degree (5 years)" %}</li>
+                    <li>LM6 – {% trans "Single-cycle master's degree (6 years)" %}</li>
+                    <li>
+                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="me-2"/>
+                        {% trans "Course delivered in English" %}</li>
+                    <li>
+                        <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}" class="me-1"/>
+                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="me-2"/>
+                        {% trans "Course with curriculum delivered in English" %}</li>
+                </ul>
+            </small>
+        </div>
+
+    </div>
+
+    <div v-else>
+        {% trans "No items here" %}
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+function {{ id }}_get_form_paramenters(keyword=null, value=null) {
+
+    let dict = {}
+
+    if (keyword)
+        dict[keyword] = value
+
+    // search
+    let search = document.getElementById('{{ id }}_search')
+    if (search && search.value) dict['search'] = search.value
+
+    // coursetype
+    let coursetype = document.getElementById('{{ id }}_coursetype_input')
+    if (coursetype && coursetype.value) dict['coursetype'] = coursetype.value
+
+    // academic year
+    let academic_year = document.getElementById('{{ id }}_academic_year_input')
+    if (academic_year && academic_year.value) dict['academicyear'] = academic_year.value
+
+    // department name
+    let department = document.getElementById('{{ id }}_department_input')
+    if (department && department.value) dict['departmentcod'] = department.value
+
+    // cds language
+    {% block filters_language_script %}
+    let cds_language = document.getElementById('{{ id }}_cds_language_input')
+    if (cds_language && cds_language.value) dict['cdslanguage'] = cds_language.value
+    {% endblock filters_language_script %}
+
+    // joint degree
+    {% block filters_jointdegree_script %}
+    let joint_degree = document.getElementById('{{ id }}_joint_degree_input')
+    if (joint_degree && joint_degree.value) dict['jointdegree'] = joint_degree.value
+    {% endblock filters_jointdegree_script %}
+
+    setItemInSession("{{ id }}", dict)
+
+    return dict
+}
+</script>
+{% endblock extra_scripts %}
+
+{% block extra_data %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+{% storage_settings_value "ALLOWED_CDS_LANGUAGES" as allowed_languages %}
+{% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
+{% storage_settings_value "ALLOWED_CDS_COURSETYPES" as allowed_cds_coursetypes %}
+
+{% storage_api_root "CMS_STORAGE_DEGREETYPES_API" as degreetypes_api %}
+{% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
+{% storage_api_root "CMS_STORAGE_CDS_AREAS_API" as cds_areas_api %}
+
+{% block current_year %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
+initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
+{% endblock current_year %}
+
+selected_coursetype: this.getItemFromSession("{{ id }}", 'coursetype'),
+selected_academic_year: this.getItemFromSession("{{ id }}", 'academicyear') || {{ id }}_get_param('academicyear'),
+selected_department_id: this.getItemFromSession("{{ id }}", 'departmentcod'),
+selected_language: this.getItemFromSession("{{ id }}", 'cdslanguage'),
+selected_jointdegree: this.getItemFromSession("{{ id }}", 'jointdegree'),
+selected_search: this.getItemFromSession("{{ id }}", 'search'),
+
+allowed_course_types: {{ allowed_cds_coursetypes|safe }} || [],
+course_types: [],
+cds_areas: [],
+
+is_loading_degreetypes: true,
+is_loading_academicyears: true,
+is_loading_departments: true,
+is_loading_cds_areas: true,
+
+loader_source_degreetypes: '{{ degreetypes_api }}?lang={{ LANGUAGE_CODE }}&page_size=200',
+loader_source_academicyears: '{{ academicyears_api }}?lang={{ LANGUAGE_CODE }}',
+loader_source_departments: '{{ departments_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
+loader_source_cds_areas: '{{ cds_areas_api }}?lang={{ LANGUAGE_CODE }}',
+
+departments_filter: [],
+cds_languages_filter: {{ allowed_languages|safe }},
+joint_degree_filter: {{ allowed_joint_degrees|safe }}
+
+{% endblock extra_data %}
+
+{% block extra_mounted %}
+
+// if url is pre-filtered with preferred coursetypes
+// get them, else show all
+let params = new URLSearchParams(this.url.split('?')[1]);
+let get_coursetype = params.get("coursetype")
+let get_structuretype = params.get("structuretype")
+if (get_coursetype != null){
+    let get_coursetypes_list = get_coursetype.split(',')
+    this.allowed_course_types = get_coursetypes_list
+}
+
+this.callDegreeTypes();
+this.callDepartments();
+this.callCdSAreas();
+
+this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
+{% endblock extra_mounted %}
+
+{% block method_search %}
+search(keyword=null, value=null) {
+    if (value) this.parameters = {{ id }}_encodeQueryData({{ id }}_get_form_paramenters(keyword, value));
+    else this.parameters = {{ id }}_encodeQueryData({{ id }}_get_form_paramenters());
+    this.CallURL(this.url + this.parameters);
+},
+{% endblock method_search %}
+
+{% block method_callurl %}
+CallURL(url, initial=false) {
+    this.is_loading = true
+    this.loader_source = url
+    if (!url.includes("academicyear") && this.initial_academic_year)
+        url = url + '&academicyear=' + this.initial_academic_year
+    if (!url.includes("coursetype") && this.allowed_course_types.length > 0)
+        url = url + '&coursetype=' + this.allowed_course_types.toString()
+    axios
+        .get(url)
+        .then(response => {
+            if(initial) this.initial_items = response.data.results;
+            this.items = response.data;
+            this.next_page = response.data.next;
+            this.previous_page = response.data.previous;
+            this.labels = response.data.labels;
+            this.is_loading = false;
+        })
+},
+{% endblock method_callurl %}
+
+{% block extra_methods %}
+callDegreeTypes() {
+    axios
+        .get(this.loader_source_degreetypes)
+        .then(response => {
+            this.course_types = response.data.results;
+            this.is_loading_degreetypes = false
+        })
+},
+callDepartments() {
+    axios
+        .get(this.loader_source_departments)
+        .then(response => {
+            this.departments_filter = response.data.results;
+            this.is_loading_departments = false
+        })
+},
+callCdSAreas()  {
+    axios
+        .get(this.loader_source_cds_areas)
+        .then(response => {
+            this.cds_areas = response.data.results;
+            this.is_loading_cds_areas = false
+        })
+},
+arrayLower(list, item) {
+    return list.toString().toLowerCase().includes(item.toLowerCase())
+},
+range : function (start, end) {
+    return Array(end - start).fill().map((val, i) => end - i - 1)
+}
+{% endblock extra_methods %}
+</script>
