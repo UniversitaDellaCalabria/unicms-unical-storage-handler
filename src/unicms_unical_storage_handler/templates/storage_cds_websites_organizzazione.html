@@ -145,10 +145,15 @@
                                              role="region"
                                              :aria-labelledby="'heading-' + index +'-lft'">
                                             <div class="accordion-body mt-3">
-
+                                                <p v-if="gruppo.LongDesc">
+                                                    [[ gruppo.LongDesc ]]
+                                                </p>
                                                 <ul>
                                                     <li v-for="member in gruppo.Members">
-                                                        [[ member.Cognome ]] [[ member.Nome ]]
+                                                        [[ member.Surname ]] [[ member.Name ]]
+                                                        <span v-if="member.Function">
+                                                        - [[ member.Function ]]
+                                                        </span>
                                                     </li>
                                                 </ul>
 
