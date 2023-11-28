@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from django.utils.translation import gettext_lazy as _
@@ -335,10 +336,10 @@ CURRENT_YEAR = ""
 HIGH_FORMATION_YEAR = ""
 
 # DIDACTIC REGULATION YEAR
-DIDACTIC_REGULATION_START_YEAR = ""
+DIDACTIC_REGULATION_START_YEAR = datetime.datetime.now().year
 
 # DIDACTIC REGULATION YEAR
-TEACHING_SYSTEM_START_YEAR = ""
+TEACHING_SYSTEM_START_YEAR = datetime.datetime.now().year
 
 # breadcrumb last item class
 BREADCRUMB_ITEM = "breadcrumb-item"
