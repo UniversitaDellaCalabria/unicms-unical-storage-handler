@@ -356,10 +356,10 @@
                 if(!date_month) date_month = this.date_month
                 if(!date_year) date_year = this.date_year
 
-                if(this.$refs.calendar!='undefined')
+                if('calendar' in this.$refs)
                     this.$refs.calendar.move({ month: date_month,
                                                year: date_year })
-                if(this.$refs.calendar2!='undefined')
+                if('calendar2' in this.$refs)
                     this.$refs.calendar2.move({ month: date_month,
                                                 year: date_year })
 
