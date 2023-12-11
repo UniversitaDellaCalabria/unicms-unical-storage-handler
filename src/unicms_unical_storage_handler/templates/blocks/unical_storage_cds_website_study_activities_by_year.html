@@ -23,7 +23,7 @@
 
     <div v-else>
         <div v-if="Object.keys(teachings_dictionary).length > 0">
-            <div v-if="teachings_dictionary[1].length == 1">
+            <div v-if="teachings_dictionary.hasOwnProperty(1) && teachings_dictionary[1].length == 1">
 
                 <p class="h4 lighter" class="mt-4 mb-3">{% trans "Teachings" %} [[ academic_year ]]/[[ academic_year + 1 ]]</p>
 
