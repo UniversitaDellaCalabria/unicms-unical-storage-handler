@@ -363,8 +363,6 @@
                     this.$refs.calendar2.move({ month: date_month,
                                                 year: date_year })
 
-                this.attributes = []
-                this.events = {}
                 let up_url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/timetable/?lang={{ LANGUAGE_CODE }}&academic_year={{ cds_website_current_year }}&year=' + year + '&date_year=' + date_year +'&date_month=' + date_month + '&search_teaching=' + this.search_teaching + '&search_teacher=' + this.search_teacher + '&search_location=' + this.search_location
                 this.year = year
                 this.is_loading_up = true
@@ -375,13 +373,13 @@
                         //this.events = response.data
                         this.is_loading_up = false
                         this.css_display = 'block'
-
+                        this.events = {}
+                        this.attributes = []
                         response.data.forEach((item, index)=>{
                             if(!(item.dataInizio in this.events)){
                                 this.events[item.dataInizio] = []
                             }
                             this.events[item.dataInizio].push(item)
-
                             this.attributes.push(
                                 {
                                     key: index,
@@ -407,10 +405,11 @@
             },
             switchPage(page) {
                 // if there is a real page switch
-                if(!page.hasOwnProperty('date'))
+                if(!page.hasOwnProperty('date')){
                     this.date_month = page.month
                     this.date_year = page.year
                     this.getEvents(year=this.year)
+                }
             },
             resetCalendar(year) {
                 this.getEvents(year=year)
