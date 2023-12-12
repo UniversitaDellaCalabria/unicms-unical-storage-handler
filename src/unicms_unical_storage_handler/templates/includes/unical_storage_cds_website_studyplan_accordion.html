@@ -9,7 +9,10 @@
             :data-bs-target="'#collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'"
             aria-expanded="false"
             :aria-controls="'collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
-        [[ tab.PlanTabDes ]] ([[ tab.PlanTabCod ]])
+        <span v-if="tab.ClaMiurCod">([[ tab.ClaMiurCod ]])&nbsp;</span>
+        <span v-if="tab.Statutario">{% trans "Statutario" %}</span>
+        <span v-else>{% trans "Alternativo" %}</span>
+        <span v-if="tab.APT">&nbsp;{% trans "Part-time" %}</span>
     </button>
 </div>
 <div :id="'collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'"
