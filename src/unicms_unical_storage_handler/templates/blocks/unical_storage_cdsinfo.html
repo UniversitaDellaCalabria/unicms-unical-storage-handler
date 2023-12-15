@@ -555,8 +555,8 @@
             </div>
         </div>
 
-        <div v-if="item.CdSDoc || item.StudyManifesto || item.DidacticRegulation || item.TeachingSystem" class="mt-4">
-            <div class="background-light-grey px-2 py-3 mb-2 w-100">
+        <div v-if="item.CdSDoc || item.CdSSatisfactionSurvey || item.StudyManifesto || item.DidacticRegulation || item.TeachingSystem" class="mt-4">
+            <div class="background-light-grey px-2 py-3 mb-2 w-100" v-if="item.CdSDoc || item.StudyManifesto || item.DidacticRegulation || item.TeachingSystem">
                 <div class="row">
                     <div class="col-2">
                         <b>
