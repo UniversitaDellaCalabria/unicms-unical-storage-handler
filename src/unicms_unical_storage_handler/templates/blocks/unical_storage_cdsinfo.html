@@ -556,7 +556,7 @@
         </div>
 
         <div v-if="item.CdSDoc || item.CdSSatisfactionSurvey || item.StudyManifesto || item.DidacticRegulation || item.TeachingSystem" class="mt-4">
-            <div class="background-light-grey px-2 py-3 mb-2 w-100" v-if="item.CdSDoc || item.StudyManifesto || item.DidacticRegulation || item.TeachingSystem">
+            <div class="background-light-grey px-2 py-3 mb-2 w-100">
                 <div class="row">
                     <div class="col-2">
                         <b>
@@ -573,17 +573,17 @@
                                     <small><b>- {% trans "Study course brochure" %}</b></small>
                                 </a>
                             </li>
-                            <li>
+                            <li v-if="item.StudyManifesto">
                                 <a :href="item.StudyManifesto" class="no-color" target="_blank">
                                     <small><b>- [[ labels.StudyManifesto ]]</b></small>
                                 </a>
                             </li>
-                            <li>
+                            <li v-if="item.DidacticRegulation">
                                 <a :href="item.DidacticRegulation" class="no-color" target="_blank">
                                     <small><b>- [[ labels.DidacticRegulation ]]</b></small>
                                 </a>
                             </li>
-                            <li>
+                            <li v-if="item.TeachingSystem">
                                 <a :href="item.TeachingSystem" class="no-color" target="_blank">
                                     <small><b>- [[ labels.TeachingSystem ]]</b></small>
                                 </a>
