@@ -149,9 +149,19 @@
                                                                                          month: 'long',
                                                                                          year: 'numeric'})]]
                                                 </b>
-                                                <span class="badge bg-success" v-if="event.codice=='ESSE3_ES'">Confermato</span>
-                                                <span class="badge bg-warning" v-else>Da confermare</span>
+                                                <span class="badge bg-success" v-if="event.codice=='ESSE3_ES'">
+                                                    Confermato
+                                                </span>
+                                                <span class="badge bg-warning" v-else>
+                                                    Da confermare
+                                                </span>
                                                 <br>
+                                                <span v-if="event.extra.descr">
+                                                    <svg class="icon icon-xs me-2">
+                                                        <use href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
+                                                    </svg> [[ event.extra.descr ]]
+                                                    <br>
+                                                </span>
                                                 <svg class="icon icon-xs me-2">
                                                     <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
                                                 </svg> [[ event.orarioInizio ]] <span v-if="event.orarioFine">/ [[ event.orarioFine ]]</span>
