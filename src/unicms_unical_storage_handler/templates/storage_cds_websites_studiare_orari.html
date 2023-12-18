@@ -217,9 +217,9 @@
                                                         <span class="day-label text-sm text-gray-900">[[ day.day ]]</span>
                                                         <div class="overflow-auto">
                                                                 <p :key="attr.key" v-for="attr in attributes"
-                                                                   class="rounded p-1 mt-0 mb-1 mx-1 text-white"
+                                                                   class="rounded p-1 mt-0 mb-1 mx-1"
                                                                    :class="attr.customData.class"
-                                                                   :style="'background: ' + attr.customData.background">
+                                                                   style="background: #feff9c; border: 1px solid #d5ba2a;">
                                                                     <span style="font-size: smaller;">
                                                                         <!--[[ attr.customData.title ]]<br />-->
                                                                         <b>[[ attr.customData.title ]]</b>
@@ -393,7 +393,7 @@
                                 {
                                     key: index,
                                     customData: {
-                                        class: 'bg-secondary text-white',
+                                        class: '',
                                         title: item.insegnamento,
                                         dataInizio: item.dataInizio,
                                         dataFine: item.dataFine,
