@@ -416,11 +416,11 @@ getTeachingsInYear(year, index) {
             }
         })
 },
-getYears() {
+async getYears() {
     let count = _cds_data.cds.CdSDuration
     for(let i=1; i<=count; i++) {
         let year = ({{ year }} || _cds_data.cds.AcademicYear) - i + 1;
-        this.getTeachingsInYear(year, i)
+        await this.getTeachingsInYear(year, i)
     }
 },
 {% endblock extra_methods %}
