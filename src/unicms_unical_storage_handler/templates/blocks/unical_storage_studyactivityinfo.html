@@ -84,7 +84,7 @@
                                     [[ coverage.ActivityType ]]
                                     (h. [[ coverage.Hours ]])
                                     -
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + coverage.StudyActivityTeacherID +'/'" v-if="coverage.StudyActivityTeacherID">
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + coverage.StudyActivityTeacherID +'/'" v-if="coverage.StudyActivityTeacherID">
                                         [[ coverage.StudyActivityTeacherName ]]
                                     </a>
                                     <span v-else>
