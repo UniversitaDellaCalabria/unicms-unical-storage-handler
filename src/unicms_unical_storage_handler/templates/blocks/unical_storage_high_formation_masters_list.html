@@ -214,31 +214,31 @@
                                 </h5>
                                 <div class="row">
                                     <div class="col-12 col-md-auto" v-if="item.HighFormationMasterYear">
-                                        <small>
+                                        <span>
                                             {% trans "Academic Year" %} >
                                             <b>[[ item.HighFormationMasterYear ]]/[[ item.HighFormationMasterYear + 1]]</b>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.HighFormationErogationModeDescription">
-                                        <small>
+                                        <span>
                                             [[ labels['HighFormationErogationModeDescription'] ]] >
                                             <b>[[ item.HighFormationErogationModeDescription ]]</b>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.HighFormationLanguage.length > 0">
-                                        <small>
+                                        <span>
                                             [[ labels['HighFormationLanguage'] ]] >
                                             <b>[[ item.HighFormationLanguage ]] </b>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="col-12" v-if="item.ScientificDirectorName">
-                                        <small>
+                                        <span>
                                             [[ labels['ScientificDirectorName'] ]] >
                                             <a :href="'/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.ScientificDirectorId + '/'" v-if="item.ScientificDirectorId">
                                                 <b>[[ item.ScientificDirectorName ]]</b>
                                             </a>
                                             <b v-else>[[ item.ScientificDirectorName ]]</b>
-                                        </small>
+                                        </span>
                                     </div>
 
                                 </div>

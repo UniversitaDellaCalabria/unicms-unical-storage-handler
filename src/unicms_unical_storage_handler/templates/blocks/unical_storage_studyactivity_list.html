@@ -275,7 +275,7 @@
         </loading-icon>
 
         <div v-else>
-            <small>
+            <span>
                 <div class="table-responsive">
                     <table class="table table-sm table-hover table-striped">
                         <thead>
@@ -338,7 +338,7 @@
                         </tbody>
                     </table>
                 </div>
-            </small>
+            </span>
         </div>
 
         <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>

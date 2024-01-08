@@ -64,68 +64,68 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-auto" v-if="item.HighFormationMasterYear">
-                                    <small>
+                                    <span>
                                         [[ labels['HighFormationMasterYear'] ]] >
                                         <b>[[ item.HighFormationMasterYear ]]/[[ item.HighFormationMasterYear + 1 ]]</b>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.HighFormationErogationModeDescription">
-                                    <small>
+                                    <span>
                                         [[ labels['HighFormationErogationModeDescription'] ]] >
                                         <b>[[ item.HighFormationErogationModeDescription ]]</b>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.HighFormationLanguage.length > 0 && item.HighFormationLanguage[0]">
-                                    <small>
+                                    <span>
                                         [[ labels['HighFormationLanguage'] ]] >
                                         <b>[[ item.HighFormationLanguage ]] </b>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.HighFormationCourseStructure">
-                                    <small>
+                                    <span>
                                         [[ labels['HighFormationCourseStructure'] ]] >
                                         <b>[[ item.HighFormationCourseStructure ]]</b>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.DoubleTitle">
-                                    <small>
+                                    <span>
                                         [[ labels['DoubleTitle'] ]] >
                                         <b>[[ item.DoubleTitle ]] </b>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.HighFormationHours">
-                                    <small>
+                                    <span>
                                         [[ labels['HighFormationHours'] ]] >
                                         <b>[[ item.HighFormationHours ]] </b>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.HighFormationMonths">
-                                    <small>
+                                    <span>
                                         [[ labels['HighFormationMonths'] ]] >
                                         <b>[[ item.HighFormationMonths ]] </b>
-                                    </small>
+                                    </span>
                                 </div>
 
                                 <div class="col-12 col-md-auto" v-if="item.HighFormationMinParticipants">
-                                    <small>
+                                    <span>
                                         [[ labels['HighFormationMinParticipants'] ]] >
                                         <b>[[ item.HighFormationMinParticipants ]] </b>
-                                    </small>
+                                    </span>
                                 </div>
 
                                 {% comment %}
                                 <div class="col-12 col-md-auto" v-if="item.HighFormationMaxParticipants">
-                                    <small>
+                                    <span>
                                     [[ labels['HighFormationMaxParticipants'] ]]
                                     <span>
                                         <b>[[ item.HighFormationMaxParticipants ]]</b>
                                     </span>
-                                    </small>
+                                    </span>
                                 </div>
 
                                 <div class="col-12" v-if="item.ScientificDirectorName && item.ScientificDirectorName.trim().length>0">
                                     <hr>
-                                    <small>
+                                    <span>
                                     [[ labels['ScientificDirectorName'] ]]
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ScientificDirectorId +'/'" v-if="item.ScientificDirectorId">
                                         <b>[[ item.ScientificDirectorName ]]</b>
@@ -133,7 +133,7 @@
                                     <span v-else>
                                         <b>[[ item.ScientificDirectorName ]]</b>
                                     </span>
-                                    </small>
+                                    </span>
                                 </div>
                                 {% endcomment %}
 
@@ -366,7 +366,7 @@
                              aria-labelledby="{{ id }}_heading-teaching-plan-lft">
                             <div class="accordion-body">
                                 <div class="table-responsive">
-                                    <small>
+                                    <span>
                                         <table class="table table-sm table-hover table-striped">
                                             <thead>
                                                 <tr>
@@ -385,7 +385,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </small>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -414,7 +414,7 @@
                              aria-labelledby="{{ id }}_heading-teaching-assignments-lft">
                             <div class="accordion-body">
                                 <div class="table-responsive">
-                                    <small>
+                                    <span>
                                         <table class="table table-sm table-hover table-striped">
                                             <thead>
                                                 <tr>
@@ -444,7 +444,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </small>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -608,7 +608,7 @@
                                     </ul>
                                     <div class="table-responsive" v-if="item.HighFormationMasterExternalCouncil.length">
                                         <h6 class="mt-4 mb-3">{% trans "External Teachers" %}</h6>
-                                        <small>
+                                        <span>
                                             <table class="table table-sm table-hover table-striped">
                                                 <thead>
                                                     <tr>
@@ -625,7 +625,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </small>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -655,7 +655,7 @@
                                 <div class="accordion-body">
                                     <div class="it-list-wrapper">
                                         <div class="table-responsive">
-                                            <small>
+                                            <span>
                                                 <table class="table table-sm table-hover table-striped">
                                                     <thead>
                                                         <tr>
@@ -676,7 +676,7 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                            </small>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

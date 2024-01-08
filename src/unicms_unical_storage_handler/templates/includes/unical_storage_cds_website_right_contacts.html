@@ -18,7 +18,7 @@
                 </svg>
             </div>
             <div class="col-9 align-left">
-                <small>
+                <span>
                     <b>[[ _cds_data.fixed_cds_labels['DirectorName'] ]]</b>
                     <br>
                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.fixed_cds.OtherData.DirectorId +'/'" v-if="_cds_data.fixed_cds.OtherData.DirectorId">
@@ -49,7 +49,7 @@
                             [[ _cds_data.coordinator_data.TelOffice[0] ]]
                         </div>
                     </div>
-                </small>
+                </span>
             </div>
             <div class="col-12"><hr></div>
         </div>
@@ -61,7 +61,7 @@
                 </svg>
             </div>
             <div class="col-9 align-left">
-                <small>
+                <span>
                     <b>[[ _cds_data.fixed_cds_labels['DeputyDirectorName'] ]]</b>
                     <br>
                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.fixed_cds.OtherData.DeputyDirectorId +'/'" v-if="_cds_data.fixed_cds.OtherData.DeputyDirectorId">
@@ -102,7 +102,7 @@
                             [[ _cds_data.deputy_coordinator_data.TelOffice[0] ]]
                         </div>
                     </div>
-                </small>
+                </span>
             </div>
             <div class="col-12"><hr></div>
         </div>
@@ -114,7 +114,7 @@
                 </svg>
             </div>
             <div class="col-9 align-left">
-                <small>
+                <span>
                     <b>[[ office.OfficeName ]]</b>
                     <div class="mt-2">
                         <div class="row">
@@ -182,7 +182,7 @@
                             </div>
                         </div>
                     </div>
-                </small>
+                </span>
             </div>
             <div class="col-12"><hr></div>
         </div>

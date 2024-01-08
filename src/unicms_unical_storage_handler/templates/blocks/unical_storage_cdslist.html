@@ -265,22 +265,22 @@
                                         </b>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.AcademicYear">
-                                        <small>
+                                        <span>
                                             {% trans "A.Y." %} >
                                             <b>[[ item.AcademicYear ]]/[[ item.AcademicYear + 1]]</b>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.CdSDuration">
-                                        <small>
+                                        <span>
                                             [[ labels['CdSDuration'] ]] >
                                             <b>[[ item.CdSDuration ]] {% trans "years" %}</b>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="col-12 col-md-auto me-md-4" v-if="item.CdSLanguage.length > 0">
-                                        <small>
+                                        <span>
                                             [[ labels['CdSLanguage'] ]] >
                                             <b>[[ item.CdSLanguage.join(', ') ]] </b>
-                                        </small>
+                                        </span>
                                     </div>
 
                                 </div>

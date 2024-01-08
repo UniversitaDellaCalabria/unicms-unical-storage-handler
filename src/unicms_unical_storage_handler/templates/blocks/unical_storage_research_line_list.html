@@ -175,18 +175,18 @@
                                 <h5><b>[[ item.RLineDescription ]]</b></h5>
                                 <div class="row" v-if="item.RLineResults">
                                     <div class="col-12 col-md-auto">
-                                        <span v-html="item.RLineResults"></small>
+                                        <span v-html="item.RLineResults"></span>
                                     </div>
                                 </div>
                                 <div class="row mt-2" v-if="item.Teachers && item.Teachers.length > 0 || item.RYear || item.RLineErc2Name || item.RLineAster2Name">
                                     <div class="col-12 col-md-auto" v-if="item.RYear">
-                                        <small>
+                                        <span>
                                             [[ labels['RYear'] ]] >
                                             <b>[[ item.RYear ]]</b>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.Teachers.length > 0">
-                                        <small>
+                                        <span>
                                             [[ labels['Teachers'] ]] >
                                             <b v-for="(teacher, index) in item.Teachers">
                                                 <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + teacher.TeacherID +'/'" v-if="teacher.TeacherID">
@@ -197,19 +197,19 @@
                                                 </span>
                                                 <span v-if="index != item.Teachers.length -1">,&nbsp;</span>
                                             </b>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.RLineErc2Name">
-                                        <small>
+                                        <span>
                                             {% trans "Ref. ERC" %} >
                                             <b>[[ item.RLineErc2Name ]]</b>
-                                        </small>
+                                        </span>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.RLineAster2Name">
-                                        <small>
+                                        <span>
                                             {% trans "Ref. ASTER" %} >
                                             <b>[[ item.RLineAster2Name ]]</b>
-                                        </small>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

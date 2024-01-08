@@ -79,7 +79,7 @@ Brochure - {{ block.super }}
                                         </h2>
                                         <div id="collapse1l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading1l">
                                             <div class="accordion-body">
-                                                <small v-html="website.CDSIntro"></small>
+                                                <span v-html="website.CDSIntro"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@ Brochure - {{ block.super }}
                                         </h2>
                                         <div id="collapse2l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading2l">
                                             <div class="accordion-body">
-                                                <small v-html="website.CDSStudyPlan"></small>
+                                                <span v-html="website.CDSStudyPlan"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@ Brochure - {{ block.super }}
                                         </h2>
                                         <div id="collapse3l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading3l">
                                             <div class="accordion-body">
-                                                <small v-html="website.CDSEnrollmentMode"></small>
+                                                <span v-html="website.CDSEnrollmentMode"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -133,13 +133,13 @@ Brochure - {{ block.super }}
                                                 {% for doc, values in course_docs.items %}
                                                     <li>
                                                         <a href="{{ values.2 }}" target="_blank" title="{% if LANGUAGE_CODE == 'it' %}{{ values.1 }}{% else %}{{ values.0 }}{% endif %}">
-                                                            <small>
+                                                            <span>
                                                                 {% if LANGUAGE_CODE == 'it' %}
                                                                     {{ values.1 }}
                                                                 {% else %}
                                                                     {{ values.0 }}
                                                                 {% endif %}
-                                                            </small>
+                                                            </span>
                                                         </a>
                                                     </li>
                                                 {% endfor %}
@@ -429,7 +429,7 @@ Brochure - {{ block.super }}
                             </svg>
                         </div>
                         <div class="col-9 align-left">
-                            <small>
+                            <span>
                                 <b>[[ _cds_data.cds_labels['DirectorName'] ]]</b>
                                 <br>
                                 <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DirectorId +'/'" v-if="_cds_data.cds.OtherData.DirectorId">
@@ -471,7 +471,7 @@ Brochure - {{ block.super }}
                                         [[ _cds_data.coordinator_data.TelOffice[0] ]]
                                     </div>
                                 </div>
-                            </small>
+                            </span>
                         </div>
 
                         <div v-if="_cds_data.cds.OtherData && _cds_data.cds.OtherData.DeputyDirectorName && _cds_data.cds.OtherData.DeputyDirectorName.trim().length>0" class="row">
@@ -482,7 +482,7 @@ Brochure - {{ block.super }}
                                 </svg>
                             </div>
                             <div class="col-9 align-left">
-                                <small>
+                                <span>
                                     <b>[[ _cds_data.cds_labels['DeputyDirectorName'] ]]</b>
                                     <br>
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DeputyDirectorId +'/'" v-if="_cds_data.cds.OtherData.DeputyDirectorId">
@@ -524,7 +524,7 @@ Brochure - {{ block.super }}
                                             [[ _cds_data.deputy_coordinator_data.TelOffice[0] ]]
                                         </div>
                                     </div>
-                                </small>
+                                </span>
                             </div>
                         </div>
 
@@ -536,7 +536,7 @@ Brochure - {{ block.super }}
                                 </svg>
                             </div>
                             <div class="col-9 align-left">
-                                <small>
+                                <span>
                                     <b>[[ office.OfficeName ]]</b>
                                     <div class="mt-2">
                                         <div class="row">
@@ -604,7 +604,7 @@ Brochure - {{ block.super }}
                                             </div>
                                         </div>
                                     </div>
-                                </small>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -749,13 +749,13 @@ Brochure - {{ block.super }}
                                         {% if field.field.required %}*{% endif %}
                                     {{ field }}
                                     {% if field.help_text %}
-                                        <small class="form-text text-muted">
+                                        <span class="form-text text-muted">
                                             {{ field.help_text|safe }}
-                                        </small>
+                                        </span>
                                     {% endif %}
-                                        <small class="text-danger">
+                                        <span class="text-danger">
                                             {{ field.errors }}
-                                        </small>
+                                        </span>
                                     </div>
                                 {% if field.name == 'phone' or field.name == 'text' %}
                                 </div>
