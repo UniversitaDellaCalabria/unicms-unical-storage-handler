@@ -16,28 +16,28 @@
                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.TeacherDepartmentCod +'/'">
                         <svg class="icon icon-muted icon-xs me-2">
                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-pa"></use>
-                        </svg> <small>[[ item.TeacherDepartmentName]]</small>
+                        </svg> [[ item.TeacherDepartmentName]]
                     </a>
                 </li>
                 <li v-if="item.TeacherOffice">
                     <svg class="icon icon-muted icon-xs me-2">
                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                    </svg> <small>[[ item.TeacherOffice]]</small>
+                    </svg> [[ item.TeacherOffice]]
                 </li>
                 <li v-for="email in item.TeacherEmail">
                     <svg class="icon icon-muted icon-xs me-2">
                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
-                    </svg> <small>[[ email]]</small>
+                    </svg> [[ email]]
                 </li>
                 <li v-for="phone in item.TeacherTelOffice">
                     <svg class="icon icon-muted icon-xs me-2">
                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
-                    </svg> <small>[[ phone]]</small>
+                    </svg> [[ phone]]
                 </li>
                 <li v-for="website in item.TeacherWebSite">
                    <svg class="icon icon-muted icon-xs me-2">
                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
-                    </svg> <small>[[ website]]</small>
+                    </svg> [[ website]]
                 </li>
             </ul>
         </div>
