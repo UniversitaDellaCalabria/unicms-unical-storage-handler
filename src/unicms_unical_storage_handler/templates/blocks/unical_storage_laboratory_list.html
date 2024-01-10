@@ -204,44 +204,44 @@
                                         </h5>
                                         <div class="row">
                                             <div class="col-12">
-                                                <small>
+                                                <span>
                                                     <b>[[ item.DepartmentName ]]</b>
-                                                </small>
+                                                </span>
                                             </div>
                                             <div class="col-12">
-                                                <small>
+                                                <span>
                                                     [[ labels['Area'] ]] >
                                                     <b>[[ item.Area ]]</b>
-                                                </small>
+                                                </span>
                                             </div>
                                             <div class="col-12">
-                                                <small>
+                                                <span>
                                                     {% trans "Manager" %} >
                                                     <b>[[ item.ScientificDirector ]]</b>
-                                                </small>
+                                                </span>
                                             </div>
                                             <div class="col-12" v-if="item.LaboratoryScopes.length">
-                                                <small>
+                                                <span>
                                                     [[ labels['LaboratoryScopes'] ]] >
                                                     <b v-for="(scope, index) in item.LaboratoryScopes">
                                                         [[ scope.ScopeDescription ]]
                                                         <span v-if="index < (item.LaboratoryScopes.length - 1)">,&nbsp;</span>
                                                     </b>
-                                                </small>
+                                                </span>
                                             </div>
                                             <div class="col-12" v-if="item.InfrastructureName">
-                                                <small>
+                                                <span>
                                                     [[ labels['InfrastructureName'] ]] >
                                                     <b>
                                                         [[ item.InfrastructureName ]]
                                                     </b>
-                                                </small>
+                                                </span>
                                             </div>
                                             <div class="col-12" v-if="item.Interdepartmental != 'NO'">
-                                                <small>
+                                                <span>
                                                     [[ labels['Interdepartmental'] ]] >
                                                     <b>[[ item.Interdepartmental ]]</b>
-                                                </small>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

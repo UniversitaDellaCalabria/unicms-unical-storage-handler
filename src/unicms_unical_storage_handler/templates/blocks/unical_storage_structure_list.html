@@ -89,19 +89,19 @@
                                 {% comment %}
                                 <div class="row">
                                     <div class="col-12 col-md-auto">
-                                        <small>
+                                        <span>
                                             [[ labels['StructureTypeName'] ]] >
                                             <b>[[ item.StructureTypeName ]]</b>
-                                        </small>
+                                        </span>
                                     </div>
                                 </div>
                                 {% endcomment %}
                                 <div class="col-12 col-md-auto text-end" v-if="item.StructureURL">
-                                    <small>
+                                    <span>
                                         <a :href="[[ item.StructureURL ]]" target="_blank" rel="noopener noreferrer">
                                             <b>{% trans "Website" %} >></b>
                                         </a>
-                                    </small>
+                                    </span>
                                 </div>
                             </div>
                         </div>

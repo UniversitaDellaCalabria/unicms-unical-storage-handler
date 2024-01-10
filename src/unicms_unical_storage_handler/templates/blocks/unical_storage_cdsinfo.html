@@ -94,45 +94,43 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-auto" v-if="item.CdSDuration">
-                                    <small>
+                                    <span>
                                         [[ labels['AcademicYear'] ]]
                                         <b>[[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]</b>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.CdSDuration">
-                                    <small>
+                                    <span>
                                         [[ labels['CdSDuration'] ]] >
                                         <b>[[ item.CdSDuration ]] {% trans "years" %}</b>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.CdSLanguage.length > 0 && item.CdSLanguage[0]">
-                                    <small>
+                                    <span>
                                         [[ labels['CdSLanguage'] ]] >
                                         <b>[[ item.CdSLanguage.join(', ') ]] </b>
-                                    </small>
+                                    </span>
                                 </div>
 
                                 <div class="col-12 col-md-auto">
-                                    <small>
+                                    <span>
                                         <a :href="[[ item.CdsUrl ]]" target="_blank" rel="noopener noreferrer">
-                                            <b>{% trans "Website" %} >></b>
-                                        </a>
-                                    </small>
+                                    </span>
                                 </div>
                             </div>
                                 {% comment %}
                                 <div class="col-12 col-md-auto" v-if="item.OtherData.SeatsNumber">
-                                    <small>
+                                    <span>
                                     [[ labels['SeatsNumber'] ]]
                                     <span>
                                         <b>[[ item.OtherData.SeatsNumber ]]</b>
                                     </span>
-                                    </small>
+                                    </span>
                                 </div>
 
                                 <div class="col-12" v-if="item.OtherData.DirectorName && item.OtherData.DirectorName.trim().length>0">
                                     <hr>
-                                    <small>
+                                    <span>
                                     [[ labels['DirectorName'] ]]
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData.DirectorId +'/'" v-if="item.OtherData.DirectorId">
                                         <b>[[ item.OtherData.DirectorName ]]</b>
@@ -140,11 +138,11 @@
                                     <span v-else>
                                         <b>[[ item.OtherData.DirectorName ]]</b>
                                     </span>
-                                    </small>
+                                    </span>
                                 </div>
 
                                 <div class="col-12" v-if="item.OtherData.DeputyDirectorName && item.OtherData.DeputyDirectorName.trim().length>0">
-                                    <small>
+                                    <span>
                                     [[ labels['DeputyDirectorName'] ]]
                                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData.DeputyDirectorId +'/'" v-if="item.OtherData.DeputyDirectorId">
                                         <b>[[ item.OtherData.DeputyDirectorName ]]</b>
@@ -152,14 +150,14 @@
                                     <span v-else>
                                         <b>[[ item.OtherData.DeputyDirectorName ]]</b>
                                     </span>
-                                    </small>
+                                    </span>
                                 </div>
                             </div>
 
                             <div class="row" v-if="item.OfficesData" v-for="office in item.OfficesData">
                                 <div class="col-12">
                                     <hr>
-                                    <small>
+                                    <span>
                                         [[ labels['OfficeDirectorName'] ]]
                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.DirectorId">
                                             <b>[[ office.OfficeDirectorName ]]</b>
@@ -167,66 +165,66 @@
                                         <span v-else>
                                             <b>[[ office.OfficeDirectorName ]]</b>
                                         </span>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12" v-if="office.TelOffice && office.TelOffice.trim().length>0">
-                                    <small>
+                                    <span>
                                         [[ labels['TelOffice'] ]]
                                         <span>
                                             <b>[[ office.TelOffice ]]</b>
                                         </span>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12" v-if="office.Email && office.Email.trim().length>0">
-                                    <small>
+                                    <span>
                                         [[ labels['Email'] ]]
                                         <span>
                                             <a :href="'email:'+office.Email">
                                                 <b>[[ office.Email ]]</b>
                                             </a>
                                         </span>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12" v-if="(office.Building && office.Building.trim().length>0) || (office.Floor && office.Floor.trim().length>0)">
-                                    <small v-if="office.Building && office.Building.trim().length>0">
+                                    <span v-if="office.Building && office.Building.trim().length>0">
                                         [[ labels['Building'] ]]
                                         <span>
                                             <b>[[ office.Building ]]</b>
                                         </span>
-                                    </small>
-                                    <small v-if="office.Floor && office.Floor.trim().length>0">
+                                    </span>
+                                    <span v-if="office.Floor && office.Floor.trim().length>0">
                                         [[ labels['Floor'] ]]
                                         <span>
                                             <b>[[ office.Floor ]]</b>
                                         </span>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12" v-if="office.Timetables && office.Timetables.trim().length>0">
-                                    <small>
+                                    <span>
                                         [[ labels['Timetables'] ]]
                                         <span>
                                             <b>[[ office.Timetables ]]</b>
                                         </span>
-                                    </small>
+                                    </span>
                                 </div>
                                 <div class="col-12" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
-                                    <small>
+                                    <span>
                                         [[ labels['OnlineCounter'] ]]
                                         <span>
                                             <b>[[ office.OnlineCounter ]]</b>
                                         </span>
-                                    </small>
+                                    </span>
                                 </div>
 
                             </div>
 
                             <div class="col-12" v-if="item.CdsUrl">
                                 <hr />
-                                <small>
+                                <span>
                                     <a :href="[[ item.CdsUrl ]]" target="_blank" rel="noopener noreferrer">
                                         <b>{% trans "Website" %} >></b>
                                     </a>
-                                </small>
+                                </span>
                             </div>
 
                             {% endcomment %}
@@ -436,7 +434,7 @@
                 </svg>
             </div>
             <div class="col-9 align-left">
-                <small>
+                <span>
                     <b>[[ labels['DirectorName'] ]]</b>
                     <br>
                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData.DirectorId +'/'" v-if="item.OtherData.DirectorId">
@@ -445,7 +443,7 @@
                     <span v-else>
                         [[ item.OtherData.DirectorName ]]
                     </span>
-                </small>
+                </span>
             </div>
         </div>
 
@@ -457,7 +455,7 @@
                 </svg>
             </div>
             <div class="col-9 align-left">
-                <small>
+                <span>
                     <b>[[ labels['DeputyDirectorName'] ]]</b>
                     <br>
                     <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.OtherData.DeputyDirectorId +'/'" v-if="item.OtherData.DeputyDirectorId">
@@ -466,7 +464,7 @@
                     <span v-else>
                         [[ item.OtherData.DeputyDirectorName ]]
                     </span>
-                </small>
+                </span>
             </div>
         </div>
 
@@ -478,7 +476,7 @@
                 </svg>
             </div>
             <div class="col-9 align-left">
-                <small>
+                <span>
                     <b>[[ office.OfficeName ]]</b>
                     <div class="mt-2">
                         <div class="row">
@@ -551,7 +549,7 @@
                             </div>
                         </div>
                     </div>
-                </small>
+                </span>
             </div>
         </div>
 
@@ -570,22 +568,22 @@
                         <ul class="mb-0 ps-0 list-unstyled">
                             <li v-if="item.CdSDoc">
                                 <a :href="item.CdSDoc" class="no-color" target="_blank">
-                                    <small><b>- {% trans "Study course brochure" %}</b></small>
+                                    <span><b>- {% trans "Study course brochure" %}</b></span>
                                 </a>
                             </li>
-                            <li>
+                            <li v-if="item.StudyManifesto">
                                 <a :href="item.StudyManifesto" class="no-color" target="_blank">
-                                    <small><b>- [[ labels.StudyManifesto ]]</b></small>
+                                    <span><b>- [[ labels.StudyManifesto ]]</b></span>
                                 </a>
                             </li>
-                            <li>
+                            <li v-if="item.DidacticRegulation">
                                 <a :href="item.DidacticRegulation" class="no-color" target="_blank">
-                                    <small><b>- [[ labels.DidacticRegulation ]]</b></small>
+                                    <span><b>- [[ labels.DidacticRegulation ]]</b></span>
                                 </a>
                             </li>
-                            <li>
+                            <li v-if="item.TeachingSystem">
                                 <a :href="item.TeachingSystem" class="no-color" target="_blank">
-                                    <small><b>- [[ labels.TeachingSystem ]]</b></small>
+                                    <span><b>- [[ labels.TeachingSystem ]]</b></span>
                                 </a>
                             </li>
                         </ul>
@@ -602,7 +600,7 @@
                         <ul class="mb-0 ps-0 list-unstyled">
                             <li>
                                 <a class="no-color" target="_blank" :href="'{{ almalaurea_link }}' + item.CdSSatisfactionSurvey">
-                                    <small><b>[[ labels['CdSSatisfactionSurvey'] ]]</b></small>
+                                    <span><b>[[ labels['CdSSatisfactionSurvey'] ]]</b></span>
                                 </a>
                             </li>
                         </ul>

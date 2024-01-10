@@ -76,7 +76,7 @@
                         <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
                             <a class="no-color"
                                {% block cds_area_item_link %}:href="item.TeachingSystem"{% endblock cds_area_item_link %} target="_blank">
-                                <small>
+                                <span>
                                 <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
                                 <b v-if="item.RegDidId == 21540">
                                 {% if LANGUAGE_CODE != 'it' %}
@@ -97,7 +97,7 @@
                                     </span>
                                     <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
                                 </span>
-                                </small>
+                                </span>
                             </a>
                         </li>
                     </ul>
@@ -107,7 +107,7 @@
         </div>
         <hr>
         <div>
-            <small>
+            <span>
                 <ul class="list-unstyled">
                     <li>L – {% trans "Bachelor's degree" %}</li>
                     <li>LM – {% trans "Master's degree (2 years)" %}</li>
@@ -121,7 +121,7 @@
                         <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="me-2"/>
                         {% trans "Course with curriculum delivered in English" %}</li>
                 </ul>
-            </small>
+            </span>
         </div>
 
     </div>

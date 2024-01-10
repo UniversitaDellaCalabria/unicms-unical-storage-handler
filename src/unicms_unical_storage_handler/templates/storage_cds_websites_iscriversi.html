@@ -254,7 +254,7 @@
                                             <ul class="mb-0 ps-0 list-unstyled">
                                                 <li v-for="right_article in _{{ cds_cod }}.topic_articles_right_column"  v-if="right_article.CdsArticle || (right_article.CdsObject && right_article.CdsObject.Object)">
                                                     <a class="no-color" target="_blank" :href="right_article.CdsObject.Object.get_absolute_url">
-                                                        <small><b>[[ right_article.Title ]]</b></small>
+                                                        <span><b>[[ right_article.Title ]]</b></span>
                                                     </a>
                                                 </li>
                                             </ul>

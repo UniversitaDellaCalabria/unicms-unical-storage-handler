@@ -85,10 +85,10 @@
                                     <div class="col">
                                         <h5><b>[[ item.PatentTitle ]]</b></h5>
                                         <p>
-                                            <small v-html="item.PatentAbstract"></small>
+                                            <span v-html="item.PatentAbstract"></span>
                                         </p>
                                         <p v-if="item.PatentInventors.length">
-                                            <small>
+                                            <span>
                                                 <span v-for="(inventor, index) in item.PatentInventors">
                                                     <a v-if="inventor.AuthorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + inventor.AuthorId +'/'">
                                                         [[ inventor.AuthorName ]]
@@ -98,25 +98,25 @@
                                                     ,&nbsp;
                                                     </span>
                                                 </span>
-                                            </small>
+                                            </span>
                                         </p>
                                         <p>
-                                            <small>
+                                            <span>
                                                 [[ labels['PatentUniqueId'] ]] >
                                                 <b>[[ item.PatentUniqueId ]]</b>
-                                            </small>
+                                            </span>
                                             <br>
-                                            <small>
+                                            <span>
                                                 [[ labels['PatentAreaDescription'] ]] >
                                                 <b>[[ item.PatentAreaDescription ]]</b>
-                                            </small>
+                                            </span>
                                         </p>
                                         <a :href="item.PatentUrlKnowledgeShare" v-if="item.PatentUrlKnowledgeShare">
-                                            <small>
+                                            <span>
                                                 <svg class="m-auto icon-sm icon">
                                                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
                                                 </svg> [[ labels.PatentUrlKnowledgeShare ]]
-                                            </small>
+                                            </span>
                                         </a>
                                     </div>
                                 </div>

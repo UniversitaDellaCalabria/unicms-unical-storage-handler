@@ -21,7 +21,7 @@
 
 <script src="{% static 'js/vue-markdown.js' %}"></script>
 
-
+{% get_allowed_website request.get_host as host %}
 {% get_current_language as LANGUAGE_CODE %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
@@ -35,6 +35,7 @@
 {% get_allowed_website request.get_host as host %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
 
 {% include "includes/unical_storage_loading.html" %}
@@ -127,8 +128,8 @@
                                     </div>
                                 </div>
 
-                                <div id="accordionDivGroups-lft" class="accordion accordion-left-icon" v-if="_cds_data.cds.CdsOrganizations && _cds_data.cds.CdsOrganizations.length > 0">
-                                    <div class="accordion-item" v-for="(gruppo, index) in _cds_data.cds.CdsOrganizations">
+                                <div id="accordionDivGroups-lft" class="accordion accordion-left-icon" v-if="_cds_data.cds.CdsGroups && _cds_data.cds.CdsGroups.length > 0">
+                                    <div class="accordion-item" v-for="(gruppo, index) in _cds_data.cds.CdsGroups">
                                         <div class="accordion-header" :id="'heading-' + index +'-lft'">
                                             <button class="accordion-button"
                                                     type="button"
@@ -136,7 +137,7 @@
                                                     :data-bs-target="'#collapse-' + index +'-lft'"
                                                     aria-expanded="false"
                                                     :aria-controls="'collapse-' + index +'-lft'">
-                                                [[ gruppo.DescrBreveIt ]]
+                                                [[ gruppo.ShortDesc ]]
                                             </button>
                                         </div>
                                         <div :id="'collapse-' + index +'-lft'"
@@ -145,10 +146,20 @@
                                              role="region"
                                              :aria-labelledby="'heading-' + index +'-lft'">
                                             <div class="accordion-body mt-3">
-
+                                                <p v-if="gruppo.LongDesc">
+                                                    [[ gruppo.LongDesc ]]
+                                                </p>
                                                 <ul>
                                                     <li v-for="member in gruppo.Members">
-                                                        [[ member.Cognome ]] [[ member.Nome ]]
+                                                        <a v-if="member.ID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + member.ID +'/'">
+                                                            [[ member.Surname ]] [[ member.Name ]]
+                                                        </a>
+                                                        <span v-else>
+                                                            [[ member.Surname ]] [[ member.Name ]]
+                                                        </span>
+                                                        <span v-if="member.Function">
+                                                        - [[ member.Function ]]
+                                                        </span>
                                                     </li>
                                                 </ul>
 

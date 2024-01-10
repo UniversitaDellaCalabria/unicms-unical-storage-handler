@@ -9,7 +9,10 @@
             :data-bs-target="'#collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'"
             aria-expanded="false"
             :aria-controls="'collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
-        [[ tab.PlanTabDes ]] ([[ tab.PlanTabCod ]])
+        <span v-if="tab.ClaMiurCod">([[ tab.ClaMiurCod ]])&nbsp;</span>
+        <span v-if="tab.Statutario">{% trans "Statutario" %}</span>
+        <span v-else>{% trans "Alternativo" %}</span>
+        <span v-if="tab.APT">&nbsp;{% trans "Part-time" %}</span>
     </button>
 </div>
 <div :id="'collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'"
@@ -30,7 +33,7 @@
                         [[ required.SceDes ]]
                     </b>
                     <div class="table-responsive">
-                        <small>
+                        <span>
                             <table class="table table-sm table-hover table-striped">
                                 <thead>
                                     <tr>
@@ -90,7 +93,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </small>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -140,7 +143,7 @@
                                         [[ vin_sub_choice.SceDes ]]
                                     </b>
                                     <div class="table-responsive">
-                                        <small>
+                                        <span>
                                             <table class="table table-sm table-hover table-striped">
                                                 <thead>
                                                     <tr>
@@ -188,7 +191,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </small>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -254,7 +257,7 @@
                                     [[ sub_choice.SceDes ]]
                                 </b>
                                 <div class="table-responsive">
-                                    <small>
+                                    <span>
                                         <table class="table table-sm table-hover table-striped">
                                             <thead>
                                                 <tr>
@@ -302,7 +305,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </small>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -379,7 +382,7 @@
                         <span>{% trans "choice between" %}</span>
 
                         <div class="table-responsive" v-if="choice.Choices.length > 0 ">
-                            <small>
+                            <span>
                                 <table class="table table-sm table-hover table-striped">
                                     <thead>
                                         <tr>
@@ -427,7 +430,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </small>
+                            </span>
                         </div>
 
                         <div v-if="choice.FilAnd.length > 0 ">
