@@ -897,7 +897,7 @@ class CdsWebsitesCorsoActivityHandler(CdsWebsiteBaseHandler):
 
     @property
     def corso_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH}//'
+        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -997,4 +997,11 @@ class CdsWebsitesRedirectHandler(BaseContentHandler):
     def as_view(self):
         if self.webpath:
             return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}'))
+        raise Http404()
+
+
+class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
+    def as_view(self):
+        if self.webpath:
+            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
         raise Http404()
