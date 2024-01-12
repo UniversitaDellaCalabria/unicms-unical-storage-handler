@@ -341,11 +341,9 @@ Brochure - {{ block.super }}
                                                 </ul>
                                             </span>
                                             <span v-else>
-                                                <span style="white-space: pre-line;">
-                                                    <span>
-                                                        <span v-if="_cds_data.containsHTML(website[name])" v-html="website[name]"></span>
-                                                        <span v-else>[[ website[name] ]]</span>
-                                                    </span>
+                                                <span>
+                                                    <span v-if="_cds_data.containsHTML(website[name])" v-html="website[name]"></span>
+                                                    <span v-else>[[ website[name] ]]</span>
                                                 </span>
                                             </span>
                                         </div>
@@ -407,12 +405,8 @@ Brochure - {{ block.super }}
                                                 </ul>
                                             </span>
                                             <span v-else>
-                                                <span style="white-space: pre-line;">
-                                                    <span>
-                                                        <span v-if="_cds_data.containsHTML(website[name])" v-html="website[name]"></span>
-                                                        <span v-else>[[ website[name] ]]</span>
-                                                    </span>
-                                                </span>
+                                                <span v-if="_cds_data.containsHTML(website[name])" v-html="website[name]"></span>
+                                                <span v-else>[[ website[name] ]]</span>
                                             </span>
                                         </div>
                                     </div>
