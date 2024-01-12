@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 13:19+0100\n"
-"PO-Revision-Date: 2024-01-12 13:20+0100\n"
+"POT-Creation-Date: 2024-01-12 13:33+0100\n"
+"PO-Revision-Date: 2024-01-12 13:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -499,10 +499,10 @@ msgstr "anno"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:142
 #: templates/blocks/unical_storage_studyactivity_list.html:169
 #: templates/blocks/unical_storage_studyactivity_list.html:288
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:40
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:201
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:315
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:466
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:39
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:198
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:305
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:456
 msgid "Teaching"
 msgstr "Insegnamento"
 
@@ -513,10 +513,10 @@ msgstr "Insegnamento"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:56
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:143
 #: templates/blocks/unical_storage_studyactivity_list.html:116
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:42
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:202
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:316
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:467
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:41
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:199
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:306
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:457
 msgid "Period"
 msgstr "Periodo"
 
@@ -526,10 +526,10 @@ msgstr "Periodo"
 #: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:322
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:57
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:144
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:43
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:203
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:317
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:468
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:42
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:200
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:307
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:458
 msgid "ETCS"
 msgstr "CFU"
 
@@ -895,7 +895,7 @@ msgstr "Attività di ateneo"
 #: templates/blocks/unical_storage_phd_activities_list.html:151
 #: templates/blocks/unical_storage_studyactivity_list.html:259
 #: templates/blocks/unical_storage_studyactivity_list.html:289
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:41
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:40
 msgid "SSD"
 msgstr ""
 
@@ -1136,73 +1136,77 @@ msgstr "Alternativo"
 msgid "Part-time"
 msgstr ""
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:106
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:149
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:104
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:147
 msgid "Insegnamenti a scelta"
 msgstr ""
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:117
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:160
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:432
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:115
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:158
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:422
 msgid "teaching optional"
 msgstr "insegnamento opzionale"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:120
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:163
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:435
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:118
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:161
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:425
 msgid "teaching required"
 msgstr "insegnamento obbligatorio"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:123
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:137
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:166
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:180
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:438
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:452
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:121
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:135
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:164
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:178
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:428
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:442
 msgid "ETCS optional"
 msgstr "CFU opzionali"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:126
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:140
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:169
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:183
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:441
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:455
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:124
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:138
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:167
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:181
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:431
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:445
 msgid "ETCS required"
 msgstr "CFU obbligatori"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:131
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:174
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:446
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:129
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:172
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:436
 msgid "teachings optional"
 msgstr "insegnamenti opzionali"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:134
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:177
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:449
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:132
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:175
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:439
 msgid "teachings required"
 msgstr "insegnamenti obbligatori"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:143
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:187
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:459
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:141
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:185
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:449
 msgid "choice between"
 msgstr "a scelta tra"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:262
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:291
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:376
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:405
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:543
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:257
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:282
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:366
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:395
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:533
 msgid "Valid option"
 msgstr "Opzione valida"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:271
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:385
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:264
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:375
 msgid "Invalid option"
 msgstr "Opzione non valida"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:421
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:285
+msgid "Study course type"
+msgstr "Tipologia del corso di studio"
+
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:411
 msgid "Courses to chose"
 msgstr "Insegnamenti a scelta"
 

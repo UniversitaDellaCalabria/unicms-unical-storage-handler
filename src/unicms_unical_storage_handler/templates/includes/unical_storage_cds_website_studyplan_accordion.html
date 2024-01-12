@@ -33,67 +33,65 @@
                         [[ required.SceDes ]]
                     </b>
                     <div class="table-responsive">
-                        <span>
-                            <table class="table table-sm table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">{% trans "Teaching" %}</th>
-                                        <th scope="col">{% trans "SSD" %}</th>
-                                        <th scope="col">{% trans "Period" %}</th>
-                                        <th scope="col">{% trans "ETCS" %}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="activity in required.Required">
-                                        <td>
-                                            [[ activity.AfCod || "-" ]]&nbsp;
+                        <table class="table table-sm table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">{% trans "Teaching" %}</th>
+                                    <th scope="col">{% trans "SSD" %}</th>
+                                    <th scope="col">{% trans "Period" %}</th>
+                                    <th scope="col">{% trans "ETCS" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="activity in required.Required">
+                                    <td>
+                                        [[ activity.AfCod || "-" ]]&nbsp;
 <!--
-                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'">
+                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'">
 -->
-                                            <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
-                                                [[ activity.AfDescription ]]
-                                            </a>
-                                            <span v-else>
-                                                [[ activity.AfDescription ]]
-                                            </span>
-                                            <ul v-if="activity.AfSubModules.length > 0">
-                                                <li v-for="module in activity.AfSubModules">
-                                                    [[ module.StudyActivityCod ]]
-                                                    <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
-                                                        [[ module.StudyActivityName ]]
-                                                    </a>
-                                                    <span v-else>
-                                                        [[ module.StudyActivityName ]]
-                                                    </span>
-                                                    <span v-if="module.StudyActivityPartitionDescription">[[ module.StudyActivityPartitionDescription ]]</span>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            [[ activity.SettCod || "-" ]]
-                                            <span v-for="module in activity.AfSubModules">
-                                                <br>
-                                                [[ module.StudyActivitySettCod || "-" ]]
-                                            </span>
-                                        </td>
-                                        <td>
-                                            [[ activity.CycleDes ]]
-                                            <span v-for="module in activity.AfSubModules">
-                                                <br>
-                                                [[ module.StudyActivitySemester || "-" ]]
-                                            </span>
-                                        </td>
-                                        <td>
-                                            [[ activity.CreditValue || "-" ]]
-                                            <span v-for="module in activity.AfSubModules">
-                                                <br>
-                                                [[ module.StudyActivityCreditValue || "-" ]]
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </span>
+                                        <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                            [[ activity.AfDescription ]]
+                                        </a>
+                                        <span v-else>
+                                            [[ activity.AfDescription ]]
+                                        </span>
+                                        <ul v-if="activity.AfSubModules.length > 0">
+                                            <li v-for="module in activity.AfSubModules">
+                                                [[ module.StudyActivityCod ]]
+                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                    [[ module.StudyActivityName ]]
+                                                </a>
+                                                <span v-else>
+                                                    [[ module.StudyActivityName ]]
+                                                </span>
+                                                <span v-if="module.StudyActivityPartitionDescription">[[ module.StudyActivityPartitionDescription ]]</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        [[ activity.SettCod || "-" ]]
+                                        <span v-for="module in activity.AfSubModules">
+                                            <br>
+                                            [[ module.StudyActivitySettCod || "-" ]]
+                                        </span>
+                                    </td>
+                                    <td>
+                                        [[ activity.CycleDes ]]
+                                        <span v-for="module in activity.AfSubModules">
+                                            <br>
+                                            [[ module.StudyActivitySemester || "-" ]]
+                                        </span>
+                                    </td>
+                                    <td>
+                                        [[ activity.CreditValue || "-" ]]
+                                        <span v-for="module in activity.AfSubModules">
+                                            <br>
+                                            [[ module.StudyActivityCreditValue || "-" ]]
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -194,121 +192,6 @@
                                         [[ vin_sub_choice.SceDes ]]
                                     </b>
                                     <div class="table-responsive">
-                                        <span>
-                                            <table class="table table-sm table-hover table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">{% trans "Teaching" %}</th>
-                                                        <th scope="col">{% trans "Period" %}</th>
-                                                        <th scope="col">{% trans "ETCS" %}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="activity in vin_sub_choice.Choices">
-                                                        <td>
-                                                            [[ activity.AfCod || "-" ]]
-                                                            <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
-                                                                [[ activity.AfDescription || "-" ]]
-                                                            </a>
-                                                            <span v-else>
-                                                                [[ activity.AfDescription || "-" ]]
-                                                            </span>
-                                                            <ul v-if="activity.AfSubModules.length > 0">
-                                                                <li v-for="module in activity.AfSubModules">
-                                                                    [[ module.StudyActivityCod || "-" ]]
-                                                                    <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
-                                                                        [[ module.StudyActivityName || "-" ]]
-                                                                    </a>
-                                                                    <span v-else>
-                                                                        [[ module.StudyActivityName || "-" ]]
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                        </td>
-                                                        <td>
-                                                            [[ activity.CycleDes || "-" ]]
-                                                            <span v-for="module in activity.AfSubModules">
-                                                                <br>
-                                                                [[ module.StudyActivitySemester || "-" ]]
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            [[ activity.CreditValue || "-" ]]
-                                                            <span v-for="module in activity.AfSubModules">
-                                                                <br>
-                                                                [[ module.StudyActivityCreditValue || "-" ]]
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END scelte del vincolo innestato -->
-                            <!-- filtri del vincolo innestato -->
-                            <div v-for="vin_sub_choice in tab.AfChoices" v-if="vin_sub_choice.VinId == vin_choice.SceId && vin_sub_choice.FilAnd.length > 0">
-                                <div>
-                                    <br>
-                                    <b>
-                                        [[ vin_sub_choice.SceDes ]]
-                                    </b>
-                                    <div v-if="vin_sub_choice.FilAnd.length > 0 ">
-                                        <ul class="ps-0 list-unstyled">
-                                            <li v-for="filter in vin_sub_choice.FilAnd" v-if="!filter.NotFlg">
-                                                <span>
-                                                    <svg class="icon icon-sm icon-success" :aria-labelledby="filter.FilAndId + 'success'">
-                                                        <title :id="filter.FilAndId + 'success'">{% trans "Valid option" %}</title>
-                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
-                                                    </svg>
-                                                </span>
-                                                [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
-                                            </li>
-                                            <li v-for="filter in vin_sub_choice.FilAnd" v-if="filter.NotFlg">
-                                                <span>
-                                                    <svg class="icon icon-sm icon-danger" :aria-labelledby="filter.FilAndId + 'danger'">
-                                                        <title :id="filter.FilAndId + 'danger'">{% trans "Invalid option" %}</title>
-                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
-                                                    </svg>
-                                                </span>
-                                                <span v-if="filter.TipoFiltroCod == 'CDS'">
-                                                    [[ filter.TipoFiltroDes ]]: [[ filter.CdsSceFilAndNome ]] ([[ filter.CdsSceFilAndCod ]])
-                                                </span>
-                                                <span v-else>
-                                                    [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div v-if="vin_choice.Choices.length==0 && vin_choice.FilAnd.length==0 && vin_choice.SceCodType != 'V'">
-                                <ul class="ps-0 list-unstyled">
-                                    <li>
-                                        <span>
-                                            <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
-                                                <title id="no-choice-success">{% trans "Valid option" %}</title>
-                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
-                                            </svg>
-                                        </span>
-                                         Tipologia del CDS: [[ _cds_data.cds.CourseTypeDescription ]] ([[ _cds_data.cds.CourseType ]])
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- END filtri vincolo innestato -->
-                        </div>
-                        <!-- END vincoli innestati -->
-
-                        <!-- scelte del vincolo -->
-                        <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.VinId == choice.SceId && sub_choice.Choices.length > 0">
-                            <div>
-                                <br>
-                                <b>
-                                    [[ sub_choice.SceDes ]]
-                                </b>
-                                <div class="table-responsive">
-                                    <span>
                                         <table class="table table-sm table-hover table-striped">
                                             <thead>
                                                 <tr>
@@ -318,7 +201,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="activity in sub_choice.Choices">
+                                                <tr v-for="activity in vin_sub_choice.Choices">
                                                     <td>
                                                         [[ activity.AfCod || "-" ]]
                                                         <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
@@ -356,7 +239,112 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END scelte del vincolo innestato -->
+                            <!-- filtri del vincolo innestato -->
+                            <div v-for="vin_sub_choice in tab.AfChoices" v-if="vin_sub_choice.VinId == vin_choice.SceId && vin_sub_choice.FilAnd.length > 0">
+                                <div>
+                                    <br>
+                                    <b>
+                                        [[ vin_sub_choice.SceDes ]]
+                                    </b>
+                                    <div v-if="vin_sub_choice.FilAnd.length > 0 ">
+                                        <ul class="ps-0 list-unstyled">
+                                            <li v-for="filter in vin_sub_choice.FilAnd" v-if="!filter.NotFlg">
+                                                <svg class="icon icon-sm icon-success" :aria-labelledby="filter.FilAndId + 'success'">
+                                                    <title :id="filter.FilAndId + 'success'">{% trans "Valid option" %}</title>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                                </svg>
+                                                [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
+                                            </li>
+                                            <li v-for="filter in vin_sub_choice.FilAnd" v-if="filter.NotFlg">
+                                                <svg class="icon icon-sm icon-danger" :aria-labelledby="filter.FilAndId + 'danger'">
+                                                    <title :id="filter.FilAndId + 'danger'">{% trans "Invalid option" %}</title>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
+                                                </svg>
+                                                <span v-if="filter.TipoFiltroCod == 'CDS'">
+                                                    [[ filter.TipoFiltroDes ]]: [[ filter.CdsSceFilAndNome ]] ([[ filter.CdsSceFilAndCod ]])
+                                                </span>
+                                                <span v-else>
+                                                    [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="vin_choice.Choices.length==0 && vin_choice.FilAnd.length==0 && vin_choice.SceCodType != 'V'">
+                                <ul class="ps-0 list-unstyled">
+                                    <li>
+                                        <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
+                                            <title id="no-choice-success">{% trans "Valid option" %}</title>
+                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                        </svg>
+                                         {% trans "Study course type" %}: [[ _cds_data.cds.CourseTypeDescription ]] ([[ _cds_data.cds.CourseType ]])
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- END filtri vincolo innestato -->
+                        </div>
+                        <!-- END vincoli innestati -->
+
+                        <!-- scelte del vincolo -->
+                        <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.VinId == choice.SceId && sub_choice.Choices.length > 0">
+                            <div>
+                                <br>
+                                <b>
+                                    [[ sub_choice.SceDes ]]
+                                </b>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">{% trans "Teaching" %}</th>
+                                                <th scope="col">{% trans "Period" %}</th>
+                                                <th scope="col">{% trans "ETCS" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="activity in sub_choice.Choices">
+                                                <td>
+                                                    [[ activity.AfCod || "-" ]]
+                                                    <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                        [[ activity.AfDescription || "-" ]]
+                                                    </a>
+                                                    <span v-else>
+                                                        [[ activity.AfDescription || "-" ]]
+                                                    </span>
+                                                    <ul v-if="activity.AfSubModules.length > 0">
+                                                        <li v-for="module in activity.AfSubModules">
+                                                            [[ module.StudyActivityCod || "-" ]]
+                                                            <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                [[ module.StudyActivityName || "-" ]]
+                                                            </a>
+                                                            <span v-else>
+                                                                [[ module.StudyActivityName || "-" ]]
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    [[ activity.CycleDes || "-" ]]
+                                                    <span v-for="module in activity.AfSubModules">
+                                                        <br>
+                                                        [[ module.StudyActivitySemester || "-" ]]
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    [[ activity.CreditValue || "-" ]]
+                                                    <span v-for="module in activity.AfSubModules">
+                                                        <br>
+                                                        [[ module.StudyActivityCreditValue || "-" ]]
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -400,13 +388,11 @@
                         <div v-if="choice.Choices.length==0 && choice.FilAnd.length==0 && choice.SceCodType != 'V'">
                             <ul class="ps-0 list-unstyled">
                                 <li>
-                                    <span>
-                                        <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
-                                            <title id="no-choice-success">{% trans "Valid option" %}</title>
-                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
-                                        </svg>
-                                    </span>
-                                     Tipologia del CDS: [[ _cds_data.cds.CourseTypeDescription ]] ([[ _cds_data.cds.CourseType ]])
+                                    <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
+                                        <title id="no-choice-success">{% trans "Valid option" %}</title>
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                    </svg>
+                                    {% trans "Study course type" %}: [[ _cds_data.cds.CourseTypeDescription ]] ([[ _cds_data.cds.CourseType ]])
                                 </li>
                             </ul>
                         </div>
@@ -513,19 +499,15 @@
                         <div v-if="choice.FilAnd.length > 0 ">
                             <ul class="ps-0 list-unstyled">
                                 <li v-for="filter in choice.FilAnd" v-if="!filter.NotFlg">
-                                    <span>
-                                        <svg class="icon icon-sm icon-success">
-                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
-                                        </svg>
-                                    </span>
+                                    <svg class="icon icon-sm icon-success">
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                    </svg>
                                     [[ filter.TipoFiltroDes ]]: [[ filter.FilOrDes ]] ([[ filter.CourseTypeSceFilAndCod ]])
                                 </li>
                                 <li v-for="filter in choice.FilAnd" v-if="filter.NotFlg">
-                                    <span>
-                                        <svg class="icon icon-sm icon-danger">
-                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
-                                        </svg>
-                                    </span>
+                                    <svg class="icon icon-sm icon-danger">
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
+                                    </svg>
                                     <span v-if="filter.TipoFiltroCod == 'CDS'">
                                         [[ filter.TipoFiltroDes ]]: [[ filter.CdsSceFilAndNome ]] ([[ filter.CdsSceFilAndCod ]])
                                     </span>
@@ -538,13 +520,11 @@
                         <div v-if="choice.Choices.length==0 && choice.FilAnd.length==0 && choice.SceCodType != 'V'">
                             <ul class="ps-0 list-unstyled">
                                 <li>
-                                    <span>
-                                        <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
-                                            <title id="no-choice-success">{% trans "Valid option" %}</title>
-                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
-                                        </svg>
-                                    </span>
-                                     Tipologia del CDS: [[ _cds_data.cds.CourseTypeDescription ]] ([[ _cds_data.cds.CourseType ]])
+                                    <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
+                                        <title id="no-choice-success">{% trans "Valid option" %}</title>
+                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
+                                    </svg>
+                                    {% trans "Study course type" %}: [[ _cds_data.cds.CourseTypeDescription ]] ([[ _cds_data.cds.CourseType ]])
                                 </li>
                             </ul>
                         </div>
