@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 12:20+0100\n"
-"PO-Revision-Date: 2024-01-12 12:25+0100\n"
+"POT-Creation-Date: 2024-01-12 12:27+0100\n"
+"PO-Revision-Date: 2024-01-12 12:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -1565,6 +1565,11 @@ msgstr "Vai al sito istituzionale"
 #: templates/storage_cds_websites_studiare.html:168
 msgid "Consult the page with study plans"
 msgstr "Consulta la pagina con i piani di studio"
+
+#: templates/storage_cds_websites_studiare_calendari.html:113
+#: templates/storage_cds_websites_studiare_orari.html:118
+msgid "Choose a teaching"
+msgstr "Scegli un insegnamento"
 
 #: templates/storage_cds_websites_studiare_calendari.html:136
 msgid "Show past events"
