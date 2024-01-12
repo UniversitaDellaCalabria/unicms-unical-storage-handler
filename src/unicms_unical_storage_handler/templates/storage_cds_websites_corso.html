@@ -264,44 +264,36 @@
                                 <hr>
                                 <ul>
                                     <li>
-                                        <b>Piano di studio Statutario:</b>
-                                        è il piano ufficiale che il corso di studio attribuisce
-                                        automaticamente a tutti gli studenti immatricolati.
-                                        Nella prima modifica del piano di studio lo studente può variare
-                                        le attività all'interno di eventuali gruppi di materie opzionali
-                                        e indicare le scelte libere
+                                        <b>{% trans "Statutory study plan" %}:</b>
+                                        {% trans "it is the official plan that the course of study attributes automatically to all enrolled students. In the first modification of the study plan the student may change activities within any groups of optional subjects and indicate free choices" %}
                                     </li>
                                     <li>
-                                        <b>Piano di studio Alternativo:</b>
-                                        è il piano che lo studente presenta scegliendo le attività
-                                        formative all’interno di opzioni e scelte libere,
-                                        predisposte dal corso di studio, nel rispetto di alcuni vincoli
+                                        <b>{% trans "Alternative study plan" %}:</b>
+                                        {% trans "it is the plan that the student presents by choosing the activities training within options and free choices, prepared by the course of study, in compliance with some constraints" %}
                                     </li>
                                     <li>
-                                        <b>Piano di studio Part-time:</b>
-                                        è il percorso dello studente che ha optato per il regime di tempo parziale,
-                                        tipicamente con la metà del numero di crediti formativi per anno rispetto al tempo pieno
+                                        <b>{% trans "Part-time study plan" %}:</b>
+                                        {% trans "is the path of the student who has opted for the part-time regime, typically with half the number of training credits per year compared to full-time" %}
                                     </li>
                                     <li>
-                                        <b>Attività a scelta:</b>
-                                        lo studente potrà scegliere tra attività offerte dai corsi di studio dell'ateneo
-                                        (scelta <i>"libera da OF"</i>) oppure all'interno di elenchi predefiniti dal corso di studio,
-                                        secondo le regole indicate nella piattaforma web di modifica del piano.
+                                        <b>{% trans "Activities of your choice" %}:</b>
+                                        {% trans "the student will be able to choose from activities offered by the university's study courses" %}
+                                        ({% trans "choice" %} <i>"libera da OF"</i>)
+                                        {% trans "or within lists predefined by the course of study, according to the rules indicated in the plan modification web platform." %}
                                     </li>
                                     <li>
-                                        <b>Vincoli:</b>
-                                        esprimono il numero minimo/massimo di crediti formativi da scegliere
-                                        all’interno di un gruppo di insegnamenti e/o di tipologia di corsi di studio.
+                                        <b>{% trans "Constraints" %}:</b>
+                                        {% trans "express the minimum/maximum number of training credits to choose within a group of courses and/or type of study courses." %}
                                     </li>
                                     <li>
-                                        <b>Modifica del piano di studio:</b>
-                                        lo studente può modificare il piano di studio prima dell’inizio di ogni semestre,
-                                        nella relativa finestra temporale stabilita dal Dipartimento.
-                                        Seguire le indicazioni nella pagina
-                                        "<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">Studiare</a>" del sito.
-                                        Per maggiori dettagli, consultare il
-                                        <a :href="_cds_data.fixed_cds.DidacticRegulation" target="_blank">Regolamento didattico</a> del corso
-                                        e il <a :href="_cds_data.fixed_cds.StudyManifesto" target="_blank">Manifesto degli studi</a>.
+                                        <b>{% trans "Modification of the study plan" %}:</b>
+                                        {% trans "the student can change the study plan before the start of each semester, in the relevant time window established by the Department." %}
+                                        {% trans "Follow the directions on the page" %}
+                                        "<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">{% trans "Study" %}</a>" {% trans "of the site" %}.
+                                        {% trans "For more details, please see" %}
+                                        <a :href="_cds_data.fixed_cds.DidacticRegulation" target="_blank">{% trans "Didactic regulation" %}</a>
+                                        {% trans "of the course and the" %}
+                                        <a :href="_cds_data.fixed_cds.StudyManifesto" target="_blank">{% trans "Study manifesto" %}</a>.
                                     </li>
                                 </ul>
                             </div>

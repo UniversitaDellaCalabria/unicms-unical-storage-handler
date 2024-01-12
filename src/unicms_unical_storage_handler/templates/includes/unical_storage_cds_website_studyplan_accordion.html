@@ -10,8 +10,8 @@
             aria-expanded="false"
             :aria-controls="'collapse-cdswebsitestudyplan-' + tab.PlanTabId + '-lft'">
         <span v-if="tab.ClaMiurCod">([[ tab.ClaMiurCod ]])&nbsp;</span>
-        <span v-if="tab.Statutario">{% trans "Statutario" %}</span>
-        <span v-else>{% trans "Alternativo" %}</span>
+        <span v-if="tab.Statutario">{% trans "Statutory" %}</span>
+        <span v-else>{% trans "Alternative" %}</span>
         <span v-if="tab.APT">&nbsp;{% trans "Part-time" %}</span>
     </button>
 </div>
@@ -111,10 +111,35 @@
                         <span v-else>
                             min [[ choice.MinUnt ]] / max [[ choice.MaxUnt ]]
                         </span>
-                        <span v-if="choice.UmRegSceCodType == 'BLK'">{% trans "teachings" %}</span>
-                        <span v-else>{% trans "ETCS" %}</span>
-                        <span v-if="choice.OpzFlg">{% trans "optional" %}</span>
-                        <span v-else>{% trans "required" %}</span>
+
+                        <span v-if="choice.MaxUnt == 1">
+                            <span v-if="choice.UmRegSceCodType == 'BLK' && choice.OpzFlg">
+                                {% trans "teaching optional" %}
+                            </span>
+                            <span v-if="choice.UmRegSceCodType == 'BLK' &! choice.OpzFlg">
+                                {% trans "teaching required" %}
+                            </span>
+                            <span v-if="!choice.UmRegSceCodType == 'BLK' && choice.OpzFlg">
+                                {% trans "ETCS optional" %}
+                            </span>
+                            <span v-if="!choice.UmRegSceCodType == 'BLK' &! choice.OpzFlg">
+                                {% trans "ETCS required" %}
+                            </span>
+                        </span>
+                        <span v-else>
+                            <span v-if="choice.UmRegSceCodType == 'BLK' && choice.OpzFlg">
+                                {% trans "teachings optional" %}
+                            </span>
+                            <span v-if="choice.UmRegSceCodType == 'BLK' &! choice.OpzFlg">
+                                {% trans "teachings required" %}
+                            </span>
+                            <span v-if="!choice.UmRegSceCodType == 'BLK' && choice.OpzFlg">
+                                {% trans "ETCS optional" %}
+                            </span>
+                            <span v-if="!choice.UmRegSceCodType == 'BLK' &! choice.OpzFlg">
+                                {% trans "ETCS required" %}
+                            </span>
+                        </span>
                         <span>{% trans "choice between" %}</span>
 
 
@@ -129,10 +154,36 @@
                                 <span v-else>
                                     min [[ vin_choice.MinUnt ]] / max [[ vin_choice.MaxUnt ]]
                                 </span>
-                                <span v-if="vin_choice.UmRegSceCodType == 'BLK'">{% trans "teachings" %}</span>
-                                <span v-else>{% trans "ETCS" %}</span>
-                                <span v-if="vin_choice.OpzFlg">{% trans "optional" %}</span>
-                                <span v-else>{% trans "required" %}</span>
+
+                                <span v-if="vin_choice.MaxUnt == 1">
+                                    <span v-if="vin_choice.UmRegSceCodType == 'BLK' && vin_choice.OpzFlg">
+                                        {% trans "teaching optional" %}
+                                    </span>
+                                    <span v-if="vin_choice.UmRegSceCodType == 'BLK' &! vin_choice.OpzFlg">
+                                        {% trans "teaching required" %}
+                                    </span>
+                                    <span v-if="!vin_choice.UmRegSceCodType == 'BLK' && vin_choice.OpzFlg">
+                                        {% trans "ETCS optional" %}
+                                    </span>
+                                    <span v-if="!vin_choice.UmRegSceCodType == 'BLK' &! vin_choice.OpzFlg">
+                                        {% trans "ETCS required" %}
+                                    </span>
+                                </span>
+                                <span v-else>
+                                    <span v-if="vin_choice.UmRegSceCodType == 'BLK' && vin_choice.OpzFlg">
+                                        {% trans "teachings optional" %}
+                                    </span>
+                                    <span v-if="vin_choice.UmRegSceCodType == 'BLK' &! vin_choice.OpzFlg">
+                                        {% trans "teachings required" %}
+                                    </span>
+                                    <span v-if="!vin_choice.UmRegSceCodType == 'BLK' && vin_choice.OpzFlg">
+                                        {% trans "ETCS optional" %}
+                                    </span>
+                                    <span v-if="!vin_choice.UmRegSceCodType == 'BLK' &! vin_choice.OpzFlg">
+                                        {% trans "ETCS required" %}
+                                    </span>
+                                </span>
+
                                 <span>{% trans "choice between" %}</span>
                             </div>
                             <br>
@@ -367,7 +418,7 @@
                 <!-- scelte non vincolate -->
                 <div v-if="choice.Year == index && choice.SceCodType != 'V' &! choice.VinId">
                     <div class="alert alert-info" role="alert">
-                        <b>{% trans "Insegnamenti a scelta" %} - [[ choice.RegSceCodDes ]]</b>
+                        <b>{% trans "Courses to chose" %} - [[ choice.RegSceCodDes ]]</b>
                         <br>
                         <span v-if="choice.MinUnt == choice.MaxUnt">
                             [[ choice.MaxUnt ]]
@@ -375,10 +426,36 @@
                         <span v-else>
                             min [[ choice.MinUnt ]] / max [[ choice.MaxUnt ]]
                         </span>
-                        <span v-if="choice.UmRegSceCodType == 'BLK'">{% trans "teachings" %}</span>
-                        <span v-else>{% trans "ETCS" %}</span>
-                        <span v-if="choice.OpzFlg">{% trans "optional" %}</span>
-                        <span v-else>{% trans "required" %}</span>
+
+                        <span v-if="choice.MaxUnt == 1">
+                            <span v-if="choice.UmRegSceCodType == 'BLK' && choice.OpzFlg">
+                                {% trans "teaching optional" %}
+                            </span>
+                            <span v-if="choice.UmRegSceCodType == 'BLK' &! choice.OpzFlg">
+                                {% trans "teaching required" %}
+                            </span>
+                            <span v-if="!choice.UmRegSceCodType == 'BLK' && choice.OpzFlg">
+                                {% trans "ETCS optional" %}
+                            </span>
+                            <span v-if="!choice.UmRegSceCodType == 'BLK' &! choice.OpzFlg">
+                                {% trans "ETCS required" %}
+                            </span>
+                        </span>
+                        <span v-else>
+                            <span v-if="choice.UmRegSceCodType == 'BLK' && choice.OpzFlg">
+                                {% trans "teachings optional" %}
+                            </span>
+                            <span v-if="choice.UmRegSceCodType == 'BLK' &! choice.OpzFlg">
+                                {% trans "teachings required" %}
+                            </span>
+                            <span v-if="!choice.UmRegSceCodType == 'BLK' && choice.OpzFlg">
+                                {% trans "ETCS optional" %}
+                            </span>
+                            <span v-if="!choice.UmRegSceCodType == 'BLK' &! choice.OpzFlg">
+                                {% trans "ETCS required" %}
+                            </span>
+                        </span>
+
                         <span>{% trans "choice between" %}</span>
 
                         <div class="table-responsive" v-if="choice.Choices.length > 0 ">
