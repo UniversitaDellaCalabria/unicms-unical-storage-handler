@@ -312,7 +312,7 @@
                                                         <span v-if="article.CdsArticle">
                                                             <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
                                                             <div v-for="other_data in article.OtherData">
-                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <p class="mt-3">[[ other_data.Title ]]</p>
                                                                 <div>[[ other_data.Text ]]</div>
                                                             </div>
                                                         </span>
@@ -327,7 +327,7 @@
                                                                 </a>
                                                             </span>
                                                             <div v-for="other_data in article.OtherData">
-                                                                <p class="h6 mt-3">[[ other_data.Title ]]</p>
+                                                                <p class="mt-3">[[ other_data.Title ]]</p>
                                                                 <div>[[ other_data.Text ]]</div>
                                                             </div>
                                                         </span>
