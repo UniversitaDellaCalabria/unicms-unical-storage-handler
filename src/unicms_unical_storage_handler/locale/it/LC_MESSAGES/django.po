@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 12:27+0100\n"
-"PO-Revision-Date: 2024-01-12 12:27+0100\n"
+"POT-Creation-Date: 2024-01-12 13:19+0100\n"
+"PO-Revision-Date: 2024-01-12 13:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -255,6 +255,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_teacherslist.html:163
 #: templates/blocks/unical_storage_teacherstudyactivities.html:140
 #: templates/storage_cds_websites_prospect.html:148
+#: templates/storage_cds_websites_studiare_calendari.html:217
 #: templates/storage_cds_websites_studiare_orari.html:313
 msgid "No items here"
 msgstr "Nessun risultato"
@@ -878,7 +879,7 @@ msgstr "Modalità test finale"
 
 #: templates/blocks/unical_storage_phd_activities_list.html:60
 #: templates/blocks/unical_storage_studyactivity_list.html:198
-#: templates/storage_cds_websites_studiare_calendari.html:195
+#: templates/storage_cds_websites_studiare_calendari.html:196
 #: templates/storage_cds_websites_studiare_orari.html:144
 msgid "Teacher"
 msgstr "Docente"
@@ -1567,7 +1568,9 @@ msgid "Consult the page with study plans"
 msgstr "Consulta la pagina con i piani di studio"
 
 #: templates/storage_cds_websites_studiare_calendari.html:113
+#: templates/storage_cds_websites_studiare_calendari.html:126
 #: templates/storage_cds_websites_studiare_orari.html:118
+#: templates/storage_cds_websites_studiare_orari.html:131
 msgid "Choose a teaching"
 msgstr "Scegli un insegnamento"
 
@@ -1575,36 +1578,44 @@ msgstr "Scegli un insegnamento"
 msgid "Show past events"
 msgstr "Mostra eventi passati"
 
-#: templates/storage_cds_websites_studiare_calendari.html:169
+#: templates/storage_cds_websites_studiare_calendari.html:162
+msgid "Confirmed"
+msgstr "Confermato"
+
+#: templates/storage_cds_websites_studiare_calendari.html:165
+msgid "To be confirmed"
+msgstr "Da confermare"
+
+#: templates/storage_cds_websites_studiare_calendari.html:170
 msgid "Description"
 msgstr "Descrizione"
 
-#: templates/storage_cds_websites_studiare_calendari.html:175
+#: templates/storage_cds_websites_studiare_calendari.html:176
 msgid "Hour"
 msgstr "Ore"
 
-#: templates/storage_cds_websites_studiare_calendari.html:181
+#: templates/storage_cds_websites_studiare_calendari.html:182
 #: templates/storage_cds_websites_studiare_orari.html:161
 msgid "Location"
 msgstr "Luogo"
 
-#: templates/storage_cds_websites_studiare_calendari.html:188
+#: templates/storage_cds_websites_studiare_calendari.html:189
 msgid "Building"
 msgstr ""
 
-#: templates/storage_cds_websites_studiare_calendari.html:202
+#: templates/storage_cds_websites_studiare_calendari.html:203
 msgid "Subscriptions"
 msgstr "Prenotazioni"
 
-#: templates/storage_cds_websites_studiare_calendari.html:205
+#: templates/storage_cds_websites_studiare_calendari.html:206
 msgid "Prenotazioni"
 msgstr ""
 
-#: templates/storage_cds_websites_studiare_calendari.html:206
+#: templates/storage_cds_websites_studiare_calendari.html:207
 msgid "dal"
 msgstr ""
 
-#: templates/storage_cds_websites_studiare_calendari.html:208
+#: templates/storage_cds_websites_studiare_calendari.html:209
 msgid "al"
 msgstr ""
 

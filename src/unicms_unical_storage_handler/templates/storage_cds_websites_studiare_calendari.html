@@ -141,76 +141,81 @@
                                     </div>
                                 </div>
 
-                                <loading-icon
-                                    v-if="is_loading && chosen_af_cod != ''"
-                                    :loader_source="loader_source">
-                                </loading-icon>
+                                <div v-if="chosen_af_cod != ''">
+                                    <loading-icon
+                                        v-if="is_loading"
+                                        :loader_source="loader_source">
+                                    </loading-icon>
 
-                                <div class="table-responsive" v-else-if="chosen_af_cod != ''">
-                                    <table class="table table-hover table-striped">
-                                        <tr v-for="event in events">
-                                            <td class="p-3">
-                                                <b>
-                                                    [[ new Date(event.dataInizio).toLocaleString("{{ LANGUAGE_CODE }}",
-                                                                                        {weekday: 'long',
-                                                                                         day: '2-digit',
-                                                                                         month: 'long',
-                                                                                         year: 'numeric'})]]
-                                                </b>
-                                                <span class="badge bg-success" v-if="event.codice=='ESSE3_ES'">
-                                                    Confermato
-                                                </span>
-                                                <span class="badge bg-warning" v-else>
-                                                    Da confermare
-                                                </span>
-                                                <br>
-                                                <span v-if="event.extra.descr">
-                                                    <svg class="icon icon-xs me-2" aria-labelledby="event_descr">
-                                                        <title id="event_descr">{% trans "Description" %}</title>
-                                                        <use href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
-                                                    </svg> [[ event.extra.descr ]]
-                                                    <br>
-                                                </span>
-                                                <svg class="icon icon-xs me-2" aria-labelledby="event_hour">
-                                                    <title id="event_hour">{% trans "Hour" %}</title>
-                                                    <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                                                </svg> [[ event.orarioInizio ]] <span v-if="event.orarioFine">/ [[ event.orarioFine ]]</span>
-                                                <span v-if="event.aula">
-                                                    <br>
-                                                    <svg class="icon icon-xs me-2" aria-labelledby="event_location">
-                                                        <title id="event_location">{% trans "Location" %}</title>
-                                                        <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                                                    </svg> [[ event.aula ]]
-                                                </span>
-                                                <span v-if="event.edificio">
-                                                    <br>
-                                                    <svg class="icon icon-xs me-2" aria-labelledby="event_building">
-                                                        <title id="event_building">{% trans "Building" %}</title>
-                                                        <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
-                                                    </svg> [[ event.edificio ]]
-                                                </span>
-                                                <span v-if="event.docente">
-                                                    <br>
-                                                    <svg class="icon icon-xs me-2" aria-labelledby="event_teacher">
-                                                        <title id="event_teacher">{% trans "Teacher" %}</title>
-                                                        <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                                                    </svg> [[ event.docente ]]
-                                                </span>
-                                                <span v-if="event.extra.dataInizioIscrizioni">
-                                                    <br>
-                                                    <svg class="icon icon-xs me-2" aria-labelledby="event_registration">
-                                                        <title id="event_registration">{% trans "Subscriptions" %}</title>
-                                                        <use href="{% static 'svg/sprites.svg' %}#it-check"></use>
-                                                    </svg>
-                                                    {% trans "Prenotazioni" %}
-                                                    {% trans "dal" %} [[ event.extra.dataInizioIscrizioni ]]
-                                                    <span v-if="event.extra.dataFineIscrizioni">
-                                                        {% trans "al" %} [[ event.extra.dataFineIscrizioni ]]
+                                    <div class="table-responsive" v-else-if="events.length > 0">
+                                        <table class="table table-hover table-striped">
+                                            <tr v-for="event in events">
+                                                <td class="p-3">
+                                                    <b>
+                                                        [[ new Date(event.dataInizio).toLocaleString("{{ LANGUAGE_CODE }}",
+                                                                                            {weekday: 'long',
+                                                                                             day: '2-digit',
+                                                                                             month: 'long',
+                                                                                             year: 'numeric'})]]
+                                                    </b>
+                                                    <span class="badge bg-success" v-if="event.codice=='ESSE3_ES'">
+                                                        {% trans "Confirmed" %}
                                                     </span>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                                    <span class="badge bg-warning" v-else>
+                                                        {% trans "To be confirmed" %}
+                                                    </span>
+                                                    <br>
+                                                    <span v-if="event.extra.descr">
+                                                        <svg class="icon icon-xs me-2" aria-labelledby="event_descr">
+                                                            <title id="event_descr">{% trans "Description" %}</title>
+                                                            <use href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
+                                                        </svg> [[ event.extra.descr ]]
+                                                        <br>
+                                                    </span>
+                                                    <svg class="icon icon-xs me-2" aria-labelledby="event_hour">
+                                                        <title id="event_hour">{% trans "Hour" %}</title>
+                                                        <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                                                    </svg> [[ event.orarioInizio ]] <span v-if="event.orarioFine">/ [[ event.orarioFine ]]</span>
+                                                    <span v-if="event.aula">
+                                                        <br>
+                                                        <svg class="icon icon-xs me-2" aria-labelledby="event_location">
+                                                            <title id="event_location">{% trans "Location" %}</title>
+                                                            <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                                                        </svg> [[ event.aula ]]
+                                                    </span>
+                                                    <span v-if="event.edificio">
+                                                        <br>
+                                                        <svg class="icon icon-xs me-2" aria-labelledby="event_building">
+                                                            <title id="event_building">{% trans "Building" %}</title>
+                                                            <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
+                                                        </svg> [[ event.edificio ]]
+                                                    </span>
+                                                    <span v-if="event.docente">
+                                                        <br>
+                                                        <svg class="icon icon-xs me-2" aria-labelledby="event_teacher">
+                                                            <title id="event_teacher">{% trans "Teacher" %}</title>
+                                                            <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
+                                                        </svg> [[ event.docente ]]
+                                                    </span>
+                                                    <span v-if="event.extra.dataInizioIscrizioni">
+                                                        <br>
+                                                        <svg class="icon icon-xs me-2" aria-labelledby="event_registration">
+                                                            <title id="event_registration">{% trans "Subscriptions" %}</title>
+                                                            <use href="{% static 'svg/sprites.svg' %}#it-check"></use>
+                                                        </svg>
+                                                        {% trans "Prenotazioni" %}
+                                                        {% trans "dal" %} [[ event.extra.dataInizioIscrizioni ]]
+                                                        <span v-if="event.extra.dataFineIscrizioni">
+                                                            {% trans "al" %} [[ event.extra.dataFineIscrizioni ]]
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div v-else-if="events.length == 0">
+                                        {% trans "No items here" %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
