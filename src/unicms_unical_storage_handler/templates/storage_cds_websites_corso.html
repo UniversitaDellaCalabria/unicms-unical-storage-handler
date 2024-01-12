@@ -58,7 +58,7 @@
                 <div class="col-12 col-lg-8">
                     <p class="h1 lighter">{{ page_title }}</p>
                     <div class="mt-5" id="_{{ cds_cod }}_1">
-                        <p>[[ item.CDSIntro ]]</p>
+                        <p v-html="item.CDSIntro"></p>
                     </div>
 
                     <div class="mt-5" id="_{{ cds_cod }}">
@@ -172,6 +172,7 @@
                                                                         <span v-else>
                                                                             [[ nameProfileInstance ]]
                                                                         </span> :
+                                                                        <br>
                                                                         <span v-if="_cds_data.containsHTML(valueProfileInstance)" v-html="valueProfileInstance"></span>
                                                                         <span v-else style="white-space: pre-line;">[[ valueProfileInstance ]]</span>
                                                                     </li>
