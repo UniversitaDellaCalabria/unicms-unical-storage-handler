@@ -59,153 +59,78 @@
                     <p class="h1 lighter">{{ page_title }}</p>
                     <div class="mt-5" id="_{{ cds_cod }}_1">
                         <p v-html="item.CDSIntro"></p>
-                    </div>
-
-                    <div class="mt-5" id="_{{ cds_cod }}">
-
-<!--
-                        <hr />
--->
-
-                        <loading-icon
-                            v-if="_cds_data.is_loading"
-                            :loader_source="loader_source">
-                        </loading-icon>
-
-                        <div v-else>
-
-                            {% comment %}
-                            <p class="h3 lighter">
-                                [[ _cds_data.fixed_cds.CourseTypeDescription ]] <span v-if="_cds_data.fixed_cds.CourseInterClassCod">{% trans "interclass" %}</span>
-                            </p>
-                            <p class="h3">
-                                [[ _cds_data.fixed_cds.CdSName ]]
-                            </p>
-                            <p class="h5 lighter">
-                                [[ _cds_data.fixed_cds.CourseClassCod ]] / [[ _cds_data.fixed_cds.CourseClassName ]]
-                            </p>
-                            <p class="h5 lighter" v-if="_cds_data.fixed_cds.CourseInterClassCod">
-                                [[ _cds_data.fixed_cds.CourseInterClassCod ]] / [[ _cds_data.fixed_cds.CourseInterClassDes ]]
-                            </p>
-
-
-<!--
-                            <p class="h5 lighter mt-4">
-                                {% trans "Referral Department" %}
-                            </p>
--->
-                            <p class="h5 mt-4">
-                                <b>[[ _cds_data.fixed_cds.DepartmentName ]]</b>
-                            </p>
-
-                            <p class="h5 lighter mt-4">
-                                {% trans "Language" %}
-                            </p>
-                            <p class="h5">
-                                <b v-for="(lang, index) in _cds_data.fixed_cds.CdSLanguage">
-                                    <span v-if="index > 0">, </span>
-                                    [[ lang ]]
-                                </b>
-                            </p>
-                            {% endcomment %}
-
-                            <div class="row">
-                                <div class="col-sm form-group mb-0">
-                                    <label for="academic_year_input">
-                                        {% trans "Year of registration" %}
-                                    </label>
-                                    <div class="w-30 mt-5">
-                                        <select id="academic_year_input"
-                                                title="{% trans 'Choose an option' %}"
-                                                name="academic_year_input"
-                                                class="form-control"
-                                                 @change="changeYear($event.target.value)">
-                                          <option v-for="item in academic_years_filter"
-                                                  :value="item.AcademicYear"
-                                                  v-if="item.AcademicYear != '{{ cds_exclude_year }}'"
-                                                  :selected="item.AcademicYear == _cds_data.cds.AcademicYear">
-                                              [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]
-                                          </option>
-                                        </select>
+                        <div id="accordionDiv1-lft" class="accordion accordion-left-icon">
+                            <div v-for="name in fields_to_show" v-if="_cds_data.fixed_cds[name] && (_cds_data.fixed_cds[name].length > 0 || Object.keys(_cds_data.fixed_cds[name]).length > 0) && name != 'CdSSatisfactionSurvey'">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" :id="'heading-' + name +'-lft'">
+                                        <button class="accordion-button"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="'#collapse-' + name +'-lft'"
+                                                aria-expanded="false"
+                                                :aria-controls="'collapse-' + name +'-lft'">
+                                            [[ _cds_data.fixed_cds_labels[name] ]]
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-5">
-                                <div id="accordionDiv1-lft" class="accordion accordion-left-icon">
-                                    <div v-for="name in fields_to_show" v-if="_cds_data.cds[name] && (_cds_data.cds[name].length > 0 || Object.keys(_cds_data.cds[name]).length > 0) && name != 'CdSSatisfactionSurvey'">
-                                        <div class="accordion-item">
-                                            <div class="accordion-header" :id="'heading-' + name +'-lft'">
-                                                <button class="accordion-button"
-                                                        type="button"
-                                                        data-bs-toggle="collapse"
-                                                        :data-bs-target="'#collapse-' + name +'-lft'"
-                                                        aria-expanded="false"
-                                                        :aria-controls="'collapse-' + name +'-lft'">
-                                                    [[ _cds_data.cds_labels[name] ]]
-                                                </button>
-                                            </div>
-                                            <div :id="'collapse-' + name +'-lft'"
-                                                 class="accordion-collapse collapse"
-                                                 data-bs-parent="#accordionDiv1-lft"
-                                                 role="region"
-                                                 :aria-labelledby="'heading-' + name +'-lft'">
-                                                <div class="accordion-body">
-                                                    <span v-if="Array.isArray(_cds_data.cds[name])">
-                                                        <ul>
-                                                            <li v-for="subvalue in _cds_data.cds[name]">
-                                                                <span v-if="_cds_data.containsHTML(subvalue)" v-html="subvalue"></span>
-                                                                <span v-else>[[ subvalue ]]</span>
-                                                            </li>
-                                                        </ul>
-                                                    </span>
-                                                    <span v-else-if="typeof _cds_data.cds[name] === 'object'">
-                                                        <ul v-for="(valueProfile, nameProfile) in _cds_data.cds[name]">
+                                    <div :id="'collapse-' + name +'-lft'"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#accordionDiv1-lft"
+                                         role="region"
+                                         :aria-labelledby="'heading-' + name +'-lft'">
+                                        <div class="accordion-body">
+                                            <span v-if="Array.isArray(_cds_data.fixed_cds[name])">
+                                                <ul>
+                                                    <li v-for="subvalue in _cds_data.fixed_cds[name]">
+                                                        <span v-if="_cds_data.containsHTML(subvalue)" v-html="subvalue"></span>
+                                                        <span v-else>[[ subvalue ]]</span>
+                                                    </li>
+                                                </ul>
+                                            </span>
+                                            <span v-else-if="typeof _cds_data.fixed_cds[name] === 'object'">
+                                                <ul v-for="(valueProfile, nameProfile) in _cds_data.fixed_cds[name]">
+                                                    <li>
+                                                        [[ nameProfile ]]
+                                                        <ul v-for="(valueProfileInstance, nameProfileInstance) in valueProfile">
                                                             <li>
-                                                                [[ nameProfile ]]
-                                                                <ul v-for="(valueProfileInstance, nameProfileInstance) in valueProfile">
-                                                                    <li>
-                                                                        <span v-if="nameProfileInstance in _cds_data.cds_labels"
-                                                                              style="white-space: pre-line;">
-                                                                            [[ _cds_data.cds_labels[nameProfileInstance] ]]
-                                                                        </span>
-                                                                        <span v-else>
-                                                                            [[ nameProfileInstance ]]
-                                                                        </span> :
-                                                                        <br>
-                                                                        <span v-if="_cds_data.containsHTML(valueProfileInstance)" v-html="valueProfileInstance"></span>
-                                                                        <span v-else style="white-space: pre-line;">[[ valueProfileInstance ]]</span>
-                                                                    </li>
-                                                                </ul>
+                                                                <span v-if="nameProfileInstance in _cds_data.fixed_cds_labels"
+                                                                      style="white-space: pre-line;">
+                                                                    [[ _cds_data.fixed_cds_labels[nameProfileInstance] ]]
+                                                                </span>
+                                                                <span v-else>
+                                                                    [[ nameProfileInstance ]]
+                                                                </span> :
+                                                                <br>
+                                                                <span v-if="_cds_data.containsHTML(valueProfileInstance)" v-html="valueProfileInstance"></span>
+                                                                <span v-else style="white-space: pre-line;">[[ valueProfileInstance ]]</span>
                                                             </li>
                                                         </ul>
+                                                    </li>
+                                                </ul>
+                                            </span>
+                                            <span v-else>
+                                                <span style="white-space: pre-line;">
+                                                    {% if full_page %}
+                                                    <a v-if="name != 'CdSSatisfactionSurvey' && name == 'CdSDoc'" v-bind:href="_cds_data.fixed_cds[name]">
+                                                        [[ _cds_data.fixed_cds[name] ]]
+                                                    </a>
+                                                    <span v-else-if="name != 'CdSSatisfactionSurvey'">
+                                                        <span v-if="_cds_data.containsHTML(_cds_data.fixed_cds[name])" v-html="_cds_data.fixed_cds[name]"></span>
+                                                        <span v-else>[[ _cds_data.fixed_cds[name] ]]</span>
                                                     </span>
+                                                    {% else %}
+                                                    <a v-if="name == 'CdSSatisfactionSurvey'" v-bind:href="'{{ almalaurea_link }}' + _cds_data.fixed_cds[name]">
+                                                        {{ almalaurea_link }}[[ _cds_data.cds[name] ]]
+                                                    </a>
+                                                    <a v-else-if="name == 'CdSDoc'" v-bind:href="_cds_data.fixed_cds[name]">
+                                                        [[ _cds_data.cds[name] ]]
+                                                    </a>
                                                     <span v-else>
-                                                        <span style="white-space: pre-line;">
-                                                            {% if full_page %}
-                                                            <a v-if="name != 'CdSSatisfactionSurvey' && name == 'CdSDoc'" v-bind:href="_cds_data.cds[name]">
-                                                                [[ _cds_data.cds[name] ]]
-                                                            </a>
-                                                            <span v-else-if="name != 'CdSSatisfactionSurvey'">
-                                                                <span v-if="_cds_data.containsHTML(_cds_data.cds[name])" v-html="_cds_data.cds[name]"></span>
-                                                                <span v-else>[[ _cds_data.cds[name] ]]</span>
-                                                            </span>
-                                                            {% else %}
-                                                            <a v-if="name == 'CdSSatisfactionSurvey'" v-bind:href="'{{ almalaurea_link }}' + _cds_data.cds[name]">
-                                                                {{ almalaurea_link }}[[ _cds_data.cds[name] ]]
-                                                            </a>
-                                                            <a v-else-if="name == 'CdSDoc'" v-bind:href="_cds_data.cds[name]">
-                                                                [[ _cds_data.cds[name] ]]
-                                                            </a>
-                                                            <span v-else>
-                                                                <span v-if="_cds_data.containsHTML(_cds_data.cds[name])" v-html="_cds_data.cds[name]"></span>
-                                                                <span v-else>[[ _cds_data.cds[name] ]]</span>
-                                                            </span>
-                                                            {% endif %}
-                                                        </span>
+                                                        <span v-if="_cds_data.containsHTML(_cds_data.fixed_cds[name])" v-html="_cds_data.fixed_cds[name]"></span>
+                                                        <span v-else>[[ _cds_data.cds[name] ]]</span>
                                                     </span>
-                                                </div>
-                                            </div>
+                                                    {% endif %}
+                                                </span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -213,90 +138,272 @@
                         </div>
                     </div>
 
-                    <!-- study plans new -->
-                    <div id="course_studyplans" class="mt-5">
-                        <loading-icon
-                            v-if="is_loading"
-                            :loader_source="loader_source">
-                        </loading-icon>
-                        <div v-else-if="items && 'PlanTabs' in items">
-                            <p class="h4 lighter mb-3">{% trans "Study plan" %}</p>
-
-                            <div v-if="curricula.length == 1">
-
-                                <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
-                                    <div class="accordion-item" v-for="tab in items.PlanTabs">
-                                        {% include "includes/unical_storage_cds_website_studyplan_accordion.html" %}
+                    <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">
+                                {% trans "Academic Year" %} {{ current_year }}/{{ current_year|add:"1" }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">
+                                {% trans "Previous academic years" %}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane p-4 fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                            <div id="course_studyplans">
+                                <div class="mb-5">
+                                    <p class="h4">{% trans "Documents" %}</p>
+                                    <div v-if="_cds_data.fixed_cds.StudyManifesto || _cds_data.fixed_cds.DidacticRegulation || _cds_data.fixed_cds.TeachingSystem">
+                                        <ul class="mb-0">
+                                            <li v-if="_cds_data.fixed_cds.StudyManifesto">
+                                                <a target="_blank" :href="_cds_data.fixed_cds.StudyManifesto">
+                                                    [[ _cds_data.fixed_cds_labels['StudyManifesto'] ]]
+                                                </a>
+                                            </li>
+                                            <li v-if="_cds_data.fixed_cds.DidacticRegulation">
+                                                <a target="_blank" :href="_cds_data.fixed_cds.DidacticRegulation">
+                                                   [[ _cds_data.fixed_cds_labels['DidacticRegulation'] ]]
+                                                </a>
+                                            </li>
+                                            <li v-if="_cds_data.fixed_cds.TeachingSystem">
+                                                <a target="_blank" :href="_cds_data.fixed_cds.TeachingSystem">
+                                                    [[ _cds_data.fixed_cds_labels['TeachingSystem'] ]]
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div v-else>
+                                        {% trans "No items here" %}
                                     </div>
                                 </div>
-                            </div>
-                            <div v-else>
-                                <div id="accordionDiv000-lft" class="accordion accordion-left-icon">
-                                    <div class="accordion-item" v-for="(curriculum, index1) in curricula">
-                                        <div class="accordion-header" :id="'heading-cdswebsitestudyplan-' + index1 + '-lft'">
-                                            <button class="accordion-button"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    :data-bs-target="'#collapse-cdswebsitestudyplan-' + index1 + '-lft'"
-                                                    aria-expanded="false"
-                                                    :aria-controls="'collapse-cdswebsitestudyplan-' + index1 + '-lft'">
-                                                [[ curriculum ]]
-                                            </button>
+
+                                <!-- study plans new -->
+                                <p class="h4 mb-3">{% trans "Study plan" %}</p>
+                                <loading-icon
+                                    v-if="is_loading"
+                                    :loader_source="loader_source">
+                                </loading-icon>
+                                <div v-else-if="items && 'PlanTabs' in items">
+                                    <div v-if="curricula.length == 1">
+                                        <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
+                                            <div class="accordion-item" v-for="tab in items.PlanTabs">
+                                                {% include "includes/unical_storage_cds_website_studyplan_accordion.html" %}
+                                            </div>
                                         </div>
-                                        <div :id="'collapse-cdswebsitestudyplan-' + index1 + '-lft'"
-                                             class="accordion-collapse collapse"
-                                             data-bs-parent="#accordionDiv000-lft"
-                                             role="region"
-                                             :aria-labelledby="'heading-cdswebsitestudyplan-' + index1 + '-lft'">
-                                            <div class="accordion-body mt-3">
-                                                <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
-                                                    <div class="accordion-item" v-for="tab in items.PlanTabs" v-if="tab.PdsDes == curriculum">
-                                                        {% include "includes/unical_storage_cds_website_studyplan_accordion.html" %}
+                                    </div>
+                                    <div v-else>
+                                        <div id="accordionDiv000-lft" class="accordion accordion-left-icon">
+                                            <div class="accordion-item" v-for="(curriculum, index1) in curricula">
+                                                <div class="accordion-header" :id="'heading-cdswebsitestudyplan-' + index1 + '-lft'">
+                                                    <button class="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            :data-bs-target="'#collapse-cdswebsitestudyplan-' + index1 + '-lft'"
+                                                            aria-expanded="false"
+                                                            :aria-controls="'collapse-cdswebsitestudyplan-' + index1 + '-lft'">
+                                                        [[ curriculum ]]
+                                                    </button>
+                                                </div>
+                                                <div :id="'collapse-cdswebsitestudyplan-' + index1 + '-lft'"
+                                                     class="accordion-collapse collapse"
+                                                     data-bs-parent="#accordionDiv000-lft"
+                                                     role="region"
+                                                     :aria-labelledby="'heading-cdswebsitestudyplan-' + index1 + '-lft'">
+                                                    <div class="accordion-body mt-3">
+                                                        <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
+                                                            <div class="accordion-item" v-for="tab in items.PlanTabs" v-if="tab.PdsDes == curriculum">
+                                                                {% include "includes/unical_storage_cds_website_studyplan_accordion.html" %}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="alert alert-info mt-4" role="alert">
+                                        <p class="h6"><b>{% trans "What does it mean?" %}</b></p>
+                                        <hr>
+                                        <ul>
+                                            <li>
+                                                <b>{% trans "Statutory study plan" %}:</b>
+                                                {% trans "it is the official plan that the course of study attributes automatically to all enrolled students. In the first modification of the study plan the student may change activities within any groups of optional subjects and indicate free choices" %}
+                                            </li>
+                                            <li>
+                                                <b>{% trans "Alternative study plan" %}:</b>
+                                                {% trans "it is the plan that the student presents by choosing the activities training within options and free choices, prepared by the course of study, in compliance with some constraints" %}
+                                            </li>
+                                            <li>
+                                                <b>{% trans "Part-time study plan" %}:</b>
+                                                {% trans "is the path of the student who has opted for the part-time regime, typically with half the number of training credits per year compared to full-time" %}
+                                            </li>
+                                            <li>
+                                                <b>{% trans "Activities of your choice" %}:</b>
+                                                {% trans "the student will be able to choose from activities offered by the university's study courses" %}
+                                                ({% trans "choice" %} <i>"libera da OF"</i>)
+                                                {% trans "or within lists predefined by the course of study, according to the rules indicated in the plan modification web platform." %}
+                                            </li>
+                                            <li>
+                                                <b>{% trans "Constraints" %}:</b>
+                                                {% trans "express the minimum/maximum number of training credits to choose within a group of courses and/or type of study courses." %}
+                                            </li>
+                                            <li>
+                                                <b>{% trans "Modification of the study plan" %}:</b>
+                                                {% trans "the student can change the study plan before the start of each semester, in the relevant time window established by the Department." %}
+                                                {% trans "Follow the directions on the page" %}
+                                                "<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">{% trans "Study" %}</a>" {% trans "of the site" %}.
+                                                {% trans "For more details, please see" %}
+                                                <a :href="_cds_data.fixed_cds.DidacticRegulation" target="_blank">{% trans "Didactic regulation" %}</a>
+                                                {% trans "of the course and the" %}
+                                                <a :href="_cds_data.fixed_cds.StudyManifesto" target="_blank">{% trans "Study manifesto" %}</a>.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    {% trans "No items here" %}
                                 </div>
                             </div>
+                        </div>
+                        <div class="tab-pane p-4 fade show" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                            <!-- study plans new -->
+                            <div id="course_studyplans_others">
 
-                            <div class="alert alert-info mt-4" role="alert">
-                                <p class="h6"><b>{% trans "What does it mean?" %}</b></p>
-                                <hr>
-                                <ul>
-                                    <li>
-                                        <b>{% trans "Statutory study plan" %}:</b>
-                                        {% trans "it is the official plan that the course of study attributes automatically to all enrolled students. In the first modification of the study plan the student may change activities within any groups of optional subjects and indicate free choices" %}
-                                    </li>
-                                    <li>
-                                        <b>{% trans "Alternative study plan" %}:</b>
-                                        {% trans "it is the plan that the student presents by choosing the activities training within options and free choices, prepared by the course of study, in compliance with some constraints" %}
-                                    </li>
-                                    <li>
-                                        <b>{% trans "Part-time study plan" %}:</b>
-                                        {% trans "is the path of the student who has opted for the part-time regime, typically with half the number of training credits per year compared to full-time" %}
-                                    </li>
-                                    <li>
-                                        <b>{% trans "Activities of your choice" %}:</b>
-                                        {% trans "the student will be able to choose from activities offered by the university's study courses" %}
-                                        ({% trans "choice" %} <i>"libera da OF"</i>)
-                                        {% trans "or within lists predefined by the course of study, according to the rules indicated in the plan modification web platform." %}
-                                    </li>
-                                    <li>
-                                        <b>{% trans "Constraints" %}:</b>
-                                        {% trans "express the minimum/maximum number of training credits to choose within a group of courses and/or type of study courses." %}
-                                    </li>
-                                    <li>
-                                        <b>{% trans "Modification of the study plan" %}:</b>
-                                        {% trans "the student can change the study plan before the start of each semester, in the relevant time window established by the Department." %}
-                                        {% trans "Follow the directions on the page" %}
-                                        "<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">{% trans "Study" %}</a>" {% trans "of the site" %}.
-                                        {% trans "For more details, please see" %}
-                                        <a :href="_cds_data.fixed_cds.DidacticRegulation" target="_blank">{% trans "Didactic regulation" %}</a>
-                                        {% trans "of the course and the" %}
-                                        <a :href="_cds_data.fixed_cds.StudyManifesto" target="_blank">{% trans "Study manifesto" %}</a>.
-                                    </li>
-                                </ul>
+                                <div class="row">
+                                    <div class="col-sm form-group mb-0">
+                                        <div class="w-30">
+                                            <select id="academic_year_input"
+                                                    title="{% trans 'Choose an option' %}"
+                                                    name="academic_year_input"
+                                                    class="form-control"
+                                                     @change="changeYear($event.target.value)">
+                                              <option value="">- {% trans "Choose an academic year" %} -</option>
+                                              <option v-for="item in academic_years_filter"
+                                                      :value="item.AcademicYear"
+                                                      v-if="item.AcademicYear != '{{ cds_exclude_year }}'">
+                                                  [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]
+                                              </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-if="selected_year" class="mt-4">
+
+                                    <div class="mb-5">
+                                        <p class="h4">{% trans "Documents" %}</p>
+                                        <div v-if="_cds_data.cds.StudyManifesto || _cds_data.cds.DidacticRegulation || _cds_data.cds.TeachingSystem">
+                                            <ul class="mb-0">
+                                                <li v-if="_cds_data.cds.StudyManifesto">
+                                                    <a target="_blank" :href="_cds_data.cds.StudyManifesto">
+                                                        [[ _cds_data.cds_labels['StudyManifesto'] ]]
+                                                    </a>
+                                                </li>
+                                                <li v-if="_cds_data.cds.DidacticRegulation">
+                                                    <a target="_blank" :href="_cds_data.cds.DidacticRegulation">
+                                                       [[ _cds_data.cds_labels['DidacticRegulation'] ]]
+                                                    </a>
+                                                </li>
+                                                <li v-if="_cds_data.cds.TeachingSystem">
+                                                    <a target="_blank" :href="_cds_data.cds.TeachingSystem">
+                                                        [[ _cds_data.cds_labels['TeachingSystem'] ]]
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div v-else>
+                                            {% trans "No items here" %}
+                                        </div>
+                                    </div>
+
+                                    <p class="h4 mb-3">{% trans "Study plan" %}</p>
+                                    <loading-icon
+                                        v-if="is_loading"
+                                        :loader_source="loader_source">
+                                    </loading-icon>
+                                    <div v-else-if="items && 'PlanTabs' in items">
+
+                                        <div v-if="curricula.length == 1">
+
+                                            <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
+                                                <div class="accordion-item" v-for="tab in items.PlanTabs">
+                                                    {% include "includes/unical_storage_cds_website_studyplan_accordion.html" %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                            <div id="accordionDiv000-lft" class="accordion accordion-left-icon">
+                                                <div class="accordion-item" v-for="(curriculum, index1) in curricula">
+                                                    <div class="accordion-header" :id="'heading-cdswebsitestudyplan-' + index1 + '-lft'">
+                                                        <button class="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                :data-bs-target="'#collapse-cdswebsitestudyplan-' + index1 + '-lft'"
+                                                                aria-expanded="false"
+                                                                :aria-controls="'collapse-cdswebsitestudyplan-' + index1 + '-lft'">
+                                                            [[ curriculum ]]
+                                                        </button>
+                                                    </div>
+                                                    <div :id="'collapse-cdswebsitestudyplan-' + index1 + '-lft'"
+                                                         class="accordion-collapse collapse"
+                                                         data-bs-parent="#accordionDiv000-lft"
+                                                         role="region"
+                                                         :aria-labelledby="'heading-cdswebsitestudyplan-' + index1 + '-lft'">
+                                                        <div class="accordion-body mt-3">
+                                                            <div id="accordionDiv00-lft" class="accordion accordion-left-icon">
+                                                                <div class="accordion-item" v-for="tab in items.PlanTabs" v-if="tab.PdsDes == curriculum">
+                                                                    {% include "includes/unical_storage_cds_website_studyplan_accordion.html" %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-info mt-4" role="alert">
+                                            <p class="h6"><b>{% trans "What does it mean?" %}</b></p>
+                                            <hr>
+                                            <ul>
+                                                <li>
+                                                    <b>{% trans "Statutory study plan" %}:</b>
+                                                    {% trans "it is the official plan that the course of study attributes automatically to all enrolled students. In the first modification of the study plan the student may change activities within any groups of optional subjects and indicate free choices" %}
+                                                </li>
+                                                <li>
+                                                    <b>{% trans "Alternative study plan" %}:</b>
+                                                    {% trans "it is the plan that the student presents by choosing the activities training within options and free choices, prepared by the course of study, in compliance with some constraints" %}
+                                                </li>
+                                                <li>
+                                                    <b>{% trans "Part-time study plan" %}:</b>
+                                                    {% trans "is the path of the student who has opted for the part-time regime, typically with half the number of training credits per year compared to full-time" %}
+                                                </li>
+                                                <li>
+                                                    <b>{% trans "Activities of your choice" %}:</b>
+                                                    {% trans "the student will be able to choose from activities offered by the university's study courses" %}
+                                                    ({% trans "choice" %} <i>"libera da OF"</i>)
+                                                    {% trans "or within lists predefined by the course of study, according to the rules indicated in the plan modification web platform." %}
+                                                </li>
+                                                <li>
+                                                    <b>{% trans "Constraints" %}:</b>
+                                                    {% trans "express the minimum/maximum number of training credits to choose within a group of courses and/or type of study courses." %}
+                                                </li>
+                                                <li>
+                                                    <b>{% trans "Modification of the study plan" %}:</b>
+                                                    {% trans "the student can change the study plan before the start of each semester, in the relevant time window established by the Department." %}
+                                                    {% trans "Follow the directions on the page" %}
+                                                    "<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">{% trans "Study" %}</a>" {% trans "of the site" %}.
+                                                    {% trans "For more details, please see" %}
+                                                    <a :href="_cds_data.fixed_cds.DidacticRegulation" target="_blank">{% trans "Didactic regulation" %}</a>
+                                                    {% trans "of the course and the" %}
+                                                    <a :href="_cds_data.fixed_cds.StudyManifesto" target="_blank">{% trans "Study manifesto" %}</a>.
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        {% trans "No items here" %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -307,42 +414,6 @@
                     {% include "includes/unical_storage_cds_website_right_contacts.html" %}
                     <hr style="color: transparent" class="my-3" />
                     {% include "includes/unical_storage_cds_website_right_links.html" with hide_ordinamento=1 %}
-
-                    <div id="_cds_website_right_col_dynamic" class="mt-4">
-                        <div v-if="_cds_data.cds.StudyManifesto || _cds_data.cds.DidacticRegulation || _cds_data.cds.TeachingSystem">
-                            <div class="background-light-grey px-2 py-3 mb-2 w-100">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <b>
-                                            <svg class="icon" aria-labelledby="info_menu">
-                                                <title id="doc_menu">{% trans "Documents" %}</title>
-                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
-                                            </svg>
-                                        </b>
-                                    </div>
-                                    <div class="col m-auto align-middle">
-                                        <ul class="mb-0 ps-0 list-unstyled">
-                                            <li v-if="_cds_data.cds.StudyManifesto">
-                                                <a class="no-color" target="_blank" :href="_cds_data.cds.StudyManifesto">
-                                                    <span><b>[[ _cds_data.cds_labels['StudyManifesto'] ]]</b></span>
-                                                </a>
-                                            </li>
-                                            <li v-if="_cds_data.cds.DidacticRegulation">
-                                                <a class="no-color" target="_blank" :href="_cds_data.cds.DidacticRegulation">
-                                                    <span><b>[[ _cds_data.cds_labels['DidacticRegulation'] ]]</b></span>
-                                                </a>
-                                            </li>
-                                            <li v-if="_cds_data.cds.TeachingSystem">
-                                                <a class="no-color" target="_blank" :href="_cds_data.cds.TeachingSystem">
-                                                    <span><b>[[ _cds_data.cds_labels['TeachingSystem'] ]]</b></span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -351,71 +422,12 @@
 </div>
 
 <script>
-var _{{ cds_cod }} = new Vue({
-    el: '#_{{ cds_cod }}',
-    data() {
-        return {
-            url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
-            //is_loading: true,
-            loader_source: '{{ url }}',
-            fields_to_show: {{ fields_to_show|safe }},
-            loader_source_academicyears: '{{ academicyears_api }}?lang={{ LANGUAGE_CODE }}',
-            academic_years_filter: [],
-            is_loading_academicyears: true,
-            regdidid: null,
-            studyplans: {},
-            degree_class: null,
-            interclass_degree_class: null,
-            academic_year: null,
-            cds_cod: null,
-            exclude_studyactivity_codes: {{ exclude_studyactivity_codes|safe }},
-        }
-    },
-    mounted() {
-        this.callAcademicYears()
-    },
-    methods: {
-        callAcademicYears() {
-            axios
-                .get(this.loader_source_academicyears)
-                .then(response => {
-                    this.academic_years_filter = response.data.results
-                    this.is_loading_academicyears = false
-                })
-        },
-        callCdsByYear(year) {
-            let cds_year_url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&academicyear=' + year + '&cdscod={{ cds_identifier }}'
-            axios
-                .get(cds_year_url)
-                .then(response => {
-                    if(response.data.results.length>0 && 'RegDidId' in response.data.results[0])
-                        _cds_data.CallURL(response.data.results[0]['RegDidId'])
-                }
-            )
-        },
-        changeYear(value) {
-            let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_identifier }}/?lang={{ LANGUAGE_CODE }}&academicyear=' + value
-            axios
-                .get(url)
-                .then(response => {
-                    this.callCdsByYear(value)
-                    _{{ cds_cod }}_studyplans.callStudyPlans(value)
-                }
-            )
-        },
-    },
-    //watch: {
-        //regdidid: function(val) {
-            //course_studyplans.regdidid = this.regdidid
-        //}
-    //}
-})
-
 var _cds_website_text = new Vue({
     el: '#_{{ cds_cod }}_1',
     data() {
         return {
             item: {},
+            fields_to_show: {{ fields_to_show|safe }},
         }
     },
     mounted() {
@@ -434,25 +446,17 @@ var _cds_website_text = new Vue({
     }
 });
 
-var _cds_website_right_col_dynamic = new Vue({
-    el: '#_cds_website_right_col_dynamic',
-    data() {
-        return {
-            item: {},
-            cds: {},
-        }
-    },
-});
-
 var _{{ cds_cod }}_studyplans = new Vue({
     el: '#course_studyplans',
     data() {
         return {
+            cds: {},
             url: '',
             is_loading: true,
             loader_source: '',
+            item: {},
             items: {},
-            curricula: [],
+            curricula: []
         }
     },
     mounted() {
@@ -480,6 +484,83 @@ var _{{ cds_cod }}_studyplans = new Vue({
                     this.is_loading = false
                     this.scrollPage()
                 })
+        },
+    },
+})
+
+var _{{ cds_cod }}_studyplans_others = new Vue({
+    el: '#course_studyplans_others',
+    data() {
+        return {
+            cds: {},
+            url: '',
+            is_loading: true,
+            loader_source: '',
+            item: {},
+            items: {},
+            curricula: [],
+            loader_source_academicyears: '{{ academicyears_api }}?lang={{ LANGUAGE_CODE }}',
+            academic_years_filter: [],
+            is_loading_academicyears: true,
+            selected_year: ''
+        }
+    },
+    mounted() {
+        this.callAcademicYears()
+    },
+    methods: {
+        {% include "includes/unical_storage_cds_website_scroll.html" %}
+        callStudyPlans(year={{ current_year }}) {
+            this.is_loading = true
+            axios
+                .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
+                .then(response => {
+                    let curricula = []
+                    if(response.data.results.length > 0) {
+                        response.data.results[0].PlanTabs.forEach(
+                            function (plantab) {
+                                if (!curricula.includes(plantab.PdsDes)) {
+                                    curricula.push(plantab.PdsDes);
+                                }
+                            }
+                        )
+                    }
+                    this.curricula = curricula
+                    this.items = response.data.results[0]
+                    this.is_loading = false
+                    this.scrollPage()
+                })
+        },
+        callAcademicYears() {
+            axios
+                .get(this.loader_source_academicyears)
+                .then(response => {
+                    this.academic_years_filter = response.data.results
+                    // remove current year
+                    this.academic_years_filter.shift()
+                    this.is_loading_academicyears = false
+                })
+        },
+        callCdsByYear(year) {
+            let cds_year_url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&academicyear=' + year + '&cdscod={{ cds_identifier }}'
+            axios
+                .get(cds_year_url)
+                .then(response => {
+                    if(response.data.results.length>0 && 'RegDidId' in response.data.results[0])
+                        _cds_data.CallURL(response.data.results[0]['RegDidId'])
+                }
+            )
+        },
+        changeYear(value) {
+            this.selected_year = value
+            let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_identifier }}/?lang={{ LANGUAGE_CODE }}&academicyear=' + value
+            axios
+                .get(url)
+                .then(response => {
+                    this.callCdsByYear(value)
+                    _{{ cds_cod }}_studyplans_others.callStudyPlans(value)
+                }
+            )
         },
     },
 })
