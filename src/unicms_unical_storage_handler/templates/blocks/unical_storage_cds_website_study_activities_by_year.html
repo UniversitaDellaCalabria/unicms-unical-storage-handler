@@ -403,7 +403,6 @@ setTeachingDictionary(regdidid, index) {
         .get(teachings_url)
         .then(response => {
             Vue.set(this.teachings_dictionary, index, response.data.results)
-            if(this.is_loading) this.is_loading = false
         })
 },
 getTeachingsInYear(year, index) {
@@ -422,6 +421,7 @@ async getYears() {
         let year = ({{ year }} || _cds_data.cds.AcademicYear) - i + 1;
         await this.getTeachingsInYear(year, i)
     }
+    if(this.is_loading) this.is_loading = false
 },
 {% endblock extra_methods %}
 
