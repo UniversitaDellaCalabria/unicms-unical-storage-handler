@@ -43,6 +43,7 @@
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
 {% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
 
@@ -141,44 +142,22 @@
                     <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">
-                                {% trans "Academic Year" %} {{ current_year }}/{{ current_year|add:"1" }}
+                                {% trans "Academic Year" %} {{ cds_website_current_year }}/{{ cds_website_current_year|add:"1" }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">
+                                {% if current_year == cds_website_current_year %}
                                 {% trans "Previous academic years" %}
+                                {% else %}
+                                {% trans "Current academic year and previous" %}
+                                {% endif %}
                             </a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane p-4 fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                             <div id="course_studyplans">
-                                <div class="mb-5">
-                                    <p class="h4">{% trans "Documents" %}</p>
-                                    <div v-if="_cds_data.fixed_cds.StudyManifesto || _cds_data.fixed_cds.DidacticRegulation || _cds_data.fixed_cds.TeachingSystem">
-                                        <ul class="mb-0">
-                                            <li v-if="_cds_data.fixed_cds.StudyManifesto">
-                                                <a target="_blank" :href="_cds_data.fixed_cds.StudyManifesto">
-                                                    [[ _cds_data.fixed_cds_labels['StudyManifesto'] ]]
-                                                </a>
-                                            </li>
-                                            <li v-if="_cds_data.fixed_cds.DidacticRegulation">
-                                                <a target="_blank" :href="_cds_data.fixed_cds.DidacticRegulation">
-                                                   [[ _cds_data.fixed_cds_labels['DidacticRegulation'] ]]
-                                                </a>
-                                            </li>
-                                            <li v-if="_cds_data.fixed_cds.TeachingSystem">
-                                                <a target="_blank" :href="_cds_data.fixed_cds.TeachingSystem">
-                                                    [[ _cds_data.fixed_cds_labels['TeachingSystem'] ]]
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div v-else>
-                                        {% trans "No items here" %}
-                                    </div>
-                                </div>
-
                                 <!-- study plans new -->
                                 <p class="h4 mb-3">{% trans "Study plan" %}</p>
                                 <loading-icon
@@ -264,6 +243,32 @@
                                 <div v-else>
                                     {% trans "No items here" %}
                                 </div>
+
+                                <hr class="my-5">
+
+                                <p class="h4">{% trans "Documents" %}</p>
+                                <div v-if="_cds_data.fixed_cds.StudyManifesto || _cds_data.fixed_cds.DidacticRegulation || _cds_data.fixed_cds.TeachingSystem">
+                                    <ul class="mb-0">
+                                        <li v-if="_cds_data.fixed_cds.StudyManifesto">
+                                            <a target="_blank" :href="_cds_data.fixed_cds.StudyManifesto">
+                                                [[ _cds_data.fixed_cds_labels['StudyManifesto'] ]]
+                                            </a>
+                                        </li>
+                                        <li v-if="_cds_data.fixed_cds.DidacticRegulation">
+                                            <a target="_blank" :href="_cds_data.fixed_cds.DidacticRegulation">
+                                               [[ _cds_data.fixed_cds_labels['DidacticRegulation'] ]]
+                                            </a>
+                                        </li>
+                                        <li v-if="_cds_data.fixed_cds.TeachingSystem">
+                                            <a target="_blank" :href="_cds_data.fixed_cds.TeachingSystem">
+                                                [[ _cds_data.fixed_cds_labels['TeachingSystem'] ]]
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div v-else>
+                                    {% trans "No items here" %}
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane p-4 fade show" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
@@ -290,32 +295,6 @@
                                 </div>
 
                                 <div v-if="selected_year" class="mt-4">
-
-                                    <div class="mb-5">
-                                        <p class="h4">{% trans "Documents" %}</p>
-                                        <div v-if="_cds_data.cds.StudyManifesto || _cds_data.cds.DidacticRegulation || _cds_data.cds.TeachingSystem">
-                                            <ul class="mb-0">
-                                                <li v-if="_cds_data.cds.StudyManifesto">
-                                                    <a target="_blank" :href="_cds_data.cds.StudyManifesto">
-                                                        [[ _cds_data.cds_labels['StudyManifesto'] ]]
-                                                    </a>
-                                                </li>
-                                                <li v-if="_cds_data.cds.DidacticRegulation">
-                                                    <a target="_blank" :href="_cds_data.cds.DidacticRegulation">
-                                                       [[ _cds_data.cds_labels['DidacticRegulation'] ]]
-                                                    </a>
-                                                </li>
-                                                <li v-if="_cds_data.cds.TeachingSystem">
-                                                    <a target="_blank" :href="_cds_data.cds.TeachingSystem">
-                                                        [[ _cds_data.cds_labels['TeachingSystem'] ]]
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div v-else>
-                                            {% trans "No items here" %}
-                                        </div>
-                                    </div>
 
                                     <p class="h4 mb-3">{% trans "Study plan" %}</p>
                                     <loading-icon
@@ -403,6 +382,32 @@
                                     <div v-else>
                                         {% trans "No items here" %}
                                     </div>
+
+                                    <hr class="my-5">
+
+                                    <p class="h4">{% trans "Documents" %}</p>
+                                    <div v-if="_cds_data.cds.StudyManifesto || _cds_data.cds.DidacticRegulation || _cds_data.cds.TeachingSystem">
+                                        <ul class="mb-0">
+                                            <li v-if="_cds_data.cds.StudyManifesto">
+                                                <a target="_blank" :href="_cds_data.cds.StudyManifesto">
+                                                    [[ _cds_data.cds_labels['StudyManifesto'] ]]
+                                                </a>
+                                            </li>
+                                            <li v-if="_cds_data.cds.DidacticRegulation">
+                                                <a target="_blank" :href="_cds_data.cds.DidacticRegulation">
+                                                   [[ _cds_data.cds_labels['DidacticRegulation'] ]]
+                                                </a>
+                                            </li>
+                                            <li v-if="_cds_data.cds.TeachingSystem">
+                                                <a target="_blank" :href="_cds_data.cds.TeachingSystem">
+                                                    [[ _cds_data.cds_labels['TeachingSystem'] ]]
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div v-else>
+                                        {% trans "No items here" %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -464,7 +469,7 @@ var _{{ cds_cod }}_studyplans = new Vue({
     },
     methods: {
         {% include "includes/unical_storage_cds_website_scroll.html" %}
-        callStudyPlans(year={{ current_year }}) {
+        callStudyPlans(year={{ cds_website_current_year }}) {
             this.is_loading = true
             axios
                 .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
@@ -510,7 +515,7 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
     },
     methods: {
         {% include "includes/unical_storage_cds_website_scroll.html" %}
-        callStudyPlans(year={{ current_year }}) {
+        callStudyPlans(year={{ cds_website_current_year }}) {
             this.is_loading = true
             axios
                 .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
@@ -537,7 +542,9 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                 .then(response => {
                     this.academic_years_filter = response.data.results
                     // remove current year
+                    {% if current_year == cds_website_current_year %}
                     this.academic_years_filter.shift()
+                    {% endif %}
                     this.is_loading_academicyears = false
                 })
         },
