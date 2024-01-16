@@ -136,7 +136,10 @@
                         }
                     )
                 },
-                CallURL(regdidid=null, year="{{ current_year }}") {
+                CallURL(regdidid=null, year=null) {
+                    {% block website_page_year %}
+                    if(!year)year = "{{ current_year }}"
+                    {% endblock website_page_year %}
                     let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_identifier }}&academicyear=' + year
                     axios
                         .get(url)
