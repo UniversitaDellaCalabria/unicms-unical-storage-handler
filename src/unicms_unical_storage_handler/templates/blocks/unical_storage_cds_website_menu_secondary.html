@@ -9,19 +9,19 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_VIEW_PREFIX_PATH" as cds_studiare_calendar_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_VIEW_PREFIX_PATH" as cds_studiare_schedule_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH" as cds_corso_path %}
-{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
 
 <div class="row">
     <div class="col-12 col-lg-auto">
         <div class="text-center d-inline-block me-4">
             <a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/"
                class="no-color"
-               title="{% trans 'Teachings' %} {{ cds_website_current_year }}/{{ cds_website_current_year|add:1 }}">
+               title="{% trans 'Teachings' %} {{ current_year }}/{{ current_year|add:1 }}">
                 <span class="text-black fw-bold">
                     <svg class="icon me-2">
                         <use xlink:href="{% static '/svg/sprites.svg' %}#it-arrow-right-circle"></use>
                     </svg>
-                    {% trans "Teachings" %} {{ cds_website_current_year }}/{{ cds_website_current_year|add:1 }}
+                    {% trans "Teachings" %} {{ current_year }}/{{ current_year|add:1 }}
                 </span>
             </a>
         </div>

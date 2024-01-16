@@ -16,9 +16,12 @@
 {{ page_title }} - {{ block.super }}
 {% endblock page_title %}
 
+{% block website_page_year %}
+{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
+if(!year)year = "{{ cds_website_current_year }}"
+{% endblock website_page_year %}
 
 {% block container %}
-
 
 {% get_cds_website_webpath webpath.pk as cds_identifier %}
 {% get_current_language as LANGUAGE_CODE %}
