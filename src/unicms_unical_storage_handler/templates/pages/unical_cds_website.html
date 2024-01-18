@@ -209,6 +209,13 @@
 
 {% endblock unical_mobile_logo %}
 
+
+{% block unical_main_menu %}
+{% with show_main_menu=1 %}
+{{ block.super }}
+{% endwith %}
+{% endblock unical_main_menu %}
+
 {% block menu_main %}
 
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
