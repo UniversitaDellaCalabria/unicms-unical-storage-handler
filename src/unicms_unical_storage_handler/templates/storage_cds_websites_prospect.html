@@ -29,6 +29,7 @@ Brochure - {{ block.super }}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
 {% get_allowed_website request.get_host as host %}
+{% get_cds_website_path_pk cds_cod as cds_webpath %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% settings_value "CAROUSEL_HERO_AUTOPLAY_TIMEOUT" as carousel_timeout %}
@@ -46,6 +47,7 @@ Brochure - {{ block.super }}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS" as collapse_fields %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2" as collapse_fields_2 %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS" as course_docs %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_website_redirect_path %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
 {% include "includes/unical_storage_loading.html" %}
@@ -819,7 +821,7 @@ Brochure - {{ block.super }}
                         {% trans "For details on the contents of individual courses, training periods abroad, teachers, tutors, study rooms, laboratories, research centres, other structures and socialization initiatives, visit the Study Program website." %}
                     </p>
                     <p class="text-center">
-                        <a href="{{ webpath.fullpath }}{{ cds_base_path }}" class="btn btn-secondary">
+                        <a href="{{ cds_webpath.fullpath }}" class="btn btn-secondary">
                             {% trans "Go to the institutional site" %}
                         </a>
                     </p>

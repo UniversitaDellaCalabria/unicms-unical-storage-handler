@@ -72,7 +72,8 @@ def storage_api_root(value):
 
 
 @register.simple_tag
-def get_cds_website_webpath(value):
+def get_cds_website_cds_cod(value=None, cds_cod=None):
+    if cds_cod: return cds_cod
     if not value: return None
     cms_webpath_cds = getattr(settings, 'CMS_WEBPATH_CDS', {})
     if not cms_webpath_cds: return None
@@ -82,4 +83,14 @@ def get_cds_website_webpath(value):
     if not webpath: return None
     parent = webpath.parent
     if not parent: return None
-    return get_cds_website_webpath(parent.pk)
+    return get_cds_website_cds_cod(parent.pk)
+
+@register.simple_tag
+def get_cds_website_path_pk(cds_cod=None):
+    if not cds_cod: return None
+    cms_webpath_cds = getattr(settings, 'CMS_WEBPATH_CDS', {})
+    if not cms_webpath_cds: return None
+    for k,v in cms_webpath_cds.items():
+        if v == cds_cod:
+            return WebPath.objects.get(pk=k, is_active=True)
+    return None

@@ -35,7 +35,7 @@
 {% storage_api_root "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
 
 {% get_current_language as LANGUAGE_CODE %}
-{% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% get_cds_website_cds_cod webpath.pk cds_cod as cds_identifier %}
 {% if cds_identifier %}
     <div id="_cds_data" class="w-100">
         <div v-if="is_loading">
@@ -166,7 +166,7 @@
 
 {% block unical_mobile_logo %}
 {% get_current_language as LANGUAGE_CODE %}
-{% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% get_cds_website_cds_cod webpath.pk cds_cod as cds_identifier %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 
 {% if cds_identifier %}
@@ -236,8 +236,8 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_LABEL" as studiare_calendar_label %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL" as studiare_schedule_label %}
 
-{% get_cds_website_webpath webpath.pk as cds_identifier %}
-{% if cds_identifier %}
+{% get_cds_website_cds_cod webpath.pk cds_cod as cds_identifier %}
+{% if cds_identifier and not hide_cds_auto_menu %}
     <li class="nav-item megamenu">
         <a class="nav-link pe-lg-1 ps-lg-0" href="{{ webpath.fullpath }}">
             Home

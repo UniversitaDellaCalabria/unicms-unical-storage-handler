@@ -23,7 +23,7 @@ if(!year)year = "{{ cds_website_current_year }}"
 
 {% block container %}
 
-{% get_cds_website_webpath webpath.pk as cds_identifier %}
+{% get_cds_website_cds_cod webpath.pk cds_cod as cds_identifier %}
 {% get_current_language as LANGUAGE_CODE %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 

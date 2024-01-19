@@ -4,7 +4,7 @@
 {% load unicms_storage_handler %}
 {% load unicms_templates %}
 
-{% get_cds_website_webpath webpath.pk as cds_cod %}
+{% get_cds_website_cds_cod webpath.pk as cds_cod %}
 {% get_current_language as LANGUAGE_CODE %}
 
 {% settings_value "CAROUSEL_HERO_AUTOPLAY_TIMEOUT" as carousel_timeout %}

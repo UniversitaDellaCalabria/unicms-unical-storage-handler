@@ -78,6 +78,7 @@ HIGH_FORMATION_YEAR = getattr(settings, 'HIGH_FORMATION_YEAR', HIGH_FORMATION_YE
 INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
 
 CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
+CMS_WEBPATH_PROSPECT = getattr(settings, 'CMS_WEBPATH_PROSPECT', CMS_WEBPATH_PROSPECT)
 CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
 CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL', CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL)
 CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)
@@ -814,6 +815,14 @@ class SingleActivityViewHandler(BaseStorageHandler):
 ####### CDS WEBSITES #######
 
 class CdsWebsiteBaseHandler(BaseContentHandler):
+    def check_webpath(self):
+        if not self.webpath.pk in CMS_WEBPATH_CDS:
+            raise Http404('No study course linked to this webpath')
+
+        self.page = Page.objects.filter(is_active=True,
+                                        webpath=self.webpath).first()
+        self.cds_cod = CMS_WEBPATH_CDS[self.webpath.pk]
+
     def __init__(self, **kwargs):
         super(CdsWebsiteBaseHandler, self).__init__(**kwargs)
         self.match_dict = self.match.groupdict()
@@ -824,12 +833,8 @@ class CdsWebsiteBaseHandler(BaseContentHandler):
         if not self.webpath:
             raise Http404('Unknown WebPath')
 
-        if not self.webpath.pk in CMS_WEBPATH_CDS:
-            raise Http404('No study course linked to this webpath')
+        self.check_webpath()
 
-        self.page = Page.objects.filter(is_active=True,
-                                        webpath=self.webpath).first()
-        self.cds_cod = CMS_WEBPATH_CDS[self.webpath.pk]
         self.data = {'request': self.request,
                      'webpath': self.webpath,
                      'website': self.website,
@@ -858,9 +863,18 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
 
     template = "storage_cds_websites_prospect.html"
 
+    def check_webpath(self):
+        if self.webpath.pk != CMS_WEBPATH_PROSPECT:
+            raise Http404('No study course linked to this webpath')
+
+        self.page = Page.objects.filter(is_active=True,
+                                        webpath=self.webpath).first()
+
     def __init__(self, **kwargs):
         if not CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE:
             raise Http404
+
+        self.cds_cod = kwargs['cds_cod']
 
         super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
         if self.request.POST:
@@ -870,6 +884,7 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
         else:
             form = CdsWebsiteContactForm()
         self.data['form'] = form
+        self.data['hide_cds_auto_menu'] = 1
 
     @property
     def breadcrumbs(self):
@@ -1001,7 +1016,14 @@ class CdsWebsitesRedirectHandler(BaseContentHandler):
 
 
 class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
+    def __init__(self, **kwargs):
+        super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
+        self.webpath = get_object_or_404(WebPath,
+                                         pk=CMS_WEBPATH_PROSPECT,
+                                         is_active=True)
+        self.cds_cod = kwargs['cds_cod']
+
     def as_view(self):
         if self.webpath:
-            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
+            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{self.cds_cod}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
         raise Http404()
