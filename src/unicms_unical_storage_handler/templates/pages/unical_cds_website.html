@@ -14,15 +14,6 @@
 {% block header_center_url %}{{ webpath.fullpath }}{{ cds_base_path }}{% endblock header_center_url %}
 {% block unical_department_header_slim_org_url %}{{ webpath.fullpath }}{{ cds_base_path }}{% endblock unical_department_header_slim_org_url %}
 
-{% block unical_top_bar_text %}
-<image src="{% unicms_template_unical_static_path 'images/logo_unical_white.svg' %}" alt="{% trans 'University of Calabria' %}" class="w-75"/>
-{% endblock unical_top_bar_text %}
-
-{% block unical_top_bar_text_mobile %}
-<image src="{% unicms_template_unical_static_path 'images/logo_unical_white.svg' %}" alt="{% trans 'University of Calabria' %}" class="w-75"/>
-{% endblock unical_top_bar_text_mobile %}
-
-
 {% block header_center_logo %}
 
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
