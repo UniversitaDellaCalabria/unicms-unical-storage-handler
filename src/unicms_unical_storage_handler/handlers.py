@@ -888,7 +888,11 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        return [('#', CMS_STORAGE_CDS_WEBSITES_PROSPECT_LABEL)]
+        for k,v in CMS_WEBPATH_CDS.items():
+            if v == self.cds_cod:
+                cds_webpath = WebPath.objects.get(pk=k)
+                return [('#', cds_webpath.name)]
+        return [('#', CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH)]
 
 
 class CdsWebsitesCorsoHandler(CdsWebsiteBaseHandler):
