@@ -181,6 +181,25 @@
             </div>
         </div>
 
+        <hr>
+        <div>
+            <span>
+                <ul class="list-unstyled">
+                    <li>L – {% trans "Bachelor's degree" %}</li>
+                    <li>LM – {% trans "Master's degree (2 years)" %}</li>
+                    <li>LM5 – {% trans "Single-cycle master's degree (5 years)" %}</li>
+                    <li>LM6 – {% trans "Single-cycle master's degree (6 years)" %}</li>
+                    <li>
+                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="me-2"/>
+                        {% trans "Course delivered in English" %}</li>
+                    <li>
+                        <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}" class="me-1"/>
+                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}" class="me-2"/>
+                        {% trans "Course with curriculum delivered in English" %}</li>
+                </ul>
+            </span>
+        </div>
+
     </div>
 
     <div v-else>
