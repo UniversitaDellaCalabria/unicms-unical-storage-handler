@@ -1,3 +1,4 @@
+import json
 import requests
 import urllib
 
@@ -10,6 +11,7 @@ from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404, redirect
 from django.template import Template, Context
 from django.utils import timezone
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import get_token
 
@@ -888,11 +890,10 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        for k,v in CMS_WEBPATH_CDS.items():
-            if v == self.cds_cod:
-                cds_webpath = WebPath.objects.get(pk=k)
-                return [('#', cds_webpath.name)]
-        return [('#', CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH)]
+        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
+        if not cds_data:
+            return [('#', CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH)]
+        return [('#', json.loads(cds_data._content)['results'][0]['CdSName'])]
 
 
 class CdsWebsitesCorsoHandler(CdsWebsiteBaseHandler):
@@ -1029,5 +1030,9 @@ class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
 
     def as_view(self):
         if self.webpath:
-            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{self.cds_cod}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
+            cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
+            if not cds_data:
+                raise Http404
+            cds_name =  json.loads(cds_data._content)['results'][0]['CdSName']
+            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{self.cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
         raise Http404()
