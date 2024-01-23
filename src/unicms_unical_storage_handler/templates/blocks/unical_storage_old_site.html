@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load static %}
+
+
+<div class="card-wrapper card-space h-auto d-block">
+<div style="background: var(--bordeaux_unical)">
+<a href="{{ url }}" target="_blank" rel="noopener noreferrer" style="text-decoration: none" title="Vecchio sito">
+<div class="row">
+<div class="col-3 col-lg-4">
+<div class="w-100 py-4 ps-4 pe-2">
+<img src="{% static 'images/old_site.webp' %}" style="width: 100%" alt="{{ url }}" />
+</div>
+</div>
+<div class="col-9 col-lg-8 py-4 pe-4 ps-0">
+<p style="line-height: 1.2; margin-bottom: 0">
+<small style="color: #fff; ">
+<b>
+{% if request.LANGUAGE_CODE == 'it' %}
+per accedere alla versione precedente del sito
+{% else %}
+to access the previous version of the website
+{% endif %}
+</b>
+</small>
+</p>
+</div>
+</div>
+</a>
+</div>
+</div>
