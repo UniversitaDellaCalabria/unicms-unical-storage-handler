@@ -81,6 +81,7 @@ INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL
 
 CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
 CMS_WEBPATH_PROSPECT = getattr(settings, 'CMS_WEBPATH_PROSPECT', CMS_WEBPATH_PROSPECT)
+CMS_WEBPATH_PROSPECT_DEFAULT = getattr(settings, 'CMS_WEBPATH_PROSPECT_DEFAULT', CMS_WEBPATH_PROSPECT_DEFAULT)
 CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
 CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL', CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL)
 CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)
@@ -866,7 +867,8 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
     template = "storage_cds_websites_prospect.html"
 
     def check_webpath(self):
-        if self.webpath.pk != CMS_WEBPATH_PROSPECT:
+        course_type = self.cds_json['CourseType']
+        if self.webpath.pk != CMS_WEBPATH_PROSPECT.get(course_type, CMS_WEBPATH_PROSPECT_DEFAULT):
             raise Http404('No study course linked to this webpath')
 
         self.page = Page.objects.filter(is_active=True,
@@ -877,8 +879,15 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
             raise Http404
 
         self.cds_cod = kwargs['cds_cod']
+        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
+
+        if not cds_data:
+            raise Http404
+
+        self.cds_json = json.loads(cds_data._content)['results'][0]
 
         super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
+
         if self.request.POST:
             form = CdsWebsiteContactForm(data=self.request.POST)
             if form.is_valid():
@@ -890,10 +899,7 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
-        if not cds_data:
-            return [('#', CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH)]
-        return [('#', json.loads(cds_data._content)['results'][0]['CdSName'])]
+        return [('#', self.cds_json['CdSName'])]
 
 
 class CdsWebsitesCorsoHandler(CdsWebsiteBaseHandler):
@@ -1022,17 +1028,23 @@ class CdsWebsitesRedirectHandler(BaseContentHandler):
 
 class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
     def __init__(self, **kwargs):
-        super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
-        self.webpath = get_object_or_404(WebPath,
-                                         pk=CMS_WEBPATH_PROSPECT,
-                                         is_active=True)
         self.cds_cod = kwargs['cds_cod']
+        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
+
+        if not cds_data:
+            raise Http404
+
+        self.cds_json = json.loads(cds_data._content)['results'][0]
+
+        super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
+
+        cds_type = self.cds_json['CourseType']
+        self.webpath = get_object_or_404(WebPath,
+                                         pk=CMS_WEBPATH_PROSPECT.get(cds_type, CMS_WEBPATH_PROSPECT_DEFAULT),
+                                         is_active=True)
 
     def as_view(self):
         if self.webpath:
-            cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
-            if not cds_data:
-                raise Http404
-            cds_name =  json.loads(cds_data._content)['results'][0]['CdSName']
+            cds_name =  self.cds_json['CdSName']
             return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{self.cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
         raise Http404()
