@@ -566,6 +566,7 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                                     )
                                     this.curricula = curricula
                                     this.items = response.data.results[0]
+                                    _cds_data.CallURL(response.data.results[0]['RegDidId'])
                                     this.is_loading = false
                                     this.scrollPage()
                                 }
