@@ -19,3 +19,46 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 :href="'{{ cds_websites_basepath }}/' + item.CdSCod +'/{{ cds_websites_redirect_path }}/'"
 
 {% endblock cds_area_item_link %}
+
+{% block method_callurl %}
+{% storage_settings_value "CMS_WEBPATH_CDS_OLD" as cms_webpath_cds_old %}
+{% storage_settings_value "CMS_WEBPATH_CDS_MORPH" as cms_webpath_cds_morph %}
+
+async CallURL(url, initial=false) {
+    this.is_loading = true
+    this.loader_source = url
+    if (!url.includes("academicyear") && this.initial_academic_year)
+        url = url + '&academicyear=' + this.initial_academic_year
+    if (!url.includes("coursetype") && this.allowed_course_types.length > 0)
+        url = url + '&coursetype=' + this.allowed_course_types.toString()
+
+    await axios
+        .get(url)
+        .then(response => {
+            if(initial) this.initial_items = response.data.results;
+            this.items = response.data;
+            this.next_page = response.data.next;
+            this.previous_page = response.data.previous;
+            this.labels = response.data.labels;
+        })
+
+    const cms_webpath_cds_old = {{ cms_webpath_cds_old|safe }}
+    const cms_webpath_cds_morph = {{ cms_webpath_cds_morph|safe }}
+
+    for (const [cdscod, year] of Object.entries(cms_webpath_cds_old)) {
+        axios
+            .get(url + '&academicyear=' + year + '&cdscod=' + cdscod)
+            .then(response => {
+                for(const c of response.data.results){
+                    for (const [cds_new, cds_old] of Object.entries(cms_webpath_cds_morph)) {
+                        if (cds_old == c.CdSCod) break;
+                        this.items.results.push(c);
+                        this.items.results.sort((a, b) => a.CdSName > b.CdSName)
+                    }
+                }
+            })
+    }
+
+    this.is_loading = false;
+},
+{% endblock method_callurl %}

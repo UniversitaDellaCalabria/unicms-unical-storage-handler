@@ -85,6 +85,7 @@ def get_cds_website_cds_cod(value=None, cds_cod=None):
     if not parent: return None
     return get_cds_website_cds_cod(parent.pk)
 
+
 @register.simple_tag
 def get_cds_website_path_pk(cds_cod=None):
     if not cds_cod: return None
@@ -94,3 +95,29 @@ def get_cds_website_path_pk(cds_cod=None):
         if v == cds_cod:
             return WebPath.objects.get(pk=k, is_active=True)
     return None
+
+
+@register.simple_tag
+def get_cds_website_current_year(cds_cod):
+    current_year = settings.CURRENT_YEAR
+    old_year_dict = getattr(settings,
+                            'CMS_WEBPATH_CDS_OLD',
+                            app_settings.CMS_WEBPATH_CDS_OLD)
+    return old_year_dict.get(cds_cod, current_year)
+
+
+@register.simple_tag
+def get_cds_website_new_year(cds_cod):
+    current_year = settings.CDS_WEBSITE_CURRENT_YEAR
+    old_year_dict = getattr(settings,
+                            'CMS_WEBPATH_CDS_OLD',
+                            app_settings.CMS_WEBPATH_CDS_OLD)
+    return old_year_dict.get(cds_cod, current_year)
+
+
+@register.simple_tag
+def get_cds_website_morph(cds_cod):
+    cds_morph = getattr(settings,
+                        'CMS_WEBPATH_CDS_MORPH',
+                        app_settings.CMS_WEBPATH_CDS_MORPH)
+    return cds_morph.get(cds_cod)

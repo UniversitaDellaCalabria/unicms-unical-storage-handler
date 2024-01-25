@@ -43,11 +43,7 @@
 
         </h3>
         <h5 class="lighter">
-            {% if not is_cds_website %}
-                [[ cds.CdSCod ]] - [[ cds.CdSName ]]<br>[[ cds.CourseTypeDescription ]]
-            {% else %}
-                [[ _cds_data.cds.CdSCod ]] - [[ _cds_data.cds.CdSName ]]<br>[[ _cds_data.cds.CourseTypeDescription ]]
-            {% endif %} ([[ item.StudyActivityPdsDes ]])
+            [[ item.StudyActivityCdSCod ]] - [[ item.StudyActivityCdSName ]] ([[ item.StudyActivityPdsDes ]])
         </h5>
         <p style="text-align: right" class="d-print-none">
             <a id="print" onclick="print_page()">

@@ -21,12 +21,15 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
-{% storage_settings_value "CURRENT_YEAR" as current_year %}
-{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
 {% storage_api_root "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
+{% storage_settings_value "CMS_WEBPATH_CDS_MORPH" as cms_webpath_cds_morph %}
+{% storage_settings_value "CURRENT_YEAR" as official_current_year %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_cds_cod webpath.pk cds_cod as cds_identifier %}
+{% get_cds_website_current_year cds_identifier as current_year %}
+{% get_cds_website_current_year cds_identifier as cds_website_current_year %}
+
 {% if cds_identifier %}
     <div id="_cds_data" class="w-100">
         <div v-if="is_loading">
@@ -131,7 +134,18 @@
                     {% block website_page_year %}
                     if(!year)year = "{{ current_year }}"
                     {% endblock website_page_year %}
-                    let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_identifier }}&academicyear=' + year
+
+                    const cms_webpath_cds_morph = {{ cms_webpath_cds_morph|safe }}
+                    let cds_identifier = '{{ cds_identifier }}'
+                    for (const [new_cds, old_cds] of Object.entries(cms_webpath_cds_morph)) {
+                        if(old_cds == '{{ cds_identifier }}'){
+                            cds_identifier = new_cds
+                            year = "{{ official_current_year }}"
+                            break
+                        }
+                    }
+
+                    let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod=' + cds_identifier + '&academicyear=' + year
                     axios
                         .get(url)
                         .then(response => {

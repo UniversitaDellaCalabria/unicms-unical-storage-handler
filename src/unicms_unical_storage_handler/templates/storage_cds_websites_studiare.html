@@ -50,6 +50,8 @@
 {% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 
+{% get_cds_website_morph cds_cod as old_cds_identifier %}
+
 {% include "includes/unical_storage_loading.html" %}
 
 
@@ -63,7 +65,7 @@
 
                         <!-- Insegnamenti -->
                         <div class="mt-5">
-                            {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="study_activities" full_page=full_page year=current_year %}
+                            {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="study_activities" full_page=full_page year=current_year cds_identifier=cds_cod %}
                         </div>
                         <!-- END insegnamenti -->
 
@@ -323,7 +325,7 @@
                                             data-bs-target="#collapse-teachers-lft"
                                             aria-expanded="false"
                                             aria-controls="collapse-teachers-lft">
-                                        {% trans "Academic Courses" %}&nbsp;<span id="cds_year"></span>
+                                        {% trans "Academic Courses" %}&nbsp;<span id="cds_year"></span>&nbsp;- ({{ cds_cod }})
                                     </button>
                                 </div>
                                 <div id="collapse-teachers-lft"
@@ -336,6 +338,31 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {% if old_cds_identifier %}
+                            <div class="accordion-item">
+                                <div class="accordion-header" id="old_heading-teachers-lft">
+                                    <button class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#old_collapse-teachers-lft"
+                                            aria-expanded="false"
+                                            aria-controls="old_collapse-teachers-lft">
+                                        {% trans "Academic Courses" %}&nbsp;<span id="old_cds_year"></span>&nbsp;- ({{ old_cds_identifier }})
+                                    </button>
+                                </div>
+                                <div id="old_collapse-teachers-lft"
+                                     class="accordion-collapse collapse"
+                                     data-bs-parent="#old_accordionDiv3-lft"
+                                     role="region"
+                                     aria-labelledby="old_heading-teachers-lft">
+                                    <div class="accordion-body mt-3">
+                                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with uid="teachers_list_old" mark_contract_teachers=1 %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
                         </div>
                         <!-- END Docenti -->
 
@@ -438,23 +465,16 @@
         },
         watch: {
             regdidid: function(val) {
-                //course_studyplans.regdidid = this.regdidid
-
                 study_activities.regdidid = this.regdidid
 
                 teachers_list.cds_cod = "{{ cds_cod }}"
                 teachers_list.academic_year = {{ current_year }}
                 document.getElementById("cds_year").innerHTML = "{{ current_year }} / {{ current_year|add:1 }}"
+
+                teachers_list_old.cds_cod = "{{ old_cds_identifier }}"
+                teachers_list_old.academic_year = {{ current_year }}
+                document.getElementById("old_cds_year").innerHTML = "{{ current_year }} / {{ current_year|add:1 }}"
                 let year_index = 1
-
-                //while(year_index <= _cds_data.cds.CdSDuration) {
-                    //impegniUP.years.push(year_index)
-                    //esamiUP.years.push(year_index)
-                    //year_index += 1
-                //}
-
-                //impegniUP.getEvents()
-                //esamiUP.getEvents()
             }
         }
     })

@@ -17,7 +17,7 @@
 {% endblock page_title %}
 
 {% block website_page_year %}
-{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
+{% get_cds_website_current_year cds_identifier as cds_website_current_year %}
 if(!year)year = "{{ cds_website_current_year }}"
 {% endblock website_page_year %}
 
@@ -45,10 +45,12 @@ if(!year)year = "{{ cds_website_current_year }}"
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDYPLANS_API" as cds_websites_studyplans_api %}
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
 {% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
-{% storage_settings_value "CURRENT_YEAR" as current_year %}
-{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
+
+{% get_cds_website_current_year cds_identifier as current_year %}
+{% get_cds_website_current_year cds_identifier as cds_website_current_year %}
+{% get_cds_website_morph cds_identifier as old_cds_identifier %}
 
 {% include "includes/unical_storage_loading.html" %}
 
@@ -236,9 +238,15 @@ if(!year)year = "{{ cds_website_current_year }}"
                                                 {% trans "Follow the directions on the page" %}
                                                 "<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">{% trans "Study" %}</a>" {% trans "of the site" %}.
                                                 {% trans "For more details, please see" %}
-                                                <a :href="_cds_data.fixed_cds.DidacticRegulation" target="_blank">{% trans "Didactic regulation" %}</a>
+                                                <a :href="_cds_data.fixed_cds.DidacticRegulation" target="_blank" v-if="_cds_data.fixed_cds.DidacticRegulation">
+                                                    {% trans "Didactic regulation" %}
+                                                </a>
+                                                <span v-else>{% trans "Didactic regulation" %}</span>
                                                 {% trans "of the course and the" %}
-                                                <a :href="_cds_data.fixed_cds.StudyManifesto" target="_blank">{% trans "Study manifesto" %}</a>.
+                                                <a :href="_cds_data.fixed_cds.StudyManifesto" target="_blank" v-if="_cds_data.fixed_cds.StudyManifesto">
+                                                    {% trans "Study manifesto" %}
+                                                </a>
+                                                <span v-else>{% trans "Study manifesto" %}</span>.
                                             </li>
                                         </ul>
                                     </div>
@@ -375,9 +383,15 @@ if(!year)year = "{{ cds_website_current_year }}"
                                                     {% trans "Follow the directions on the page" %}
                                                     "<a href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">{% trans "Study" %}</a>" {% trans "of the site" %}.
                                                     {% trans "For more details, please see" %}
-                                                    <a :href="_cds_data.fixed_cds.DidacticRegulation" target="_blank">{% trans "Didactic regulation" %}</a>
+                                                    <a :href="_cds_data.cds.DidacticRegulation" target="_blank" v-if="_cds_data.cds.DidacticRegulation">
+                                                        {% trans "Didactic regulation" %}
+                                                    </a>
+                                                    <span v-else>{% trans "Didactic regulation" %}</span>
                                                     {% trans "of the course and the" %}
-                                                    <a :href="_cds_data.fixed_cds.StudyManifesto" target="_blank">{% trans "Study manifesto" %}</a>.
+                                                    <a :href="_cds_data.cds.StudyManifesto" target="_blank" v-if="_cds_data.cds.StudyManifesto">
+                                                        {% trans "Study manifesto" %}
+                                                    </a>
+                                                    <span v-else>{% trans "Study manifesto" %}</span>.
                                                 </li>
                                             </ul>
                                         </div>
@@ -532,11 +546,32 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                                 }
                             }
                         )
+                        this.curricula = curricula
+                        this.items = response.data.results[0]
+                        this.is_loading = false
+                        this.scrollPage()
                     }
-                    this.curricula = curricula
-                    this.items = response.data.results[0]
-                    this.is_loading = false
-                    this.scrollPage()
+                    else{
+                        axios
+                            .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ old_cds_identifier }}&year=' + year)
+                            .then(response => {
+                                let curricula = []
+                                if(response.data.results.length > 0) {
+                                    response.data.results[0].PlanTabs.forEach(
+                                        function (plantab) {
+                                            if (!curricula.includes(plantab.PdsDes)) {
+                                                curricula.push(plantab.PdsDes);
+                                            }
+                                        }
+                                    )
+                                    this.curricula = curricula
+                                    this.items = response.data.results[0]
+                                    this.is_loading = false
+                                    this.scrollPage()
+                                }
+                            })
+                    }
+
                 })
         },
         callAcademicYears() {
@@ -545,8 +580,13 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                 .then(response => {
                     this.academic_years_filter = response.data.results
                     // remove current year
+                    this.academic_years_filter = this.academic_years_filter.filter(function( obj ) {
+                        return obj.AcademicYear <= {{ cds_website_current_year }};
+                    });
                     {% if current_year == cds_website_current_year %}
-                    this.academic_years_filter.shift()
+                    this.academic_years_filter = this.academic_years_filter.filter(function( obj ) {
+                        return obj.AcademicYear !== {{ current_year }};
+                    });
                     {% endif %}
                     this.is_loading_academicyears = false
                 })

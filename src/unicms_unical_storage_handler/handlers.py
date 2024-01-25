@@ -80,6 +80,7 @@ HIGH_FORMATION_YEAR = getattr(settings, 'HIGH_FORMATION_YEAR', HIGH_FORMATION_YE
 INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
 
 CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
+CMS_WEBPATH_CDS_OLD = getattr(settings, 'CMS_WEBPATH_CDS_OLD', CMS_WEBPATH_CDS_OLD)
 CMS_WEBPATH_PROSPECT = getattr(settings, 'CMS_WEBPATH_PROSPECT', CMS_WEBPATH_PROSPECT)
 CMS_WEBPATH_PROSPECT_DEFAULT = getattr(settings, 'CMS_WEBPATH_PROSPECT_DEFAULT', CMS_WEBPATH_PROSPECT_DEFAULT)
 CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
@@ -879,6 +880,11 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
             raise Http404
 
         self.cds_cod = kwargs['cds_cod']
+
+        # old study course!
+        if CMS_WEBPATH_CDS_OLD.get(self.cds_cod):
+            raise Http404
+
         cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
 
         if not cds_data:
@@ -1029,6 +1035,11 @@ class CdsWebsitesRedirectHandler(BaseContentHandler):
 class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
     def __init__(self, **kwargs):
         self.cds_cod = kwargs['cds_cod']
+
+        # old study course!
+        if CMS_WEBPATH_CDS_OLD.get(self.cds_cod):
+            raise Http404
+
         cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
 
         if not cds_data:
