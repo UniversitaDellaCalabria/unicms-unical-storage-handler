@@ -61,7 +61,7 @@
                                             <div class="card card-bg no-after">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div v-if="'DirectorId' in _cds_data.cds.OtherData" class="col-12 col-lg-6">
+                                                        <div v-if="_cds_data.cds.OtherData.DirectorId" class="col-12 col-lg-6">
 
                                                             <b>[[ _cds_data.cds_labels['DirectorName'] ]]</b>
                                                             <br>
@@ -91,8 +91,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div v-if="'DeputyDirectorId' in _cds_data.cds.OtherData" class="col-12 col-lg-6">
-
+                                                        <div v-if="_cds_data.cds.OtherData.DeputyDirectorId" class="col-12 col-lg-6">
                                                             <b>[[ _cds_data.cds_labels['DeputyDirectorName'] ]]</b>
                                                             <br>
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + _cds_data.cds.OtherData.DeputyDirectorId +'/'" v-if="_cds_data.cds.OtherData.DeputyDirectorId">
@@ -101,13 +100,13 @@
                                                             <span v-else>
                                                                 [[ _cds_data.cds.OtherData.DeputyDirectorName ]]
                                                             </span>
-                                                            <div class="row" v-if="_cds_data.coordinator_data && _cds_data.coordinator_data.hasOwnProperty('Email')">
+                                                            <div class="row" v-if="_cds_data.deputy_coordinator_data && _cds_data.deputy_coordinator_data.hasOwnProperty('Email')">
                                                                 <div class="col">
                                                                     <svg class="icon icon-sm icon-muted me-2">
                                                                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
                                                                     </svg>
-                                                                    <a :href="'email:'+_cds_data.coordinator_data.Email[0]">
-                                                                        [[ _cds_data.coordinator_data.Email[0] ]]
+                                                                    <a :href="'email:'+_cds_data.deputy_coordinator_data.Email[0]">
+                                                                        [[ _cds_data.deputy_coordinator_data.Email[0] ]]
                                                                     </a>
                                                                 </div>
                                                             </div>
