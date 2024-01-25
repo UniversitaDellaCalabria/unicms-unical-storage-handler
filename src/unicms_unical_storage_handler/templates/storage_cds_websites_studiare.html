@@ -325,7 +325,7 @@
                                             data-bs-target="#collapse-teachers-lft"
                                             aria-expanded="false"
                                             aria-controls="collapse-teachers-lft">
-                                        {% trans "Academic Courses" %}&nbsp;<span id="cds_year"></span>&nbsp;- ({{ cds_cod }})
+                                        {% trans "Academic Courses" %}&nbsp;<span id="cds_year"></span>{% if old_cds_identifier %}&nbsp;- ({{ cds_cod }}){% endif %}
                                     </button>
                                 </div>
                                 <div id="collapse-teachers-lft"
