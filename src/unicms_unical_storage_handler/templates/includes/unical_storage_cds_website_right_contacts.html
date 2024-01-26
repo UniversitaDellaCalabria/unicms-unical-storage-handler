@@ -166,7 +166,7 @@
                                 </svg>
                             </div>
                             <div class="col-10">
-                                [[ office.Timetables ]]
+                                <span v-html="office.Timetables"></span>
                             </div>
                         </div>
                         <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
