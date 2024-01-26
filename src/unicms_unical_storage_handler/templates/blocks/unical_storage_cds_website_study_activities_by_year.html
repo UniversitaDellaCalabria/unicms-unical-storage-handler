@@ -184,8 +184,11 @@ getTeachingsInYear(year, index) {
     axios
         .get(url)
         .then(response => {
+            if(response.data.results && response.data.results.length > 0){
+                this.setTeachingDictionary(response.data.results[0].RegDidId, index)
+            }
             {% if old_cds_identifier %}
-            if(response.data.results.length == 0){
+            else if(response.data.results && response.data.results.length == 0) {
                 let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ old_cds_identifier }}&academicyear=' + year
                 axios
                 .get(url)
@@ -194,13 +197,6 @@ getTeachingsInYear(year, index) {
                         this.setTeachingDictionary(response.data.results[0].RegDidId, index)
                     }
                 })
-            }
-            else {
-            {% endif %}
-            if(response.data.results && response.data.results.length > 0){
-                this.setTeachingDictionary(response.data.results[0].RegDidId, index)
-            }
-            {% if old_cds_identifier %}
             }
             {% endif %}
         })

@@ -446,7 +446,7 @@
                     .get(url)
                     .then(response => {
                         this.studyplans = []
-                        if(response.data.results.length == 0){
+                        if(response.data.results && response.data.results.length == 0){
                             let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ old_cds_identifier }}&academicyear=' + ac_year
                             axios
                                 .get(url)

@@ -107,14 +107,17 @@
                         .then(response => {
                             this.cds = response.data.results
                             _{{ cds_identifier }}_logo_mobile.cds = response.data.results
-                            this.getPersonData(response.data.results.OtherData.DirectorId,response.data.results.OtherData.DeputyDirectorId)
+
                             this.cds_labels = response.data.labels
+
                             if(update_fixed){
                                 this.fixed_cds = response.data.results
                                 this.fixed_cds_labels = response.data.labels
                             }
                             this.is_loading = false
+
                             _{{ cds_identifier }}_logo_mobile.is_loading = false
+
                             // automatic pages
                             if (typeof _{{ cds_identifier }} != "undefined") {
                                 _{{ cds_identifier }}.regdidid = regdidid
@@ -127,6 +130,9 @@
                             if (typeof _cds_website_info_icons != "undefined") {
                                 _cds_website_info_icons.department_cod = response.data.results['DepartmentCod']
                             }
+
+                            this.getPersonData(response.data.results.OtherData.DirectorId,
+                                               response.data.results.OtherData.DeputyDirectorId)
                         }
                     )
                 },
