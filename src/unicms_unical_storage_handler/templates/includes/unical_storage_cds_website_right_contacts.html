@@ -1,9 +1,17 @@
 {% load i18n %}
 {% load static %}
-{% load unicms_storage_handler %}
 
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% get_allowed_website request.get_host as host %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 
 {% include "includes/unical_storage_loading.html" %}
 
