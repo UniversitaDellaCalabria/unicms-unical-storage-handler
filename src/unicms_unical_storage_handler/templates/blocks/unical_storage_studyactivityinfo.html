@@ -21,6 +21,7 @@
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as redirect_prefix %}
 
 <div id="{{ id }}">
 
@@ -175,7 +176,7 @@
                             </a>
                         </td>
                         <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom && _cds_data.cds.CdSCod != item.StudyActivityBorrowedFrom.StudyActivityCdSCod">
-                            <a target="_blank" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityID +'/'">
+                            <a target="_blank" :href="'//{{ host }}/{{ cds_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityCdSCod +'/{{ sub_path }}/{{ activity_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityID +'/{{ redirect_prefix }}/'">
                                 [[ item.StudyActivityBorrowedFrom.StudyActivityName ]] ([[ item.StudyActivityBorrowedFrom.StudyActivityCdSName ]])
                             </a>
                         </td>
@@ -193,7 +194,7 @@
                                     <a v-if="_cds_data.cds.CdSCod == borrow.StudyActivityCdSCod" :href="replaceActivityCode(borrow.StudyActivityID)">
                                         [[ borrow.StudyActivityName ]]
                                     </a>
-                                    <a v-else target="_blank" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + borrow.StudyActivityRegDidId +'/{{ activity_prefix }}/' + borrow.StudyActivityID +'/'">
+                                    <a v-else target="_blank" :href="'//{{ host }}/{{ cds_prefix }}/' + borrow.StudyActivityCdSCod +'/{{ sub_path }}/{{ activity_prefix }}/' + borrow.StudyActivityID +'/{{ redirect_prefix }}/'">
                                         [[ borrow.StudyActivityName ]]
                                     </a>
                                     {% endif %}

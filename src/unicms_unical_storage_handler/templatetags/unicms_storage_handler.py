@@ -15,6 +15,18 @@ register = template.Library()
 ALLOWED_UNICMS_SITES = getattr(settings, 'ALLOWED_UNICMS_SITES',
                                app_settings.ALLOWED_UNICMS_SITES)
 
+
+@register.simple_tag
+def split_string(s, c):
+    result = []
+    if not s: return result
+    if not c: return result
+    l = s.split(c)
+    for i in l:
+        if i: result.append(i)
+    return result
+
+
 @register.simple_tag
 def clean_url(url):
     if url.find('?'): url = url.split('?')[0]

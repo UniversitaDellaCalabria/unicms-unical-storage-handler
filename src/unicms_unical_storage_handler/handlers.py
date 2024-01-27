@@ -1059,3 +1059,15 @@ class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
             cds_name =  self.cds_json['CdSName']
             return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{self.cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
         raise Http404()
+
+
+class CdsWebsitesStudyActivityRedirectHandler(CdsWebsitesRedirectHandler):
+    def __init__(self, **kwargs):
+        super(CdsWebsitesStudyActivityRedirectHandler, self).__init__(**kwargs)
+        self.sub_path = kwargs['sub_path']
+        self.activity_id = kwargs['code']
+
+    def as_view(self):
+        if self.webpath:
+            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/{self.sub_path}/{CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH}/{self.activity_id}/'))
+        raise Http404()
