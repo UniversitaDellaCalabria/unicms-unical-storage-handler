@@ -113,9 +113,13 @@
                                 this.fixed_cds_labels = response.data.labels
                             }
 
-                            // automatic pages
-                            if (typeof _{{ cds_identifier }} != "undefined") {
-                                _{{ cds_identifier }}.regdidid = regdidid
+                            // calendars and exams
+                            if (typeof _{{ cds_identifier }}_impegniUP != "undefined") {
+                                _{{ cds_identifier }}_impegniUP.regdidid = regdidid
+                            }
+                            // studiare teachigs
+                            if (typeof _{{ cds_identifier }}_studiare_study_activities != "undefined") {
+                                _{{ cds_identifier }}_studiare_study_activities.regdidid = regdidid
                             }
                             // hero slider block
                             if (typeof _{{ cds_identifier }}_hero_slider != "undefined") {

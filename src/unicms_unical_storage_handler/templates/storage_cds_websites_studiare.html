@@ -65,7 +65,7 @@
 
                         <!-- Insegnamenti -->
                         <div class="mt-5">
-                            {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="study_activities" full_page=full_page year=current_year cds_identifier=cds_cod %}
+                            {% include "blocks/unical_storage_cds_website_study_activities_by_year.html" with uid="_"|add:cds_cod|add:"_studiare_study_activities" full_page=full_page year=current_year cds_identifier=cds_cod %}
                         </div>
                         <!-- END insegnamenti -->
 
@@ -325,7 +325,7 @@
                                             data-bs-target="#collapse-teachers-lft"
                                             aria-expanded="false"
                                             aria-controls="collapse-teachers-lft">
-                                        {% trans "Year" %}&nbsp;<span id="cds_year"></span>{% if old_cds_identifier %}&nbsp;- ({{ cds_cod }}){% endif %}
+                                        {% trans "Year" %}&nbsp;{{ current_year }} / {{ current_year|add:1 }}{% if old_cds_identifier %}&nbsp;- ({{ cds_cod }}){% endif %}
                                     </button>
                                 </div>
                                 <div id="collapse-teachers-lft"
@@ -348,7 +348,7 @@
                                             data-bs-target="#old_collapse-teachers-lft"
                                             aria-expanded="false"
                                             aria-controls="old_collapse-teachers-lft">
-                                        {% trans "Year" %}&nbsp;<span id="old_cds_year"></span>&nbsp;- ({{ old_cds_identifier }})
+                                        {% trans "Year" %}&nbsp;{{ current_year }} / {{ current_year|add:1 }}&nbsp;- ({{ old_cds_identifier }})
                                     </button>
                                 </div>
                                 <div id="old_collapse-teachers-lft"
@@ -413,7 +413,6 @@
                 url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
                 is_loading: true,
                 loader_source: '{{ url }}',
-                regdidid: null,
                 teachers: [],
                 teachers_labels: {},
                 teachers_is_loading: true,
@@ -426,11 +425,23 @@
         },
         mounted() {
             //this.CallURL();
+            this.start();
             this.CallTopics();
             this.CallTopicArticles();
             //this.CallCds();
         },
         methods: {
+            start() {
+                teachers_list.cds_cod = "{{ cds_cod }}"
+                teachers_list.academic_year = {{ current_year }}
+
+                {% if old_cds_identifier %}
+                teachers_list_old.cds_cod = "{{ old_cds_identifier }}"
+                teachers_list_old.academic_year = {{ current_year }}
+                {% endif %}
+
+                let year_index = 1
+            },
             CallTopicArticles() {
                 let url = '{{ base_api }}{{ page_topic_articles }}?lang={{ LANGUAGE_CODE }}&page_size=200&cds_cod={{ cds_cod }}&topic_id=' + this.allowed_topics
                 axios
@@ -463,23 +474,6 @@
                 )
             },
         },
-        watch: {
-            regdidid: function(val) {
-                study_activities.regdidid = val
-
-                teachers_list.cds_cod = "{{ cds_cod }}"
-                teachers_list.academic_year = {{ current_year }}
-                document.getElementById("cds_year").innerHTML = "{{ current_year }} / {{ current_year|add:1 }}"
-
-                {% if old_cds_identifier %}
-                teachers_list_old.cds_cod = "{{ old_cds_identifier }}"
-                teachers_list_old.academic_year = {{ current_year }}
-                document.getElementById("old_cds_year").innerHTML = "{{ current_year }} / {{ current_year|add:1 }}"
-                {% endif %}
-
-                let year_index = 1
-            }
-        }
     })
 
 
