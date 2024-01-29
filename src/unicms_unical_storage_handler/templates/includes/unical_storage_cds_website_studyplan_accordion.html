@@ -26,7 +26,6 @@
             <p class="h4">
                 [[ index ]] {% trans "Year" %}
             </p>
-
             <div v-for="required in tab.AfRequired">
                 <div v-if="required.Year == index">
                     <b>
@@ -98,8 +97,9 @@
 
             <!-- choices -->
             <div v-for="choice in tab.AfChoices">
+
                 <!-- vincoli principali -->
-                <div v-if="choice.SceCodType == 'V' && choice.VinId == null && tab.AfChoices.some(e => e.VinId === choice.SceId ) && tab.AfChoices.some(e => e.Year === index )">
+                <div v-if="choice.SceCodType == 'V' && choice.VinId == null && tab.AfChoices.some(e => e.VinId === choice.SceId && e.Year === index) && tab.AfChoices.some(e => e.Year === index )">
                     <div class="alert alert-info" role="alert">
                         <b>{% trans "Insegnamenti a scelta" %} - [[ choice.RegSceCodDes ]]</b>
                         <br>
@@ -139,7 +139,6 @@
                             </span>
                         </span>
                         <span>{% trans "choice between" %}</span>
-
 
                         <!-- vincoli innestati -->
                         <div v-for="vin_choice in tab.AfChoices" v-if="vin_choice.Year == index && vin_choice.SceCodType == 'V' && vin_choice.SceId != choice.SceId" role="alert" class="alert alert mt-3 ps-3" style="border-left: 8px solid var(--grey)">
@@ -186,7 +185,7 @@
                             </div>
                             <br>
                             <!-- scelte del vincolo innestato -->
-                            <div v-for="vin_sub_choice in tab.AfChoices" v-if="vin_sub_choice.VinId == vin_choice.SceId && vin_sub_choice.Choices.length > 0">
+                            <div v-for="vin_sub_choice in tab.AfChoices" v-if="vin_sub_choice.Tear == index && vin_sub_choice.VinId == vin_choice.SceId && vin_sub_choice.Choices.length > 0">
                                 <div>
                                     <b>
                                         [[ vin_sub_choice.SceDes ]]
@@ -244,14 +243,14 @@
                             </div>
                             <!-- END scelte del vincolo innestato -->
                             <!-- filtri del vincolo innestato -->
-                            <div v-for="vin_sub_choice in tab.AfChoices" v-if="vin_sub_choice.VinId == vin_choice.SceId && vin_sub_choice.FilAnd.length > 0">
+                            <div v-for="vin_sub_choice in tab.AfChoices" v-if="vin_sub_choice.Year == index && vin_sub_choice.VinId == vin_choice.SceId && vin_sub_choice.FilAnd.length > 0">
                                 <div>
                                     <br>
                                     <b>
                                         [[ vin_sub_choice.SceDes ]]
                                     </b>
                                     <div v-if="vin_sub_choice.FilAnd.length > 0 ">
-                                        <ul class="ps-0 list-unstyled">
+                                        <ul class="ps-0 list-unstyled mt-2">
                                             <li v-for="filter in vin_sub_choice.FilAnd" v-if="!filter.NotFlg">
                                                 <svg class="icon icon-sm icon-success" :aria-labelledby="filter.FilAndId + 'success'">
                                                     <title :id="filter.FilAndId + 'success'">{% trans "Valid option" %}</title>
@@ -275,8 +274,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="vin_choice.Choices.length==0 && vin_choice.FilAnd.length==0 && vin_choice.SceCodType != 'V'">
-                                <ul class="ps-0 list-unstyled">
+                            <div v-if="vin_choice.Year == index && vin_choice.Choices.length==0 && vin_choice.FilAnd.length==0 && vin_choice.SceCodType != 'V'">
+                                <ul class="ps-0 list-unstyled mt-2">
                                     <li>
                                         <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
                                             <title id="no-choice-success">{% trans "Valid option" %}</title>
@@ -291,7 +290,7 @@
                         <!-- END vincoli innestati -->
 
                         <!-- scelte del vincolo -->
-                        <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.VinId == choice.SceId && sub_choice.Choices.length > 0">
+                        <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.Year == index && sub_choice.VinId == choice.SceId && sub_choice.Choices.length > 0">
                             <div>
                                 <br>
                                 <b>
@@ -350,14 +349,14 @@
                         </div>
                         <!-- END scelte del vincolo -->
                         <!-- filtri del vincolo -->
-                        <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.VinId == choice.SceId && sub_choice.FilAnd.length > 0">
+                        <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.Year == index && sub_choice.VinId == choice.SceId && sub_choice.FilAnd.length > 0">
                             <div>
                                 <br>
                                 <b>
                                     [[ sub_choice.SceDes ]]
                                 </b>
                                 <div v-if="sub_choice.FilAnd.length > 0 ">
-                                    <ul class="ps-0 list-unstyled">
+                                    <ul class="ps-0 list-unstyled mt-2">
                                         <li v-for="filter in sub_choice.FilAnd" v-if="!filter.NotFlg">
                                             <span>
                                                 <svg class="icon icon-sm icon-success" :aria-labelledby="filter.FilAndId + 'success'">
@@ -385,8 +384,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-if="choice.Choices.length==0 && choice.FilAnd.length==0 && choice.SceCodType != 'V'">
-                            <ul class="ps-0 list-unstyled">
+                        <div v-for="sub_choice in tab.AfChoices" v-if="sub_choice.Choices.length==0 && sub_choice.Year == index && sub_choice.FilAnd.length==0 && sub_choice.SceCodType != 'V'">
+                            <br>
+                            <b>
+                                [[ sub_choice.SceDes ]]
+                            </b>
+                            <ul class="ps-0 list-unstyled mt-2">
                                 <li>
                                     <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
                                         <title id="no-choice-success">{% trans "Valid option" %}</title>
@@ -497,7 +500,7 @@
                         </div>
 
                         <div v-if="choice.FilAnd.length > 0 ">
-                            <ul class="ps-0 list-unstyled">
+                            <ul class="ps-0 list-unstyled mt-2">
                                 <li v-for="filter in choice.FilAnd" v-if="!filter.NotFlg">
                                     <svg class="icon icon-sm icon-success">
                                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
@@ -517,8 +520,8 @@
                                 </li>
                             </ul>
                         </div>
-                        <div v-if="choice.Choices.length==0 && choice.FilAnd.length==0 && choice.SceCodType != 'V'">
-                            <ul class="ps-0 list-unstyled">
+                        <div v-if="choice.Choices.length==0 && choice.Year == index && choice.FilAnd.length==0 && choice.SceCodType != 'V'">
+                            <ul class="ps-0 list-unstyled mt-2">
                                 <li>
                                     <svg class="icon icon-sm icon-success" aria-labelledby="no-choice-success">
                                         <title id="no-choice-success">{% trans "Valid option" %}</title>
