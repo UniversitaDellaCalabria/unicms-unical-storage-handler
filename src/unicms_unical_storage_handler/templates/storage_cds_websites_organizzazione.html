@@ -227,7 +227,7 @@
                                                         <svg class="icon icon-sm icon-muted me-2">
                                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
                                                         </svg>
-                                                        [[ office.Timetables ]]
+                                                        <span v-html="office.Timetables"></span>
                                                     </div>
                                                 </div>
                                                 <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
