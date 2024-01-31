@@ -149,10 +149,12 @@
                     const cms_webpath_cds_morph = {{ cms_webpath_cds_morph|safe }}
                     let cds_identifier = '{{ cds_identifier }}'
                     for (const [new_cds, old_cds] of Object.entries(cms_webpath_cds_morph)) {
-                        if(old_cds == '{{ cds_identifier }}'){
-                            cds_identifier = new_cds
-                            year = "{{ official_current_year }}"
-                            break
+                        for (let i=0; i<old_cds.length; i++) {
+                            if(old_cds[i] == '{{ cds_identifier }}'){
+                                cds_identifier = new_cds
+                                year = "{{ official_current_year }}"
+                                break
+                            }
                         }
                     }
 

@@ -132,4 +132,4 @@ def get_cds_website_morph(cds_cod):
     cds_morph = getattr(settings,
                         'CMS_WEBPATH_CDS_MORPH',
                         app_settings.CMS_WEBPATH_CDS_MORPH)
-    return cds_morph.get(cds_cod)
+    return cds_morph.get(cds_cod, [])

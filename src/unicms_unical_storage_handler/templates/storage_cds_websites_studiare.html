@@ -50,7 +50,7 @@
 {% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 
-{% get_cds_website_morph cds_cod as old_cds_identifier %}
+{% get_cds_website_morph cds_cod as old_cds_identifiers %}
 
 {% include "includes/unical_storage_loading.html" %}
 
@@ -325,7 +325,7 @@
                                             data-bs-target="#collapse-teachers-lft"
                                             aria-expanded="false"
                                             aria-controls="collapse-teachers-lft">
-                                        {% trans "Year" %}&nbsp;{{ current_year }} / {{ current_year|add:1 }}{% if old_cds_identifier %}&nbsp;- ({{ cds_cod }}){% endif %}
+                                        {% trans "Year" %}&nbsp;{{ current_year }} / {{ current_year|add:1 }}{% if old_cds_identifiers %}&nbsp;- ({{ cds_cod }}){% endif %}
                                     </button>
                                 </div>
                                 <div id="collapse-teachers-lft"
@@ -339,28 +339,30 @@
                                 </div>
                             </div>
 
-                            {% if old_cds_identifier %}
+                            {% if old_cds_identifiers %}
+                            {% for old_cds_identifier in old_cds_identifiers %}
                             <div class="accordion-item">
-                                <div class="accordion-header" id="old_heading-teachers-lft">
+                                <div class="accordion-header" id="old_heading-teachers-lft-{{ old_cds_identifier }}">
                                     <button class="accordion-button"
                                             type="button"
                                             data-bs-toggle="collapse"
-                                            data-bs-target="#old_collapse-teachers-lft"
+                                            data-bs-target="#old_collapse-teachers-lft-{{ old_cds_identifier }}"
                                             aria-expanded="false"
-                                            aria-controls="old_collapse-teachers-lft">
+                                            aria-controls="old_collapse-teachers-lft-{{ old_cds_identifier }}">
                                         {% trans "Year" %}&nbsp;{{ current_year }} / {{ current_year|add:1 }}&nbsp;- ({{ old_cds_identifier }})
                                     </button>
                                 </div>
-                                <div id="old_collapse-teachers-lft"
+                                <div id="old_collapse-teachers-lft-{{ old_cds_identifier }}"
                                      class="accordion-collapse collapse"
-                                     data-bs-parent="#old_accordionDiv3-lft"
+                                     data-bs-parent="#accordionDiv3-lft"
                                      role="region"
-                                     aria-labelledby="old_heading-teachers-lft">
+                                     aria-labelledby="old_heading-teachers-lft-{{ old_cds_identifier }}">
                                     <div class="accordion-body mt-3">
-                                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with uid="teachers_list_old" mark_contract_teachers=1 %}
+                                        {% include "blocks/unical_storage_teacherslist_without_filters.html" with uid="teachers_list_old_"|add:old_cds_identifier mark_contract_teachers=1 %}
                                     </div>
                                 </div>
                             </div>
+                            {% endfor %}
                             {% endif %}
 
                         </div>
@@ -435,9 +437,11 @@
                 teachers_list.cds_cod = "{{ cds_cod }}"
                 teachers_list.academic_year = {{ current_year }}
 
-                {% if old_cds_identifier %}
-                teachers_list_old.cds_cod = "{{ old_cds_identifier }}"
-                teachers_list_old.academic_year = {{ current_year }}
+                {% if old_cds_identifiers %}
+                {% for old_cds_identifier in old_cds_identifiers %}
+                teachers_list_old_{{ old_cds_identifier }}.cds_cod = "{{ old_cds_identifier }}"
+                teachers_list_old_{{ old_cds_identifier }}.academic_year = {{ current_year }}
+                {% endfor %}
                 {% endif %}
 
                 let year_index = 1

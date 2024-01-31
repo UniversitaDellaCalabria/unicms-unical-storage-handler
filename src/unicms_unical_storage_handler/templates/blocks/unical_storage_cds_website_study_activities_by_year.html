@@ -151,13 +151,14 @@
 
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
 exclude_studyactivity_codes: {{ exclude_studyactivity_codes|safe }},
-
+old_cds_identifiers: {{ old_cds_identifiers|safe }},
 degree_class: '',
 interclass_degree_class: '',
 academic_year: '',
 regdidid: null,
 teachings_dictionary: {},
-labels: {}
+labels: {},
+old_cds_found: false
 {% endblock extra_data %}
 
 {% block call_url %}
@@ -168,37 +169,43 @@ labels: {}
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 
-{% get_cds_website_morph cds_identifier as old_cds_identifier %}
+{% get_cds_website_morph cds_identifier as old_cds_identifiers %}
 {% get_current_language as LANGUAGE_CODE %}
 
-setTeachingDictionary(regdidid, index) {
+async setTeachingDictionary(regdidid, index) {
     let teachings_url = "{{ base_api }}{{ cds_api }}" + regdidid + "/studyplans/"
-    axios
+    await axios
         .get(teachings_url)
         .then(response => {
             Vue.set(this.teachings_dictionary, index, response.data.results)
         })
 },
-getTeachingsInYear(year, index) {
+async getOldTeachings(year, index) {
+    for(let i=0;i<this.old_cds_identifiers.length;i++) {
+        if(this.old_cds_found) break;
+        let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod=' + this.old_cds_identifiers[i] + '&academicyear=' + year
+        await axios
+            .get(url)
+            .then(response => {
+                if(response.data.results && response.data.results.length > 0){
+                    this.old_cds_found = true
+                    this.setTeachingDictionary(response.data.results[0].RegDidId, index)
+                }
+        })
+    }
+    this.old_cds_found = false
+},
+async getTeachingsInYear(year, index) {
     let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod=' + _cds_data.cds.CdSCod + '&academicyear=' + year
-    axios
+    await axios
         .get(url)
         .then(response => {
             if(response.data.results && response.data.results.length > 0){
                 this.setTeachingDictionary(response.data.results[0].RegDidId, index)
             }
-            {% if old_cds_identifier %}
-            else if(response.data.results && response.data.results.length == 0) {
-                let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ old_cds_identifier }}&academicyear=' + year
-                axios
-                .get(url)
-                .then(response => {
-                    if(response.data.results && response.data.results.length > 0){
-                        this.setTeachingDictionary(response.data.results[0].RegDidId, index)
-                    }
-                })
+            else {
+                this.getOldTeachings(year, index)
             }
-            {% endif %}
         })
 },
 async getYears() {

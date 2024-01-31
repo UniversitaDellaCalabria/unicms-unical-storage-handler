@@ -51,9 +51,11 @@ async CallURL(url, initial=false) {
             .then(response => {
                 for(const c of response.data.results){
                     for (const [cds_new, cds_old] of Object.entries(cms_webpath_cds_morph)) {
-                        if (cds_old == c.CdSCod) break;
-                        this.items.results.push(c);
-                        this.items.results.sort((a, b) => a.CdSName > b.CdSName)
+                        for (let i=0; i<cds_old.length; i++) {
+                            if (cds_old[i] == c.CdSCod) break;
+                            this.items.results.push(c);
+                            this.items.results.sort((a, b) => a.CdSName > b.CdSName)
+                        }
                     }
                 }
             })

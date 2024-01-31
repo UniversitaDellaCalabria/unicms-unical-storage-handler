@@ -55,7 +55,7 @@
 {% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 
-{% get_cds_website_morph cds_cod as old_cds_identifier %}
+{% get_cds_website_morph cds_cod as old_cds_identifiers %}
 
 {% include "includes/unical_storage_loading.html" %}
 
@@ -363,7 +363,9 @@
                 chosen_af_cod: '',
                 search_teacher: '',
                 search_location: '',
-                cds_identifier: '{{ cds_cod }}'
+                cds_identifier: '{{ cds_cod }}',
+                old_cds_identifiers: {{ old_cds_identifiers|safe }},
+                old_cds_found: false,
             } //end return
         }, //end data
         mounted()  {
@@ -445,6 +447,25 @@
                     this.getEvents(year=this.year)
                 }
             },
+            async getOldYears(year) {
+                for(let i=0;i<this.old_cds_identifiers.length;i++) {
+                    if(this.old_cds_found) break;
+                    let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod=' + this.old_cds_identifiers[i] + '&academicyear=' + year
+                    await axios
+                        .get(url)
+                        .then(response => {
+                            this.studyplans = []
+                            if(response.data.results && response.data.results.length > 0){
+                                console.log(this.old_cds_identifiers[i])
+                                this.old_cds_found = true
+                                this.cds_identifier = this.old_cds_identifiers[i]
+                                this.callStudyPlans(response.data.results[0].RegDidId)
+                                this.getEvents()
+                            }
+                        })
+                }
+                this.old_cds_found = false
+            },
             resetCalendar(year=1) {
                 this.year = year
                 this.chosen_af_cod = ''
@@ -456,17 +477,7 @@
                     .then(response => {
                         this.studyplans = []
                         if(response.data.results && response.data.results.length == 0){
-                            let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ old_cds_identifier }}&academicyear=' + ac_year
-                            axios
-                                .get(url)
-                                .then(response => {
-                                    this.studyplans = []
-                                    if(response.data.results && response.data.results.length > 0){
-                                        this.cds_identifier = '{{ old_cds_identifier }}'
-                                        this.callStudyPlans(response.data.results[0].RegDidId)
-                                        this.getEvents()
-                                    }
-                                })
+                            this.getOldYears(ac_year)
                         }
                         else if(response.data.results && response.data.results.length > 0){
                             this.callStudyPlans(response.data.results[0].RegDidId)
