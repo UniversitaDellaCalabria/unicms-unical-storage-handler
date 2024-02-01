@@ -64,7 +64,7 @@
                              :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-1-lft'"
                              role="region"
                              :aria-labelledby="'heading-{{ id }}-1' + index + '-lft'">
-                            <div class="accordion-body" v-if="teachings_dictionary[year].length == 1" v-for="item in teachings_dictionary[year]">
+                            <div class="accordion-body" v-if="teachings_dictionary[year].length == 1">
                                 <div class="it-list-wrapper">
                                     <div class="table-responsive">
                                         <span>
@@ -84,7 +84,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="activity in item.StudyActivities[year]" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                    <tr v-for="activity in teachings_dictionary[year][0].StudyActivities[year]" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
                                                         <td>
 <!--
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
