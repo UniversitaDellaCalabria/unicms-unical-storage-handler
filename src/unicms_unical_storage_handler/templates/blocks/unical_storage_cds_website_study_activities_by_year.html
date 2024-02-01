@@ -217,7 +217,7 @@ old_cds_found: false
 {% get_current_language as LANGUAGE_CODE %}
 
 async setTeachingDictionary(regdidid, index) {
-    let teachings_url = "{{ base_api }}{{ cds_api }}" + regdidid + "/studyplans/"
+    let teachings_url = "{{ base_api }}{{ cds_api }}" + regdidid + "/studyplans/?lang={{ LANGUAGE_CODE }}"
     await axios
         .get(teachings_url)
         .then(response => {
