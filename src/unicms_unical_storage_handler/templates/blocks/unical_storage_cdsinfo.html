@@ -204,9 +204,7 @@
                                 <div class="col-12" v-if="office.Timetables && office.Timetables.trim().length>0">
                                     <span>
                                         [[ labels['Timetables'] ]]
-                                        <span>
-                                            <b>[[ office.Timetables ]]</b>
-                                        </span>
+                                        <span v-html="office.Timetables"></span>
                                     </span>
                                 </div>
                                 <div class="col-12" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
