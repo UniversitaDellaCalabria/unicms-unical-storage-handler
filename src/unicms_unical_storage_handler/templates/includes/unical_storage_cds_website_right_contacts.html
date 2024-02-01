@@ -157,14 +157,19 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="row" v-if="office.Floor && office.Floor.trim().length>0">
+                        <div class="row" v-if="(office.Building && office.Building.trim().length>0) || (office.Floor && office.Floor.trim().length>0)">
                             <div class="col-2">
                                 <svg class="icon icon-sm icon-muted me-2">
                                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
                                 </svg>
                             </div>
                             <div class="col-10">
-                                [[ _cds_data.fixed_cds_labels['Floor'] ]] [[ office.Floor ]]
+                                <div v-if="office.Building && office.Building.trim().length>0">
+                                    [[ _cds_data.fixed_cds_labels['Building'] ]] [[ office.Building ]]
+                                </div>
+                                <div v-if="office.Floor && office.Floor.trim().length>0">
+                                    [[ _cds_data.fixed_cds_labels['Floor'] ]] [[ office.Floor ]]
+                                </div>
                             </div>
                         </div>
                         <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
