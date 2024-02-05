@@ -23,6 +23,9 @@ if(!year)year = "{{ cds_website_current_year }}"
 Brochure - {{ block.super }}
 {% endblock page_title %}
 
+{% block messages %}
+{% endblock messages %}
+
 {% block container %}
 
 {% get_current_language as LANGUAGE_CODE %}
@@ -52,7 +55,6 @@ Brochure - {{ block.super }}
 
 {% include "includes/unical_storage_loading.html" %}
 
-
 <div id="_{{ cds_cod }}">
 
     <div class="col-12 py-5 bd-content">
@@ -60,6 +62,20 @@ Brochure - {{ block.super }}
         <div class="container pb-5">
             <div class="row">
                 <div class="col">
+
+                    {% if messages %}
+                    <div class="mb-5">
+                        {% for message in messages %}
+                        <div class="mb-0 alert alert-{{ message.tags }}
+                                   {% if 'error' in message.tags%} alert-danger{% endif %}
+                                   {% if not forloop.first %}mt-1{% endif %}"
+                                   role="alert">
+                            {{ message|safe }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
                     <div>
                         <div class="row mb-lg-3">
                             <div class="col-12 col-lg-8" v-if="_cds_data.cds.CdSVideo">
@@ -741,14 +757,18 @@ Brochure - {{ block.super }}
             <div class="col">
                 <div class="container mb-3">
                     <p class="h3 mb-4">
-                        {% trans "Request information for this course" %}
+                        <svg class="icon icon-xl me-3" style="fill: var(--bordeaux_unical)">
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
+                        </svg> {% trans "Request information for this course" %}
                     </p>
 
-                    <form method="post" class="light-form">
+                    <form method="post" action="" class="light-form">
                         <div class="row">
                             {% for field in form %}
-                                {% if not forloop.counter0 or field.name == 'text'%}
+                                {% if not forloop.counter0 or field.name == 'message'%}
                                 <div class="col-12 col-lg-6">
+                                {% elif field.name == 'privacy'%}
+                                <div class="col-12 py-3">
                                 {% endif %}
                                     <div style="padding: 0 0 1rem">
                                         <b>{{ field.label_tag }}</b>
@@ -763,7 +783,7 @@ Brochure - {{ block.super }}
                                             {{ field.errors }}
                                         </span>
                                     </div>
-                                {% if field.name == 'phone' or field.name == 'text' %}
+                                {% if field.name == 'phone' or field.name == 'message' %}
                                 </div>
                                 {% endif %}
                             {% endfor %}

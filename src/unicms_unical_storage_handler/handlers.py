@@ -1,11 +1,15 @@
 import json
+import logging
 import requests
 import urllib
 
 from datetime import datetime, timezone
 
 from django.conf import settings
+from django.contrib import messages
+from django.core.mail import send_mail
 from django.http import (HttpResponse,
+                         HttpResponseRedirect,
                          Http404)
 from django.middleware.csrf import get_token
 from django.shortcuts import get_object_or_404, redirect
@@ -22,6 +26,9 @@ from cms.pages.models import Page
 
 from . forms import CdsWebsiteContactForm
 from . settings import *
+
+
+logger = logging.getLogger(__name__)
 
 
 # local or global settings
@@ -88,8 +95,8 @@ CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL = getattr(settings, 'CMS_STORAGE_CDS_W
 CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)
 CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)
 CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)
-
 CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE', CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE)
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS', CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS)
 
 
 class BaseStorageHandler(BaseContentHandler):
@@ -879,6 +886,7 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
         if not CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE:
             raise Http404
 
+        self.redirect = False
         self.cds_cod = kwargs['cds_cod']
 
         # old study course!
@@ -887,7 +895,7 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
 
         cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
 
-        if not cds_data:
+        if not cds_data and cds_data.status_code != 200:
             raise Http404
 
         self.cds_json = json.loads(cds_data._content)['results'][0]
@@ -897,11 +905,46 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
         if self.request.POST:
             form = CdsWebsiteContactForm(data=self.request.POST)
             if form.is_valid():
-                print(form.data)
+                name = f"{form.cleaned_data['first_name']} {form.cleaned_data['last_name']}"
+                course = f"{self.cds_json['CdSCod']} - {self.cds_json['CdSName']}"
+                try:
+                    send_mail(
+                        subject=f"Richiesta informazioni: {course} - {name}",
+                        message=f"{form.cleaned_data['message']} Email: {form.cleaned_data['email']}",
+                        html_message=f"<b>Utente:</b> {name}<br><b>Email:</b> {form.cleaned_data['email']}<br><b>Telefono:</b> {form.cleaned_data['phone']}<br><br><b>Messaggio:</b><p>{form.cleaned_data['message']}</p><br>",
+                        from_email=settings.EMAIL_SENDER,
+                        recipient_list=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS,
+                        fail_silently=False,
+                    )
+                    messages.add_message(
+                        self.request,
+                        messages.SUCCESS,
+                        _("Your email has been successfully sent"),
+                    )
+                    self.redirect = True
+                except:
+                    messages.add_message(
+                        self.request,
+                        messages.ERROR,
+                        _("Your email was not sent due to a technical problem. Try later"),
+                    )
+            else:
+                for k, v in form.errors.items():
+                    messages.add_message(
+                        self.request,
+                        messages.ERROR,
+                        f"{k}: {v}"
+                    )
         else:
             form = CdsWebsiteContactForm()
+
+        self.data['messages'] = messages.get_messages(self.request)
         self.data['form'] = form
         self.data['hide_cds_auto_menu'] = 1
+
+    def as_view(self):
+        if self.redirect: return HttpResponseRedirect(self.request.path_info)
+        return super(CdsWebsitesProspectHandler, self).as_view()
 
     @property
     def breadcrumbs(self):
