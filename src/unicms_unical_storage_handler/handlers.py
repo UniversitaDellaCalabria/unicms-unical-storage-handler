@@ -919,14 +919,14 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
                     messages.add_message(
                         self.request,
                         messages.SUCCESS,
-                        _("Your email has been successfully sent"),
+                        _("Your message has been successfully sent"),
                     )
                     self.redirect = True
                 except:
                     messages.add_message(
                         self.request,
                         messages.ERROR,
-                        _("Your email was not sent due to a technical problem. Try later"),
+                        _("Your message was not sent due to a technical problem. Try later"),
                     )
             else:
                 for k, v in form.errors.items():
