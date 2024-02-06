@@ -57,7 +57,7 @@ Brochure - {{ block.super }}
 
 <div id="_{{ cds_cod }}">
 
-    <div class="col-12 py-5 bd-content">
+    <div class="col-12 pt-5 bd-content">
         {% block centered_container %}
         <div class="container pb-5">
             <div class="row">
@@ -797,9 +797,6 @@ Brochure - {{ block.super }}
                                     type="button"
                                     data-bs-toggle="modal"
                                     data-bs-target="#modal_submit">
-                                <svg class="icon icon-xs icon-white">
-                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-plus-circle"></use>
-                                </svg>
                                 {% trans "Submit" %}
                             </button>
                         </div>
