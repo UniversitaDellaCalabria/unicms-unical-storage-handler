@@ -14,7 +14,6 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as prospect_page_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_website_prospect_redirect %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE" as prospect_is_visible %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CAROUSEL_BACKGROUNDS_URL" as carousel_backgrounds %}
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
 
@@ -45,11 +44,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 px-5">
-                    {% if prospect_is_visible %}
                     <a href="{{ webpath.parent.fullpath }}{{ cds_base_path }}/{{ cds_cod }}/{{ cds_website_prospect_redirect }}/{{ prospect_page_path }}/" style="text-decoration: none; text-shadow: 2px 2px 3px #000">
-                    {% else %}
-                    <a href="#" style="text-decoration: none; text-shadow: 2px 2px 3px #000">
-                    {% endif %}
                         <div class="it-hero-text-wrapper unical-hero-text-wrapper">
                             <p class="h2 d-none d-lg-block lighter text-white font-serif" style="font-style: italic">
                                 [[ slide.SliderDescription ]]

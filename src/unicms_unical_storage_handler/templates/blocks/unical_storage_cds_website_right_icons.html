@@ -6,11 +6,9 @@
 
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as prospect_page_path %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_IS_VISIBLE" as prospect_is_visible %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_website_prospect_redirect %}
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
 
-{% if prospect_is_visible %}
 <a href="{{ webpath.parent.fullpath }}{{ cds_base_path }}/{{ cds_cod }}/{{ cds_website_prospect_redirect }}/{{ prospect_page_path }}/">
     <div class="row">
         <div class="col-3">
@@ -27,6 +25,5 @@
 </a>
 
 <hr style="color: transparent" class="my-3" />
-{% endif %}
 
 {% include "includes/unical_storage_cds_website_right_links.html" %}
