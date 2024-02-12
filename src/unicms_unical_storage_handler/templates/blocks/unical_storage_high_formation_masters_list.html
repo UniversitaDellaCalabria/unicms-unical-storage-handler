@@ -13,7 +13,7 @@
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH" as masters_prefix %}
 {% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
-{% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+{% storage_settings_value "HIGH_FORMATION_YEAR" as current_year %}
 
 
 <div id="{{ id }}">
@@ -56,7 +56,7 @@
                                                       - {% trans 'Choose an option' %} -
                                                   </option>
                                                   <option v-for="item in years_filter"
-                                                          v-if="item.AcademicYear != '{{ cds_exclude_year }}'"
+                                                          v-if="item.AcademicYear <= '{{ current_year }}'"
                                                           :value="item.AcademicYear"
                                                           :selected="item.AcademicYear == selected_year">
                                                       [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]

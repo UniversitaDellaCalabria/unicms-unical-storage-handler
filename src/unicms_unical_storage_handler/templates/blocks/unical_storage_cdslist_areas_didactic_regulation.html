@@ -13,7 +13,7 @@
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
-{% storage_settings_value "CDS_EXCLUDE_YEAR" as cds_exclude_year %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
 {% storage_settings_value "DIDACTIC_REGULATION_START_YEAR" as didactic_regulation_start_year %}
 
 
@@ -39,7 +39,7 @@
                               <option value="" v-if="initial_academic_year==''">
                                   - {% trans 'Choose an option' %} -
                               </option>
-                              <option v-for="item in range({{ didactic_regulation_start_year }}, {{ cds_exclude_year }})"
+                              <option v-for="item in range({{ didactic_regulation_start_year }}, {{ current_year|add:'1' }})"
                                       :value="item"
                                       :selected="item == selected_academic_year">
                                   [[ item ]]/[[ item + 1 ]]
