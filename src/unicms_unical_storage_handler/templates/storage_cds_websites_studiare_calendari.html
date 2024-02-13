@@ -63,6 +63,7 @@
 <div class="col-12 py-5 bd-content">
     <div>
         {% block centered_container %}
+
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-8">
@@ -95,7 +96,29 @@
                                 <div class="card-wrapper card-space mb-3">
                                     <div class="card card-bg card-big no-after">
                                         <div class="card-body">
-                                            <div v-if="years && year && _cds_data.cds.AcademicYear">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-check form-check-group">
+                                                        <div class="toggles">
+                                                            <label for="past_years">
+                                                                {% trans "Include exams for courses not offered" %}
+                                                                <input type="checkbox" id="past_years" @change="togglePastYears($event.target.checked)">
+                                                                <span class="lever"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check form-check-group">
+                                                        <div class="toggles">
+                                                            <label for="all_records">
+                                                                {% trans "Show past events" %}
+                                                                <input type="checkbox" id="all_records" @change="changeShowPast($event.target.checked)">
+                                                                <span class="lever"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div v-if="years && year && _cds_data.cds.AcademicYear && showYearSelector">
                                                 <label for="aa_years">
                                                     <b>{% trans "Academic Year" %}</b>
                                                 </label>
@@ -155,14 +178,6 @@
                                                         [[ teaching.StudyActivityCod ]] - [[ teaching.StudyActivityName ]]
                                                   </option>
                                                 </select>
-                                            </div>
-                                            <div class="mt-3">
-                                                <div class="form-check">
-                                                    <input id="all_records" type="checkbox" v-on:change="changeShowPast($event.target.checked)">
-                                                    <label for="all_records">
-                                                        {% trans "Show past events" %}
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -280,7 +295,8 @@
                 show_past: false,
                 old_cds_identifiers: {{ old_cds_identifiers|safe }},
                 old_cds_found: false,
-                cds_identifier: '{{ cds_cod }}'
+                cds_identifier: '{{ cds_cod }}',
+                showYearSelector: false
             } //end return
         }, //end data
         mounted()  {},
@@ -353,6 +369,10 @@
                 this.show_past = value
                 if(this.chosen_af_cod)
                     this.getEvents()
+            },
+            togglePastYears(value) {
+                this.showYearSelector = value
+                this.changeAcademicYear('{{ current_year }}')
             }
         },
         watch: {
