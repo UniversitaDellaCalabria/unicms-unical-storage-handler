@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-06 15:47+0100\n"
-"PO-Revision-Date: 2024-02-06 15:47+0100\n"
+"POT-Creation-Date: 2024-02-13 14:25+0100\n"
+"PO-Revision-Date: 2024-02-13 14:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -42,11 +42,11 @@ msgstr "Messaggio"
 msgid "Preso atto dell'informativa di cui all' art. 13 del GDPR EU 2016/679"
 msgstr ""
 
-#: handlers.py:922
+#: handlers.py:918
 msgid "Your message has been successfully sent"
 msgstr "Il tuo messaggio è stato inviato correttamente"
 
-#: handlers.py:929
+#: handlers.py:925
 msgid "Your message was not sent due to a technical problem. Try later"
 msgstr ""
 "Il tuo messaggio non è stato inviato a causa di un problema tecnico. Riprova "
@@ -188,8 +188,8 @@ msgstr "Il Corso"
 msgid "Enroll"
 msgstr "Iscriversi"
 
-#: settings.py:430 templates/storage_cds_websites_corso.html:239
-#: templates/storage_cds_websites_corso.html:384
+#: settings.py:430 templates/storage_cds_websites_corso.html:237
+#: templates/storage_cds_websites_corso.html:382
 msgid "Study"
 msgstr "Studiare"
 
@@ -243,7 +243,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_addressbook_v2.html:183
 #: templates/blocks/unical_storage_cdslist.html:300
 #: templates/blocks/unical_storage_cdslist_areas.html:250
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:209
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:208
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:132
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:130
 #: templates/blocks/unical_storage_cdslist_regulations.html:267
@@ -254,7 +254,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_high_formation_masters_list.html:258
 #: templates/blocks/unical_storage_laboratory_list.html:263
 #: templates/blocks/unical_storage_patents_list.html:137
-#: templates/blocks/unical_storage_phd_activities_list.html:300
+#: templates/blocks/unical_storage_phd_activities_list.html:299
 #: templates/blocks/unical_storage_phd_list.html:191
 #: templates/blocks/unical_storage_projects_list.html:251
 #: templates/blocks/unical_storage_publications_list.html:165
@@ -270,12 +270,12 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_teacherresearchlines.html:39
 #: templates/blocks/unical_storage_teacherslist.html:163
 #: templates/blocks/unical_storage_teacherstudyactivities.html:140
-#: templates/storage_cds_websites_corso.html:255
-#: templates/storage_cds_websites_corso.html:281
-#: templates/storage_cds_websites_corso.html:400
-#: templates/storage_cds_websites_corso.html:426
+#: templates/storage_cds_websites_corso.html:253
+#: templates/storage_cds_websites_corso.html:279
+#: templates/storage_cds_websites_corso.html:398
+#: templates/storage_cds_websites_corso.html:424
 #: templates/storage_cds_websites_prospect.html:171
-#: templates/storage_cds_websites_studiare_calendari.html:244
+#: templates/storage_cds_websites_studiare_calendari.html:259
 #: templates/storage_cds_websites_studiare_orari.html:324
 msgid "No items here"
 msgstr "Nessun risultato"
@@ -356,14 +356,14 @@ msgstr "Tipo struttura"
 #: templates/blocks/unical_storage_laboratory_list.html:154
 #: templates/blocks/unical_storage_patents_list.html:45
 #: templates/blocks/unical_storage_patents_list.html:49
-#: templates/blocks/unical_storage_phd_activities_list.html:98
-#: templates/blocks/unical_storage_phd_activities_list.html:102
-#: templates/blocks/unical_storage_phd_activities_list.html:128
-#: templates/blocks/unical_storage_phd_activities_list.html:132
-#: templates/blocks/unical_storage_phd_activities_list.html:155
-#: templates/blocks/unical_storage_phd_activities_list.html:159
-#: templates/blocks/unical_storage_phd_activities_list.html:183
-#: templates/blocks/unical_storage_phd_activities_list.html:187
+#: templates/blocks/unical_storage_phd_activities_list.html:97
+#: templates/blocks/unical_storage_phd_activities_list.html:101
+#: templates/blocks/unical_storage_phd_activities_list.html:127
+#: templates/blocks/unical_storage_phd_activities_list.html:131
+#: templates/blocks/unical_storage_phd_activities_list.html:154
+#: templates/blocks/unical_storage_phd_activities_list.html:158
+#: templates/blocks/unical_storage_phd_activities_list.html:182
+#: templates/blocks/unical_storage_phd_activities_list.html:186
 #: templates/blocks/unical_storage_projects_list.html:63
 #: templates/blocks/unical_storage_projects_list.html:67
 #: templates/blocks/unical_storage_projects_list.html:89
@@ -400,7 +400,7 @@ msgstr "Tipo struttura"
 #: templates/blocks/unical_storage_studyactivity_list.html:124
 #: templates/blocks/unical_storage_teacherslist.html:66
 #: templates/blocks/unical_storage_teacherslist.html:93
-#: templates/storage_cds_websites_corso.html:293
+#: templates/storage_cds_websites_corso.html:291
 msgid "Choose an option"
 msgstr "Scegli un'opzione"
 
@@ -472,11 +472,11 @@ msgstr "Dipartimento"
 msgid "Coordinator"
 msgstr "Coordinatore"
 
-#: templates/blocks/unical_storage_cds_website_carousel_hero.html:28
+#: templates/blocks/unical_storage_cds_website_carousel_hero.html:27
 msgid "Previous"
 msgstr "Precedente"
 
-#: templates/blocks/unical_storage_cds_website_carousel_hero.html:36
+#: templates/blocks/unical_storage_cds_website_carousel_hero.html:35
 msgid "Next"
 msgstr ""
 
@@ -490,7 +490,7 @@ msgstr "Sito web"
 msgid "University credits"
 msgstr "Crediti formativi"
 
-#: templates/blocks/unical_storage_cds_website_right_icons.html:22
+#: templates/blocks/unical_storage_cds_website_right_icons.html:20
 msgid "Course in summary"
 msgstr "Il corso in sintesi"
 
@@ -502,7 +502,7 @@ msgstr "Periodi didattici"
 #: templates/blocks/unical_storage_cdsstudyplans.html:60
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:39
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:127
-#: templates/storage_cds_websites_studiare_calendari.html:125
+#: templates/storage_cds_websites_studiare_calendari.html:148
 #: templates/storage_cds_websites_studiare_orari.html:113
 msgid "year"
 msgstr "anno"
@@ -514,11 +514,11 @@ msgstr "anno"
 #: templates/blocks/unical_storage_studyactivity_list.html:169
 #: templates/blocks/unical_storage_studyactivity_list.html:288
 #: templates/includes/unical_storage_cds_website_studyplan_accordion.html:38
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:197
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:303
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:455
-#: templates/storage_cds_websites_studiare_calendari.html:131
-#: templates/storage_cds_websites_studiare_calendari.html:147
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:199
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:305
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:457
+#: templates/storage_cds_websites_studiare_calendari.html:154
+#: templates/storage_cds_websites_studiare_calendari.html:170
 #: templates/storage_cds_websites_studiare_orari.html:120
 #: templates/storage_cds_websites_studiare_orari.html:136
 msgid "Teaching"
@@ -530,9 +530,9 @@ msgstr "Insegnamento"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:143
 #: templates/blocks/unical_storage_studyactivity_list.html:116
 #: templates/includes/unical_storage_cds_website_studyplan_accordion.html:40
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:198
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:304
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:456
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:200
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:306
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:458
 msgid "Period"
 msgstr "Periodo"
 
@@ -541,9 +541,9 @@ msgstr "Periodo"
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:57
 #: templates/blocks/unical_storage_cdsstudyplans_v3.html:144
 #: templates/includes/unical_storage_cds_website_studyplan_accordion.html:41
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:199
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:305
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:457
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:201
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:307
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:459
 msgid "ETCS"
 msgstr "CFU"
 
@@ -565,12 +565,13 @@ msgid "Academic Courses"
 msgstr "Docenze Anno"
 
 #: templates/blocks/unical_storage_cdsinfo.html:565
-#: templates/storage_cds_websites_corso.html:260
-#: templates/storage_cds_websites_corso.html:405
+#: templates/storage_cds_websites_corso.html:258
+#: templates/storage_cds_websites_corso.html:403
 msgid "Documents"
 msgstr "Documenti"
 
 #: templates/blocks/unical_storage_cdsinfo.html:574
+#: templates/includes/unical_storage_cds_website_right_links.html:20
 msgid "Study course brochure"
 msgstr "Brochure del corso"
 
@@ -609,10 +610,10 @@ msgid "A.Y."
 msgstr "A.A."
 
 #: templates/blocks/unical_storage_cdslist_areas.html:191
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:52
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:61
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:129
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:138
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:51
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:60
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:128
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:137
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:74
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:72
 msgid "Course Area"
@@ -620,9 +621,9 @@ msgstr "Area"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:216
 #: templates/blocks/unical_storage_cdslist_areas.html:240
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:98
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:172
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:199
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:97
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:171
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:198
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:98
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:122
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:96
@@ -633,10 +634,10 @@ msgstr "Italiano"
 #: templates/blocks/unical_storage_cdslist_areas.html:218
 #: templates/blocks/unical_storage_cdslist_areas.html:237
 #: templates/blocks/unical_storage_cdslist_areas.html:241
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:100
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:174
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:196
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:200
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:99
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:173
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:195
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:199
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:100
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:119
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:123
@@ -647,42 +648,42 @@ msgid "English"
 msgstr "Inglese"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:232
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:191
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:190
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:114
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:112
 msgid "Bachelor's degree"
 msgstr "Laurea Triennale"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:233
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:192
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:191
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:115
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:113
 msgid "Master's degree (2 years)"
 msgstr "Laurea Magistrale (2 anni)"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:234
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:193
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:192
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:116
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:114
 msgid "Single-cycle master's degree (5 years)"
 msgstr "Laurea Magistrale a ciclo unico (5 anni)"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:235
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:194
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:193
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:117
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:115
 msgid "Single-cycle master's degree (6 years)"
 msgstr "Laurea Magistrale a ciclo unico (6 anni)"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:238
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:197
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:196
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:120
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:118
 msgid "Course delivered in English"
 msgstr "Corso erogato in lingua inglese"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:242
-#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:201
+#: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:200
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:124
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:122
 msgid "Course with curriculum delivered in English"
@@ -805,10 +806,10 @@ msgstr "Modalità di erogazione"
 
 #: templates/blocks/unical_storage_high_formation_masters_list.html:219
 #: templates/blocks/unical_storage_studyactivity_list.html:42
-#: templates/storage_cds_websites_corso.html:150
+#: templates/storage_cds_websites_corso.html:148
 #: templates/storage_cds_websites_studiare.html:194
 #: templates/storage_cds_websites_studiare.html:215
-#: templates/storage_cds_websites_studiare_calendari.html:100
+#: templates/storage_cds_websites_studiare_calendari.html:123
 msgid "Academic Year"
 msgstr "Anno accademico"
 
@@ -901,29 +902,29 @@ msgstr "Note"
 msgid "Final Test Mode"
 msgstr "Modalità test finale"
 
-#: templates/blocks/unical_storage_phd_activities_list.html:60
+#: templates/blocks/unical_storage_phd_activities_list.html:59
 #: templates/blocks/unical_storage_studyactivity_list.html:198
-#: templates/storage_cds_websites_studiare_calendari.html:223
+#: templates/storage_cds_websites_studiare_calendari.html:238
 #: templates/storage_cds_websites_studiare_orari.html:155
 msgid "Teacher"
 msgstr "Docente"
 
-#: templates/blocks/unical_storage_phd_activities_list.html:94
+#: templates/blocks/unical_storage_phd_activities_list.html:93
 msgid "Referent PhD"
 msgstr "Dottorato di riferimento"
 
-#: templates/blocks/unical_storage_phd_activities_list.html:124
+#: templates/blocks/unical_storage_phd_activities_list.html:123
 msgid "University Activities"
 msgstr "Attività di ateneo"
 
-#: templates/blocks/unical_storage_phd_activities_list.html:151
+#: templates/blocks/unical_storage_phd_activities_list.html:150
 #: templates/blocks/unical_storage_studyactivity_list.html:259
 #: templates/blocks/unical_storage_studyactivity_list.html:289
 #: templates/includes/unical_storage_cds_website_studyplan_accordion.html:39
 msgid "SSD"
 msgstr ""
 
-#: templates/blocks/unical_storage_phd_activities_list.html:179
+#: templates/blocks/unical_storage_phd_activities_list.html:178
 #: templates/blocks/unical_storage_phd_list.html:128
 msgid "Cycle"
 msgstr "Ciclo"
@@ -1093,7 +1094,7 @@ msgstr "Stampa"
 
 #: templates/blocks/unical_storage_teacher_materials.html:60
 #: templates/blocks/unical_storage_teacher_news_list.html:66
-#: templates/storage_cds_websites_prospect.html:813
+#: templates/storage_cds_websites_prospect.html:810
 msgid "Close"
 msgstr "Chiudi"
 
@@ -1160,79 +1161,79 @@ msgstr "Alternativo"
 msgid "Part-time"
 msgstr ""
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:104
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:146
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:106
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:148
 msgid "Insegnamenti a scelta"
 msgstr ""
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:115
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:157
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:421
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:117
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:159
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:423
 msgid "teaching optional"
 msgstr "insegnamento opzionale"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:118
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:160
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:424
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:120
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:162
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:426
 msgid "teaching required"
 msgstr "insegnamento obbligatorio"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:121
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:135
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:163
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:177
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:427
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:441
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:123
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:137
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:165
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:179
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:429
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:443
 msgid "ETCS optional"
 msgstr "CFU opzionali"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:124
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:138
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:166
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:180
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:430
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:444
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:126
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:140
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:168
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:182
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:432
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:446
 msgid "ETCS required"
 msgstr "CFU obbligatori"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:129
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:171
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:435
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:131
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:173
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:437
 msgid "teachings optional"
 msgstr "insegnamenti opzionali"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:132
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:174
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:438
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:134
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:176
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:440
 msgid "teachings required"
 msgstr "insegnamenti obbligatori"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:141
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:184
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:448
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:143
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:186
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:450
 msgid "choice between"
 msgstr "a scelta tra"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:256
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:281
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:363
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:395
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:527
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:258
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:283
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:365
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:397
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:529
 msgid "Valid option"
 msgstr "Opzione valida"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:263
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:372
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:265
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:374
 msgid "Invalid option"
 msgstr "Opzione non valida"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:284
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:398
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:530
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:286
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:400
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:532
 msgid "Study course type"
 msgstr "Tipologia del corso di studio"
 
-#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:410
+#: templates/includes/unical_storage_cds_website_studyplan_accordion.html:412
 msgid "Courses to chose"
 msgstr "Insegnamenti a scelta"
 
@@ -1295,31 +1296,31 @@ msgstr "Vedi lista"
 msgid "People"
 msgstr "Persone"
 
-#: templates/storage_cds_websites_corso.html:156
+#: templates/storage_cds_websites_corso.html:154
 msgid "Previous academic years"
 msgstr "Anni accademici precedenti"
 
-#: templates/storage_cds_websites_corso.html:158
+#: templates/storage_cds_websites_corso.html:156
 msgid "Current academic year and previous"
 msgstr "Anno accademico corrente e precedenti"
 
-#: templates/storage_cds_websites_corso.html:167
-#: templates/storage_cds_websites_corso.html:310
+#: templates/storage_cds_websites_corso.html:165
+#: templates/storage_cds_websites_corso.html:308
 msgid "Study plan"
 msgstr "Piano di studio"
 
-#: templates/storage_cds_websites_corso.html:210
-#: templates/storage_cds_websites_corso.html:355
+#: templates/storage_cds_websites_corso.html:208
+#: templates/storage_cds_websites_corso.html:353
 msgid "What does it mean?"
 msgstr "Cosa significa?"
 
-#: templates/storage_cds_websites_corso.html:214
-#: templates/storage_cds_websites_corso.html:359
+#: templates/storage_cds_websites_corso.html:212
+#: templates/storage_cds_websites_corso.html:357
 msgid "Statutory study plan"
 msgstr "Piano di studio statutario"
 
-#: templates/storage_cds_websites_corso.html:215
-#: templates/storage_cds_websites_corso.html:360
+#: templates/storage_cds_websites_corso.html:213
+#: templates/storage_cds_websites_corso.html:358
 msgid ""
 "it is the official plan that the course of study attributes automatically to "
 "all enrolled students. In the first modification of the study plan the "
@@ -1331,13 +1332,13 @@ msgstr ""
 "studente può variare  le attività all'interno di eventuali gruppi di materie "
 "opzionali e indicare le scelte libere"
 
-#: templates/storage_cds_websites_corso.html:218
-#: templates/storage_cds_websites_corso.html:363
+#: templates/storage_cds_websites_corso.html:216
+#: templates/storage_cds_websites_corso.html:361
 msgid "Alternative study plan"
 msgstr "Piano di studio alternativo"
 
-#: templates/storage_cds_websites_corso.html:219
-#: templates/storage_cds_websites_corso.html:364
+#: templates/storage_cds_websites_corso.html:217
+#: templates/storage_cds_websites_corso.html:362
 msgid ""
 "it is the plan that the student presents by choosing the activities training "
 "within options and free choices, prepared by the course of study, in "
@@ -1347,13 +1348,13 @@ msgstr ""
 "all’interno di opzioni e scelte libere, predisposte dal corso di studio, nel "
 "rispetto di alcuni vincoli"
 
-#: templates/storage_cds_websites_corso.html:222
-#: templates/storage_cds_websites_corso.html:367
+#: templates/storage_cds_websites_corso.html:220
+#: templates/storage_cds_websites_corso.html:365
 msgid "Part-time study plan"
 msgstr "Piano di studio part-time"
 
-#: templates/storage_cds_websites_corso.html:223
-#: templates/storage_cds_websites_corso.html:368
+#: templates/storage_cds_websites_corso.html:221
+#: templates/storage_cds_websites_corso.html:366
 msgid ""
 "is the path of the student who has opted for the part-time regime, typically "
 "with half the number of training credits per year compared to full-time"
@@ -1362,13 +1363,13 @@ msgstr ""
 "tipicamente con la metà del numero di crediti formativi per anno rispetto al "
 "tempo pieno"
 
-#: templates/storage_cds_websites_corso.html:226
-#: templates/storage_cds_websites_corso.html:371
+#: templates/storage_cds_websites_corso.html:224
+#: templates/storage_cds_websites_corso.html:369
 msgid "Activities of your choice"
 msgstr "Attività a scelta"
 
-#: templates/storage_cds_websites_corso.html:227
-#: templates/storage_cds_websites_corso.html:372
+#: templates/storage_cds_websites_corso.html:225
+#: templates/storage_cds_websites_corso.html:370
 msgid ""
 "the student will be able to choose from activities offered by the "
 "university's study courses"
@@ -1376,13 +1377,13 @@ msgstr ""
 "lo studente potrà scegliere tra attività offerte dai corsi di studio "
 "dell'ateneo"
 
-#: templates/storage_cds_websites_corso.html:228
-#: templates/storage_cds_websites_corso.html:373
+#: templates/storage_cds_websites_corso.html:226
+#: templates/storage_cds_websites_corso.html:371
 msgid "choice"
 msgstr "scelta"
 
-#: templates/storage_cds_websites_corso.html:229
-#: templates/storage_cds_websites_corso.html:374
+#: templates/storage_cds_websites_corso.html:227
+#: templates/storage_cds_websites_corso.html:372
 msgid ""
 "or within lists predefined by the course of study, according to the rules "
 "indicated in the plan modification web platform."
@@ -1390,13 +1391,13 @@ msgstr ""
 "oppure all'interno di elenchi predefiniti dal corso di studio, secondo le "
 "regole indicate nella piattaforma web di modifica del piano."
 
-#: templates/storage_cds_websites_corso.html:232
-#: templates/storage_cds_websites_corso.html:377
+#: templates/storage_cds_websites_corso.html:230
+#: templates/storage_cds_websites_corso.html:375
 msgid "Constraints"
 msgstr "Vincoli"
 
-#: templates/storage_cds_websites_corso.html:233
-#: templates/storage_cds_websites_corso.html:378
+#: templates/storage_cds_websites_corso.html:231
+#: templates/storage_cds_websites_corso.html:376
 msgid ""
 "express the minimum/maximum number of training credits to choose within a "
 "group of courses and/or type of study courses."
@@ -1404,13 +1405,13 @@ msgstr ""
 "esprimono il numero minimo/massimo di crediti formativi da scegliere "
 "all’interno di un gruppo di insegnamenti e/o di tipologia di corsi di studio."
 
-#: templates/storage_cds_websites_corso.html:236
-#: templates/storage_cds_websites_corso.html:381
+#: templates/storage_cds_websites_corso.html:234
+#: templates/storage_cds_websites_corso.html:379
 msgid "Modification of the study plan"
 msgstr "Modifica del piano di studio"
 
-#: templates/storage_cds_websites_corso.html:237
-#: templates/storage_cds_websites_corso.html:382
+#: templates/storage_cds_websites_corso.html:235
+#: templates/storage_cds_websites_corso.html:380
 msgid ""
 "the student can change the study plan before the start of each semester, in "
 "the relevant time window established by the Department."
@@ -1418,41 +1419,41 @@ msgstr ""
 "lo studente può modificare il piano di studio prima dell’inizio di ogni "
 "semestre, nella relativa finestra temporale stabilita dal Dipartimento."
 
-#: templates/storage_cds_websites_corso.html:238
-#: templates/storage_cds_websites_corso.html:383
+#: templates/storage_cds_websites_corso.html:236
+#: templates/storage_cds_websites_corso.html:381
 msgid "Follow the directions on the page"
 msgstr "Seguire le indicazioni nella pagina"
 
-#: templates/storage_cds_websites_corso.html:239
-#: templates/storage_cds_websites_corso.html:384
+#: templates/storage_cds_websites_corso.html:237
+#: templates/storage_cds_websites_corso.html:382
 msgid "of the site"
 msgstr "del sito"
 
-#: templates/storage_cds_websites_corso.html:240
-#: templates/storage_cds_websites_corso.html:385
+#: templates/storage_cds_websites_corso.html:238
+#: templates/storage_cds_websites_corso.html:383
 msgid "For more details, please see"
 msgstr "Per maggiori dettagli, consultare il"
 
+#: templates/storage_cds_websites_corso.html:240
 #: templates/storage_cds_websites_corso.html:242
-#: templates/storage_cds_websites_corso.html:244
+#: templates/storage_cds_websites_corso.html:385
 #: templates/storage_cds_websites_corso.html:387
-#: templates/storage_cds_websites_corso.html:389
 msgid "Didactic regulation"
 msgstr "Regolamento didattico"
 
-#: templates/storage_cds_websites_corso.html:245
-#: templates/storage_cds_websites_corso.html:390
+#: templates/storage_cds_websites_corso.html:243
+#: templates/storage_cds_websites_corso.html:388
 msgid "of the course and the"
 msgstr "del corso e il"
 
+#: templates/storage_cds_websites_corso.html:245
 #: templates/storage_cds_websites_corso.html:247
-#: templates/storage_cds_websites_corso.html:249
+#: templates/storage_cds_websites_corso.html:390
 #: templates/storage_cds_websites_corso.html:392
-#: templates/storage_cds_websites_corso.html:394
 msgid "Study manifesto"
 msgstr "Manifesto degli studi"
 
-#: templates/storage_cds_websites_corso.html:297
+#: templates/storage_cds_websites_corso.html:295
 msgid "Choose an academic year"
 msgstr "Scegli un anno accademico"
 
@@ -1592,27 +1593,27 @@ msgstr ""
 msgid "Request information for this course"
 msgstr "Richiedi informazioni per questo corso"
 
-#: templates/storage_cds_websites_prospect.html:803
+#: templates/storage_cds_websites_prospect.html:800
 msgid "Submit"
 msgstr "Invia"
 
-#: templates/storage_cds_websites_prospect.html:811
+#: templates/storage_cds_websites_prospect.html:808
 msgid "Confirm"
 msgstr "Conferma"
 
-#: templates/storage_cds_websites_prospect.html:821
+#: templates/storage_cds_websites_prospect.html:818
 msgid "Do you want to confirm the entered data?"
 msgstr "Desideri confermare i dati immessi?"
 
-#: templates/storage_cds_websites_prospect.html:828
+#: templates/storage_cds_websites_prospect.html:825
 msgid "Yes, proceed"
 msgstr "Si, procedi"
 
-#: templates/storage_cds_websites_prospect.html:843
+#: templates/storage_cds_websites_prospect.html:840
 msgid "If you want more information on the Degree Course"
 msgstr "Se vuoi avere maggiori informazioni sul Corso di Laurea"
 
-#: templates/storage_cds_websites_prospect.html:846
+#: templates/storage_cds_websites_prospect.html:843
 msgid ""
 "For details on the contents of individual courses, training periods abroad, "
 "teachers, tutors, study rooms, laboratories, research centres, other "
@@ -1622,7 +1623,7 @@ msgstr ""
 "all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, altre "
 "strutture e iniziative di socializzazione visita il sito del Corso di Studio."
 
-#: templates/storage_cds_websites_prospect.html:850
+#: templates/storage_cds_websites_prospect.html:847
 msgid "Go to the institutional site"
 msgstr "Vai al sito istituzionale"
 
@@ -1630,60 +1631,64 @@ msgstr "Vai al sito istituzionale"
 msgid "Consult the page with study plans"
 msgstr "Consulta la pagina con i piani di studio"
 
-#: templates/storage_cds_websites_studiare_calendari.html:116
+#: templates/storage_cds_websites_studiare_calendari.html:104
+msgid "Include exams for not offered teachings"
+msgstr "Includi esami per insegnamenti non erogati"
+
+#: templates/storage_cds_websites_studiare_calendari.html:113
+msgid "Show past events"
+msgstr "Mostra eventi passati"
+
+#: templates/storage_cds_websites_studiare_calendari.html:139
 #: templates/storage_cds_websites_studiare_orari.html:104
 msgid "Study course year"
 msgstr "Anno di corso"
 
-#: templates/storage_cds_websites_studiare_calendari.html:137
-#: templates/storage_cds_websites_studiare_calendari.html:153
+#: templates/storage_cds_websites_studiare_calendari.html:160
+#: templates/storage_cds_websites_studiare_calendari.html:176
 #: templates/storage_cds_websites_studiare_orari.html:126
 #: templates/storage_cds_websites_studiare_orari.html:142
 msgid "Choose a teaching"
 msgstr "Scegli un insegnamento"
 
-#: templates/storage_cds_websites_studiare_calendari.html:163
-msgid "Show past events"
-msgstr "Mostra eventi passati"
-
-#: templates/storage_cds_websites_studiare_calendari.html:189
+#: templates/storage_cds_websites_studiare_calendari.html:204
 msgid "Confirmed"
 msgstr "Confermato"
 
-#: templates/storage_cds_websites_studiare_calendari.html:192
+#: templates/storage_cds_websites_studiare_calendari.html:207
 msgid "To be confirmed"
 msgstr "Da confermare"
 
-#: templates/storage_cds_websites_studiare_calendari.html:197
+#: templates/storage_cds_websites_studiare_calendari.html:212
 msgid "Description"
 msgstr "Descrizione"
 
-#: templates/storage_cds_websites_studiare_calendari.html:203
+#: templates/storage_cds_websites_studiare_calendari.html:218
 msgid "Hour"
 msgstr "Ore"
 
-#: templates/storage_cds_websites_studiare_calendari.html:209
+#: templates/storage_cds_websites_studiare_calendari.html:224
 #: templates/storage_cds_websites_studiare_orari.html:172
 msgid "Location"
 msgstr "Luogo"
 
-#: templates/storage_cds_websites_studiare_calendari.html:216
+#: templates/storage_cds_websites_studiare_calendari.html:231
 msgid "Building"
 msgstr ""
 
-#: templates/storage_cds_websites_studiare_calendari.html:230
+#: templates/storage_cds_websites_studiare_calendari.html:245
 msgid "Subscriptions"
 msgstr "Prenotazioni"
 
-#: templates/storage_cds_websites_studiare_calendari.html:233
+#: templates/storage_cds_websites_studiare_calendari.html:248
 msgid "Prenotazioni"
 msgstr ""
 
-#: templates/storage_cds_websites_studiare_calendari.html:234
+#: templates/storage_cds_websites_studiare_calendari.html:249
 msgid "dal"
 msgstr ""
 
-#: templates/storage_cds_websites_studiare_calendari.html:236
+#: templates/storage_cds_websites_studiare_calendari.html:251
 msgid "al"
 msgstr ""
 
