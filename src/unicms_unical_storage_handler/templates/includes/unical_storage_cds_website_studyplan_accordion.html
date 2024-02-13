@@ -48,28 +48,30 @@
 <!--
                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.RegDidId + '/{{ activity_prefix }}/' + activity.AfId +'/'">
 -->
-                                        <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                        <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId" style="text-transform: uppercase">
                                             [[ activity.AfDescription ]]
                                         </a>
-                                        <span v-else>
+                                        <span v-else style="text-transform: uppercase">
                                             [[ activity.AfDescription ]]
                                         </span>
                                         <ul v-if="activity.AfSubModules.length > 0">
                                             <li v-for="module in activity.AfSubModules">
                                                 [[ module.StudyActivityCod ]]
-                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID" style="text-transform: uppercase">
                                                     [[ module.StudyActivityName ]]
                                                 </a>
-                                                <span v-else>
+                                                <span v-else style="text-transform: uppercase">
                                                     [[ module.StudyActivityName ]]
                                                 </span>
-                                                <span v-if="module.StudyActivityPartitionDescription">[[ module.StudyActivityPartitionDescription ]]</span>
+                                                <span v-if="module.StudyActivityPartitionDescription" style="text-transform: uppercase">
+                                                    [[ module.StudyActivityPartitionDescription ]]
+                                                </span>
                                             </li>
                                         </ul>
                                     </td>
                                     <td>
                                         [[ activity.SettCod || "-" ]]
-                                        <span v-for="module in activity.AfSubModules">
+                                        <span v-for="module in activity.AfSubModules" style="text-transform: uppercase">
                                             <br>
                                             [[ module.StudyActivitySettCod || "-" ]]
                                         </span>
@@ -203,19 +205,19 @@
                                                 <tr v-for="activity in vin_sub_choice.Choices">
                                                     <td>
                                                         [[ activity.AfCod || "-" ]]
-                                                        <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                        <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId" style="text-transform: uppercase">
                                                             [[ activity.AfDescription || "-" ]]
                                                         </a>
-                                                        <span v-else>
+                                                        <span v-else style="text-transform: uppercase">
                                                             [[ activity.AfDescription || "-" ]]
                                                         </span>
                                                         <ul v-if="activity.AfSubModules.length > 0">
                                                             <li v-for="module in activity.AfSubModules">
                                                                 [[ module.StudyActivityCod || "-" ]]
-                                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID" style="text-transform: uppercase">
                                                                     [[ module.StudyActivityName || "-" ]]
                                                                 </a>
-                                                                <span v-else>
+                                                                <span v-else style="text-transform: uppercase">
                                                                     [[ module.StudyActivityName || "-" ]]
                                                                 </span>
                                                             </li>
@@ -309,19 +311,19 @@
                                             <tr v-for="activity in sub_choice.Choices">
                                                 <td>
                                                     [[ activity.AfCod || "-" ]]
-                                                    <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                    <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId" style="text-transform: uppercase">
                                                         [[ activity.AfDescription || "-" ]]
                                                     </a>
-                                                    <span v-else>
+                                                    <span v-else style="text-transform: uppercase">
                                                         [[ activity.AfDescription || "-" ]]
                                                     </span>
                                                     <ul v-if="activity.AfSubModules.length > 0">
                                                         <li v-for="module in activity.AfSubModules">
                                                             [[ module.StudyActivityCod || "-" ]]
-                                                            <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                            <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID" style="text-transform: uppercase">
                                                                 [[ module.StudyActivityName || "-" ]]
                                                             </a>
-                                                            <span v-else>
+                                                            <span v-else style="text-transform: uppercase">
                                                                 [[ module.StudyActivityName || "-" ]]
                                                             </span>
                                                         </li>
@@ -461,19 +463,19 @@
                                         <tr v-for="activity in choice.Choices">
                                             <td>
                                                 [[ activity.AfCod || "-" ]]
-                                                <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId">
+                                                <a :href="'{{ activity_prefix }}/' + activity.AfId +'/'" v-if="activity.AfId" style="text-transform: uppercase">
                                                     [[ activity.AfDescription || "-" ]]
                                                 </a>
-                                                <span v-else>
+                                                <span v-else style="text-transform: uppercase">
                                                     [[ activity.AfDescription || "-" ]]
                                                 </span>
                                                 <ul v-if="activity.AfSubModules.length > 0">
                                                     <li v-for="module in activity.AfSubModules">
                                                         [[ module.StudyActivityCod || "-" ]]
-                                                        <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID">
+                                                        <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID" style="text-transform: uppercase">
                                                             [[ module.StudyActivityName || "-" ]]
                                                         </a>
-                                                        <span v-else>
+                                                        <span v-else style="text-transform: uppercase">
                                                             [[ module.StudyActivityName || "-" ]]
                                                         </span>
                                                     </li>

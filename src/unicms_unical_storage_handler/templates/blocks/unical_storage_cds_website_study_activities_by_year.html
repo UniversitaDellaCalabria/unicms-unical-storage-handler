@@ -89,7 +89,7 @@
 <!--
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
 -->
-                                                            <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                            <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'" style="text-transform: uppercase">
                                                                 [[ activity.StudyActivityName ]]
                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                             </a>
@@ -151,7 +151,7 @@
             <!--
                                                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
             -->
-                                                                        <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                        <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'" style="text-transform: uppercase">
                                                                             [[ activity.StudyActivityName ]]
                                                                             <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                                         </a>
