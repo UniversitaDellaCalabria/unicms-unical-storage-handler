@@ -68,7 +68,7 @@
                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-user"></use>
                 </svg>
             </div>
-            <div class="col-9 align-left">
+            <div class="col-10 align-left">
                 <span>
                     <b>[[ _cds_data.fixed_cds_labels['DeputyDirectorName'] ]]</b>
                     <br>
@@ -115,13 +115,14 @@
             <div class="col-12"><hr></div>
         </div>
 
+        {% if not home %}
         <div v-if="_cds_data.fixed_cds.OfficesData" v-for="office in _cds_data.fixed_cds.OfficesData" class="row">
             <div class="col-2">
                 <svg class="icon icon-muted">
                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
                 </svg>
             </div>
-            <div class="col-9 align-left">
+            <div class="col-10 align-left">
                 <span>
                     <b>[[ office.OfficeName ]]</b>
                     <div class="mt-2">
@@ -199,6 +200,7 @@
             </div>
             <div class="col-12"><hr></div>
         </div>
+        {% endif %}
     </div>
 </div>
 <script>
