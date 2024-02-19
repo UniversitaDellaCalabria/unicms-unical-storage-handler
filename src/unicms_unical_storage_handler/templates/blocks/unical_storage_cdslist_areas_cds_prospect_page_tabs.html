@@ -6,6 +6,11 @@
 {% load unicms_templates %}
 
 
+{% block current_year %}
+{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as current_year %}
+initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
+{% endblock current_year %}
+
 {% block content %}
 
 {% get_current_language as LANGUAGE_CODE %}
