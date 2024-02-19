@@ -99,6 +99,17 @@ def get_cds_website_cds_cod(value=None, cds_cod=None):
 
 
 @register.simple_tag
+def get_cds_website_root_path(cds_cod=None):
+    if not cds_cod: return None
+    cms_webpath_cds = getattr(settings, 'CMS_WEBPATH_CDS', {})
+    if not cms_webpath_cds: return None
+    for k,v in cms_webpath_cds.items():
+        if v == cds_cod:
+            return WebPath.objects.get(pk=k, is_active=True)
+    return None
+
+
+@register.simple_tag
 def get_cds_website_path_pk(cds_cod=None):
     if not cds_cod: return None
     cms_webpath_cds = getattr(settings, 'CMS_WEBPATH_CDS', {})
