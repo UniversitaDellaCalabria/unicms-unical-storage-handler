@@ -15,8 +15,8 @@
 {% endblock extra_head %}
 
 {% block website_page_year %}
-{% storage_settings_value "CDS_WEBSITE_CURRENT_YEAR" as cds_website_current_year %}
-if(!year)year = "{{ cds_website_current_year }}"
+{% storage_settings_value "CDS_WEBSITE_PROSPECT_CURRENT_YEAR" as cds_website_prospect_current_year %}
+if(!year)year = "{{ cds_website_prospect_current_year }}"
 {% endblock website_page_year %}
 
 {% block page_title %}
