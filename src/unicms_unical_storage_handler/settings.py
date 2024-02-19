@@ -459,12 +459,19 @@ CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = {
 }
 
 CMS_STORAGE_CDS_WEBSITES_CAROUSEL_BACKGROUNDS_URL = {
-    # "Socio-Economica": "#",
-    # "Umanistica": "#",
-    # "Scienze": "#",
-    # "Ingegneria e Tecnologia": "#",
-    # "Medico Sanitaria": "#",
-    # "Formazione di Educatori e Insegnanti": "#",
+    "Socio-Economica": "cover-area-socio-economica.jpg",
+    "Umanistica": "cover-area-umanistica.jpg",
+    "Scienze": "cover-area-scienze.jpg",
+    "Ingegneria e Tecnologia": "cover-area-ingegneria-tecnologica.jpg",
+    "Medico Sanitaria": "cover-area-medico-sanitaria.jpg",
+    "Formazione di Educatori e Insegnanti": "cover-area-formazione-insegnanti.jpg",
+    # eng
+    "Socio-Economics": "cover-area-socio-economica.jpg",
+    "Humanities": "cover-area-umanistica.jpg",
+    "Sciences": "cover-area-scienze.jpg",
+    "Engineering and Technology ": "cover-area-ingegneria-tecnologica.jpg",
+    "Medical and Health-care": "cover-area-medico-sanitaria.jpg",
+    "Training of Educators and Teachers": "cover-area-formazione-insegnanti.jpg",
 }
 
 CDS_WEBSITE_CURRENT_YEAR = ""
