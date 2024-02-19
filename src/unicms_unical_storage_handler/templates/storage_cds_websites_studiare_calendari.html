@@ -195,6 +195,9 @@
                                                     <span class="badge bg-warning" v-else>
                                                         {% trans "To be confirmed" %}
                                                     </span>
+                                                    <span class="badge bg-info" v-if="event.extra.stato">
+                                                        [[ event.extra.stato ]]
+                                                    </span>
                                                     <br>
                                                     <span v-if="event.extra.descr">
                                                         <svg class="icon icon-xs me-2" aria-labelledby="event_descr">
