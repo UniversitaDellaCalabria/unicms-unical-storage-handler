@@ -19,14 +19,6 @@
 {% endblock page_title %}
 
 
-{% block extra_head %}
-{{ block.super }}
-<link rel="stylesheet" href="{% static 'css/unicms_storage_calendar.css' %}" type="text/css">
-<!-- Link VCalendar Javascript (Plugin automatically installed) -->
-<script src="https://unpkg.com/v-calendar"></script>
-{% endblock extra_head %}
-
-
 {% block container %}
 
 <script src="{% static 'js/vue-markdown.js' %}"></script>
