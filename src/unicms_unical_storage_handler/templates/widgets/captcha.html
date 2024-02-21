@@ -1,0 +1,48 @@
+{% load i18n %}
+
+<style>
+    .nonfield {
+            display:none;
+        }
+    .errorlist {
+            text-align: left;
+            color: red;
+        }
+</style>
+
+  <div class="row">
+
+    <div class="col-auto">
+     <img class="captcha_dyn_form p-2" style="background: #fff; border: 1px grey dotted;"
+          id="{{ widget.name }}_img"
+          src="data:image/png;base64,{{ image_b64 }}" />
+    </div>
+
+    <div class="col-auto">
+        <button id="captcha_refresh_button" type="button" class="btn btn-info btn-xs"
+                onclick="refresh_captcha_{{ widget.unique_id }}();" />
+            <svg class="icon icon-white icon-xs me-2">
+                <use xlink:href="/static/svg/sprites.svg#it-refresh"></use>
+            </svg>
+            <span>{% trans 'REFRESH' %}</span>
+        </button>
+    </div>
+    <div class="col-auto">
+      <audio id="{{ widget.name }}_wav" controls
+       src="data:audio/wav;base64,{{ audio_b64 }}"/>
+    </div>
+</div>
+
+<div class="text-left mt-3">
+  <input placeholder="{% trans 'Insert CaPTCHA here' %}"
+   style="width: 172px;"
+   type="text"
+   class="p-1"
+   name="{{ widget.name }}"
+   value="{{ widget.value | stringformat:'s' }}"
+   {% include "django/forms/widgets/attrs.html" %}>
+</div>
+
+ <p>
+     {% trans "Enter the value represented in the CaPTCHA image" %}
+</p>

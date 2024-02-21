@@ -765,26 +765,30 @@ Brochure - {{ block.super }}
                     <form method="post" action="" class="light-form">
                         <div class="row">
                             {% for field in form %}
-                                {% if not forloop.counter0 or field.name == 'message'%}
-                                <div class="col-12 col-lg-6">
-                                {% elif field.name == 'privacy'%}
-                                <div class="col-12 py-3">
-                                {% endif %}
-                                    <div style="padding: 0 0 1rem">
-                                        <b>{{ field.label_tag }}</b>
-                                        {% if field.field.required %}*{% endif %}
-                                    {{ field }}
-                                    {% if field.help_text %}
-                                        <span class="form-text text-muted">
-                                            {{ field.help_text|safe }}
-                                        </span>
+                                {% if field.field.widget.input_type != 'hidden' %}
+                                    {% if not forloop.counter0 or field.name == 'message'%}
+                                    <div class="col-12 col-lg-6">
+                                    {% elif field.name == 'privacy'%}
+                                    <div class="col-12 py-3">
                                     {% endif %}
-                                        <span class="text-danger">
-                                            {{ field.errors }}
-                                        </span>
+                                        <div style="padding: 0 0 1rem">
+                                            <b>{{ field.label_tag }}</b>
+                                            {% if field.field.required %}*{% endif %}
+                                {% endif %}
+                                {{ field }}
+                                {% if field.field.widget.input_type != 'hidden' %}
+                                        {% if field.help_text %}
+                                            <span class="form-text text-muted">
+                                                {{ field.help_text|safe }}
+                                            </span>
+                                        {% endif %}
+                                            <span class="text-danger">
+                                                {{ field.errors }}
+                                            </span>
+                                        </div>
+                                    {% if field.name == 'phone' or field.name == 'message' %}
                                     </div>
-                                {% if field.name == 'phone' or field.name == 'message' %}
-                                </div>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                         </div>

@@ -47,6 +47,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     install_requires=[
-        'unicms-template-unical'
+        'unicms-template-unical',
+        'django-form-builder'
     ],
 )

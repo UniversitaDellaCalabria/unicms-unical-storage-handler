@@ -24,7 +24,7 @@ from cms.contexts.models import WebPath
 from cms.contexts.utils import contextualize_template, sanitize_path
 from cms.pages.models import Page
 
-from . forms import CdsWebsiteContactForm
+from . forms import CdsWebsiteContactForm, DynCdsWebsiteContactForm
 from . settings import *
 
 
@@ -899,7 +899,7 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
         super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
 
         if self.request.POST:
-            form = CdsWebsiteContactForm(data=self.request.POST)
+            form = DynCdsWebsiteContactForm(data=self.request.POST)
             if form.is_valid():
                 name = f"{form.cleaned_data['first_name']} {form.cleaned_data['last_name']}"
                 course = f"{self.cds_json['CdSCod']} - {self.cds_json['CdSName']}"
@@ -932,7 +932,7 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
                         f"{k}: {v}"
                     )
         else:
-            form = CdsWebsiteContactForm()
+            form = DynCdsWebsiteContactForm()
 
         self.data['messages'] = messages.get_messages(self.request)
         self.data['form'] = form
