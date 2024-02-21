@@ -255,7 +255,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL" as studiare_schedule_label %}
 
 {% get_cds_website_cds_cod webpath.pk cds_cod as cds_identifier %}
-{% get_cds_website_root_path cds_identifier as root_webpath %}
+{% get_cds_website_root_path webpath cds_identifier as root_webpath %}
 {% if cds_identifier and not hide_cds_auto_menu %}
     <li class="nav-item megamenu">
         <a class="nav-link pe-lg-1 ps-lg-0" href="{{ root_webpath.fullpath }}">
