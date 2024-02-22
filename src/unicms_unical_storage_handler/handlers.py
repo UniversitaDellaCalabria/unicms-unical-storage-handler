@@ -82,8 +82,6 @@ CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_STRUCTUR
 CMS_STORAGE_TEACHER_API = getattr(settings, 'CMS_STORAGE_TEACHER_API', CMS_STORAGE_TEACHER_API)
 CMS_STORAGE_TEACHERS_LABEL = getattr(settings, 'CMS_STORAGE_TEACHERS_LABEL', CMS_STORAGE_TEACHERS_LABEL)
 CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH', CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH)
-CURRENT_YEAR = getattr(settings, 'CURRENT_YEAR', CURRENT_YEAR)
-HIGH_FORMATION_YEAR = getattr(settings, 'HIGH_FORMATION_YEAR', HIGH_FORMATION_YEAR)
 INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
 
 CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
@@ -96,6 +94,11 @@ CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEB
 CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)
 CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)
 CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS', CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS)
+
+CURRENT_YEAR = getattr(settings, 'CURRENT_YEAR', CURRENT_YEAR)
+CDS_WEBSITE_CURRENT_YEAR = getattr(settings, 'CDS_WEBSITE_CURRENT_YEAR', CDS_WEBSITE_CURRENT_YEAR)
+CDS_WEBSITE_PROSPECT_CURRENT_YEAR = getattr(settings, 'CDS_WEBSITE_PROSPECT_CURRENT_YEAR', CDS_WEBSITE_PROSPECT_CURRENT_YEAR)
+HIGH_FORMATION_YEAR = getattr(settings, 'HIGH_FORMATION_YEAR', HIGH_FORMATION_YEAR)
 
 
 class BaseStorageHandler(BaseContentHandler):
@@ -889,12 +892,12 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
         if CMS_WEBPATH_CDS_OLD.get(self.cds_cod):
             raise Http404
 
-        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
+        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
 
-        if not cds_data and cds_data.status_code != 200:
+        if not cds_data or cds_data.status_code != 200:
             raise Http404
 
-        self.cds_json = json.loads(cds_data._content)['results'][0]
+        self.cds_json = cds_data.json()['results'][0]
 
         super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
 
@@ -1079,12 +1082,12 @@ class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
         if CMS_WEBPATH_CDS_OLD.get(self.cds_cod):
             raise Http404
 
-        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&format=json', timeout=5)
+        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
 
-        if not cds_data:
+        if not cds_data or cds_data.status_code != 200:
             raise Http404
 
-        self.cds_json = json.loads(cds_data._content)['results'][0]
+        self.cds_json = cds_data.json()['results'][0]
 
         super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
 

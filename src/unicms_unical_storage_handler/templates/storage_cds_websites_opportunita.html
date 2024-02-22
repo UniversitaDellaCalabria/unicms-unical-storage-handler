@@ -170,10 +170,8 @@
             }
         },
         mounted() {
-            //this.CallURL();
             this.CallTopics();
             this.CallTopicArticles();
-            //this.CallCds();
         },
         methods: {
             CallURL() {
@@ -210,16 +208,6 @@
                     .get(url)
                     .then(response => {
                         this.topics = response.data.results
-                    }
-                )
-            },
-            CallCds() {
-                let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_cod }}'
-                axios
-                    .get(url)
-                    .then(response => {
-                        this.cds = response.data.results[0]
-                        this.cds_labels = response.data.labels
                     }
                 )
             },
