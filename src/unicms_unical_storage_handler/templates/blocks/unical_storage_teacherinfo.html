@@ -112,6 +112,10 @@
                     {% include "blocks/includes/teachers/unical_storage_teacher_contacts.html" %}
                 </div>
 
+                <div id="{{ id }}_receptionMobile" class="d-lg-none">
+                    {% include "blocks/includes/teachers/unical_storage_teacher_info.html" %}
+                </div>
+
                 <ul v-if="item.TeacherFunctions && item.TeacherFunctions.length > 0">
                     <li v-for="value in item.TeacherFunctions">
                         <span style="white-space: pre-line;">
@@ -232,10 +236,6 @@
 
     <!-- Didattica -->
     <div class="tab-pane p-4 fade" id="tab4b" role="tabpanel" aria-labelledby="tab4b-tab">
-
-        <div id="{{ id }}_receptionMobile" class="d-lg-none">
-            {% include "blocks/includes/teachers/unical_storage_teacher_info.html" %}
-        </div>
 
         <!-- teacher's activities -->
         <div id="{{ id }}_collapse-3-lft" class="accordion accordion-left-icon">
@@ -374,11 +374,6 @@
         data() { return { item: {}, labels: {}, } },
     })
 
-    var {{ id }}_receptionMobile = new Vue({
-        el: '#{{ id }}_receptionMobile',
-        data() { return { item: {}, labels: {}, } },
-    })
-
     var {{ id }}_cv = new Vue({
         el: '#tab3b',
         data() { return { item: {}, labels: {}, } },
@@ -422,8 +417,6 @@
                         {{ id }}_head.item = response.data.results;
                         {{ id }}_head.is_loading = false;
                         {{ id }}_tabList.item = response.data.results;
-                        {{ id }}_receptionMobile.item = response.data.results;
-                        {{ id }}_receptionMobile.labels = response.data.labels;
                         {{ id }}_researchFields.item = response.data.results;
                         {{ id }}_researchFields.labels = response.data.labels;
                         {{ id }}_cv.item = response.data.results;
