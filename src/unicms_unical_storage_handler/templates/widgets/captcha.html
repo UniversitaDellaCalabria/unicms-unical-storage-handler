@@ -1,4 +1,9 @@
 {% load i18n %}
+{% load unicms_storage_handler %}
+
+
+{% storage_settings_value 'CDS_STORAGE_CDS_WEBSITE_CAPTCHA_AUDIO' as CDS_STORAGE_CDS_WEBSITE_CAPTCHA_AUDIO %}
+
 
 <style>
     .nonfield {
@@ -27,10 +32,12 @@
             <span>{% trans 'REFRESH' %}</span>
         </button>
     </div>
+    {% if CDS_STORAGE_CDS_WEBSITE_CAPTCHA_AUDIO %}
     <div class="col-auto">
       <audio id="{{ widget.name }}_wav" controls
        src="data:audio/wav;base64,{{ audio_b64 }}"/>
     </div>
+    {% endif %}
 </div>
 
 <div class="text-left mt-3">
