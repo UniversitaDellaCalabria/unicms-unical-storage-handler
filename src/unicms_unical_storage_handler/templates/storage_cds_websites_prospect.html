@@ -677,7 +677,7 @@ Brochure - {{ block.super }}
         </div>
 
 
-        <div class="row mt-3 py-5">
+        <div class="row" :class="!website.CDSExStudents || website.CDSExStudents.length == 0? 'pb-5' : 'mt-3 py-5'">
             <div class="col">
                 <div class="container">
                     <ul class="nav nav-tabs nav-tabs-icon-text" id="tabList" role="tablist">
