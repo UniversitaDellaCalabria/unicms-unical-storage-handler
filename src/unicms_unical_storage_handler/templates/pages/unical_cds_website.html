@@ -22,6 +22,7 @@
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 {% storage_api_root "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
+{% storage_settings_value "CMS_WEBPATH_CDS" as cms_webpath_cds %}
 {% storage_settings_value "CMS_WEBPATH_CDS_MORPH" as cms_webpath_cds_morph %}
 {% storage_settings_value "CURRENT_YEAR" as official_current_year %}
 
@@ -145,15 +146,24 @@
                     {% block website_page_year %}
                     if(!year)year = "{{ current_year }}"
                     {% endblock website_page_year %}
-
+                    const cms_webpath_cds = {{ cms_webpath_cds|safe }}
                     const cms_webpath_cds_morph = {{ cms_webpath_cds_morph|safe }}
                     let cds_identifier = '{{ cds_identifier }}'
-                    for (const [new_cds, old_cds] of Object.entries(cms_webpath_cds_morph)) {
-                        for (let i=0; i<old_cds.length; i++) {
-                            if(old_cds[i] == '{{ cds_identifier }}'){
-                                cds_identifier = new_cds
-                                year = "{{ official_current_year }}"
-                                break
+                    let active_webpath_cds = false
+                    for (const [webpath, cds_id] of Object.entries(cms_webpath_cds)) {
+                        if(cds_id == '{{ cds_identifier }}'){
+                            active_webpath_cds = true
+                            break
+                        }
+                    }
+                    if (!active_webpath_cds) {
+                        for (const [new_cds, old_cds] of Object.entries(cms_webpath_cds_morph)) {
+                            for (let i=0; i<old_cds.length; i++) {
+                                if(old_cds[i] == '{{ cds_identifier }}'){
+                                    cds_identifier = new_cds
+                                    year = "{{ official_current_year }}"
+                                    break
+                                }
                             }
                         }
                     }
