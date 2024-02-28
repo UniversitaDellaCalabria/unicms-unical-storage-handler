@@ -546,89 +546,93 @@ Brochure - {{ block.super }}
                                 </span>
                             </div>
                         </div>
-
-                        <div v-if="_cds_data.cds.OfficesData" v-for="office in _cds_data.cds.OfficesData" class="row">
-                            <div class="col-12"><hr></div>
-                            <div class="col-2">
-                                <svg class="icon icon-muted">
-                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
-                                </svg>
-                            </div>
-                            <div class="col-9 align-left">
-                                <span>
-                                    <b>[[ office.OfficeName ]]</b>
-                                    <div class="mt-2">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.OfficeDirector && office.OfficeDirectorName">
-                                                    [[ office.OfficeDirectorName ]]
-                                                </a>
-                                                <span v-else-if="office.OfficeDirectorName">
-                                                    [[ office.OfficeDirectorName ]]
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                [[ office.TelOffice ]]
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="office.Email && office.Email.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                <a :href="'email:'+office.Email">
-                                                    [[ office.Email ]]
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="(office.Building && office.Building.trim().length>0) || (office.Floor && office.Floor.trim().length>0)">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                <div v-if="office.Building && office.Building.trim().length>0">
-                                                    [[ website_labels['Building'] ]] [[ office.Building ]]
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5" v-if="_cds_data.cds.OfficesData">
+                <div class="col">
+                    <loading-icon v-if="_cds_data.is_loading"></loading-icon>
+                    <div class="card-wrapper card-space" v-else-if="_cds_data.fixed_cds.OfficesData">
+                        <div class="card card-bg no-after">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-lg-4" v-for="(office, index) in _cds_data.fixed_cds.OfficesData" :class="[index>0 ? 'mt-4 mt-lg-0': '', index >2 ? 'mt-lg-4' : '']">
+                                        <span>
+                                            <b>[[ office.OfficeName ]]</b>
+                                            <div class="mt-2">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + office.OfficeDirector +'/'" v-if="office.OfficeDirector && office.OfficeDirectorName">
+                                                            [[ office.OfficeDirectorName ]]
+                                                        </a>
+                                                        <span v-else-if="office.OfficeDirectorName">
+                                                            [[ office.OfficeDirectorName ]]
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                                <div v-if="office.Floor && office.Floor.trim().length>0">
-                                                    [[ website_labels['Floor'] ]] [[ office.Floor ]]
+                                                <div class="row" v-if="office.TelOffice && office.TelOffice.trim().length>0">
+                                                    <div class="col-1">
+                                                        <svg class="icon icon-sm icon-muted me-2">
+                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-telephone"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        [[ office.TelOffice ]]
+                                                    </div>
+                                                </div>
+                                                <div class="row" v-if="office.Email && office.Email.trim().length>0">
+                                                    <div class="col-1">
+                                                        <svg class="icon icon-sm icon-muted me-2">
+                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <a :href="'email:'+office.Email">
+                                                            [[ office.Email ]]
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row" v-if="(office.Building && office.Building.trim().length>0) || (office.Floor && office.Floor.trim().length>0)">
+                                                    <div class="col-1">
+                                                        <svg class="icon icon-sm icon-muted me-2">
+                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div v-if="office.Building && office.Building.trim().length>0">
+                                                            [[ _cds_data.fixed_cds_labels['Building'] ]] [[ office.Building ]]
+                                                        </div>
+                                                        <div v-if="office.Floor && office.Floor.trim().length>0">
+                                                            [[ _cds_data.fixed_cds_labels['Floor'] ]] [[ office.Floor ]]
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
+                                                    <div class="col-1">
+                                                        <svg class="icon icon-sm icon-muted me-2">
+                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <span v-html="office.Timetables"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
+                                                    <div class="col-1">
+                                                        <svg class="icon icon-sm icon-muted me-2">
+                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <a :href="office.OnlineCounter" target="_blank" rel="noreferrer noopener">
+                                                            [[ _cds_data.fixed_cds_labels['OnlineCounter'] ]]
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row" v-if="office.Timetables && office.Timetables.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                <span v-html="office.Timetables"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row" v-if="office.OnlineCounter && office.OnlineCounter.trim().length>0">
-                                            <div class="col-2">
-                                                <svg class="icon icon-sm icon-muted me-2">
-                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="col-10">
-                                                <a :href="office.OnlineCounter" target="_blank" rel="noreferrer noopener">
-                                                    [[ _cds_data.cds_labels['OnlineCounter'] ]]
-                                                </a>
-                                            </div>
-                                        </div>
+                                        </span>
                                     </div>
-                                </span>
+                                </div>
                             </div>
                         </div>
                     </div>
