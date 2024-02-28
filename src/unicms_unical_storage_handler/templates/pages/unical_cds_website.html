@@ -24,12 +24,11 @@
 {% storage_api_root "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
 {% storage_settings_value "CMS_WEBPATH_CDS" as cms_webpath_cds %}
 {% storage_settings_value "CMS_WEBPATH_CDS_MORPH" as cms_webpath_cds_morph %}
-{% storage_settings_value "CURRENT_YEAR" as official_current_year %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_cds_cod webpath.pk cds_cod as cds_identifier %}
 {% get_cds_website_current_year cds_identifier as current_year %}
-{% get_cds_website_current_year cds_identifier as cds_website_current_year %}
+
 
 {% if cds_identifier %}
     <div id="_cds_data" class="w-100">
@@ -146,6 +145,7 @@
                     {% block website_page_year %}
                     if(!year)year = "{{ current_year }}"
                     {% endblock website_page_year %}
+
                     const cms_webpath_cds = {{ cms_webpath_cds|safe }}
                     const cms_webpath_cds_morph = {{ cms_webpath_cds_morph|safe }}
                     let cds_identifier = '{{ cds_identifier }}'
@@ -161,7 +161,7 @@
                             for (let i=0; i<old_cds.length; i++) {
                                 if(old_cds[i] == '{{ cds_identifier }}'){
                                     cds_identifier = new_cds
-                                    year = "{{ official_current_year }}"
+                                    //year = "{{ current_year }}"
                                     break
                                 }
                             }

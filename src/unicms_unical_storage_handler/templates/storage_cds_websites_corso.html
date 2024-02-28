@@ -295,7 +295,7 @@ if(!year)year = "{{ cds_website_current_year }}"
                                               <option value="">- {% trans "Choose an academic year" %} -</option>
                                               <option v-for="item in academic_years_filter"
                                                       :value="item.AcademicYear"
-                                                      v-if="item.AcademicYear <= '{{ current_year }}'">
+                                                      v-if="item.AcademicYear <= '{{ cds_website_current_year }}'">
                                                   [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]
                                               </option>
                                             </select>
