@@ -48,7 +48,7 @@ if(!year)year = "{{ cds_website_current_year }}"
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH" as cds_studiare_path %}
 
 {% get_cds_website_current_year cds_identifier as current_year %}
-{% get_cds_website_new_year cds_identifier as cds_website_current_year %}
+{% get_cds_website_new_year cds_identifier as cds_website_future_year %}
 {% get_cds_website_morph cds_identifier as old_cds_identifiers %}
 
 {% include "includes/unical_storage_loading.html" %}
@@ -145,12 +145,12 @@ if(!year)year = "{{ cds_website_current_year }}"
                     <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">
-                                {% trans "Academic Year" %} {{ cds_website_current_year }}/{{ cds_website_current_year|add:"1" }}
+                                {% trans "Academic Year" %} {{ cds_website_future_year }}/{{ cds_website_future_year|add:"1" }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">
-                                {% if current_year == cds_website_current_year %}
+                                {% if current_year == cds_website_future_year %}
                                 {% trans "Previous academic years" %}
                                 {% else %}
                                 {% trans "Current academic year and previous" %}
@@ -295,7 +295,7 @@ if(!year)year = "{{ cds_website_current_year }}"
                                               <option value="">- {% trans "Choose an academic year" %} -</option>
                                               <option v-for="item in academic_years_filter"
                                                       :value="item.AcademicYear"
-                                                      v-if="item.AcademicYear <= '{{ cds_website_current_year }}'">
+                                                      v-if="item.AcademicYear <= '{{ cds_website_future_year }}'">
                                                   [[ item.AcademicYear ]]/[[ item.AcademicYear + 1 ]]
                                               </option>
                                             </select>
@@ -484,7 +484,7 @@ var _{{ cds_cod }}_studyplans = new Vue({
     },
     methods: {
         {% include "includes/unical_storage_cds_website_scroll.html" %}
-        callStudyPlans(year={{ cds_website_current_year }}) {
+        callStudyPlans(year={{ cds_website_future_year }}) {
             this.is_loading = true
             axios
                 .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
@@ -558,7 +558,7 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
             }
             this.old_cds_found = false
         },
-        callStudyPlans(year={{ cds_website_current_year }}) {
+        callStudyPlans(year={{ cds_website_future_year }}) {
             this.is_loading = true
             axios
                 .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
@@ -590,9 +590,9 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                     this.academic_years_filter = response.data.results
                     // remove current year
                     this.academic_years_filter = this.academic_years_filter.filter(function( obj ) {
-                        return obj.AcademicYear <= {{ cds_website_current_year }};
+                        return obj.AcademicYear <= {{ cds_website_future_year }};
                     });
-                    {% if current_year == cds_website_current_year %}
+                    {% if current_year == cds_website_future_year %}
                     this.academic_years_filter = this.academic_years_filter.filter(function( obj ) {
                         return obj.AcademicYear !== {{ current_year }};
                     });

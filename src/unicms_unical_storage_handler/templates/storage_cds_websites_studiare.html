@@ -40,8 +40,8 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH" as corso_path %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 {% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
-{% storage_settings_value "CURRENT_YEAR" as current_year %}
 
+{% get_cds_website_current_year cds_cod as current_year %}
 {% get_cds_website_morph cds_cod as old_cds_identifiers %}
 
 {% include "includes/unical_storage_loading.html" %}
