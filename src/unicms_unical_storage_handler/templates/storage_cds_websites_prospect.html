@@ -549,14 +549,14 @@ Brochure - {{ block.super }}
                     </div>
                 </div>
             </div>
-            <div class="row mt-5" v-if="_cds_data.cds.OfficesData">
+            <div class="row mt-5" v-if="_cds_data.cds.OfficesData && _cds_data.fixed_cds.OfficesData.length > 0">
                 <div class="col">
                     <loading-icon v-if="_cds_data.is_loading"></loading-icon>
-                    <div class="card-wrapper card-space" v-else-if="_cds_data.fixed_cds.OfficesData">
+                    <div class="card-wrapper card-space" v-else>
                         <div class="card card-bg no-after">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12 col-lg-4" v-for="(office, index) in _cds_data.fixed_cds.OfficesData" :class="[index>0 ? 'mt-4 mt-lg-0': '', index >2 ? 'mt-lg-4' : '']">
+                                    <div class="col-12 col-lg-4" v-for="(office, index) in _cds_data.cds.OfficesData" :class="[index>0 ? 'mt-4 mt-lg-0': '', index >2 ? 'mt-lg-4' : '']">
                                         <span>
                                             <b>[[ office.OfficeName ]]</b>
                                             <div class="mt-2">
