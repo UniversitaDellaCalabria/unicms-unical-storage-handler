@@ -32,7 +32,6 @@ Brochure - {{ block.super }}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
 {% get_allowed_website request.get_host as host %}
-{% get_cds_website_path_pk cds_cod as cds_webpath %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% settings_value "CAROUSEL_HERO_AUTOPLAY_TIMEOUT" as carousel_timeout %}
@@ -53,7 +52,7 @@ Brochure - {{ block.super }}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_website_redirect_path %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
-{% get_cds_website_root_path webpath cds_cod as root_webpath %}
+{% get_cds_website_root_path webpath cds_cod as cds_webpath %}
 
 {% include "includes/unical_storage_loading.html" %}
 
@@ -843,7 +842,7 @@ Brochure - {{ block.super }}
             </div>
         </div>
 
-        {% if root_webpath %}
+        {% if cds_webpath %}
         <div class="row mt-3 pt-5">
             <div class="col">
                 <div class="container">
@@ -861,6 +860,30 @@ Brochure - {{ block.super }}
                 </div>
             </div>
         </div>
+        {% else %}
+        {% get_cds_website_morph cds_cod as old_cds_list %}
+        {% for old_cds_cod in old_cds_list %}
+            {% get_cds_website_root_path cds_cod=old_cds_cod as old_webpath %}
+            {% if old_webpath %}
+            <div class="row mt-3 pt-5">
+                <div class="col">
+                    <div class="container">
+                        <p class="h3 text-center">
+                            {% trans "If you want more information on the Degree Course" %}
+                        </p>
+                        <p class="text-center my-4">
+                            {% trans "For details on the contents of individual courses, training periods abroad, teachers, tutors, study rooms, laboratories, research centres, other structures and socialization initiatives, visit the Study Program website." %}
+                        </p>
+                        <p class="text-center">
+                            <a href="{{ old_webpath.fullpath }}" class="btn btn-secondary">
+                                {% trans "Go to the institutional site" %}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
         {% endif %}
 
     </div>
