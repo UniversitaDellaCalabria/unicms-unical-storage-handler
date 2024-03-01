@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 14:11+0100\n"
-"PO-Revision-Date: 2024-02-21 16:26+0100\n"
+"POT-Creation-Date: 2024-03-01 15:15+0100\n"
+"PO-Revision-Date: 2024-03-01 15:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -62,18 +62,17 @@ msgstr ""
 msgid ""
 "I have taken note of the information referred to in art. 13 of the GDPR EU "
 "2016/679"
-msgstr ""
-"Ho preso atto dell'informativa di cui all' art. 13 del GDPR EU 2016/679"
+msgstr "Ho preso atto dell'informativa di cui all' art. 13 del GDPR EU 2016/679"
 
 #: forms.py:94
 msgid "Verification code"
 msgstr "Codice di verifica"
 
-#: handlers.py:921
+#: handlers.py:922
 msgid "Your message has been successfully sent"
 msgstr "Il tuo messaggio è stato inviato correttamente"
 
-#: handlers.py:928
+#: handlers.py:929
 msgid "Your message was not sent due to a technical problem. Try later"
 msgstr ""
 "Il tuo messaggio non è stato inviato a causa di un problema tecnico. Riprova "
@@ -123,8 +122,7 @@ msgid "Laboratories"
 msgstr "Laboratori"
 
 #: settings.py:195 templates/storage_base.html:182
-#: templates/storage_patents_list.html:11
-#: templates/storage_patents_list.html:20
+#: templates/storage_patents_list.html:11 templates/storage_patents_list.html:20
 msgid "Patents"
 msgstr "Brevetti"
 
@@ -149,8 +147,7 @@ msgstr "Pubblicazioni"
 
 #: settings.py:199
 #: templates/blocks/collapse/unical_storage_collapse_research_group_list.html:7
-#: templates/storage_base.html:236
-#: templates/storage_research_group_list.html:11
+#: templates/storage_base.html:236 templates/storage_research_group_list.html:11
 #: templates/storage_research_group_list.html:20
 msgid "Research groups"
 msgstr "Gruppi di ricerca"
@@ -162,14 +159,12 @@ msgstr "Gruppi di ricerca"
 msgid "Research lines"
 msgstr "Linee di ricerca"
 
-#: settings.py:201 templates/storage_base.html:12
-#: templates/storage_base.html:26
+#: settings.py:201 templates/storage_base.html:12 templates/storage_base.html:26
 msgid "Open data"
 msgstr ""
 
 #: settings.py:202 templates/storage_base.html:200
-#: templates/storage_spinoff_list.html:11
-#: templates/storage_spinoff_list.html:20
+#: templates/storage_spinoff_list.html:11 templates/storage_spinoff_list.html:20
 msgid "Companies"
 msgstr "Imprese"
 
@@ -305,7 +300,7 @@ msgstr "prossimo"
 #: templates/storage_cds_websites_corso.html:279
 #: templates/storage_cds_websites_corso.html:398
 #: templates/storage_cds_websites_corso.html:424
-#: templates/storage_cds_websites_prospect.html:173
+#: templates/storage_cds_websites_prospect.html:175
 #: templates/storage_cds_websites_studiare_calendari.html:248
 #: templates/storage_cds_websites_studiare_orari.html:324
 msgid "No items here"
@@ -466,7 +461,7 @@ msgstr "Durata"
 #: templates/blocks/unical_storage_cds_website_info_icons.html:44
 #: templates/blocks/unical_storage_cdsinfo.html:106
 #: templates/blocks/unical_storage_cdslist.html:277
-#: templates/storage_cds_websites_prospect.html:220
+#: templates/storage_cds_websites_prospect.html:222
 msgid "years"
 msgstr "anni"
 
@@ -1121,7 +1116,7 @@ msgstr "Stampa"
 
 #: templates/blocks/unical_storage_teacher_materials.html:60
 #: templates/blocks/unical_storage_teacher_news_list.html:66
-#: templates/storage_cds_websites_prospect.html:816
+#: templates/storage_cds_websites_prospect.html:822
 msgid "Close"
 msgstr "Chiudi"
 
@@ -1281,12 +1276,12 @@ msgstr "Torna alla pagina precedente"
 
 #: templates/includes/unical_storage_loading.html:14
 #: templates/pages/unical_cds_website.html:37
-#: templates/pages/unical_cds_website.html:194
+#: templates/pages/unical_cds_website.html:208
 msgid "Loading data"
 msgstr "Caricamento dati"
 
 #: templates/pages/unical_cds_website.html:43
-#: templates/pages/unical_cds_website.html:200
+#: templates/pages/unical_cds_website.html:214
 msgid "interclass"
 msgstr "interclasse"
 
@@ -1355,9 +1350,9 @@ msgid ""
 "indicate free choices"
 msgstr ""
 "è il piano ufficiale che il corso di studio attribuisce automaticamente a "
-"tutti gli studenti immatricolati. Nella prima modifica del piano di studio "
-"lo studente può variare  le attività all'interno di eventuali gruppi di "
-"materie opzionali e indicare le scelte libere"
+"tutti gli studenti immatricolati. Nella prima modifica del piano di studio lo "
+"studente può variare  le attività all'interno di eventuali gruppi di materie "
+"opzionali e indicare le scelte libere"
 
 #: templates/storage_cds_websites_corso.html:216
 #: templates/storage_cds_websites_corso.html:361
@@ -1513,78 +1508,78 @@ msgstr ""
 msgid "Informations"
 msgstr "Informazioni"
 
-#: templates/storage_cds_websites_prospect.html:101
+#: templates/storage_cds_websites_prospect.html:103
 msgid "course in brief"
 msgstr "corso in pillole"
 
-#: templates/storage_cds_websites_prospect.html:118
+#: templates/storage_cds_websites_prospect.html:120
 msgid "subjects"
 msgstr "cosa si studia"
 
-#: templates/storage_cds_websites_prospect.html:135
+#: templates/storage_cds_websites_prospect.html:137
 msgid "how to enroll"
 msgstr "come iscriversi"
 
-#: templates/storage_cds_websites_prospect.html:150
+#: templates/storage_cds_websites_prospect.html:152
 msgid "download materials"
 msgstr "scarica materiali"
 
-#: templates/storage_cds_websites_prospect.html:180
-#: templates/storage_cds_websites_prospect.html:186
+#: templates/storage_cds_websites_prospect.html:182
+#: templates/storage_cds_websites_prospect.html:188
 msgid "request info"
 msgstr "richiedi info"
 
-#: templates/storage_cds_websites_prospect.html:327
+#: templates/storage_cds_websites_prospect.html:329
 msgid "Who is eligible for the course"
 msgstr "Chi può accedere al corso"
 
-#: templates/storage_cds_websites_prospect.html:391
+#: templates/storage_cds_websites_prospect.html:393
 msgid "Fees, contributions and excemptions"
 msgstr "Tasse e contributi"
 
-#: templates/storage_cds_websites_prospect.html:646
+#: templates/storage_cds_websites_prospect.html:652
 msgid "Discover the career of former students"
 msgstr "Scopri la carriera degli ex studenti del corso"
 
-#: templates/storage_cds_websites_prospect.html:664
+#: templates/storage_cds_websites_prospect.html:670
 msgid "Click here"
 msgstr "Clicca qui"
 
-#: templates/storage_cds_websites_prospect.html:682
+#: templates/storage_cds_websites_prospect.html:688
 msgid "Life on Campus"
 msgstr "Vita nel Campus"
 
-#: templates/storage_cds_websites_prospect.html:687
+#: templates/storage_cds_websites_prospect.html:693
 msgid "Services to students"
 msgstr "Servizi agli studenti"
 
-#: templates/storage_cds_websites_prospect.html:692
+#: templates/storage_cds_websites_prospect.html:698
 msgid "Residential center"
 msgstr "Centro residenziale"
 
-#: templates/storage_cds_websites_prospect.html:706
+#: templates/storage_cds_websites_prospect.html:712
 msgid ""
-"On the largest and most equipped campus in Italy, you can experience a "
-"unique university community, sharing educational, recreational, sporting and "
+"On the largest and most equipped campus in Italy, you can experience a unique "
+"university community, sharing educational, recreational, sporting and "
 "cultural moments with colleagues and teachers. The Campus is equipped with "
 "study rooms, a sports centre, theatres, amphitheatres, cinemas, bars, "
 "refreshment points and other meeting spaces. A citadel that allows you to "
 "live an extraordinary human experience, as well as an educational one."
 msgstr ""
-"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di "
-"comunità universitaria unica, condividendo con colleghi e docenti momenti "
-"formativi, ludici, sportivi e culturali. Il Campus è dotato di aule studio, "
-"di un centro sportivo, teatri, anfiteatri, cinema, bar, punti ristoro e "
-"altri spazi aggregativi. Una cittadella che consente di vivere una "
-"straordinaria esperienza umana, oltre che formativa."
+"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di comunità "
+"universitaria unica, condividendo con colleghi e docenti momenti formativi, "
+"ludici, sportivi e culturali. Il Campus è dotato di aule studio, di un centro "
+"sportivo, teatri, anfiteatri, cinema, bar, punti ristoro e altri spazi "
+"aggregativi. Una cittadella che consente di vivere una straordinaria "
+"esperienza umana, oltre che formativa."
 
-#: templates/storage_cds_websites_prospect.html:711
-#: templates/storage_cds_websites_prospect.html:729
-#: templates/storage_cds_websites_prospect.html:747
+#: templates/storage_cds_websites_prospect.html:717
+#: templates/storage_cds_websites_prospect.html:735
+#: templates/storage_cds_websites_prospect.html:753
 msgid "Discover more"
 msgstr "Scopri di più"
 
-#: templates/storage_cds_websites_prospect.html:724
+#: templates/storage_cds_websites_prospect.html:730
 msgid ""
 "A citadel that hosts those who live on the Campus in the best possible way, "
 "because it offers multiple services for study and for individual and "
@@ -1595,63 +1590,67 @@ msgstr ""
 "Una cittadella che ospita nel migliore dei modi chi vive nel Campus, perché "
 "offre molteplici servizi per lo studio e per il benessere individuale e "
 "collettivo: biblioteche, centro per l’apprendimento linguistico, servizi di "
-"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, "
-"un ufficio postale, uno sportello bancario e uno spazio per il silenzio."
+"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, un "
+"ufficio postale, uno sportello bancario e uno spazio per il silenzio."
 
-#: templates/storage_cds_websites_prospect.html:742
+#: templates/storage_cds_websites_prospect.html:748
 msgid ""
 "It completes and enhances the offer of the University of Calabria and "
-"realizes the idea of ​​an Anglo-Saxon university campus. It is distributed in "
-"10 districts in which the university residences are located, consisting of "
-"apartments with double and single bedrooms, living room, kitchen and "
-"bathroom. In the neighborhoods there are common spaces for studying and for "
-"recreational and sporting activities, with the presence of TV rooms, games "
-"rooms and gyms; laundry and bike rental services are available."
+"concretizes the idea of ​​an Anglo-Saxon type university campus. It is "
+"distributed in 10 neighborhoods in which the university residences are "
+"located, made up of studios and apartments with double and single rooms, "
+"living room, kitchen and bathrooms. The neighborhoods are equipped with "
+"common spaces for study and for recreational and sporting activities, with "
+"the presence of TV rooms, free Wi-Fi services, games rooms and gyms; Laundry "
+"and bike rental services are also available."
 msgstr ""
 "Completa e valorizza l’offerta dell’Università della Calabria e concretizza "
 "l’idea di campus universitario di tipo anglosassone. È distribuito in 10 "
 "quartieri nei quali sono ubicate le residenze universitarie, costituite da "
-"appartamenti con camere doppie e singole, soggiorno, cucina e servizi. Nei "
-"quartieri ci sono spazi comuni per lo studio e per le attività ricreative e "
-"sportive, con la presenza di sale tv, sale giochi e palestre; sono "
-"disponibili servizi di lavanderia e di noleggio bici."
+"monolocali e appartamenti con camere doppie e singole, soggiorno, cucina e "
+"servizi. I quartieri sono dotati di spazi comuni per lo studio e per le "
+"attività ricreative e sportive, con la presenza di sale tv, servizi Wi-Fi "
+"gratuiti, sale giochi e palestre; sono disponibili, altresì, servizi di "
+"lavanderia e di noleggio bici."
 
-#: templates/storage_cds_websites_prospect.html:764
+#: templates/storage_cds_websites_prospect.html:770
 msgid "Request information for this course"
 msgstr "Richiedi informazioni per questo corso"
 
-#: templates/storage_cds_websites_prospect.html:806
+#: templates/storage_cds_websites_prospect.html:812
 msgid "Submit"
 msgstr "Invia"
 
-#: templates/storage_cds_websites_prospect.html:814
+#: templates/storage_cds_websites_prospect.html:820
 msgid "Confirm"
 msgstr "Conferma"
 
-#: templates/storage_cds_websites_prospect.html:824
+#: templates/storage_cds_websites_prospect.html:830
 msgid "Do you want to confirm the entered data?"
 msgstr "Desideri confermare i dati immessi?"
 
-#: templates/storage_cds_websites_prospect.html:831
+#: templates/storage_cds_websites_prospect.html:837
 msgid "Yes, proceed"
 msgstr "Si, procedi"
 
-#: templates/storage_cds_websites_prospect.html:847
+#: templates/storage_cds_websites_prospect.html:853
+#: templates/storage_cds_websites_prospect.html:875
 msgid "If you want more information on the Degree Course"
 msgstr "Se vuoi avere maggiori informazioni sul Corso di Laurea"
 
-#: templates/storage_cds_websites_prospect.html:850
+#: templates/storage_cds_websites_prospect.html:856
+#: templates/storage_cds_websites_prospect.html:878
 msgid ""
 "For details on the contents of individual courses, training periods abroad, "
 "teachers, tutors, study rooms, laboratories, research centres, other "
 "structures and socialization initiatives, visit the Study Program website."
 msgstr ""
 "Per i dettagli sui contenuti dei singoli insegnamenti, periodi formativi "
-"all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, "
-"altre strutture e iniziative di socializzazione visita il sito del Corso di "
-"Studio."
+"all'estero, docenti, tutor, aule studio, laboratori, centri di ricerca, altre "
+"strutture e iniziative di socializzazione visita il sito del Corso di Studio."
 
-#: templates/storage_cds_websites_prospect.html:854
+#: templates/storage_cds_websites_prospect.html:860
+#: templates/storage_cds_websites_prospect.html:882
 msgid "Go to the institutional site"
 msgstr "Vai al sito istituzionale"
 
