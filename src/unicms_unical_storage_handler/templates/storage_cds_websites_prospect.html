@@ -856,7 +856,7 @@ Brochure - {{ block.super }}
                         {% trans "For details on the contents of individual courses, training periods abroad, teachers, tutors, study rooms, laboratories, research centres, other structures and socialization initiatives, visit the Study Program website." %}
                     </p>
                     <p class="text-center">
-                        <a href="{{ cds_webpath.get_site_path }}" class="btn btn-secondary">
+                        <a href="{{ cds_webpath.get_site_path }}" target="_blank" class="btn btn-secondary">
                             {% trans "Go to the institutional site" %}
                         </a>
                     </p>
@@ -878,7 +878,7 @@ Brochure - {{ block.super }}
                             {% trans "For details on the contents of individual courses, training periods abroad, teachers, tutors, study rooms, laboratories, research centres, other structures and socialization initiatives, visit the Study Program website." %}
                         </p>
                         <p class="text-center">
-                            <a href="{{ old_webpath.get_site_path }}" class="btn btn-secondary">
+                            <a href="{{ old_webpath.get_site_path }}" target="_blank" class="btn btn-secondary">
                                 {% trans "Go to the institutional site" %}
                             </a>
                         </p>
