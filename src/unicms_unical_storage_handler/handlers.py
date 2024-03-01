@@ -1071,7 +1071,7 @@ class CdsWebsitesRedirectHandler(BaseContentHandler):
 
     def as_view(self):
         if not self.webpath: raise Http404()
-        return redirect((f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}'))
+        return redirect(self.webpath.get_site_path())
 
 
 class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
