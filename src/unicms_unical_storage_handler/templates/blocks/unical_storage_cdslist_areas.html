@@ -303,6 +303,7 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_settings_value "ALLOWED_CDS_LANGUAGES" as allowed_languages %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 {% storage_settings_value "ALLOWED_CDS_COURSETYPES" as allowed_cds_coursetypes %}
+{% storage_settings_value "CDS_STORAGE_CDS_WEBSITE_INTERNATIONAL_CDS_TO_EXCLUDE" as cds_to_exclude %}
 
 {% storage_api_root "CMS_STORAGE_DEGREETYPES_API" as degreetypes_api %}
 {% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
@@ -340,8 +341,8 @@ departments_filter: [],
 cds_languages_filter: {{ allowed_languages|safe }},
 joint_degree_filter: {{ allowed_joint_degrees|safe }},
 
-cds_to_exclude: {% block cds_to_exclude %}[]{% endblock cds_to_exclude %}
-
+cds_to_exclude: {{ cds_to_exclude|safe }},
+check_exclusion: false
 {% endblock extra_data %}
 
 {% block extra_mounted %}
@@ -349,11 +350,15 @@ cds_to_exclude: {% block cds_to_exclude %}[]{% endblock cds_to_exclude %}
 // if url is pre-filtered with preferred coursetypes
 // get them, else show all
 let params = new URLSearchParams(this.url.split('?')[1]);
+let get_check_exclusion = params.get("check_exclusion")
 let get_coursetype = params.get("coursetype")
 let get_structuretype = params.get("structuretype")
 if (get_coursetype != null){
     let get_coursetypes_list = get_coursetype.split(',')
     this.allowed_course_types = get_coursetypes_list
+}
+if (get_check_exclusion){
+    this.check_exclusion = true
 }
 
 this.callDegreeTypes();
@@ -374,6 +379,7 @@ search(keyword=null, value=null) {
 
 {% block method_callurl %}
 CallURL(url, initial=false) {
+    let exclude_list = this.cds_to_exclude
     this.is_loading = true
     this.loader_source = url
     if (!url.includes("academicyear") && this.initial_academic_year)
@@ -383,6 +389,10 @@ CallURL(url, initial=false) {
     axios
         .get(url)
         .then(response => {
+            if(this.check_exclusion)
+                response.data.results = response.data.results.filter(function( obj ) {
+                    return !exclude_list.includes(obj.CdSCod);
+                });
             if(initial) this.initial_items = response.data.results;
             this.items = response.data;
             this.next_page = response.data.next;
