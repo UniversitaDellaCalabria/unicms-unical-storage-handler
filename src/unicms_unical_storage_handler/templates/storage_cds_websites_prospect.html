@@ -57,6 +57,8 @@ Brochure - {{ block.super }}
 
 {% get_cds_website_root_path webpath cds_cod as cds_webpath %}
 
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CAROUSEL_BACKGROUNDS_URL" as carousel_backgrounds %}
+
 {% include "includes/unical_storage_loading.html" %}
 
 <div id="_{{ cds_cod }}">
@@ -89,6 +91,9 @@ Brochure - {{ block.super }}
                                             allowfullscreen>
                                     </iframe>
                                 </div>
+                            </div>
+                            <div class="col-12 col-lg-8" v-else>
+                                <img class="h-100" :src="'/static/images/corsi/' + backgrounds[_cds_data.cds.AreaCds]">
                             </div>
                             <div class="col-12 col-lg mt-3 mt-lg-0" :class="{'ps-lg-4': _cds_data.cds.CdSVideo}">
 
@@ -897,6 +902,8 @@ Brochure - {{ block.super }}
         el: '#_{{ cds_cod }}',
         data() {
             return {
+                AreaCds: null,
+                backgrounds: {{ carousel_backgrounds|safe }},
                 website: {},
                 website_labels: {},
                 collapse_fields: {{ collapse_fields|safe }},
