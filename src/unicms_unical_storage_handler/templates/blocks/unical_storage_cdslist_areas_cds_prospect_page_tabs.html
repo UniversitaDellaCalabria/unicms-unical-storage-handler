@@ -11,6 +11,11 @@
 initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
 {% endblock current_year %}
 
+{% block cds_to_exclude %}
+{% storage_settings_value "CDS_STORAGE_CDS_WEBSITE_INTERNATIONAL_CDS_TO_EXCLUDE" as cds_to_exclude %}
+{{ cds_to_exclude|safe }}
+{% endblock cds_to_exclude %}
+
 {% block content %}
 
 {% get_current_language as LANGUAGE_CODE %}

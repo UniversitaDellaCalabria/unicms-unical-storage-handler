@@ -338,7 +338,9 @@ loader_source_cds_areas: '{{ cds_areas_api }}?lang={{ LANGUAGE_CODE }}',
 academic_years_filter: [],
 departments_filter: [],
 cds_languages_filter: {{ allowed_languages|safe }},
-joint_degree_filter: {{ allowed_joint_degrees|safe }}
+joint_degree_filter: {{ allowed_joint_degrees|safe }},
+
+cds_to_exclude: {% block cds_to_exclude %}[]{% endblock cds_to_exclude %}
 
 {% endblock extra_data %}
 
