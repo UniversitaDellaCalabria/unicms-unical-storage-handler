@@ -1103,11 +1103,13 @@ class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
                                          is_active=True)
 
     def as_view(self):
-        if self.webpath:
-            cds_name =  self.cds_json['CdSName']
-            cds_cod =  self.cds_json['CdSCod']
-            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
-        raise Http404()
+        if not self.webpath: raise Http404()
+        root = WebPath.objects.filter(pk=settings.CMS_WEBPATH_PROSPECT_DEFAULT).first()
+        if not root: raise Http404()
+
+        cds_name =  self.cds_json['CdSName']
+        cds_cod =  self.cds_json['CdSCod']
+        return redirect('//' + sanitize_path(f'{root.site.domain}/{root.fullpath}/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
 
 
 class CdsWebsitesStudyActivityRedirectHandler(CdsWebsitesRedirectHandler):
