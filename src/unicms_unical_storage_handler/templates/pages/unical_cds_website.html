@@ -272,22 +272,22 @@
 {% get_cds_website_root_path webpath cds_identifier as root_webpath %}
 {% if cds_identifier and not hide_cds_auto_menu %}
     <li class="nav-item megamenu">
-        <a class="nav-link pe-lg-1 ps-lg-0" href="{{ root_webpath.fullpath }}">
+        <a class="nav-link pe-lg-1 ps-lg-0" href="{{ root_webpath.get_site_path }}">
             Home
         </a>
     </li>
     <li class="nav-item megamenu">
-        <a class="nav-link pe-lg-1" href="{{ root_webpath.fullpath }}{{ cds_base_path }}/{{ cds_corso_path }}/">
+        <a class="nav-link pe-lg-1" href="{{ root_webpath.get_site_path }}{{ cds_base_path }}/{{ cds_corso_path }}/">
             <span>{{ cds_corso_label }}</span>
         </a>
     </li>
      <li class="nav-item megamenu">
-        <a class="nav-link pe-lg-1" href="{{ root_webpath.fullpath }}{{ cds_base_path }}/{{ cds_iscriversi_path }}/">
+        <a class="nav-link pe-lg-1" href="{{ root_webpath.get_site_path }}{{ cds_base_path }}/{{ cds_iscriversi_path }}/">
             <span>{{ cds_iscriversi_label }}</span>
         </a>
     </li>
     <li class="nav-item megamenu">
-        <a class="nav-link pe-lg-1" href="{{ root_webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">
+        <a class="nav-link pe-lg-1" href="{{ root_webpath.get_site_path }}{{ cds_base_path }}/{{ cds_studiare_path }}/">
             <span>{{ cds_studiare_label }}</span>
         </a>
 
@@ -310,7 +310,7 @@
                     <div class="link-list-wrapper">
                         <ul class="link-list">
                             <li>
-                                <a class="list-item pb-2 {% if not forloop.first %}pt-2{% endif %} pt-lg-0" href="{{ root_webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/{{ cds_studiare_schedule_path }}/">
+                                <a class="list-item pb-2 {% if not forloop.first %}pt-2{% endif %} pt-lg-0" href="{{ root_webpath.get_site_path }}{{ cds_base_path }}/{{ cds_studiare_path }}/{{ cds_studiare_schedule_path }}/">
                                     <span class="text-dark">{{ studiare_schedule_label }}</span>
                                 </a>
                             </li>
