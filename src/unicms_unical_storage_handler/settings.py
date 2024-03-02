@@ -446,15 +446,25 @@ CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2 = [
 CMS_STORAGE_CDS_WEBSITE_BROCHURE_IS_VISIBLE = True
 
 CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = {
-    # 'regolamento_tasse': [
-        # 'Tax regulation',
-        # 'Regolamento tasse',
-        # 'https://www.unical.it/media/medias/2023/Regolamento_tasse_contributi_ed_esoneri.pdf'
+    # 'it': [
+        # (
+            # 'Regolamento tasse',
+            # 'https://www.unical.it/media/medias/2023/Regolamento_tasse_contributi_ed_esoneri.pdf'
+        # ),
+        # (
+            # 'Guida Esse3',
+            # 'https://unical.esse3.cineca.it/Home.do'
+        # )
     # ],
-    # 'guida_esse3': [
-        # 'Esse3 guide',
-        # 'Guida Esse3',
-        # 'https://unical.esse3.cineca.it/Home.do'
+    # 'en': [
+        # (
+            # 'Tax regulation',
+            # '#'
+        # ),
+        # (
+            # 'Esse3 guide',
+            # '#'
+        # )
     # ]
 }
 
