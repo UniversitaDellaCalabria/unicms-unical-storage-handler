@@ -916,8 +916,8 @@ Brochure - {{ block.super }}
             this.callWebsite()
         },
         updated() {
-            this.setSlider(div_id='#CdsSlider', items=1, single=true)
-            this.setSlider(div_id='#CdsExStudents', items=3, timeout=({{ carousel_timeout|default:5000 }} + 2000))
+            this.setSloganSlider()
+            this.setExStudentsSlider()
         },
         methods: {
             callWebsite() {
@@ -930,17 +930,15 @@ Brochure - {{ block.super }}
                     }
                 )
             },
-            setSlider(div_id, items=1, single=false, timeout={{ carousel_timeout|default:5000 }}) {
-                let tablet_items = 2;
-                if(single) tablet_items = 1;
-                $(div_id).owlCarousel({
+            setSloganSlider(){
+                $('#CdsSlider').owlCarousel({
                     nav : true, // Show next and prev buttons
                     //rewind: true,
-                    loop: false,
+                    loop: true,
                     //slideSpeed : 300,
                     //paginationSpeed : 400,
                     autoplay: true,
-                    autoplayTimeout: timeout,
+                    autoplayTimeout: {{ carousel_timeout|default:5000 }},
                     dots: false,
                     margin: 12,
                     //dotsEach: false,
@@ -953,17 +951,48 @@ Brochure - {{ block.super }}
                         },
                         // breakpoint from 481 up
                         481 : {
-                            items: tablet_items
+                            items: 1
                         },
                         // breakpoint from 1024 up
                         1024 : {
-                            items: items
+                            items: 1
                         }
                     }
                   //lazyLoad : true,
                 });
                 $("#slider_arrow").click(function(){
-                    $(div_id).trigger('next.owl.carousel');
+                    $('#CdsSlider').trigger('next.owl.carousel');
+                });
+            },
+            setExStudentsSlider() {
+                $('#CdsExStudents').owlCarousel({
+                    nav : true, // Show next and prev buttons
+                    rewind: true,
+                    //loop: loop,
+                    //slideSpeed : 300,
+                    //paginationSpeed : 400,
+                    autoplay: true,
+                    autoplayTimeout: {{ carousel_timeout|default:5000 }} + 2000,
+                    dots: false,
+                    margin: 12,
+                    //dotsEach: false,
+                    stagePadding: 0,
+
+                    responsive : {
+                        // breakpoint from 0 up
+                        0 : {
+                            items: 1
+                        },
+                        // breakpoint from 481 up
+                        481 : {
+                            items: 2
+                        },
+                        // breakpoint from 1024 up
+                        1024 : {
+                            items: 3
+                        }
+                    }
+                  //lazyLoad : true,
                 });
             },
             youtubeNoCookie(value) {
