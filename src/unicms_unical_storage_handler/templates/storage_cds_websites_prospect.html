@@ -53,6 +53,7 @@ Brochure - {{ block.super }}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2" as collapse_fields_2 %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS" as course_docs %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_website_redirect_path %}
+{% storage_settings_value "CDS_STORAGE_CDS_WEBSITE_DEFAULT_IMAGE" as cds_website_default_image %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
 {% get_cds_website_root_path webpath cds_cod as cds_webpath %}
@@ -93,7 +94,7 @@ Brochure - {{ block.super }}
                                 </div>
                             </div>
                             <div class="col-12 col-lg-8" v-else>
-                                <img :src="'/static/images/corsi/' + backgrounds[_cds_data.cds.AreaCds]">
+                                <img src="{{ cds_website_default_image }}" class="w-100">
                             </div>
                             {% comment %}
                             <div class="col-12 col-lg mt-3 mt-lg-0" :class="{'ps-lg-4': _cds_data.cds.CdSVideo}">
