@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-04 09:51+0100\n"
-"PO-Revision-Date: 2024-03-04 09:52+0100\n"
+"POT-Creation-Date: 2024-03-04 11:11+0100\n"
+"PO-Revision-Date: 2024-03-04 11:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -506,6 +506,12 @@ msgstr "Precedente"
 msgid "Next"
 msgstr ""
 
+#: templates/blocks/unical_storage_cds_website_carousel_hero.html:54
+#: templates/blocks/unical_storage_cds_website_carousel_hero.html:61
+#: templates/blocks/unical_storage_cds_website_right_icons.html:20
+msgid "Course in summary"
+msgstr "Il corso in sintesi"
+
 #: templates/blocks/unical_storage_cds_website_info_icons.html:18
 #: templates/blocks/unical_storage_cdsinfo.html:119
 #: templates/blocks/unical_storage_structure_list.html:103
@@ -515,10 +521,6 @@ msgstr "Sito web"
 #: templates/blocks/unical_storage_cds_website_info_icons.html:58
 msgid "University credits"
 msgstr "Crediti formativi"
-
-#: templates/blocks/unical_storage_cds_website_right_icons.html:20
-msgid "Course in summary"
-msgstr "Il corso in sintesi"
 
 #: templates/blocks/unical_storage_cds_website_study_activities_by_year.html:31
 msgid "Teaching periods"
@@ -1599,14 +1601,15 @@ msgstr ""
 
 #: templates/storage_cds_websites_prospect.html:755
 msgid ""
-"It completes and enhances the offer of the University of Calabria and "
-"concretizes the idea of ​​an Anglo-Saxon type university campus. It is "
-"distributed in 10 neighborhoods in which the university residences are "
-"located, made up of studios and apartments with double and single rooms, "
-"living room, kitchen and bathrooms. The neighborhoods are equipped with "
-"common spaces for study and for recreational and sporting activities, with "
-"the presence of TV rooms, free Wi-Fi services, games rooms and gyms; Laundry "
-"and bike rental services are also available."
+"A vital articulation of the Athenaeum that completes and enhances the offer "
+"of the University of Calabria and realises the idea of an Anglo-Saxon type "
+"university campus. The campus is distributed over 10 neighbourhoods, in "
+"which the university residences are located, consisting of studios and flats "
+"with double and single rooms, each accommodation has a living room, kitchen "
+"and services. The neighbourhoods are equipped with common areas for study "
+"and recreational and sporting activities, with the presence of TV rooms, "
+"free Wi-Fi services, games rooms and gyms; laundry and bicycle rental "
+"services are also available in every neighbourhood."
 msgstr ""
 "Completa e valorizza l’offerta dell’Università della Calabria e concretizza "
 "l’idea di campus universitario di tipo anglosassone. È distribuito in 10 "
