@@ -831,7 +831,7 @@ class SingleActivityViewHandler(BaseStorageHandler):
 class CdsWebsiteBaseHandler(BaseContentHandler):
     def check_webpath(self):
         if not self.webpath.pk in CMS_WEBPATH_CDS:
-            raise Http404('No study course linked to this webpath')
+            raise Http404('No degree course linked to this webpath')
 
         self.page = Page.objects.filter(is_active=True,
                                         webpath=self.webpath).first()
