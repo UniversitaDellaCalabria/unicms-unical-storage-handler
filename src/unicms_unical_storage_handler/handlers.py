@@ -1108,7 +1108,7 @@ class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
 
         cds_name =  self.cds_json['CdSName']
         cds_cod =  self.cds_json['CdSCod']
-        return redirect('//' + sanitize_path(f'{root.site.domain}/{root.fullpath}/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
+        return redirect('//' + sanitize_path(f'{root.site.domain}/{settings.CMS_PATH_PREFIX}/{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
 
 
 class CdsWebsitesStudyActivityRedirectHandler(CdsWebsitesRedirectHandler):
