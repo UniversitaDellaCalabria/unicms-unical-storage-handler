@@ -176,50 +176,125 @@
         </loading-icon>
 
         <div v-else>
-            <div class="card-columns card-columns-2">
-                <div class="card d-inline-block" v-for="area in cds_areas" v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
-                    <b class="bordeaux-unical-color">
-                        {% if LANGUAGE_CODE == 'it' %}
-                            Area
-                        {% endif %}
-                        <span v-if="area.AreaCds == 'Medico Sanitaria'">
-                            Medico-Sanitaria
-                        </span>
-                        <span v-else>[[ area.AreaCds ]]</span>
-                        {% if LANGUAGE_CODE != 'it' %}
-                            {% trans "Course Area" %}
-                        {% endif %}
-                    </b>
-                    <ul class="list-unstyled mt-3">
-                        <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
-                            <a class="no-color"
-                               {% block cds_area_item_link %}:href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"{% endblock cds_area_item_link %}
-                               {% if request.get_host != host %}target="_blank"{% endif %}>
-                                <span>
-                                <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
-                                <b v-if="item.RegDidId == 21540">
-                                {% if LANGUAGE_CODE != 'it' %}
-                                    (inter-university)
-                                {% else %}
-                                    (interateneo)
-                                {% endif %}
-                                </b>
-                                <span>
-                                    - [[ item.CourseType ]]
-                                </span>
-                                <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
-                                    ([[ item.ErogationMode ]])
-                                </span>
-                                <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
-                                    <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
-                                        <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
+            <div class="d-none d-lg-block">
+                <div class="card-columns card-columns-2">
+                    <div class="card d-inline-block" v-for="area in cds_areas" v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
+                        <b class="bordeaux-unical-color">
+                            {% if LANGUAGE_CODE == 'it' %}
+                                Area
+                            {% endif %}
+                            <span v-if="area.AreaCds == 'Medico Sanitaria'">
+                                Medico-Sanitaria
+                            </span>
+                            <span v-else>[[ area.AreaCds ]]</span>
+                            {% if LANGUAGE_CODE != 'it' %}
+                                {% trans "Course Area" %}
+                            {% endif %}
+                        </b>
+                        <ul class="list-unstyled mt-3">
+                            <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
+                                <a class="no-color"
+                                   {% block cds_area_item_link %}:href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"{% endblock cds_area_item_link %}
+                                   {% if request.get_host != host %}target="_blank"{% endif %}>
+                                    <span>
+                                    <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
+                                    <b v-if="item.RegDidId == 21540">
+                                    {% if LANGUAGE_CODE != 'it' %}
+                                        (inter-university)
+                                    {% else %}
+                                        (interateneo)
+                                    {% endif %}
+                                    </b>
+                                    <span>
+                                        - [[ item.CourseType ]]
                                     </span>
-                                    <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
-                                </span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
+                                    <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
+                                        ([[ item.ErogationMode ]])
+                                    </span>
+                                    <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
+                                        <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                            <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
+                                        </span>
+                                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
+                                    </span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="{{ id }}_accordionDivCds-lft" class="accordion accordion-left-icon d-lg-none">
+
+                <div class="accordion-item"
+                     v-for="(area, index) in cds_areas"
+                     v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
+                    <div class="accordion-header" :id="'{{ id }}_heading-' + index +'-lft'">
+                        <button class="accordion-button"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                :data-bs-target="'#{{ id }}_collapse-' + index +'-lft'"
+                                aria-expanded="false"
+                                :aria-controls="'{{ id }}_collapse-' + index +'-lft'">
+                            <span v-if="area.AreaCds == 'Medico Sanitaria'">
+                                {% if LANGUAGE_CODE == 'it' %}
+                                    Area
+                                {% endif %}
+                                Medico-Sanitaria
+                                {% if LANGUAGE_CODE != 'it' %}
+                                    {% trans "Course Area" %}
+                                {% endif %}
+                            </span>
+                            <span v-else>
+                                {% if LANGUAGE_CODE == 'it' %}
+                                    Area
+                                {% endif %}
+                                [[ area.AreaCds ]]
+                                {% if LANGUAGE_CODE != 'it' %}
+                                    {% trans "Course Area" %}
+                                {% endif %}
+                            </span>
+                        </button>
+                    </div>
+                    <div :id="'{{ id }}_collapse-' + index +'-lft'"
+                         class="accordion-collapse collapse"
+                         data-bs-parent="#{{ id }}_accordionDivCds-lft"
+                         role="region"
+                         :aria-labelledby="'{{ id }}_heading-' + index +'-lft'"
+                         v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
+                        <div class="accordion-body">
+                            <ul class="list-unstyled">
+                                <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
+                                    <a class="no-color"
+                                       {% block cds_area_item_link_mobile %}:href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"{% endblock cds_area_item_link_mobile %}
+                                       {% if request.get_host != host %}target="_blank"{% endif %}>
+                                        <span>
+                                        <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
+                                        <b v-if="item.RegDidId == 21540">
+                                        {% if LANGUAGE_CODE != 'it' %}
+                                            (inter-university)
+                                        {% else %}
+                                            (interateneo)
+                                        {% endif %}
+                                        </b>
+                                        <span>
+                                            - [[ item.CourseType ]]
+                                        </span>
+                                        <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
+                                            ([[ item.ErogationMode ]])
+                                        </span>
+                                        <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
+                                            <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                                <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
+                                            </span>
+                                            <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
+                                        </span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
             </div>

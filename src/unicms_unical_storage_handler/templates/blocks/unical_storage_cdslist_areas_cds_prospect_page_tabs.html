@@ -112,18 +112,18 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                     </div>
                 </div>
             </div>
-            <div id="accordionDivCds-lft" class="accordion accordion-left-icon d-lg-none">
+            <div id="{{ id }}_accordionDivCds-lft" class="accordion accordion-left-icon d-lg-none">
 
                 <div class="accordion-item"
                      v-for="(area, index) in cds_areas"
                      v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
-                    <div class="accordion-header" :id="'heading-' + index +'-lft'">
+                    <div class="accordion-header" :id="'{{ id }}_heading-' + index +'-lft'">
                         <button class="accordion-button"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                :data-bs-target="'#collapse-' + index +'-lft'"
+                                :data-bs-target="'#{{ id }}_collapse-' + index +'-lft'"
                                 aria-expanded="false"
-                                :aria-controls="'collapse-' + index +'-lft'">
+                                :aria-controls="'{{ id }}_collapse-' + index +'-lft'">
                             <span v-if="area.AreaCds == 'Medico Sanitaria'">
                                 {% if LANGUAGE_CODE == 'it' %}
                                     Area
@@ -144,11 +144,11 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                             </span>
                         </button>
                     </div>
-                    <div :id="'collapse-' + index +'-lft'"
+                    <div :id="'{{ id }}_collapse-' + index +'-lft'"
                          class="accordion-collapse collapse"
-                         data-bs-parent="#accordionDivCds-lft"
+                         data-bs-parent="#{{ id }}_accordionDivCds-lft"
                          role="region"
-                         :aria-labelledby="'heading-' + index +'-lft'"
+                         :aria-labelledby="'{{ id }}_heading-' + index +'-lft'"
                          v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
                         <div class="accordion-body">
                             <ul class="list-unstyled">
