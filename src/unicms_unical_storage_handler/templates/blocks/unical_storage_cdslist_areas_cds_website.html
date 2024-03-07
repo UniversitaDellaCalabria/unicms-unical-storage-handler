@@ -29,6 +29,12 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 
 {% endblock cds_area_item_link_mobile %}
 
+{% block website_url_icons %}
+{% endblock website_url_icons %}
+
+{% block website_url_icons_mobile %}
+{% endblock website_url_icons_mobile %}
+
 {% block method_callurl %}
 {% storage_settings_value "CMS_WEBPATH_CDS_OLD" as cms_webpath_cds_old %}
 {% storage_settings_value "CMS_WEBPATH_CDS_MORPH" as cms_webpath_cds_morph %}

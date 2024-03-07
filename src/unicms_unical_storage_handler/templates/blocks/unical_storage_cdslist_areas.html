@@ -12,6 +12,8 @@
 {% get_allowed_website request.get_host as host %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_websites_basepath %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_websites_redirect_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 
@@ -197,26 +199,34 @@
                                    {% block cds_area_item_link %}:href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"{% endblock cds_area_item_link %}
                                    {% if request.get_host != host %}target="_blank"{% endif %}>
                                     <span>
-                                    <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
-                                    <b v-if="item.RegDidId == 21540">
-                                    {% if LANGUAGE_CODE != 'it' %}
-                                        (inter-university)
-                                    {% else %}
-                                        (interateneo)
-                                    {% endif %}
-                                    </b>
-                                    <span>
-                                        - [[ item.CourseType ]]
-                                    </span>
-                                    <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
-                                        ([[ item.ErogationMode ]])
-                                    </span>
-                                    <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
-                                        <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
-                                            <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
+                                        <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
+                                        <b v-if="item.RegDidId == 21540">
+                                        {% if LANGUAGE_CODE != 'it' %}
+                                            (inter-university)
+                                        {% else %}
+                                            (interateneo)
+                                        {% endif %}
+                                        </b>
+                                        <span>
+                                            - [[ item.CourseType ]]
                                         </span>
-                                        <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
-                                    </span>
+                                        <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
+                                            ([[ item.ErogationMode ]])
+                                        </span>
+                                        <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
+                                            <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                                <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
+                                            </span>
+                                            <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
+                                        </span>
+                                        {% block website_url_icons %}
+                                        <a target="_blank" :href="'/{{ cms_path_prefix }}{{ cds_websites_basepath }}/' + item.CdSCod +'/{{ cds_websites_redirect_path }}/'">
+                                            <svg class="icon icon-xs" style="fill: var(--bordeaux_unical)" :aria-labelledby="item.CdsCod + '_label'">
+                                                <title :id="item.CdsCod + '_label'">{% trans "Website" %}</title>
+                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                            </svg>
+                                        </a>
+                                        {% endblock website_url_icons %}
                                     </span>
                                 </a>
                             </li>
@@ -269,26 +279,34 @@
                                        {% block cds_area_item_link_mobile %}:href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.RegDidId +'/'"{% endblock cds_area_item_link_mobile %}
                                        {% if request.get_host != host %}target="_blank"{% endif %}>
                                         <span>
-                                        <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
-                                        <b v-if="item.RegDidId == 21540">
-                                        {% if LANGUAGE_CODE != 'it' %}
-                                            (inter-university)
-                                        {% else %}
-                                            (interateneo)
-                                        {% endif %}
-                                        </b>
-                                        <span>
-                                            - [[ item.CourseType ]]
-                                        </span>
-                                        <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
-                                            ([[ item.ErogationMode ]])
-                                        </span>
-                                        <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
-                                            <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
-                                                <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
+                                            <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
+                                            <b v-if="item.RegDidId == 21540">
+                                            {% if LANGUAGE_CODE != 'it' %}
+                                                (inter-university)
+                                            {% else %}
+                                                (interateneo)
+                                            {% endif %}
+                                            </b>
+                                            <span>
+                                                - [[ item.CourseType ]]
                                             </span>
-                                            <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
-                                        </span>
+                                            <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
+                                                ([[ item.ErogationMode ]])
+                                            </span>
+                                            <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
+                                                <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                                    <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
+                                                </span>
+                                                <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
+                                            </span>
+                                            {% block website_url_icons_mobile %}
+                                            <a target="_blank" :href="'/{{ cms_path_prefix }}{{ cds_websites_basepath }}/' + item.CdSCod +'/{{ cds_websites_redirect_path }}/'">
+                                                <svg class="icon icon-xs" style="fill: var(--bordeaux_unical)" :aria-labelledby="item.CdsCod + '_label'">
+                                                    <title :id="item.CdsCod + '_label'">{% trans "Website" %}</title>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                </svg>
+                                            </a>
+                                            {% endblock website_url_icons_mobile %}
                                         </span>
                                     </a>
                                 </li>
