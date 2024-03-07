@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.http import (HttpResponse,
                          HttpResponseRedirect,
                          Http404)
@@ -95,6 +95,7 @@ CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEB
 CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)
 CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)
 CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS', CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS)
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS', CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS)
 
 CURRENT_YEAR = getattr(settings, 'CURRENT_YEAR', CURRENT_YEAR)
 CDS_WEBSITE_CURRENT_YEAR = getattr(settings, 'CDS_WEBSITE_CURRENT_YEAR', CDS_WEBSITE_CURRENT_YEAR)
@@ -908,19 +909,29 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
                 name = f"{form.cleaned_data['first_name']} {form.cleaned_data['last_name']}"
                 course = f"{self.cds_json['CdSCod']} - {self.cds_json['CdSName']}"
                 try:
-                    send_mail(
-                        subject=f"Richiesta informazioni: {course} - {name}",
-                        message=f"{form.cleaned_data['message']} Email: {form.cleaned_data['email']}",
-                        html_message=f"<b>Utente:</b> {name}<br><b>Email:</b> {form.cleaned_data['email']}<br><b>Telefono:</b> {form.cleaned_data['phone']}<br><br><b>Messaggio:</b><p>{form.cleaned_data['message']}</p><br>",
-                        from_email=settings.EMAIL_SENDER,
-                        recipient_list=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS,
-                        fail_silently=False,
-                    )
+                    subject=f"Richiesta informazioni: {course} - {name}"
+                    plain_text=f"{form.cleaned_data['message']} Email: {form.cleaned_data['email']}"
+                    html_text=f"<b>Utente:</b> {name}<br><b>Email:</b> {form.cleaned_data['email']}<br><b>Telefono:</b> {form.cleaned_data['phone']}<br><br><b>Messaggio:</b><p>{form.cleaned_data['message']}</p><br>"
+                    from_email=settings.EMAIL_SENDER
+                    to=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS
+                    bcc=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS
+                    reply_to=[form.cleaned_data['email']]
+
+                    msg = EmailMultiAlternatives(subject=subject,
+                                                 body=plain_text,
+                                                 from_email=from_email,
+                                                 to=to,
+                                                 bcc=bcc,
+                                                 reply_to=reply_to)
+                    msg.attach_alternative(html_text, "text/html")
+                    msg.send()
+
                     messages.add_message(
                         self.request,
                         messages.SUCCESS,
                         _("Your message has been successfully sent"),
                     )
+
                     self.redirect = True
                 except:
                     messages.add_message(
