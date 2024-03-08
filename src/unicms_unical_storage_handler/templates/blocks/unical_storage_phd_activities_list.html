@@ -230,16 +230,24 @@
                                             <b>[[ item.ReferentStructureName ]]</b>
                                         </span>
                                     </div>
-                                    <div v-else>
+                                    <div class="col-12 col-md-auto" v-if="item.ReferentPhd && item.ActivityType!='Ateneo'">
                                         <span>
                                             [[ labels['ReferentPhd'] ]] >
                                             <b>[[ item.ReferentPhd ]]</b>
                                         </span>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-12 col-md-auto" v-if="item.Cycle">
                                         <span>
                                             [[ labels['Cycle'] ]] >
                                             <b>[[ item.Cycle ]]</b>
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-auto" v-if="item.ActivityTipology">
+                                        <span>
+                                            [[ labels['ActivityTipology'] ]] >
+                                            <b>[[ item.ActivityTipology ]]</b>
                                         </span>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.SSD">
@@ -258,6 +266,25 @@
                                         <span>
                                             [[ labels['CFU'] ]] >
                                             <b>[[ item.CFU ]] </b>
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-auto" v-if="item.MinStudents">
+                                        <span>
+                                            [[ labels['MinStudents'] ]] >
+                                            <b>[[ item.MinStudents ]] </b>
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-auto" v-if="item.MaxStudents">
+                                        <span>
+                                            [[ labels['MaxStudents'] ]] >
+                                            <b>[[ item.MaxStudents ]] </b>
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-auto" v-if="item.FinalTest">
+                                        <span>
+                                            [[ labels['FinalTest'] ]] >
+                                            <b v-if="item.FinalTest">{% trans "Yes" %}</b>
+                                            <b v-else>{% trans "No" %}</b>
                                         </span>
                                     </div>
                                     <div class="col-12 col-md-auto" v-if="item.ActivityStart">

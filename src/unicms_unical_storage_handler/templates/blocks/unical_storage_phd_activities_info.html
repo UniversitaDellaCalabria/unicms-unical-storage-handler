@@ -64,6 +64,18 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-12 col-md-auto" v-if="item.Cycle">
+                                    <span>
+                                        [[ labels['Cycle'] ]] >
+                                        <b>[[ item.Cycle ]]</b>
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.ActivityTipology">
+                                    <span>
+                                        [[ labels['ActivityTipology'] ]] >
+                                        <b>[[ item.ActivityTipology ]]</b>
+                                    </span>
+                                </div>
                                 <div class="col-12 col-md-auto" v-if="item.SSD">
                                     <span>
                                         [[ labels['SSD'] ]] >
@@ -88,14 +100,12 @@
                                         <b>[[ item.MinStudents ]] </b>
                                     </span>
                                 </div>
-
                                 <div class="col-12 col-md-auto" v-if="item.MaxStudents">
                                     <span>
                                         [[ labels['MaxStudents'] ]] >
                                         <b>[[ item.MaxStudents ]] </b>
                                     </span>
                                 </div>
-
                                 <div class="col-12 col-md-auto" v-if="item.FinalTest">
                                     <span>
                                         [[ labels['FinalTest'] ]] >
@@ -104,26 +114,29 @@
                                     </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.ActivityStart">
-                                        <span>
-                                            [[ labels['ActivityStart'] ]] >
-                                            <b>[[ item.ActivityStart ]] </b>
-                                        </span>
-                                    </div><div class="col-12 col-md-auto" v-if="item.ActivityEnd">
-                                        <span>
-                                            [[ labels['ActivityEnd'] ]] >
-                                            <b>[[ item.ActivityEnd ]] </b>
-                                        </span>
-                                    </div><div class="col-12 col-md-auto" v-if="item.ClassroomsTimetable">
-                                        <span>
-                                            [[ labels['ClassroomsTimetable'] ]] >
-                                            <span v-html="item.ClassroomsTimetable"></span>
-                                        </span>
-                                    </div><div class="col-12 col-md-auto" v-if="item.ShowTimetable">
-                                        <span>
-                                            [[ labels['ShowTimetable'] ]] >
-                                            <b>[[ item.ShowTimetable ]] </b>
-                                        </span>
-                                    </div>
+                                    <span>
+                                        [[ labels['ActivityStart'] ]] >
+                                        <b>[[ item.ActivityStart ]] </b>
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.ActivityEnd">
+                                    <span>
+                                        [[ labels['ActivityEnd'] ]] >
+                                        <b>[[ item.ActivityEnd ]] </b>
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.ClassroomsTimetable">
+                                    <span>
+                                        [[ labels['ClassroomsTimetable'] ]] >
+                                        <span v-html="item.ClassroomsTimetable"></span>
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-auto" v-if="item.ShowTimetable">
+                                    <span>
+                                        [[ labels['ShowTimetable'] ]] >
+                                        <b>[[ item.ShowTimetable ]] </b>
+                                    </span>
+                                </div>
 
                             </div>
 
