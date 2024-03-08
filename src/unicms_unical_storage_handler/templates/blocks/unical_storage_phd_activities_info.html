@@ -99,7 +99,8 @@
                                 <div class="col-12 col-md-auto" v-if="item.FinalTest">
                                     <span>
                                         [[ labels['FinalTest'] ]] >
-                                        <b>[[ item.FinalTest ]] </b>
+                                        <b v-if="item.FinalTest">{% trans "Yes" %}</b>
+                                        <b v-else>{% trans "No" %}</b>
                                     </span>
                                 </div>
                                 <div class="col-12 col-md-auto" v-if="item.ActivityStart">
