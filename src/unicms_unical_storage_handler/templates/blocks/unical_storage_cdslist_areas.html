@@ -14,6 +14,7 @@
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_websites_basepath %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_websites_redirect_path %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as cds_websites_prospect_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 
@@ -226,6 +227,12 @@
                                                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
                                             </svg>
                                         </a>
+                                        <a target="_blank" :href="'/{{ cms_path_prefix }}{{ cds_websites_basepath }}/' + item.CdSCod +'/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'">
+                                            <svg class="icon icon-xs" style="fill: var(--bordeaux_unical)" :aria-labelledby="item.CdsCod + '_prospect_label'">
+                                                <title :id="item.CdsCod + '_prospect_label'">{% trans "Course in short" %}</title>
+                                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
+                                            </svg>
+                                        </a>
                                         {% endblock website_url_icons %}
                                     </span>
                                 </a>
@@ -304,6 +311,12 @@
                                                 <svg class="icon icon-xs" style="fill: var(--bordeaux_unical)" :aria-labelledby="item.CdsCod + '_label'">
                                                     <title :id="item.CdsCod + '_label'">{% trans "Website" %}</title>
                                                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                </svg>
+                                            </a>
+                                            <a target="_blank" :href="'/{{ cms_path_prefix }}{{ cds_websites_basepath }}/' + item.CdSCod +'/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'">
+                                                <svg class="icon icon-xs" style="fill: var(--bordeaux_unical)" :aria-labelledby="item.CdsCod + '_prospect_label'">
+                                                    <title :id="item.CdsCod + '_prospect_label'">{% trans "Course in short" %}</title>
+                                                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
                                                 </svg>
                                             </a>
                                             {% endblock website_url_icons_mobile %}
