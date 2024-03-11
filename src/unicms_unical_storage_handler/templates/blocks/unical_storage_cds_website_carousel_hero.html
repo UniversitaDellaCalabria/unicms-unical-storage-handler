@@ -82,7 +82,7 @@ var _{{ cds_cod }}_hero_slider = new Vue({
         this.callWebsite()
     },
     updated() {
-        this.setSlider(div_id='#_{{ cds_cod }}_hero_slider', items=1, single=true)
+        this.setSlider(div_id='#_{{ cds_cod }}_hero_slider')
     },
     methods: {
         callWebsite() {
@@ -94,9 +94,7 @@ var _{{ cds_cod }}_hero_slider = new Vue({
                 }
             )
         },
-        setSlider(div_id, items=1, single=false, timeout={{ carousel_timeout|default:5000 }}) {
-            let tablet_items = 2;
-            if(single) tablet_items = 1;
+        setSlider(div_id, items=1, timeout={{ carousel_timeout|default:5000 }}) {
             var owl_{{ cds_cod }} = $(div_id);
             owl_{{ cds_cod }}.owlCarousel({
                 nav : true, // Show next and prev buttons
@@ -118,11 +116,11 @@ var _{{ cds_cod }}_hero_slider = new Vue({
                     },
                     // breakpoint from 481 up
                     481 : {
-                        items: tablet_items
+                        items: 1
                     },
                     // breakpoint from 1024 up
                     1024 : {
-                        items: items
+                        items: 1
                     }
                 }
               //lazyLoad : true,
