@@ -24,7 +24,6 @@
 
 {% include "includes/unical_storage_loading.html" %}
 
-<script src="{% static 'js/vue-markdown.js' %}"></script>
 
 {% if full_page %}
 <div class="row">
@@ -243,7 +242,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <vue-markdown :emoji=false :source='item.CdSIntro'></vue-markdown>
+                    <span v-html="item.CdSIntro"></span>
                 </div>
 
                 {% if not full_page %}
@@ -614,7 +613,7 @@
 
 <script>
 
-Vue.use(VueMarkdown);
+//Vue.use(VueMarkdown);
 
 var {{ id }} = new Vue({
     el: '#{{ id }}',

@@ -21,8 +21,6 @@
 
 {% include "includes/unical_storage_loading.html" %}
 
-<script src="{% static 'js/vue-markdown.js' %}"></script>
-
 
 <div id="{{ id }}">
 
@@ -49,7 +47,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-6 py-5 pe-lg-5">
-                        <vue-markdown :emoji=false :source='item.CdSIntro'></vue-markdown>
+                        <span v-html="item.CdSIntro"></span>
                     </div>
                     <div class="col-12 col-lg-6 py-5 ps-lg-5">
                         <div class="p-4" style="border: 1px solid #fff">
@@ -115,7 +113,7 @@
 
 
 <script>
-Vue.use(VueMarkdown);
+//Vue.use(VueMarkdown);
 
 var {{ id }} = new Vue({
     el: '#{{ id }}',
