@@ -17,7 +17,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_websites_redirect_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as cds_websites_prospect_path %}
 
-:href="'{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"
+:href="'/{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"
 
 {% endblock cds_area_item_link %}
 
@@ -27,6 +27,6 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_websites_redirect_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as cds_websites_prospect_path %}
 
-:href="'{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"
+:href="'/{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"
 
 {% endblock cds_area_item_link_mobile %}
