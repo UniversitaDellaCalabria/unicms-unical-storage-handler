@@ -66,14 +66,41 @@
             </div>
         </div>
     </div>
+    <div class="item"  v-if="!slides ||slides.length == 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 px-5">
+                    <a href="{{ webpath.parent.fullpath }}{{ cds_base_path }}/{{ cds_cod }}/{{ cds_website_prospect_redirect }}/{{ prospect_page_path }}/" target="_blank" style="text-decoration: none; text-shadow: 2px 2px 3px #000">
+                        <div class="it-hero-text-wrapper unical-hero-text-wrapper">
+                            <p class="h2 d-none d-lg-block lighter text-white font-serif" style="font-style: italic">
+                                [[ CdsName ]]
+                            </p>
+                            <br class="d-none d-lg-block">
+                            <p class="h4 d-none d-lg-block lighter text-white font-monospace text-uppercase">
+                                {% trans "Course in short" %}
+                            </p>
+                            <p class="h3 d-block d-lg-none lighter text-white font-serif" style="font-style: italic">
+                                [[ CdsName ]]
+                            </p>
+                            <br class="d-block d-lg-none">
+                            <p class="h5 d-block d-lg-none lighter text-white font-monospace text-uppercase">
+                                {% trans "Course in short" %}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 var _{{ cds_cod }}_hero_slider = new Vue({
     el: '#_{{ cds_cod }}_hero_slider',
     data() {
         return {
-            slides: {},
+            slides: [],
             AreaCds: null,
+            CdsName: null,
             is_loading: true,
             backgrounds: {{ carousel_backgrounds|safe }}
         }
@@ -99,7 +126,7 @@ var _{{ cds_cod }}_hero_slider = new Vue({
             owl_{{ cds_cod }}.owlCarousel({
                 nav : true, // Show next and prev buttons
                 //rewind: true,
-                loop: true,
+                loop: (this.slides && this.slides.length > 0)?true:false,
                 //slideSpeed : 300,
                 //paginationSpeed : 400,
                 autoplay: true,
@@ -132,16 +159,13 @@ var _{{ cds_cod }}_hero_slider = new Vue({
                 owl_{{ cds_cod }}.trigger('prev.owl.carousel');
             });
 
+            let banner_top = document.querySelector('#_{{ cds_cod }}_hero_slider').offsetTop;
+            let banner_width = document.querySelector('#_{{ cds_cod }}_hero_slider').offsetWidth;
+            let banner_height = document.querySelector('#_{{ cds_cod }}_hero_slider').offsetHeight;
 
-            if(this.slides.length > 0){
-                let banner_top = document.querySelector('#_{{ cds_cod }}_hero_slider').offsetTop;
-                let banner_width = document.querySelector('#_{{ cds_cod }}_hero_slider').offsetWidth;
-                let banner_height = document.querySelector('#_{{ cds_cod }}_hero_slider').offsetHeight;
-
-                document.getElementById("{{ cds_cod }}_customNavigation").style.top = banner_top + (banner_height/2)-24 + "px";
-                document.getElementById("{{ cds_cod }}_customNavigation").style.width = banner_width + "px";
-                document.getElementById("{{ cds_cod }}_customNavigation").style.display = "block"
-            }
+            document.getElementById("{{ cds_cod }}_customNavigation").style.top = banner_top + (banner_height/2)-24 + "px";
+            document.getElementById("{{ cds_cod }}_customNavigation").style.width = banner_width + "px";
+            document.getElementById("{{ cds_cod }}_customNavigation").style.display = "block"
         },
     },
 })
