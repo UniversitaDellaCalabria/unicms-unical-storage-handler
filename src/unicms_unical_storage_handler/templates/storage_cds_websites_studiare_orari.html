@@ -22,8 +22,7 @@
 {% block extra_head %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/unicms_storage_calendar.css' %}" type="text/css">
-<!-- Link VCalendar Javascript (Plugin automatically installed) -->
-<script src="https://unpkg.com/v-calendar"></script>
+<script src="{% static 'js/v-calendar.2.4.0.js' %}"></script>
 <style>
 .calendar-hidden .vc-weeks { display: none; }
 </style>
