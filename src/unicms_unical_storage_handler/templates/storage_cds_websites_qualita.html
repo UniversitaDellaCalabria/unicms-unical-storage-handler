@@ -1,0 +1,213 @@
+{% extends "pages/unical_cds_website.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% load unicms_pages %}
+
+{% load unicms_contexts %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<!-- SEO  -->
+{% block page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_QUALITA_LABEL" as page_title %}
+{{ page_title }} - {{ block.super }}
+{% endblock page_title %}
+
+
+{% block container %}
+
+<script src="{% static 'js/vue-markdown.js' %}"></script>
+
+
+{% get_current_language as LANGUAGE_CODE %}
+{% breadcrumbs webpath=webpath leaf=handler %}
+
+{% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
+{% storage_settings_value "CMS_STORAGE_PENTAHO_API" as pentaho_api %}
+{% storage_settings_value "CMS_STORAGE_PENTAHO_ISODID_API" as pentaho_isodid_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_QUALITA_LABEL" as page_title %}
+{% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% storage_settings_value "PENTAHO_ISODID_REPORT_START_YEAR" as pentaho_isodid_start_year %}
+
+{% include "includes/unical_storage_loading.html" %}
+
+
+<div class="col-12 py-5 bd-content">
+    <div>
+        {% block centered_container %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <p class="h1 lighter">{{ page_title }}</p>
+                        <div class="mt-5" id="_{{ cds_cod }}">
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card-wrapper card-space">
+                                        <div class="card card-bg no-after">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm form-group mb-0">
+                                                        <label for="year_input">
+                                                            {% trans "Year" %}
+                                                        </label>
+                                                        <div class="mt-5">
+                                                            <select id="year_input"
+                                                                    title="{% trans 'Year' %}"
+                                                                    name="year_input"
+                                                                    class="form-control"
+                                                                    @change="callURL($event.target.value)">
+                                                                    <option v-for="y in range({{ pentaho_isodid_start_year }}, {{ current_year|add:'1' }})" :value="y" :selected="y == active_year">
+                                                                      [[ y ]]
+                                                                  </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <loading-icon
+                                v-if="is_loading"
+                                :loader_source="loader_source">
+                            </loading-icon>
+                            <div v-else>
+                                <div class="row" v-if="data">
+                                    <div class="col-12">
+                                        <div v-for="(value, key) in data">
+                                            <p class="h4 lighter mt-5">[[ key ]]</p>
+                                            <div :id="'chart-'+slugify(key)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <div class="alert alert-info" role="alert">
+                                      {% trans "Resource not found" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 offset-lg-1">
+                        {% include "includes/unical_storage_cds_website_right_static.html" %}
+                        <hr style="color: transparent" class="my-3" />
+                        {% include "includes/unical_storage_cds_website_right_contacts.html" %}
+                        <hr style="color: transparent" class="my-3" />
+                        {% include "includes/unical_storage_cds_website_right_links.html" %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    Vue.use(VueMarkdown);
+
+    var _{{ cds_cod }} = new Vue({
+        el: '#_{{ cds_cod }}',
+        data() {
+            return {
+                data: {},
+                active_year: {{ current_year }},
+                url: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
+                is_loading: true,
+                loader_source: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
+            }
+        },
+        mounted() {
+            this.callURL();
+        },
+        //updated() {
+            //this.drawCharts();
+        //},
+        methods: {
+            slugify(str) {
+                  return String(str)
+                    .normalize('NFKD') // split accented characters into their base characters and diacritical marks
+                    .replace(/[\u0300-\u036f]/g, '') // remove all the accents, which happen to be all in the \u03xx UNICODE block.
+                    .trim() // trim leading or trailing whitespace
+                    .toLowerCase() // convert to lowercase
+                    .replace(/[^a-z0-9 -]/g, '') // remove non-alphanumeric characters
+                    .replace(/\s+/g, '-') // replace spaces with hyphens
+                    .replace(/-+/g, '-'); // remove consecutive hyphens
+            },
+            async callURL(year=null) {
+                this.is_loading = true
+                this.data = {}
+                let url = this.url
+                if(year) {
+                    this.active_year = year
+                    url = url + '?year=' + year
+                }
+                await axios
+                    .get(url)
+                    .then(response => {
+                        this.data = response.data.data
+                        this.is_loading = false
+                    })
+                this.drawCharts()
+            },
+            drawCharts() {
+                for(let key in this.data){
+                    let series = []
+                    for(let serie_key in this.data[key].data){
+                        series.push({"name": serie_key,
+                                     "data": this.data[key].data[serie_key]
+                                     })
+                    }
+                    var options = {
+                        series: series,
+                        chart: {
+                            type: 'bar',
+                            height: 430
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: true,
+                                dataLabels: {
+                                    position: 'top',
+                                },
+                            }
+                        },
+                        dataLabels: {
+                            enabled: true,
+                            offsetX: -6,
+                            style: {
+                                fontSize: '12px',
+                                colors: ['#fff']
+                          }
+                        },
+                        stroke: {
+                            show: true,
+                            width: 1,
+                            colors: ['#fff']
+                        },
+                        tooltip: {
+                            shared: true,
+                            intersect: false
+                        },
+                        xaxis: {
+                            categories: this.data[key].labels,
+                        },
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#chart-"+this.slugify(key)), options);
+                    chart.render();
+                }
+            },
+            range : function (start, end) {
+                return Array(end - start).fill().map((val, i) => end - i - 1)
+            }
+        }
+    })
+</script>
+{% endblock container %}

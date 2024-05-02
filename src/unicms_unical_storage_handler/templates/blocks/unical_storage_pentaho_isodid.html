@@ -1,0 +1,161 @@
+{% load static %}
+
+{% load i18n %}
+
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% random_id uid as id %}
+{% include "includes/unical_storage_loading.html" %}
+
+{% get_allowed_website request.get_host as host %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
+{% storage_settings_value "CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH" as spinoff_prefix %}
+{% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<div id="{{ id }}">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card-wrapper card-space">
+                <div class="card card-bg no-after">
+                    <div class="card-body">
+                        <div class="col-sm form-group mb-0">
+                            <div>
+                                <label for="{{ id }}_academic_year_input">
+                                    {% trans "Year of registration" %}
+                                </label>
+                                <div class="w-30 mt-5">
+                                    <select id="{{ id }}_academic_year_input"
+                                            title="{% trans 'Choose an option' %}"
+                                            name="{{ id }}_academic_year_input"
+                                            class="form-control">
+                                      <option value="">
+                                          - {% trans 'Choose an option' %} -
+                                      </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <loading-icon
+        v-if="is_loading"
+        :loader_source="loader_source">
+    </loading-icon>
+
+    <div v-else>
+        <div class="row">
+            <div class="col-12">
+                <div v-for="(value, key) in data">
+                    <p class="h3">[[ key ]]</p>
+                    <div :id="'chart-'+slugify(key)">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var {{ id }} = new Vue({
+        el: '#{{ id }}',
+        data() {
+            return {
+                data: {},
+                //url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
+                url: 'http://localhost:9000/api/ricerca/pentaho/isodid/?cdscod=0774&year=2023',
+                is_loading: true,
+                loader_source: '{{ url }}',
+            }
+        },
+        mounted() {
+            this.callURL();
+        },
+        updated() {
+            this.drawCharts();
+        },
+        methods: {
+            slugify(str) {
+                  return String(str)
+                    .normalize('NFKD') // split accented characters into their base characters and diacritical marks
+                    .replace(/[\u0300-\u036f]/g, '') // remove all the accents, which happen to be all in the \u03xx UNICODE block.
+                    .trim() // trim leading or trailing whitespace
+                    .toLowerCase() // convert to lowercase
+                    .replace(/[^a-z0-9 -]/g, '') // remove non-alphanumeric characters
+                    .replace(/\s+/g, '-') // replace spaces with hyphens
+                    .replace(/-+/g, '-'); // remove consecutive hyphens
+            },
+            callURL() {
+                axios
+                    .get(this.url)
+                    .then(response => {
+                        this.data = response.data.data
+                        this.is_loading = false
+                    })
+            },
+            drawCharts() {
+                for(let key in this.data){
+                    let series = []
+                    for(let serie_key in this.data[key].data){
+                        series.push({"name": serie_key,
+                                     "data": this.data[key].data[serie_key]
+                                     })
+                    }
+                    console.log(series)
+                    var options = {
+                        series: series,
+                        chart: {
+                            type: 'bar',
+                            height: 430
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: true,
+                                dataLabels: {
+                                    position: 'top',
+                                },
+                            }
+                        },
+                        dataLabels: {
+                            enabled: true,
+                            offsetX: -6,
+                            style: {
+                                fontSize: '12px',
+                                colors: ['#fff']
+                          }
+                        },
+                        stroke: {
+                            show: true,
+                            width: 1,
+                            colors: ['#fff']
+                        },
+                        tooltip: {
+                            shared: true,
+                            intersect: false
+                        },
+                        xaxis: {
+                            categories: this.data[key].labels,
+                        },
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#chart-"+this.slugify(key)), options);
+                    chart.render();
+                }
+            },
+        }
+    })
+</script>
