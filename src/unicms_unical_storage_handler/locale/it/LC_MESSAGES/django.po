@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-02 11:36+0200\n"
-"PO-Revision-Date: 2024-05-02 11:36+0200\n"
+"POT-Creation-Date: 2024-05-03 13:49+0200\n"
+"PO-Revision-Date: 2024-05-03 13:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -232,8 +232,8 @@ msgid "Brochure"
 msgstr ""
 
 #: settings.py:438
-msgid "Quality"
-msgstr "Qualità"
+msgid "ISO-Did survey results"
+msgstr "Risultati indagine ISO-Did"
 
 #: settings.py:439 templates/storage_cds_websites_corso.html:237
 #: templates/storage_cds_websites_corso.html:382
@@ -754,8 +754,8 @@ msgstr "Tipologia"
 #: templates/blocks/unical_storage_publications_list.html:38
 #: templates/blocks/unical_storage_teacherstudyactivities.html:29
 #: templates/includes/unical_storage_cds_website_studyplan_accordion.html:27
-#: templates/storage_cds_websites_qualita.html:62
-#: templates/storage_cds_websites_qualita.html:66
+#: templates/storage_cds_websites_isodid.html:57
+#: templates/storage_cds_websites_isodid.html:61
 #: templates/storage_cds_websites_studiare.html:320
 #: templates/storage_cds_websites_studiare.html:344
 msgid "Year"
@@ -1290,7 +1290,7 @@ msgid "Alert"
 msgstr "Attenzione"
 
 #: templates/includes/unical_storage_empty.html:6
-#: templates/storage_cds_websites_qualita.html:93
+#: templates/storage_cds_websites_isodid.html:93
 msgid "Resource not found"
 msgstr "Risorsa non trovata"
 
@@ -1830,6 +1830,9 @@ msgstr "Inserisci CaPTCHA qui"
 #: templates/widgets/captcha.html:54
 msgid "Enter the value represented in the CaPTCHA image"
 msgstr "Inserisci il valore rappresentato nella immagine CaPTCHA"
+
+#~ msgid "Quality"
+#~ msgstr "Qualità"
 
 #~ msgid "University Activities"
 #~ msgstr "Attività di ateneo"

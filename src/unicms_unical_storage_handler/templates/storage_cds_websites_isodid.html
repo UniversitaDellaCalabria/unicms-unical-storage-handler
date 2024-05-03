@@ -14,7 +14,7 @@
 
 <!-- SEO  -->
 {% block page_title %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_QUALITA_LABEL" as page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL" as page_title %}
 {{ page_title }} - {{ block.super }}
 {% endblock page_title %}
 
@@ -30,7 +30,7 @@
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_PENTAHO_API" as pentaho_api %}
 {% storage_settings_value "CMS_STORAGE_PENTAHO_ISODID_API" as pentaho_isodid_api %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_QUALITA_LABEL" as page_title %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 {% storage_settings_value "PENTAHO_ISODID_REPORT_START_YEAR" as pentaho_isodid_start_year %}
