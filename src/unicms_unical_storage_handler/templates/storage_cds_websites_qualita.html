@@ -108,7 +108,7 @@
         {% endblock %}
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{% static 'js/apexcharts.3.49.0.js' %}"></script>
 <script>
     Vue.use(VueMarkdown);
 
@@ -157,6 +157,41 @@
                 this.drawCharts()
             },
             drawCharts() {
+                var options = {
+                    series: [],
+                    chart: {
+                        type: 'bar',
+                        height: 430
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                            dataLabels: {
+                                position: 'top',
+                            },
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        offsetX: -6,
+                        style: {
+                            fontSize: '12px',
+                            colors: ['#fff']
+                      }
+                    },
+                    stroke: {
+                        show: true,
+                        width: 1,
+                        colors: ['#fff']
+                    },
+                    tooltip: {
+                        shared: true,
+                        intersect: false
+                    },
+                    xaxis: {
+                        categories: [],
+                    },
+                };
                 for(let key in this.data){
                     let series = []
                     for(let serie_key in this.data[key].data){
@@ -164,42 +199,8 @@
                                      "data": this.data[key].data[serie_key]
                                      })
                     }
-                    var options = {
-                        series: series,
-                        chart: {
-                            type: 'bar',
-                            height: 430
-                        },
-                        plotOptions: {
-                            bar: {
-                                horizontal: true,
-                                dataLabels: {
-                                    position: 'top',
-                                },
-                            }
-                        },
-                        dataLabels: {
-                            enabled: true,
-                            offsetX: -6,
-                            style: {
-                                fontSize: '12px',
-                                colors: ['#fff']
-                          }
-                        },
-                        stroke: {
-                            show: true,
-                            width: 1,
-                            colors: ['#fff']
-                        },
-                        tooltip: {
-                            shared: true,
-                            intersect: false
-                        },
-                        xaxis: {
-                            categories: this.data[key].labels,
-                        },
-                    };
-
+                    options['series'] = series
+                    options['xaxis']['categories'] = this.data[key].labels
                     var chart = new ApexCharts(document.querySelector("#chart-"+this.slugify(key)), options);
                     chart.render();
                 }
