@@ -85,6 +85,13 @@
                                             <p class="h4 lighter mt-5">[[ key ]]</p>
                                             <div :id="'chart-'+slugify(key)">
                                             </div>
+                                            <div v-if="data[key].legenda" class="mt-3">
+                                                <ul>
+                                                    <li v-for="(value, name, index) in data[key].legenda">
+                                                        <b>[[ name ]]</b>: [[ value ]]
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
