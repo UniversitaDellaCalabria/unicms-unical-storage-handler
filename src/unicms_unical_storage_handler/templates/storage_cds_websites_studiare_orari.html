@@ -426,8 +426,7 @@
                 )
             },
             choseAF(af_string){
-                let af_array = af_string.split("-")
-                this.chosen_af_cod = af_array[0]
+                this.chosen_af_cod = af_string.substring(0, af_string.indexOf('-'))
             },
             callStudyPlans(regdid=null) {
                 if(!regdid) regdid = this.regdidid

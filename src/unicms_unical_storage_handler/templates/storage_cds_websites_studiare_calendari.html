@@ -312,9 +312,8 @@
                     })
             },
             choseAF(af_string){
-                let af_array = af_string.split("-")
-                this.chosen_af_cod = af_array[0]
-                this.chosen_af_name = af_array[1]
+                this.chosen_af_cod = af_string.substring(0, af_string.indexOf('-'))
+                this.chosen_af_name = af_string.substring(af_string.indexOf('-')+1)
             },
             changeAcademicYear(year){
                 this.academic_year = year
