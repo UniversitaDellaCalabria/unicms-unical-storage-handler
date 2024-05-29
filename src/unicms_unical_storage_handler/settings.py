@@ -462,6 +462,12 @@ CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = {
             # 'Guida Esse3',
             # 'https://unical.esse3.cineca.it/Home.do'
         # )
+        # '0773': [
+            # (
+                # 'Guida corso',
+                # 'https://unical.esse3.cineca.it/Home.do'
+            # )
+        # ],
     # ],
     # 'en': [
         # (
@@ -471,7 +477,13 @@ CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = {
         # (
             # 'Esse3 guide',
             # '#'
-        # )
+        # ),
+        # '0773': [
+            # (
+                # 'Course guide',
+                # 'https://unical.esse3.cineca.it/Home.do'
+            # )
+        # ],
     # ]
 }
 

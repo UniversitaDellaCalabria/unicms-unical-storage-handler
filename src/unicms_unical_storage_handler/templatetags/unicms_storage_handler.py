@@ -14,6 +14,8 @@ register = template.Library()
 
 ALLOWED_UNICMS_SITES = getattr(settings, 'ALLOWED_UNICMS_SITES',
                                app_settings.ALLOWED_UNICMS_SITES)
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS',
+                                                app_settings.CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS)
 
 
 @register.simple_tag
@@ -135,3 +137,16 @@ def get_cds_website_morph(cds_cod):
                         'CMS_WEBPATH_CDS_MORPH',
                         app_settings.CMS_WEBPATH_CDS_MORPH)
     return cds_morph.get(cds_cod, [])
+
+
+@register.simple_tag
+def get_prospect_docs(lang, cds):
+    result = []
+    for doc in CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS.get(lang, []):
+        if isinstance(doc, tuple):
+            result.append(doc)
+            continue
+        cds_docs = doc.get(cds, [])
+        for cds_doc in cds_docs:
+            result.append(cds_doc)
+    return result

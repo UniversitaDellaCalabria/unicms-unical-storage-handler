@@ -51,7 +51,6 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL" as page_titlke %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS" as collapse_fields %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2" as collapse_fields_2 %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS" as course_docs %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_website_redirect_path %}
 {% storage_settings_value "CDS_STORAGE_CDS_WEBSITE_DEFAULT_IMAGE" as cds_website_default_image %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
@@ -153,7 +152,8 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                             </div>
                                         </div>
                                     </div>
-                                    {% if course_docs|get_value:LANGUAGE_CODE %}
+                                    {% get_prospect_docs LANGUAGE_CODE cds_cod as docs %}
+                                    {% if docs %}
                                     <div class="accordion-item">
                                         <h2 class="accordion-header " id="heading4l">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4l" aria-expanded="false" aria-controls="collapse4l">
@@ -166,7 +166,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                         <div id="collapse4l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading4l">
                                             <div class="accordion-body">
                                                 <ul>
-                                                {% for doc in course_docs|get_value:LANGUAGE_CODE %}
+                                                {% for doc in docs %}
                                                     <li>
                                                         {% if doc.1 %}
                                                         <a href="{{ doc.1 }}" target="_blank" title="{{ doc.0 }}">
