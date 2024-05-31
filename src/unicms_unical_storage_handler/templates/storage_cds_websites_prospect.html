@@ -103,7 +103,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                 <div class="accordion accordionUnicalRightIcon" id="accordionExampleLft">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="heading1l">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1l" aria-expanded="false" aria-controls="collapse1l">
+                                            <button class="py-2 accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1l" aria-expanded="false" aria-controls="collapse1l">
                                                 <svg class="me-4 icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-files"></use>
                                                 </svg>
@@ -120,7 +120,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                     </div>
                                     <div class="accordion-item">
                                         <h2 class="accordion-header " id="heading2l">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2l" aria-expanded="false" aria-controls="collapse2l">
+                                            <button class="py-2 accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2l" aria-expanded="false" aria-controls="collapse2l">
                                                 <svg class="me-4 icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-copy"></use>
                                                 </svg>
@@ -137,7 +137,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                     </div>
                                     <div class="accordion-item">
                                         <h2 class="accordion-header " id="heading3l">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3l" aria-expanded="false" aria-controls="collapse3l">
+                                            <button class="py-2 accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3l" aria-expanded="false" aria-controls="collapse3l">
                                                 <svg class="me-4 icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
                                                 </svg>
@@ -187,7 +187,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                     <div class="accordion-item" style="background: var(--bordeaux_unical)">
                                         <h2 class="accordion-header" id="heading5l">
                                             <a href="#requestInfoForm" style="text-decoration: none !important" title="{% trans 'request info' %}">
-                                                <button class="accordion-button no-icon" type="button" aria-expanded="false">
+                                                <button class="py-1 accordion-button no-icon" type="button" aria-expanded="false">
                                                     <svg class="me-4 icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
                                                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
                                                     </svg>
@@ -198,6 +198,44 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                             </a>
                                         </h2>
                                     </div>
+
+                                    {% if cds_webpath %}
+                                    <div class="accordion-item mt-2" style="background: var(--bordeaux_unical)">
+                                        <h2 class="accordion-header" id="heading5l">
+                                            <a href="{{ cds_webpath.get_site_path }}" target="_blank" style="text-decoration: none !important" title="{% trans 'Course website' %}">
+                                                <button class="py-1 accordion-button no-icon" type="button" aria-expanded="false">
+                                                    <svg class="me-4 icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
+                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-external-link"></use>
+                                                    </svg>
+                                                    <p style="text-transform: uppercase;" class="h6 m-0 text-white">
+                                                        <b>{% trans "Course website" %}</b>
+                                                    </p>
+                                                </button>
+                                            </a>
+                                        </h2>
+                                    </div>
+                                    {% else %}
+                                    {% get_cds_website_morph cds_cod as old_cds_list %}
+                                    {% for old_cds_cod in old_cds_list %}
+                                        {% get_cds_website_root_path cds_cod=old_cds_cod as old_webpath %}
+                                        {% if old_webpath %}
+                                        <div class="accordion-item mt-2" style="background: var(--bordeaux_unical)">
+                                            <h2 class="accordion-header" id="heading5l">
+                                                <a href="{{ old_webpath.get_site_path }}" target="_blank" style="text-decoration: none !important" title="{% trans 'Course website' %}">
+                                                    <button class="py-1 accordion-button no-icon" type="button" aria-expanded="false">
+                                                        <svg class="me-4 icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
+                                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-external-link"></use>
+                                                        </svg>
+                                                        <p style="text-transform: uppercase;" class="h6 m-0 text-white">
+                                                            <b>{% trans "Course website" %}</b>
+                                                        </p>
+                                                    </button>
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -839,50 +877,8 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
-
-        {% if cds_webpath %}
-        <div class="mt-3 pt-5">
-            <div class="container">
-                <p class="h3 text-center">
-                    {% trans "If you want more information on the Degree Course" %}
-                </p>
-                <p class="text-center my-4">
-                    {% trans "For details on the contents of individual courses, training periods abroad, teachers, tutors, study rooms, laboratories, research centres, other structures and socialization initiatives, visit the Study Program website." %}
-                </p>
-                <p class="text-center">
-                    <a href="{{ cds_webpath.get_site_path }}" target="_blank" class="btn btn-secondary">
-                        {% trans "Go to the institutional site" %}
-                    </a>
-                </p>
-            </div>
-        </div>
-        {% else %}
-        {% get_cds_website_morph cds_cod as old_cds_list %}
-        {% for old_cds_cod in old_cds_list %}
-            {% get_cds_website_root_path cds_cod=old_cds_cod as old_webpath %}
-            {% if old_webpath %}
-            <div class="mt-3 pt-5">
-                <div class="container">
-                    <p class="h3 text-center">
-                        {% trans "If you want more information on the Degree Course" %}
-                    </p>
-                    <p class="text-center my-4">
-                        {% trans "For details on the contents of individual courses, training periods abroad, teachers, tutors, study rooms, laboratories, research centres, other structures and socialization initiatives, visit the Study Program website." %}
-                    </p>
-                    <p class="text-center">
-                        <a href="{{ old_webpath.get_site_path }}" target="_blank" class="btn btn-secondary">
-                            {% trans "Go to the institutional site" %}
-                        </a>
-                    </p>
-                </div>
-            </div>
-            {% endif %}
-        {% endfor %}
-        {% endif %}
-
     </div>
 </div>
 
