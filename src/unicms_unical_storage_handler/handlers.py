@@ -142,7 +142,7 @@ class BaseStorageHandler(BaseContentHandler):
 
     @property
     def get_base_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -189,7 +189,7 @@ class CdSInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -291,7 +291,7 @@ class TeacherInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -346,7 +346,7 @@ class AddressbookInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -397,7 +397,7 @@ class StructureInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -438,7 +438,7 @@ class LaboratoryInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -550,7 +550,7 @@ class PublicationsInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -612,7 +612,7 @@ class SpinoffInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -656,7 +656,7 @@ class ProjectsInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -702,7 +702,7 @@ class HighFormationMastersInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
@@ -750,7 +750,7 @@ class PhdActivitiesInfoViewHandler(BaseStorageHandler):
 
     @property
     def parent_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PHD_ACTIVITIES_VIEW_PREFIX_PATH}/'
+        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PHD_ACTIVITIES_VIEW_PREFIX_PATH}/'
         return sanitize_path(url)
 
     @property
