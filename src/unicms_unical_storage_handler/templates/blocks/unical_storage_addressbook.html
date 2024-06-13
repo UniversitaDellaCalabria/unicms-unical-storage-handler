@@ -214,10 +214,12 @@
                                     {% endcomment %}
                                     <div class="col-12 align-left">
                                         <span>
-                                            <a class="no-color" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ID +'/'">
+                                            <a v-if="item.Email.length > 0" class="no-color" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.Email[0].split('@')[0] +'/'">
                                                 <b>[[ item.Name ]]</b>
                                             </a>
-
+                                            <a v-else class="no-color" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ID +'/'">
+                                                <b>[[ item.Name ]]</b>
+                                            </a>
                                             {% comment %}
                                             {% block structure %}
                                             <span v-if="item.StructureTypeCOD != '000'">

@@ -78,8 +78,9 @@
                             <div class="form-group mb-0">
 
                                 <!-- Academic year & language -->
-                            {% block filters_phd %}
                                 <div class="row">
+
+                                    {% block filters_phd %}
                                     <loading-icon
                                         v-if="is_loading_phd"
                                         :loader_source="loader_source_phd">
@@ -107,7 +108,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     {% endblock filters_phd %}
 
                                     {% block filters_structures %}
@@ -137,6 +137,36 @@
                                         </div>
                                     </div>
                                     {% endblock filters_structures %}
+                                </div>
+                                <div class="row">
+                                    {% block typology %}
+                                    <loading-icon
+                                        v-if="is_loading_typology"
+                                        :loader_source="loader_source_typologies">
+                                    </loading-icon>
+                                    <div class="col-sm form-group mb-0" v-else>
+                                        <div>
+                                            <label for="{{ id }}_ssd_input">
+                                                {% trans "Typology" %}
+                                            </label>
+                                            <div class="w-30 mt-5">
+                                                <select id="{{ id }}_typology_input"
+                                                        title="{% trans 'Choose an option' %}"
+                                                        name="{{ id }}_typology_input"
+                                                        class="form-control"
+                                                        @change="{{ id }}.search()">
+                                                    <option value="">- {% trans 'Choose an option' %} -</option>
+                                                    <option v-for="item in typology_filter"
+                                                            :value="item.ID"
+                                                            :selected="item.ID == selected_typology_id">
+                                                        [[ item.Name ]]
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endblock typology %}
+
                                     {% block ssd %}
                                     <loading-icon
                                         v-if="is_loading_ssd"
@@ -168,7 +198,7 @@
                                     {% block cycle %}
                                     <loading-icon
                                         v-if="is_loading_cycle"
-                                        :loader_source="loader_source_cycle">
+                                        :loader_source="loader_source_cycles">
                                     </loading-icon>
                                     <div class="col-sm form-group mb-0" v-else>
                                         <div>
@@ -344,6 +374,10 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
     let cycle = document.getElementById('{{ id }}_cycle_input')
     if (cycle && cycle.value) dict['cycle'] = cycle.value
 
+    // typology
+    let typology = document.getElementById('{{ id }}_typology_input')
+    if (typology && typology.value) dict['typology'] = typology.value
+
     // teacher
     let teacher = document.getElementById('{{ id }}_teacher')
     if (teacher && teacher.value) dict['teacher'] = teacher.value
@@ -360,8 +394,6 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
     let ssd = document.getElementById('{{ id }}_ssd_input')
     if (ssd && ssd.value) dict['ssd'] = ssd.value
 
-
-
     setItemInSession("{{ id }}", dict)
 
     return dict
@@ -377,10 +409,12 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_api_root "CMS_STORAGE_REF_STRUCTURES_API" as structures_api %}
 {% storage_api_root "CMS_STORAGE_REF_SSD_API" as ssd_api %}
 {% storage_api_root "CMS_STORAGE_REF_CYCLE_API" as cycles_api %}
+{% storage_api_root "CMS_STORAGE_PHD_ACTIVITY_TYPOLOGIES_API" as typologies_api %}
 
 initial_year: {{ id }}_get_param('year') || '',
 
 selected_cycle_id: this.getItemFromSession("{{ id }}", 'cycle'),
+selected_typology_id: this.getItemFromSession("{{ id }}", 'typology'),
 selected_ssd_id: this.getItemFromSession("{{ id }}", 'ssd'),
 selected_structure_id: this.getItemFromSession("{{ id }}", 'structure'),
 selected_phd_id: this.getItemFromSession("{{ id }}", 'phd'),
@@ -391,16 +425,19 @@ is_loading_phd: true,
 is_loading_structures: true,
 is_loading_ssd: true,
 is_loading_cycle: true,
+is_loading_typology: true,
 
 loader_source_structures: '{{ structures_api }}?lang={{ LANGUAGE_CODE }}',
 loader_source_phd: '{{ phd_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 loader_source_ssd: '{{ ssd_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 loader_source_cycles: '{{ cycles_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
+loader_source_typologies: '{{ typologies_api }}?lang={{ LANGUAGE_CODE }}&page_size=100',
 
 structures_filter: [],
 phd_filter: [],
 ssd_filter: [],
 cycle_filter: [],
+typology_filter: [],
 {% endblock extra_data %}
 
 {% block extra_mounted %}
@@ -408,6 +445,7 @@ this.callStructures();
 this.callPhD();
 this.callSSD();
 this.callCycles();
+this.callTypologies();
 
 this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
 {% endblock extra_mounted %}
@@ -467,6 +505,14 @@ callCycles() {
         .then(response => {
             this.cycle_filter = response.data;
             this.is_loading_cycle = false
+        })
+},
+callTypologies() {
+    axios
+        .get(this.loader_source_typologies)
+        .then(response => {
+            this.typology_filter = response.data.results;
+            this.is_loading_typology = false
         })
 },
 {% endblock extra_methods %}
