@@ -20,6 +20,7 @@
 {% storage_settings_value "ADDRESSBOOK_INFO_NOT_SHOW" as fields_to_hide %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 {% storage_settings_value "ADDRESSBOOK_SPECIAL_ROLES" as addressbook_special_roles %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_FRIENDLY_URL_MAIN_EMAIL_DOMAIN" as addressbook_friendly_main_url_email_domain %}
 
 
 <div id="{{ id }}">
@@ -100,8 +101,10 @@
                             </ul>
                         </td>
                         <td v-else>
-
-                            <a v-if="item.Teacher == 1 && name == 'Teacher'"
+                            <a v-if="item.Teacher == 1 && name == 'Teacher' && item.Email && item.Email.length > 0 && item.Email[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.Email[0].split('@')[0] +'/'">
+                                {% trans "Link" %}
+                            </a>
+                            <a v-else-if="item.Teacher == 1 && name == 'Teacher'"
                                :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teachers_prefix }}/' + item.ID +'/'">
                                 {% trans "Link" %}
                             </a>

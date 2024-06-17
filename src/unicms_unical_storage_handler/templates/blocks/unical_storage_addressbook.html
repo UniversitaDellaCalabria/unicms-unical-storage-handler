@@ -10,12 +10,15 @@
 {% get_allowed_website request.get_host as host %}
 
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teachers_prefix %}
 {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_FRIENDLY_URL_MAIN_EMAIL_DOMAIN" as addressbook_friendly_main_url_email_domain %}
 
 {% block storage_block_top %}
+
 {% include "blocks/includes/unical_storage_check.html" %}
 {% endblock storage_block_top %}
 
@@ -214,7 +217,10 @@
                                     {% endcomment %}
                                     <div class="col-12 align-left">
                                         <span>
-                                            <a class="no-color" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ID +'/'">
+                                            <a v-if="item.Email && item.Email.length > 0 && item.Email[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" class="no-color" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.Email[0].split('@')[0] +'/'">
+                                                <b>[[ item.Name ]]</b>
+                                            </a>
+                                            <a v-else class="no-color" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ID +'/'">
                                                 <b>[[ item.Name ]]</b>
                                             </a>
                                             {% comment %}

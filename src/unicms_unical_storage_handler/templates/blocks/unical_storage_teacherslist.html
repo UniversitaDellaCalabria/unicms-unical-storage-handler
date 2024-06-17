@@ -12,6 +12,7 @@
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
 {% storage_settings_value "CONTRACT_TEACHER_ROLES" as contract_teacher_roles %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_FRIENDLY_URL_MAIN_EMAIL_DOMAIN" as addressbook_friendly_main_url_email_domain %}
 
 
 <div id="{{ id }}">
@@ -129,7 +130,10 @@
                 <tbody>
                     <tr v-for="item in items.results">
                         <td>
-                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + item.TeacherID +'/'">
+                            <a v-if="item.Email && item.Email.length > 0 && item.Email[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + item.Email[0].split('@')[0] +'/'">
+                                [[ item.TeacherName ]]
+                            </a>
+                            <a v-else :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + item.TeacherID +'/'">
                                 [[ item.TeacherName ]]
                             </a>
                         </td>

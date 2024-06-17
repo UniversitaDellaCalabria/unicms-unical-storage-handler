@@ -22,6 +22,7 @@
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_API" as cds_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as redirect_prefix %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_FRIENDLY_URL_MAIN_EMAIL_DOMAIN" as addressbook_friendly_main_url_email_domain %}
 
 <div id="{{ id }}">
 
@@ -81,7 +82,10 @@
                                     [[ coverage.ActivityType ]]
                                     (h. [[ coverage.Hours ]])
                                     -
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + coverage.StudyActivityTeacherID +'/'" v-if="coverage.StudyActivityTeacherID">
+                                    <a v-if="coverage.StudyActivityTeacherID && coverage.TeacherEmail && coverage.TeacherEmail.length > 0 && coverage.TeacherEmail[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + coverage.TeacherEmail[0].split('@')[0] +'/'">
+                                        [[ coverage.StudyActivityTeacherName ]]
+                                    </a>
+                                    <a v-else-if="coverage.StudyActivityTeacherID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + coverage.StudyActivityTeacherID +'/'">
                                         [[ coverage.StudyActivityTeacherName ]]
                                     </a>
                                     <span v-else>
