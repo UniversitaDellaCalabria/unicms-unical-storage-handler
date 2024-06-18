@@ -15,6 +15,8 @@
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_FRIENDLY_URL_MAIN_EMAIL_DOMAIN" as addressbook_friendly_main_url_email_domain %}
+
 
 <div id="{{ id }}">
 
@@ -54,9 +56,15 @@
                         <td v-if="Array.isArray(value)">
                             <ul v-if="name == 'PublicationAuthors'">
                                 <li v-for="subvalue in value">
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.AuthorId +'/'">
+                                    <a v-if="subvalue.AuthorId && subvalue.AuthorEmail && subvalue.AuthorEmail.length > 0 && subvalue.AuthorEmail[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.AuthorEmail[0].split('@')[0] +'/'">
+                                        [[ subvalue.AuthorName ]]
+                                    </a>
+                                    <a v-else-if="subvalue.AuthorId" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.AuthorId +'/'">
                                         [[ subvalue.AuthorName]]
                                     </a>
+                                    <span v-else>
+                                        [[ subvalue.AuthorName]]
+                                    </span>
                                 </li>
                             </ul>
                             <ul v-else>

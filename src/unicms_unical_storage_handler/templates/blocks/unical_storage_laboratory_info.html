@@ -16,6 +16,7 @@
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+{% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_FRIENDLY_URL_MAIN_EMAIL_DOMAIN" as addressbook_friendly_main_url_email_domain %}
 
 
 <div id="{{ id }}">
@@ -102,10 +103,14 @@
                                :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.CompletionReferentId +'/'">
                                 [[ item.CompletionReferentName ]]
                             </a>
-                            <a v-else-if="name == 'ScientificDirectorName' "
-                               :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ScientificDirectorId +'/'">
-                                [[ item.ScientificDirectorName ]]
-                            </a>
+                            <span v-else-if="name == 'ScientificDirectorName' ">
+                                <a v-if="item.ScientificDirectorEmail && item.ScientificDirectorEmail.length > 0 && item.ScientificDirectorEmail[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ScientificDirectorEmail[0].split('@')[0] +'/'">
+                                    [[ item.ScientificDirectorName ]]
+                                </a>
+                                <a v-else :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + item.ScientificDirectorId +'/'">
+                                    [[ item.ScientificDirectorName ]]
+                                </a>
+                            </span>
                             <a v-else-if="name == 'DepartmentReferentName' "
                                :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + item.DepartmentReferentCod +'/'">
                                 [[ item.DepartmentReferentName ]]
@@ -273,7 +278,10 @@
                 <div class="accordion-body">
                     <ul>
                         <li v-for="subvalue in item.LaboratoryResearchPersonnel" v-if="subvalue.ResearchPersonnelName && subvalue.ResearchPersonnelName != ''">
-                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.ResearchPersonnelID +'/'">
+                            <a v-if="subvalue.ResearchPersonnelEmail && subvalue.ResearchPersonnelEmail.length > 0 && subvalue.ResearchPersonnelEmail[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.ResearchPersonnelEmail[0].split('@')[0] +'/'">
+                                [[ subvalue.ResearchPersonnelName ]]
+                            </a>
+                            <a v-else :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.ResearchPersonnelID +'/'">
                                 [[ subvalue.ResearchPersonnelName ]]
                             </a>
                         </li>
@@ -302,7 +310,10 @@
                 <div class="accordion-body">
                     <ul>
                         <li v-for="subvalue in item.LaboratoryTechPersonnel" v-if="subvalue.TechPersonnelName && subvalue.TechPersonnelName != ''">
-                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.TechPersonnelID +'/'">
+                            <a v-if="subvalue.TechPersonnelEmail && subvalue.TechPersonnelEmail.length > 0 && subvalue.TechPersonnelEmail[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.TechPersonnelEmail[0].split('@')[0] +'/'">
+                                [[ subvalue.TechPersonnelName ]]
+                            </a>
+                            <a v-else :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.TechPersonnelID +'/'">
                                 [[ subvalue.TechPersonnelName ]]
                             </a>
                         </li>
