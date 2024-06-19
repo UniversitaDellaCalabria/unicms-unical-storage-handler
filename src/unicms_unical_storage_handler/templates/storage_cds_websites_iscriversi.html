@@ -21,9 +21,6 @@
 
 {% block container %}
 
-<script src="{% static 'js/vue-markdown.js' %}"></script>
-
-
 {% get_current_language as LANGUAGE_CODE %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
@@ -60,12 +57,12 @@
                                     <div :id="'accordionDiv-' + allowed_topic +'-lft'" class="accordion accordion-left-icon">
                                         <div v-for="article in topic_articles" v-if="article.TopicId == allowed_topic">
                                             <!-- href button -->
-                                            <div v-if="article.CdsObject && article.CdsObject.Object && article.CdsObject.ClassObjectId == 'WebPath' &! article.CdsObject.ObjectText">
+                                            <div v-if="article.Type == 'Object' && article.Content && article.Content.Object && article.Content.ClassObjectId == 'WebPath' &! article.Content.ObjectText">
                                                 <div class="accordion-header accordion-header-href" :id="'static-heading-' + article.ID +'-lft'">
                                                     <a class="no-color"
                                                        target="_blank"
-                                                       :title="article.CdsObject.Object.name"
-                                                       :href="article.CdsObject.Object.get_absolute_url">
+                                                       :title="article.Content.Object.name"
+                                                       :href="article.Content.Object.get_absolute_url">
                                                         <button class="accordion-button"
                                                                 type="button"
                                                                 data-bs-toggle="collapse"
@@ -74,7 +71,7 @@
                                                                 [[ article.Title ]]
                                                             </span>
                                                             <span v-else>
-                                                                [[ article.CdsObject.Object.name ]]
+                                                                [[ article.Content.Object.name ]]
                                                             </span>
                                                         </button>
                                                     </a>
@@ -82,7 +79,7 @@
                                             </div>
                                             <!-- end href button -->
                                             <!-- collapse item -->
-                                            <div class="accordion-item" v-else-if="article.CdsArticle || (article.CdsObject && article.CdsObject.Object && ((article.CdsObject.ClassObjectId == 'WebPath' && article.CdsObject.ObjectText) || article.CdsObject.ClassObjectId != 'WebPath'))">
+                                            <div class="accordion-item" v-else-if="(article.Type == 'Article' && article.Content) || (article.Type == 'Object' && article.Content && article.Content.Object && ((article.Content.ClassObjectId == 'WebPath' && article.Content.ObjectText) || article.Content.ClassObjectId != 'WebPath'))">
                                                 <div class="accordion-header" :id="'heading-' + article.ID +'-lft'">
                                                     <button class="accordion-button"
                                                             type="button"
@@ -93,12 +90,12 @@
                                                         <span v-if="article.Title">
                                                             [[ article.Title ]]
                                                         </span>
-                                                        <span v-else="article.CdsObject && article.CdsObject.Object">
-                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
-                                                                [[ article.CdsObject.Object.title ]]
+                                                        <span v-else-if="article.Type == 'Object' && article.Content && article.Content.Object">
+                                                            <span v-if="article.Content.ClassObjectId == 'Publication'">
+                                                                [[ article.Content.Object.title ]]
                                                             </span>
-                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                                [[ article.CdsObject.Object.name ]]
+                                                            <span v-else-if="article.Content.ClassObjectId == 'WebPath'">
+                                                                [[ article.Content.Object.name ]]
                                                             </span>
                                                         </span>
                                                     </button>
@@ -109,8 +106,31 @@
                                                      role="region"
                                                      :aria-labelledby="'heading-' + article.ID +'-lft'">
                                                     <div class="accordion-body">
-                                                        <span v-if="article.CdsArticle">
-                                                            <vue-markdown :emoji=false :source='article.CdsArticle.ArticleDescription'></vue-markdown>
+                                                        <span v-if="article.Type == 'Article' && article.Content">
+                                                            <span v-html="article.Content.Text"></span>
+                                                            <div v-if="article.SubArticles.length > 0" :id="'accordionDiv-' + article.ID +'-lft'" class="accordion accordion-left-icon">
+                                                                <div v-for="sub_article in article.SubArticles" class="accordion-item">
+                                                                    <div class="accordion-header" :id="'heading-' + sub_article.Id +'-lft'">
+                                                                        <button class="accordion-button"
+                                                                                type="button"
+                                                                                data-bs-toggle="collapse"
+                                                                                :data-bs-target="'#collapse-' + sub_article.Id +'-lft'"
+                                                                                aria-expanded="false"
+                                                                                :aria-controls="'collapse-' + sub_article.Id +'-lft'">
+                                                                            [[ sub_article.Title ]]
+                                                                        </button>
+                                                                    </div>
+                                                                    <div :id="'collapse-' + sub_article.Id +'-lft'"
+                                                                         class="accordion-collapse collapse"
+                                                                         :data-bs-parent="'#accordionDiv-' + article.ID +'-lft'"
+                                                                         role="region"
+                                                                         :aria-labelledby="'heading-' + sub_article.Id +'-lft'">
+                                                                        <div class="accordion-body">
+                                                                            <span v-html="sub_article.Text"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div v-for="other_data in article.OtherData">
                                                                 <div class="mt-3">
                                                                     <p class="mt-3" v-if="other_data.Title">[[ other_data.Title ]]</p>
@@ -162,13 +182,13 @@
                                                                 </div>
                                                             </div>
                                                         </span>
-                                                        <span v-else-if="article.CdsObject && article.CdsObject.Object">
-                                                            <span v-html="article.CdsObject.ObjectText"></span>
-                                                            <span v-if="article.CdsObject.ClassObjectId == 'Publication'">
-                                                                <span v-html="article.CdsObject.Object.content"></span>
+                                                        <span v-else-if="article.Type == 'Object' && article.Content && article.Content.Object">
+                                                            <span v-html="article.Content.ObjectText"></span>
+                                                            <span v-if="article.Content.ClassObjectId == 'Publication'">
+                                                                <span v-html="article.Content.Object.content"></span>
                                                             </span>
-                                                            <span v-else-if="article.CdsObject.ClassObjectId == 'WebPath'">
-                                                                <a :href="article.CdsObject.Object.get_absolute_url">[[ article.CdsObject.Object.name ]]</a>
+                                                            <span v-else-if="article.Content.ClassObjectId == 'WebPath'">
+                                                                <a :href="article.Content.Object.get_absolute_url">[[ article.Content.Object.name ]]</a>
                                                             </span>
                                                             <div v-for="other_data in article.OtherData">
                                                                 <div class="mt-3">
@@ -252,8 +272,8 @@
                                         </div>
                                         <div class="col m-auto align-middle">
                                             <ul class="mb-0 ps-0 list-unstyled">
-                                                <li v-for="right_article in _{{ cds_cod }}.topic_articles_right_column"  v-if="right_article.CdsArticle || (right_article.CdsObject && right_article.CdsObject.Object)">
-                                                    <a class="no-color" target="_blank" :href="right_article.CdsObject.Object.get_absolute_url">
+                                                <li v-for="right_article in _{{ cds_cod }}.topic_articles_right_column"  v-if="right_article.Type == 'Object' && right_article.Content && right_article.Content.Object">
+                                                    <a class="no-color" target="_blank" :href="right_article.Content.Object.get_absolute_url">
                                                         <span><b>[[ right_article.Title ]]</b></span>
                                                     </a>
                                                 </li>
@@ -308,7 +328,7 @@
                         this.topic_articles = response.data.results
                         this.allowed_topics.forEach(
                             topic => {
-                                let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
+                                let found = response.data.results.some(el => el.TopicId === topic && (el.Type == 'Article' && el.Content || (el.Type == 'Object' && el.Content && el.Content.Object)));
                                 if(!found) this.empty_topics.push(topic)
                             }
                         )
@@ -324,7 +344,7 @@
                         this.topic_articles_right_column = response.data.results
                         this.allowed_topics_right_column.forEach(
                             topic => {
-                                let found = response.data.results.some(el => el.TopicId === topic && (el.CdsArticle || (el.CdsObject && el.CdsObject.Object)));
+                                let found = response.data.results.some(el => el.TopicId === topic && (el.Type == 'Article' && el.Content || (el.Type == 'Object' && el.Content && el.Content.Object)));
                                 if(!found) this.empty_topics_right_column.push(topic)
                             }
                         )
