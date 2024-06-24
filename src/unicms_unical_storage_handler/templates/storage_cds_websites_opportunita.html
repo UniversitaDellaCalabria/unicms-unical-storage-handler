@@ -21,9 +21,6 @@
 
 {% block container %}
 
-<script src="{% static 'js/vue-markdown.js' %}"></script>
-
-
 {% get_current_language as LANGUAGE_CODE %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 
@@ -267,8 +264,6 @@
 </div>
 
 <script>
-    Vue.use(VueMarkdown);
-
     var _{{ cds_cod }} = new Vue({
         el: '#_{{ cds_cod }}',
         data() {

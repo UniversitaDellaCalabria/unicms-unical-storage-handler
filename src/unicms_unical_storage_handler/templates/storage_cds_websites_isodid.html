@@ -80,6 +80,25 @@
                             </loading-icon>
                             <div v-else>
                                 <div class="row" v-if="data">
+                                    <div class="mt-4 col-12">
+                                        <ul>
+                                            <li>
+                                                <div style="background: rgb(0, 143, 251);margin-right: 5px; width: 12px;height:12px;display: inline-block;"></div>
+                                                <b>IVP Frequentanti:</b>
+                                                indica i questionari degli studenti che hanno dichiarato di aver frequentato almeno il 50% delle ore di lezione/laboratorio/esercitazione
+                                            </li>
+                                            <li>
+                                                <div style="background: rgb(0, 227, 150);margin-right: 5px; width: 12px;height:12px;display: inline-block;"></div>
+                                                <b>IVP Non frequentanti:</b>
+                                                indica i questionari degli studenti in corso che hanno dichiarato di aver frequentato almeno il 50% delle ore di lezione/laboratorio/esercitazione
+                                            </li>
+                                            <li>
+                                                <div style="background: rgb(254, 176, 25);margin-right: 5px; width: 12px;height:12px;display: inline-block;"></div>
+                                                <b>IVP Frequentanti IC:</b>
+                                                indica i questionari degli studenti che hanno dichiarato di aver frequentato meno del 50% delle ore di lezione/laboratorio
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <div class="col-12">
                                         <div v-for="(value, key) in data">
                                             <p class="h4 lighter mt-5">[[ key ]]</p>
