@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-24 12:49+0200\n"
-"PO-Revision-Date: 2024-06-24 12:51+0200\n"
+"POT-Creation-Date: 2024-06-24 12:56+0200\n"
+"PO-Revision-Date: 2024-06-24 12:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -1303,7 +1303,6 @@ msgid "Alert"
 msgstr "Attenzione"
 
 #: templates/includes/unical_storage_empty.html:6
-#: templates/storage_cds_websites_isodid.html:119
 msgid "Resource not found"
 msgstr "Risorsa non trovata"
 
@@ -1577,6 +1576,14 @@ msgstr ""
 #: templates/storage_cds_websites_iscriversi.html:268
 msgid "Informations"
 msgstr "Informazioni"
+
+#: templates/storage_cds_websites_isodid.html:119
+msgid ""
+"No data available for the selected year. It is possible to consult those "
+"from previous years"
+msgstr ""
+"Nessun dato disponibile per l'anno selezionato. E' possibile consultare "
+"quelli degli anni precedenti"
 
 #: templates/storage_cds_websites_prospect.html:112
 msgid "course in brief"
