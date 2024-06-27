@@ -5,7 +5,7 @@
 
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISODID_VIEW_PREFIX_PATH" as almalaurea_link %}
+{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISODID_VIEW_PREFIX_PATH" as isodid_link %}
 
 
 <div id="_cds_website_right_col_links">
@@ -27,7 +27,7 @@
     </div>
 
     <div class="mt-4">
-        <a target="_blank" href="{{ webpath.get_full_path }}{{ cds_base_path }}/{{ almalaurea_link }}/">
+        <a href="{{ webpath.get_full_path }}{{ cds_base_path }}/{{ isodid_link }}/">
         <div class="row">
             <div class="col-3">
                 <svg class="me-4 icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
