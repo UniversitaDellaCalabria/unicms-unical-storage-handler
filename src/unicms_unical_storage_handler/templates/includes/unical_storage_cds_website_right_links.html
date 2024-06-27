@@ -10,7 +10,7 @@
 
 <div id="_cds_website_right_col_links">
     <div v-if="_cds_data.fixed_cds.CdSDoc" class="mt-4">
-        <a :href="_cds_data.fixed_cds.CdSDoc" target="_blank">
+        <a title="{% trans 'Degree course brochure' %}" :href="_cds_data.fixed_cds.CdSDoc" target="_blank">
             <div class="row">
                 <div class="col-3">
                     <img src="{% static 'images/download.svg' %}" style="width: 64px" />
@@ -27,7 +27,7 @@
     </div>
 
     <div class="mt-4">
-        <a href="{{ webpath.get_full_path }}{{ cds_base_path }}/{{ isodid_link }}/">
+        <a title="{% trans 'Student opinions survey' %}" href="{{ webpath.get_full_path }}{{ cds_base_path }}/{{ isodid_link }}/">
         <div class="row">
             <div class="col-3">
                 <svg class="me-4 icon icon-white icon-xl badge-primary p-2" style="border-radius: 50%">
@@ -46,7 +46,7 @@
     </div>
 
     <div v-if="_cds_data.fixed_cds.CdSSatisfactionSurvey" class="mt-4">
-        <a target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.fixed_cds.CdSSatisfactionSurvey">
+        <a :title="_cds_data.fixed_cds_labels['CdSSatisfactionSurvey']" target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.fixed_cds.CdSSatisfactionSurvey">
         <div class="row">
             <div class="col-3">
                 <img src="{% static 'images/almalaurea.svg' %}" style="width: 64px" />
