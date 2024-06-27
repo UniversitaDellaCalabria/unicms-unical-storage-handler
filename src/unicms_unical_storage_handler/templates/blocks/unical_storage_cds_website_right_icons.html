@@ -9,7 +9,7 @@
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_website_prospect_redirect %}
 {% storage_settings_value "ALMALAUREA_LINK" as almalaurea_link %}
 
-<a href="{{ webpath.parent.fullpath }}{{ cds_base_path }}/{{ cds_cod }}/{{ cds_website_prospect_redirect }}/{{ prospect_page_path }}/" target="_blank">
+<a title="{% trans 'Course in short' %}" href="{{ webpath.parent.fullpath }}{{ cds_base_path }}/{{ cds_cod }}/{{ cds_website_prospect_redirect }}/{{ prospect_page_path }}/" target="_blank">
     <div class="row">
         <div class="col-3">
             <img src="{% static 'images/corso_in_sintesi.svg' %}" style="width: 64px" />
