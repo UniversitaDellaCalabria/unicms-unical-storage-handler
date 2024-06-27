@@ -26,6 +26,7 @@
         </a>
     </div>
 
+    {% if not hide_isodid %}
     <div class="mt-4">
         <a title="{% trans 'Student opinions survey' %}" href="{{ webpath.get_full_path }}{{ cds_base_path }}/{{ isodid_link }}/">
         <div class="row">
@@ -44,6 +45,7 @@
         </div>
         </a>
     </div>
+    {% endif %}
 
     <div v-if="_cds_data.fixed_cds.CdSSatisfactionSurvey" class="mt-4">
         <a :title="_cds_data.fixed_cds_labels['CdSSatisfactionSurvey']" target="_blank" :href="'{{ almalaurea_link }}' + _cds_data.fixed_cds.CdSSatisfactionSurvey">
