@@ -56,7 +56,7 @@
                                     :data-bs-target="'#collapse-{{ id }}-1' + index +'-lft'"
                                     aria-expanded="false"
                                     :aria-controls="'collapse-{{ id }}-1' + index +'-lft'">
-                            [[ year ]] {% trans "year" %}
+                            [[ year ]] {% trans "year" %} - ([[ teachings_dictionary[year][0].StudyActivities[year][0].StudyActivityCdSCod ]])
                             </button>
                         </div>
                         <div :id="'collapse-{{ id }}-1' + index +'-lft'"
