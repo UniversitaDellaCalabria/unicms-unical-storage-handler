@@ -285,6 +285,7 @@
                                 <th scope="col">{% trans "SSD" %}</th>
                                 <th scope="col">{% trans "Main Activity" %}</th>
                                 <th scope="col">[[ labels.StudyActivityCdSName ]]</th>
+                                <th scope="col">[[ labels.StudyPlanDes ]]</th>
                                 <th scope="col">[[ labels.StudyActivityTeacherName ]]</th>
                             </tr>
                         </thead>
@@ -324,6 +325,12 @@
                                 <td>
                                     <a v-if="item.StudyActivityCdSName" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/'">
                                         [[ item.StudyActivityCdSName ]]</a>
+                                    <span v-else>-</span>
+                                </td>
+                                <td>
+                                    <span v-if="item.StudyPlanDes">
+                                        [[ item.StudyPlanDes ]]
+                                    </span>
                                     <span v-else>-</span>
                                 </td>
                                 <td>
