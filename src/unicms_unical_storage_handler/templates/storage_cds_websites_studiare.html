@@ -675,6 +675,7 @@
                             }
                         )
                         this.is_loading = false
+                        _{{ cds_cod }}_1.is_loading = false
                     }
                 )
             },
@@ -684,6 +685,7 @@
                     .get(url)
                     .then(response => {
                         this.topics = response.data.results
+                        _{{ cds_cod }}_1.topics = response.data.results
                     }
                 )
             },
