@@ -319,7 +319,7 @@ INITIAL_STRUCTURE_FATHER = ''
 SPINOFF_INFO_NOT_SHOW = ['SpinoffId', 'SpinoffImage', 'SpinoffTechAreaId',
                          'IsSpinoff', 'IsStartup', 'SpinoffAgencyName',
                          'SpinoffUnicalReferentId', 'SpinoffDescription',
-                         'TechAreaId']
+                         'TechAreaId', 'IsActive']
 
 HIGH_FORMATION_MASTERS_INFO_NOT_SHOW = ['ID', 'HighFormationTypeId',
                                         'HighFormationErogationMode']

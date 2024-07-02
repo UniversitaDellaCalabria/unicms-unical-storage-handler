@@ -671,12 +671,10 @@
                                 let found = response.data.results.some(el => el.TopicId === topic && (el.Type == 'Article' && el.Content || (el.Type == 'Object' && el.Content && el.Content.Object)));
                                 if(!found){
                                     this.empty_topics.push(topic)
-                                    _{{ cds_cod }}_1.empty_topics.push(topic)
                                 }
                             }
                         )
                         this.is_loading = false
-                        _{{ cds_cod }}_1.is_loading = false
                     }
                 )
             },
@@ -686,7 +684,6 @@
                     .get(url)
                     .then(response => {
                         this.topics = response.data.results
-                        _{{ cds_cod }}_1.topics = response.data.results
                     }
                 )
             },
