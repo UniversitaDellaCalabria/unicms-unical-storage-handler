@@ -1,0 +1,261 @@
+{% extends "bases/unical_storage_list.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% block content %}
+
+{% get_allowed_website request.get_host as host %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
+{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
+{% storage_settings_value "CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH" as projects_prefix %}
+{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
+
+
+<div id="{{ id }}">
+
+    <div if="(initial_items && initial_items.length) || parameters">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-wrapper card-space">
+                    {% block filters %}
+
+                    <div class="card card-bg no-after">
+                        <div class="card-body">
+
+                            {% include "includes/unical_storage_search_input.html" with id=id %}
+
+                                <div class="form-group mb-0">
+                                    <!-- Program type and Territorial scope -->
+                                    <div class="row">
+
+                                        {% block filter_programtype %}
+                                        <loading-icon
+                                            v-if="is_loading_programtypes"
+                                            :loader_source="loader_source_programtypes">
+                                        </loading-icon>
+                                        <div class="col-sm form-group mb-0" v-else>
+                                            <div>
+                                                <label for="{{ id }}_programtype_input">
+                                                    {% trans "Program Type" %}
+                                                </label>
+                                                <div class="w-30 mt-5">
+                                                    <select id="{{ id }}_programtype_input"
+                                                            title="{% trans 'Choose an option' %}"
+                                                            name="{{ id }}_programtype_input"
+                                                            class="form-control"
+                                                            @change="{{ id }}.search()">
+                                                        <option value="">- {% trans 'Choose an option' %} -</option>
+                                                        <option v-for="item in programtypes"
+                                                                v-if="!excluded_programtypes.includes(String(item.TypeProgramId))"
+                                                                :value="item.TypeProgramId"
+                                                                :selected="item.TypeProgramId == selected_programtype">
+                                                            [[ item.TypeProgramDescription ]]
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endblock filter_programtype %}
+
+                                        <loading-icon
+                                            v-if="is_loading_infrastructures"
+                                            :loader_source="loader_source_infrastructures">
+                                        </loading-icon>
+                                        <div class="col-sm form-group mb-0" v-else>
+                                            <div>
+                                                <label for="{{ id }}_infrastructure_input">
+                                                    {% trans "Structure" %}
+                                                </label>
+                                                <div class="w-30 mt-5">
+                                                    <select id="{{ id }}_infrastructure_input"
+                                                            title="{% trans 'Choose an option' %}"
+                                                            name="{{ id }}_infrastructure_input"
+                                                            class="form-control"
+                                                            @change="{{ id }}.search()">
+                                                        <option value="">- {% trans 'Choose an option' %} -</option>
+                                                        <option v-for="item in infrastructures"
+                                                                :value="item.DepartmentCod"
+                                                                :selected="item.DepartmentCod == selected_infrastructure">
+                                                            [[ item.DepartmentName ]]
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- END Program type and Territorial scope -->
+                            </div>
+                        </div>
+                    </div>
+                    {%  endblock filters %}
+                </div>
+            </div>
+        </div>
+
+        <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
+
+        <loading-icon
+            v-if="is_loading"
+            :loader_source="loader_source">
+        </loading-icon>
+
+        <div v-else>
+            <div class="row mb-3" v-for="item in items.results">
+                <div class="col-12">
+                    <!--start card-->
+                    <div class="card-wrapper pb-0">
+                        <div class="card no-after" style="border:1px solid #b71918">
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    {% comment %}
+                                    <div class="col-12 col-lg-2 me-lg-3 mb-3 mb-lg-0" v-if="item.ProjectImage">
+                                        <img :src="item.ProjectImage" class="w-100"/>
+                                    </div>
+                                    {% endcomment %}
+                                    <div class="col">
+                                        <h5>
+                                            <a class="no-color" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ projects_prefix }}/' + item.ProjectId +'/'">
+                                                <b>[[ item.ProjectTitle ]]</b>
+                                            </a>
+                                        </h5>
+                                        <p>
+                                            <span v-html="item.ProjectDescription"></span>
+                                        </p>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <span>
+                                                    [[ labels['InfrastructureDescription'] ]] >
+                                                    <b>[[ item.InfrastructureDescription ]] </b>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-auto">
+                                                <span>
+                                                    [[ labels['ProjectYear'] ]] >
+                                                    <b>[[ item.ProjectYear ]]</b>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-auto">
+                                                <span>
+                                                    [[ labels['TerritorialScopeDescription'] ]] >
+                                                    <b>[[ item.TerritorialScopeDescription ]] </b>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-auto">
+                                                <span>
+                                                    {% trans "Tech Area" %} >
+                                                    <b>[[ item.TechAreaDescription ]] </b>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-auto">
+                                                <span>
+                                                    [[ labels['TypeProgramDescription'] ]] >
+                                                    <b>[[ item.TypeProgramDescription ]] </b>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end card-->
+                </div>
+            </div>
+        </div>
+
+        <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
+    </div>
+
+    <div v-else>
+        {% trans "No items here" %}
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+function {{ id }}_get_form_paramenters(keyword=null, value=null) {
+
+    let dict ={};
+
+    if (keyword)
+        dict[keyword] = value
+
+    // search
+    let search = document.getElementById('{{ id }}_search')
+    if (search && search.value) dict['search'] = search.value
+
+    // program type
+    let programtype = document.getElementById('{{ id }}_programtype_input')
+    if (programtype && programtype.value) dict['programtype'] = programtype.value
+
+    // infrastructures
+    let infrastructure = document.getElementById('{{ id }}_infrastructure_input')
+    if (infrastructure && infrastructure.value) dict['infrastructure'] = infrastructure.value
+
+    setItemInSession("{{ id }}", dict)
+
+    return dict
+}
+</script>
+{% endblock extra_scripts %}
+
+{% block extra_data %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% storage_api_root "CMS_STORAGE_PROJECTS_PROGRAMS_TYPES_API" as programtypes_api %}
+{% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
+{% storage_api_root "CMS_STORAGE_PROJECTS_INFRASTRUCTURES_API" as infrastructures_api %}
+{% storage_settings_value "PROJECTS_PRIN_ID_LIST" as prin_id_list %}
+
+search_dict: {},
+programtypes: [],
+infrastructures: [],
+
+is_loading_programtypes: true,
+is_loading_infrastructures: true,
+
+loader_source_programtypes: '{{ programtypes_api }}?lang={{ LANGUAGE_CODE }}&page_size=200',
+loader_source_infrastructures: '{{ departments_api }}?lang={{ LANGUAGE_CODE }}&page_size=200',
+
+selected_search: this.getItemFromSession("{{ id }}", 'search'),
+selected_programtype: this.getItemFromSession("{{ id }}", 'programtype'),
+selected_infrastructure: this.getItemFromSession("{{ id }}", 'infrastructure'),
+
+id_list: {{ prin_id_list|safe }},
+{% endblock extra_data %}
+
+{% block extra_mounted %}
+this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
+
+this.callProgramTypes();
+this.callInfrastructures();
+
+this.excluded_programtypes = {{ id }}_get_param("-programtype").split(",");
+{% endblock extra_mounted %}
+
+{% block extra_methods %}
+callProgramTypes() {
+    axios
+        .get(this.loader_source_programtypes)
+        .then(response => {
+            this.programtypes = response.data.results.filter( p => this.id_list.includes( p.TypeProgramId ) );
+            this.is_loading_programtypes = false
+        })
+},
+callInfrastructures() {
+    axios
+        .get(this.loader_source_infrastructures)
+        .then(response => {
+            this.infrastructures = response.data.results;
+            this.is_loading_infrastructures = false
+        })
+},
+{% endblock extra_methods %}
+</script>

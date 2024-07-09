@@ -314,6 +314,8 @@ PROJECTS_INFO_NOT_SHOW = ['ProjectId', 'ProjectDepartmentId',
                           'ProjectDescription', 'ProjectAbstract',
                           'ProjectImage', 'InfrastructureId', 'IsActive']
 
+PROJECTS_PRIN_ID_LIST = []
+
 INITIAL_STRUCTURE_FATHER = ''
 
 SPINOFF_INFO_NOT_SHOW = ['SpinoffId', 'SpinoffImage', 'SpinoffTechAreaId',
