@@ -54,7 +54,7 @@
                                 :loader_source="loader_source">
                             </loading-icon>
                             <div v-else>
-                                <div class="row mb-3" v-if="_cds_data.cds.OtherData && ('DirectorId' in _cds_data.cds.OtherData || 'DeputyDirectorId' in _cds_data.cds.OtherData)">
+                                <div class="row mb-3" v-if="_cds_data.cds.OtherData && (_cds_data.cds.OtherData.DirectorId || _cds_data.cds.OtherData.DeputyDirectorId)">
                                     <div class="col-12">
                                         <!--start card-->
                                         <div class="card-wrapper card-space">
