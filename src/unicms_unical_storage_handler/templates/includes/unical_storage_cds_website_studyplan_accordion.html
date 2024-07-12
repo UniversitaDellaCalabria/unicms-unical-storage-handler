@@ -103,7 +103,8 @@
                 <!-- vincoli principali -->
                 <div v-if="choice.SceCodType == 'V' && choice.VinId == null && tab.AfChoices.some(e => e.VinId === choice.SceId && e.Year === index) && tab.AfChoices.some(e => e.Year === index )">
                     <div class="alert alert-info" role="alert">
-                        <b>{% trans "Insegnamenti a scelta" %} - [[ choice.RegSceCodDes ]]</b>
+                        <b v-if="choice.SceDes">[[ choice.SceDes ]] - [[ choice.RegSceCodDes ]]</b>
+                        <b v-else>{% trans "Insegnamenti a scelta" %} - [[ choice.RegSceCodDes ]]</b>
                         <br>
                         <span v-if="choice.MinUnt == choice.MaxUnt">
                             [[ choice.MaxUnt ]]
@@ -145,7 +146,8 @@
                         <!-- vincoli innestati -->
                         <div v-for="vin_choice in tab.AfChoices" v-if="vin_choice.Year == index && vin_choice.SceCodType == 'V' && vin_choice.SceId != choice.SceId" role="alert" class="alert alert mt-3 ps-3" style="border-left: 8px solid var(--grey)">
                             <div>
-                                <b>{% trans "Insegnamenti a scelta" %} - [[ vin_choice.RegSceCodDes ]]</b>
+                                <b v-if="vin_choice.SceDes">[[ vin_choice.SceDes ]] - [[ vin_choice.RegSceCodDes ]]</b>
+                                <b v-else>{% trans "Insegnamenti a scelta" %} - [[ vin_choice.RegSceCodDes ]]</b>
                                 <br>
                                 <span v-if="vin_choice.MinUnt == vin_choice.MaxUnt">
                                     [[ vin_choice.MaxUnt ]]
@@ -409,7 +411,8 @@
                 <!-- scelte non vincolate -->
                 <div v-if="choice.Year == index && choice.SceCodType != 'V' &! choice.VinId">
                     <div class="alert alert-info" role="alert">
-                        <b>{% trans "Courses to chose" %} - [[ choice.RegSceCodDes ]]</b>
+                        <b v-if="choice.SceDes">[[ choice.SceDes ]] - [[ choice.RegSceCodDes ]]</b>
+                        <b v-else>{% trans "Courses to chose" %} - [[ choice.RegSceCodDes ]]</b>
                         <br>
                         <span v-if="choice.MinUnt == choice.MaxUnt">
                             [[ choice.MaxUnt ]]
