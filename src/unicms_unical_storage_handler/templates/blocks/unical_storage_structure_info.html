@@ -99,7 +99,7 @@
 
                     <!-- Manager -->
                     <tr v-if="item.StructurePersonnelFunctions">
-                        <td>{% trans "Manager" %}</td>
+                        <td>{% trans "Roles" %}</td>
                         <td>
                             <ul class="list-unstyled">
                                 <li v-for="subvalue in item.StructurePersonnelFunctions" v-if="subvalue.Name && subvalue.Name != '' && functions.includes(subvalue.FunctionCod)">
