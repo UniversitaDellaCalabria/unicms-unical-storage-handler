@@ -91,7 +91,7 @@
                     </tr>
 
                     <!-- Manager -->
-                    <tr v-for="subvalue in item.StructurePersonnelFunctions" v-if="subvalue.Name && subvalue.Name != '' && functions.includes(subvalue.FunctionCod)">
+                    <tr v-for="subvalue in item.StructurePersonnelFunctions" v-if="subvalue.Name && subvalue.Name != ''">
                         <td>[[ subvalue.Function ]]</td>
                         <td>
                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.ID +'/'">
