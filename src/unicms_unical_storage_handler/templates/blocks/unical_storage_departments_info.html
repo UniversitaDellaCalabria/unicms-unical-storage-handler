@@ -91,16 +91,12 @@
                     </tr>
 
                     <!-- Manager -->
-                    <tr v-if="item.StructurePersonnelFunctions">
-                        <td>{% trans "Roles" %}</td>
+                    <tr v-for="subvalue in item.StructurePersonnelFunctions" v-if="subvalue.Name && subvalue.Name != '' && functions.includes(subvalue.FunctionCod)">
+                        <td>[[ subvalue.Function ]]</td>
                         <td>
-                            <ul class="list-unstyled">
-                                <li v-for="subvalue in item.StructurePersonnelFunctions" v-if="subvalue.Name && subvalue.Name != '' && functions.includes(subvalue.FunctionCod)">
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.ID +'/'">
-                                            [[ subvalue.Name ]]
-                                    </a>  - [[ subvalue.Function ]]
-                                </li>
-                            </ul>
+                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ addressbook_prefix }}/' + subvalue.ID +'/'">
+                                [[ subvalue.Name ]]
+                            </a>
                         </td>
                     </tr>
                     <!-- End Manager -->
