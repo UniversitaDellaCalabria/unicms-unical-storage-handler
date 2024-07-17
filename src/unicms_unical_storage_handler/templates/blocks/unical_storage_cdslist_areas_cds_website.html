@@ -31,7 +31,6 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 
 {% block method_callurl %}
 {% storage_settings_value "CMS_WEBPATH_CDS_OLD" as cms_webpath_cds_old %}
-{% storage_settings_value "CMS_WEBPATH_CDS_MORPH" as cms_webpath_cds_morph %}
 
 async CallURL(url, initial=false) {
     this.is_loading = true
@@ -52,21 +51,15 @@ async CallURL(url, initial=false) {
         })
 
     const cms_webpath_cds_old = {{ cms_webpath_cds_old|safe }}
-    const cms_webpath_cds_morph = {{ cms_webpath_cds_morph|safe }}
 
     for (const [cdscod, year] of Object.entries(cms_webpath_cds_old)) {
         axios
             .get(url + '&academicyear=' + year + '&cdscod=' + cdscod)
             .then(response => {
                 for(const c of response.data.results){
-                    for (const [cds_new, cds_old] of Object.entries(cms_webpath_cds_morph)) {
-                        for (let i=0; i<cds_old.length; i++) {
-                            if (cds_old[i] == c.CdSCod) break;
-                            this.items.results.push(c);
-                            this.items.results.sort((a, b) => a.CdSName > b.CdSName)
-                        }
-                    }
+                    this.items.results.push(c);
                 }
+                this.items.results.sort((a, b) => a.CdSName.localeCompare(b.CdSName))
             })
     }
 
