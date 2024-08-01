@@ -35,6 +35,8 @@
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 {% storage_settings_value "PENTAHO_ISODID_REPORT_START_YEAR" as pentaho_isodid_start_year %}
 
+{% get_cds_website_morph cds_cod as old_cds_identifiers %}
+
 {% include "includes/unical_storage_loading.html" %}
 
 
@@ -79,7 +81,7 @@
                                 :loader_source="loader_source">
                             </loading-icon>
                             <div v-else>
-                                <div class="row" v-if="data">
+                                <div class="row" v-if="data && Object.keys(data).length != 0">
                                     <div class="mt-4 col-12">
                                         <ul>
                                             <li>
@@ -102,8 +104,7 @@
                                     <div class="col-12">
                                         <div v-for="(value, key) in data">
                                             <p class="h4 lighter mt-5">[[ key ]]</p>
-                                            <div :id="'chart-'+slugify(key)">
-                                            </div>
+                                            <div :id="'chart-'+slugify(key)"></div>
                                             <div v-if="data[key].legenda" class="mt-3">
                                                 <ul>
                                                     <li v-for="(value, name, index) in data[key].legenda">
@@ -147,6 +148,9 @@
                 url: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
                 is_loading: true,
                 loader_source: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
+                old_cds_identifiers: {{ old_cds_identifiers|safe }},
+                old_data_found: false,
+                old_cds_called: false
             }
         },
         mounted() {
@@ -166,21 +170,43 @@
                     .replace(/\s+/g, '-') // replace spaces with hyphens
                     .replace(/-+/g, '-'); // remove consecutive hyphens
             },
+            async getOldData() {
+                for(let i=0;i<this.old_cds_identifiers.length;i++) {
+                    if(this.old_data_found) break;
+                    let url = '{{ base_api }}{{ pentaho_api }}' + this.old_cds_identifiers[i] + '/{{ pentaho_isodid_api }}?year=' + this.active_year
+                    await axios
+                        .get(url)
+                        .then(response => {
+                            if(Object.keys(response.data).length != 0){
+                                this.old_data_found = true
+                                this.data = response.data.data
+                            }
+                    })
+                    this.drawCharts()
+                }
+                this.old_data_found = false
+            },
             async callURL(year=null) {
+                this.old_cds_called = false
                 this.is_loading = true
                 this.data = {}
-                let url = this.url
                 if(year) {
                     this.active_year = year
-                    url = url + '?year=' + year
                 }
+                let url = this.url + '?year=' + this.active_year
                 await axios
                     .get(url)
                     .then(response => {
-                        this.data = response.data.data
+                        if(Object.keys(response.data).length == 0){
+                            this.old_cds_called = true
+                            this.getOldData()
+                        }
+                        else {
+                            this.data = response.data.data
+                        }
                         this.is_loading = false
                     })
-                this.drawCharts()
+                if(!this.old_cds_called) this.drawCharts()
             },
             drawCharts() {
                 var options = {
