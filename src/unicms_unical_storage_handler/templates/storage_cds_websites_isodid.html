@@ -32,8 +32,8 @@
 {% storage_settings_value "CMS_STORAGE_PENTAHO_ISODID_API" as pentaho_isodid_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
-{% storage_settings_value "CURRENT_YEAR" as current_year %}
 {% storage_settings_value "PENTAHO_ISODID_REPORT_START_YEAR" as pentaho_isodid_start_year %}
+{% storage_settings_value "PENTAHO_ISODID_REPORT_END_YEAR" as pentaho_isodid_end_year %}
 
 {% get_cds_website_morph cds_cod as old_cds_identifiers %}
 
@@ -56,7 +56,7 @@
                                                 <div class="row">
                                                     <div class="col-sm form-group mb-0">
                                                         <label for="year_input">
-                                                            {% trans "Year" %}
+                                                            {% trans "Academic Year" %}
                                                         </label>
                                                         <div class="mt-5">
                                                             <select id="year_input"
@@ -64,8 +64,8 @@
                                                                     name="year_input"
                                                                     class="form-control"
                                                                     @change="callURL($event.target.value)">
-                                                                    <option v-for="y in range({{ pentaho_isodid_start_year }}, {{ current_year|add:'1' }})" :value="y" :selected="y == active_year">
-                                                                      [[ y ]]
+                                                                    <option v-for="y in range({{ pentaho_isodid_start_year }}, {{ pentaho_isodid_end_year|add:'1' }})" :value="y" :selected="y == active_year">
+                                                                      [[ y ]]/[[ y + 1]]
                                                                   </option>
                                                             </select>
                                                         </div>
@@ -144,7 +144,7 @@
         data() {
             return {
                 data: {},
-                active_year: {{ current_year }},
+                active_year: {{ pentaho_isodid_end_year }},
                 url: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
                 is_loading: true,
                 loader_source: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
