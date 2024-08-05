@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 15:28+0200\n"
-"PO-Revision-Date: 2024-07-17 15:29+0200\n"
+"POT-Creation-Date: 2024-08-05 10:03+0200\n"
+"PO-Revision-Date: 2024-08-05 10:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -282,7 +282,7 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_addressbook.html:332
 #: templates/blocks/unical_storage_addressbook_v2.html:183
 #: templates/blocks/unical_storage_cdslist.html:300
-#: templates/blocks/unical_storage_cdslist_areas.html:326
+#: templates/blocks/unical_storage_cdslist_areas.html:327
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:213
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:132
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:130
@@ -693,7 +693,7 @@ msgstr "Area"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:217
 #: templates/blocks/unical_storage_cdslist_areas.html:290
-#: templates/blocks/unical_storage_cdslist_areas.html:316
+#: templates/blocks/unical_storage_cdslist_areas.html:317
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:102
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:176
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:203
@@ -706,8 +706,8 @@ msgstr "Italiano"
 
 #: templates/blocks/unical_storage_cdslist_areas.html:219
 #: templates/blocks/unical_storage_cdslist_areas.html:292
-#: templates/blocks/unical_storage_cdslist_areas.html:313
-#: templates/blocks/unical_storage_cdslist_areas.html:317
+#: templates/blocks/unical_storage_cdslist_areas.html:314
+#: templates/blocks/unical_storage_cdslist_areas.html:318
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:104
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:178
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:200
@@ -721,42 +721,42 @@ msgstr "Italiano"
 msgid "English"
 msgstr "Inglese"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:308
+#: templates/blocks/unical_storage_cdslist_areas.html:309
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:195
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:114
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:112
 msgid "Bachelor's degree"
 msgstr "Laurea Triennale"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:309
+#: templates/blocks/unical_storage_cdslist_areas.html:310
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:196
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:115
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:113
 msgid "Master's degree (2 years)"
 msgstr "Laurea Magistrale (2 anni)"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:310
+#: templates/blocks/unical_storage_cdslist_areas.html:311
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:197
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:116
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:114
 msgid "Single-cycle master's degree (5 years)"
 msgstr "Laurea Magistrale a ciclo unico (5 anni)"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:311
+#: templates/blocks/unical_storage_cdslist_areas.html:312
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:198
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:117
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:115
 msgid "Single-cycle master's degree (6 years)"
 msgstr "Laurea Magistrale a ciclo unico (6 anni)"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:314
+#: templates/blocks/unical_storage_cdslist_areas.html:315
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:201
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:120
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:118
 msgid "Course delivered in English"
 msgstr "Corso erogato in lingua inglese"
 
-#: templates/blocks/unical_storage_cdslist_areas.html:318
+#: templates/blocks/unical_storage_cdslist_areas.html:319
 #: templates/blocks/unical_storage_cdslist_areas_cds_prospect_page_tabs.html:205
 #: templates/blocks/unical_storage_cdslist_areas_didactic_regulation.html:124
 #: templates/blocks/unical_storage_cdslist_areas_teaching_system.html:122
@@ -764,6 +764,7 @@ msgid "Course with curriculum delivered in English"
 msgstr "Corso con curriculum erogato in lingua inglese"
 
 #: templates/blocks/unical_storage_cdslist_areas_cds_website.html:34
+#: templates/blocks/unical_storage_cdslist_areas_cds_website.html:38
 msgid "Phasing out"
 msgstr "Ad esaurimento"
 
@@ -783,8 +784,7 @@ msgstr "Tipologia"
 #: templates/blocks/unical_storage_publications_list.html:38
 #: templates/blocks/unical_storage_teacherstudyactivities.html:29
 #: templates/includes/unical_storage_cds_website_studyplan_accordion.html:27
-#: templates/storage_cds_websites_isodid.html:57
-#: templates/storage_cds_websites_isodid.html:61
+#: templates/storage_cds_websites_isodid.html:63
 #: templates/storage_cds_websites_studiare.html:544
 #: templates/storage_cds_websites_studiare.html:568
 msgid "Year"
@@ -881,6 +881,7 @@ msgstr "Modalità di erogazione"
 #: templates/blocks/unical_storage_high_formation_masters_list.html:219
 #: templates/blocks/unical_storage_studyactivity_list.html:42
 #: templates/storage_cds_websites_corso.html:148
+#: templates/storage_cds_websites_isodid.html:59
 #: templates/storage_cds_websites_studiare.html:297
 #: templates/storage_cds_websites_studiare.html:318
 msgid "Academic Year"
@@ -1162,6 +1163,8 @@ msgid "Semester"
 msgstr "Semestre"
 
 #: templates/blocks/unical_storage_studyactivity_list.html:287
+#: templates/storage_cds_websites_isodid.html:77
+#: templates/storage_cds_websites_isodid.html:81
 msgid "Code"
 msgstr "Codice"
 
@@ -1630,7 +1633,16 @@ msgstr ""
 msgid "Informations"
 msgstr "Informazioni"
 
-#: templates/storage_cds_websites_isodid.html:119
+#: templates/storage_cds_websites_isodid.html:142
+msgid ""
+"No data available for the selected year. It is possible to consult those "
+"from previous years or select a different degree course code"
+msgstr ""
+"Nessun dato disponibile per l'anno selezionato. E' possibile consultare "
+"quelli degli anni precedenti o selezionare un codice di corso di laurea "
+"differente"
+
+#: templates/storage_cds_websites_isodid.html:144
 msgid ""
 "No data available for the selected year. It is possible to consult those "
 "from previous years"

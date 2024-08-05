@@ -138,7 +138,11 @@
                                 </div>
                                 <div v-else>
                                     <div class="alert alert-info" role="alert">
-                                      {% trans "No data available for the selected year. It is possible to consult those from previous years" %}
+                                        {% if old_cds_identifiers %}
+                                        {% trans "No data available for the selected year. It is possible to consult those from previous years or select a different degree course code" %}
+                                        {% else %}
+                                        {% trans "No data available for the selected year. It is possible to consult those from previous years" %}
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
