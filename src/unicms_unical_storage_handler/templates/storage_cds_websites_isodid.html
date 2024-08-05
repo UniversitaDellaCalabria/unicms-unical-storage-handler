@@ -63,7 +63,7 @@
                                                                     title="{% trans 'Year' %}"
                                                                     name="year_input"
                                                                     class="form-control"
-                                                                    @change="callURL($event.target.value)">
+                                                                    @change="changeYear($event.target.value)">
                                                                     <option v-for="y in range({{ pentaho_isodid_start_year }}, {{ pentaho_isodid_end_year|add:'1' }})" :value="y" :selected="y == active_year">
                                                                       [[ y ]]/[[ y + 1]]
                                                                   </option>
@@ -168,21 +168,16 @@
             return {
                 data: {},
                 active_year: {{ pentaho_isodid_end_year }},
-                //url: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
                 is_loading: true,
                 loader_source: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
                 old_cds_identifiers: {{ old_cds_identifiers|safe }},
                 old_data_found: false,
-                old_cds_called: false,
                 selected_code: '{{ cds_cod }}'
             }
         },
         mounted() {
             this.callURL();
         },
-        //updated() {
-            //this.drawCharts();
-        //},
         methods: {
             slugify(str) {
                   return String(str)
@@ -196,47 +191,22 @@
             },
             changeCode(code) {
                 this.selected_code = code
-                this.callURL(year=this.active_year)
+                this.callURL()
             },
-            async getOldData() {
-                for(let i=0;i<this.old_cds_identifiers.length;i++) {
-                    if(this.old_data_found) break;
-                    let url = '{{ base_api }}{{ pentaho_api }}' + this.old_cds_identifiers[i] + '/{{ pentaho_isodid_api }}?year=' + this.active_year
-                    await axios
-                        .get(url)
-                        .then(response => {
-                            if(Object.keys(response.data).length != 0){
-                                this.old_data_found = true
-                                this.data = response.data.data
-                            }
-                    })
-                    this.drawCharts()
-                }
-                this.old_data_found = false
+            changeYear(year) {
+                this.active_year = year
+                this.callURL()
             },
             async callURL(year=null) {
-                //this.old_cds_called = false
                 this.is_loading = true
                 this.data = {}
-                if(year) {
-                    this.active_year = year
-                }
                 let url = '{{ base_api }}{{ pentaho_api }}' + this.selected_code + '/{{ pentaho_isodid_api }}' + '?year=' + this.active_year
-                //let url = this.url + '?year=' + this.active_year
                 await axios
                     .get(url)
                     .then(response => {
-                        //if(Object.keys(response.data).length == 0){
-                            //this.old_cds_called = true
-                            //this.getOldData()
-                        //}
-                        //else {
-                            //this.data = response.data.data
-                        //}
                         this.data = response.data.data
                         this.is_loading = false
                     })
-                //if(!this.old_cds_called) this.drawCharts()
                 this.drawCharts()
             },
             drawCharts() {
