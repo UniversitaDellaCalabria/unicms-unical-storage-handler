@@ -71,6 +71,27 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row" v-if="old_cds_identifiers.length > 0">
+                                                    <div class="col-sm form-group mb-0">
+                                                        <label for="code_input">
+                                                            {% trans "Code" %}
+                                                        </label>
+                                                        <div class="mt-5">
+                                                            <select id="code_input"
+                                                                    title="{% trans 'Code' %}"
+                                                                    name="code_input"
+                                                                    class="form-control"
+                                                                    @change="changeCode($event.target.value)">
+                                                                    <option value="{{ cds_cod }}">
+                                                                        {{ cds_cod }}
+                                                                    </option>
+                                                                    <option v-for="code in old_cds_identifiers" :value="code">
+                                                                      [[ code ]]
+                                                                    </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -145,12 +166,13 @@
             return {
                 data: {},
                 active_year: {{ pentaho_isodid_end_year }},
-                url: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
+                //url: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
                 is_loading: true,
                 loader_source: '{{ base_api }}{{ pentaho_api }}{{ cds_cod }}/{{ pentaho_isodid_api }}',
                 old_cds_identifiers: {{ old_cds_identifiers|safe }},
                 old_data_found: false,
-                old_cds_called: false
+                old_cds_called: false,
+                selected_code: '{{ cds_cod }}'
             }
         },
         mounted() {
@@ -170,6 +192,10 @@
                     .replace(/\s+/g, '-') // replace spaces with hyphens
                     .replace(/-+/g, '-'); // remove consecutive hyphens
             },
+            changeCode(code) {
+                this.selected_code = code
+                this.callURL(year=this.active_year)
+            },
             async getOldData() {
                 for(let i=0;i<this.old_cds_identifiers.length;i++) {
                     if(this.old_data_found) break;
@@ -187,26 +213,29 @@
                 this.old_data_found = false
             },
             async callURL(year=null) {
-                this.old_cds_called = false
+                //this.old_cds_called = false
                 this.is_loading = true
                 this.data = {}
                 if(year) {
                     this.active_year = year
                 }
-                let url = this.url + '?year=' + this.active_year
+                let url = '{{ base_api }}{{ pentaho_api }}' + this.selected_code + '/{{ pentaho_isodid_api }}' + '?year=' + this.active_year
+                //let url = this.url + '?year=' + this.active_year
                 await axios
                     .get(url)
                     .then(response => {
-                        if(Object.keys(response.data).length == 0){
-                            this.old_cds_called = true
-                            this.getOldData()
-                        }
-                        else {
-                            this.data = response.data.data
-                        }
+                        //if(Object.keys(response.data).length == 0){
+                            //this.old_cds_called = true
+                            //this.getOldData()
+                        //}
+                        //else {
+                            //this.data = response.data.data
+                        //}
+                        this.data = response.data.data
                         this.is_loading = false
                     })
-                if(!this.old_cds_called) this.drawCharts()
+                //if(!this.old_cds_called) this.drawCharts()
+                this.drawCharts()
             },
             drawCharts() {
                 var options = {
