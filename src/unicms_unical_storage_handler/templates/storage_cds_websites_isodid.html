@@ -54,7 +54,7 @@
                                         <div class="card card-bg no-after">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-sm form-group mb-0">
+                                                    <div class="col-12 {% if old_cds_identifiers %}col-lg-6{% endif %} form-group mb-0">
                                                         <label for="year_input">
                                                             {% trans "Academic Year" %}
                                                         </label>
@@ -70,9 +70,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row" v-if="old_cds_identifiers.length > 0">
-                                                    <div class="col-sm form-group mb-0">
+                                                    <div class="col-12 col-lg-6 form-group mb-0" v-if="old_cds_identifiers.length > 0">
                                                         <label for="code_input">
                                                             {% trans "Code" %}
                                                         </label>
