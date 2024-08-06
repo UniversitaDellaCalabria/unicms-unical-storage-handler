@@ -95,6 +95,11 @@
                                 <div class="card-wrapper card-space mb-3 ">
                                     <div class="card card-bg card-big no-after">
                                         <div class="card-body">
+                                            <div class="mb-3">
+                                                <label for="up_academic_year">
+                                                    <b>{% trans "Academic Year" %}</b>: {{ current_year }}/{{ current_year|add:1 }}
+                                                </label>
+                                            </div>
                                             <div v-if="years" class="mb-3">
                                                 <label for="up_years">
                                                     <b>{% trans "Degree course year" %}</b>
