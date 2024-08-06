@@ -104,7 +104,7 @@
                             }
                         )
                 },
-                CallRegDid(regdidid, update_fixed=false) {
+                CallRegDid(regdidid, regdid_year, update_fixed=false) {
                     let cds_url = '{{ base_api }}{{ cds_api }}' + regdidid + '/?lang={{ LANGUAGE_CODE }}'
                     axios
                         .get(cds_url)
@@ -120,6 +120,7 @@
                             // calendars and exams
                             if (typeof _{{ cds_identifier }}_impegniUP != "undefined") {
                                 _{{ cds_identifier }}_impegniUP.regdidid = regdidid
+                                _{{ cds_identifier }}_impegniUP.regdid_year = regdid_year
                             }
                             // studiare teachigs
                             if (typeof _{{ cds_identifier }}_studiare_study_activities != "undefined") {
@@ -179,9 +180,9 @@
                         .then(response => {
                             if(!regdidid) {
                                 regdidid = response.data.results[0]['RegDidId']
-                                this.CallRegDid(regdidid, true)
+                                this.CallRegDid(regdidid, year,true)
                             }
-                            else this.CallRegDid(regdidid)
+                            else this.CallRegDid(regdidid, year)
                             {% block cds_website_extra_main %}
                             {% endblock cds_website_extra_main %}
                         }

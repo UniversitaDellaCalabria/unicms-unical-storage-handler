@@ -273,6 +273,7 @@
                 is_loading: true,
                 loader_source: '',
                 regdidid: null,
+                regdid_year: null,
                 url: '',
                 studyplans: [],
                 chosen_af_name: '',
@@ -356,7 +357,8 @@
             },
             togglePastYears(value) {
                 this.showYearSelector = value
-                this.changeAcademicYear('{{ last_cds_year }}')
+                if(value) this.changeAcademicYear('{{ last_cds_year }}')
+                else this.changeAcademicYear('{{ current_year }}')
             }
         },
         watch: {
@@ -366,7 +368,8 @@
                     this.years.push(year_index)
                     year_index += 1
                 }
-                this.callStudyPlans()
+                if(this.regdid_year >= this.academic_year)
+                    this.callStudyPlans()
             },
             chosen_af_cod: function(val) {
                 if(val != '') this.getEvents()
