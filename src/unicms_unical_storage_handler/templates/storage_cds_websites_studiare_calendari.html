@@ -41,6 +41,7 @@
 {% storage_api_root "CMS_STORAGE_TEACHER_API" as teachers_api %}
 
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% get_cds_website_current_year cds_cod as last_cds_year %}
 {% get_cds_website_morph cds_cod as old_cds_identifiers %}
 
 {% include "includes/unical_storage_loading.html" %}
@@ -355,7 +356,7 @@
             },
             togglePastYears(value) {
                 this.showYearSelector = value
-                this.changeAcademicYear('{{ current_year }}')
+                this.changeAcademicYear('{{ last_cds_year }}')
             }
         },
         watch: {
