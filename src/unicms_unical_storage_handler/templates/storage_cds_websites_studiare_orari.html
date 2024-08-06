@@ -116,212 +116,219 @@
                                                 </select>
                                             </div>
 
-                                            <div v-if="studyplans.length > 1" class="mt-3">
-                                                <label for="up_years">
-                                                    <b>{% trans "Teaching" %}</b>
-                                                </label>
-                                                <select id="up_af"
-                                                        name="teaching_input"
-                                                        class="form-control"
-                                                        @change="choseAF($event.target.value)">
-                                                  <option value="">{% trans "Choose a teaching" %}</option>
-                                                  <optgroup :label="[[ studyplan.StudyPlanName ]]" v-for="studyplan in studyplans">
-                                                    <option v-for="teaching in studyplan.StudyActivities[year]" :value="teaching.StudyActivityCod + '-' + teaching.StudyActivityName">
-                                                        [[ teaching.StudyActivityCod ]] - [[ teaching.StudyActivityName ]]
-                                                    </option>
-                                                  </optgroup>
-                                                </select>
-                                            </div>
-                                            <div v-else-if="studyplans.length == 1" class="mt-3">
-                                                <label for="up_years">
-                                                    <b>{% trans "Teaching" %}</b>
-                                                </label>
-                                                <select id="up_af"
-                                                        name="teaching_input"
-                                                        class="form-control"
-                                                        @change="choseAF($event.target.value)">
-                                                  <option value="">- {% trans "Choose a teaching" %} </option>
-                                                  <option v-if="studyplans.length > 0" v-for="teaching in studyplans[0].StudyActivities[year]" :value="teaching.StudyActivityCod + '-' + teaching.StudyActivityName">
-                                                        [[ teaching.StudyActivityCod ]] - [[ teaching.StudyActivityName ]]
-                                                  </option>
-                                                </select>
-                                            </div>
+                                            <div v-if="studyplans.length > 0">
+                                                <div v-if="studyplans.length > 1" class="mt-3">
+                                                    <label for="up_years">
+                                                        <b>{% trans "Teaching" %}</b>
+                                                    </label>
+                                                    <select id="up_af"
+                                                            name="teaching_input"
+                                                            class="form-control"
+                                                            @change="choseAF($event.target.value)">
+                                                      <option value="">{% trans "Choose a teaching" %}</option>
+                                                      <optgroup :label="[[ studyplan.StudyPlanName ]]" v-for="studyplan in studyplans">
+                                                        <option v-for="teaching in studyplan.StudyActivities[year]" :value="teaching.StudyActivityCod + '-' + teaching.StudyActivityName">
+                                                            [[ teaching.StudyActivityCod ]] - [[ teaching.StudyActivityName ]]
+                                                        </option>
+                                                      </optgroup>
+                                                    </select>
+                                                </div>
+                                                <div v-else-if="studyplans.length == 1" class="mt-3">
+                                                    <label for="up_years">
+                                                        <b>{% trans "Teaching" %}</b>
+                                                    </label>
+                                                    <select id="up_af"
+                                                            name="teaching_input"
+                                                            class="form-control"
+                                                            @change="choseAF($event.target.value)">
+                                                      <option value="">- {% trans "Choose a teaching" %} </option>
+                                                      <option v-if="studyplans.length > 0" v-for="teaching in studyplans[0].StudyActivities[year]" :value="teaching.StudyActivityCod + '-' + teaching.StudyActivityName">
+                                                            [[ teaching.StudyActivityCod ]] - [[ teaching.StudyActivityName ]]
+                                                      </option>
+                                                    </select>
+                                                </div>
 
-                                            <div class="input-group mb-2 mt-3">
-                                                <label for="search_teacher"></label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="search_teacher"
-                                                       name="search_teacher"
-                                                       placeholder="{% trans 'Teacher' %}"
-                                                       v-model="search_teacher"
-                                                       v-on:keyup.enter="getEvents(year)">
+                                                <div class="input-group mb-2 mt-3">
+                                                    <label for="search_teacher"></label>
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="search_teacher"
+                                                           name="search_teacher"
+                                                           placeholder="{% trans 'Teacher' %}"
+                                                           v-model="search_teacher"
+                                                           v-on:keyup.enter="getEvents(year)">
 
-                                                <button class="btn btn-primary btn-xs"
-                                                        type="button"
-                                                        id="search_teacher-button"
-                                                        @click="getEvents(year)">
-                                                    {% trans "Search" %}
-                                                </button>
+                                                    <button class="btn btn-primary btn-xs"
+                                                            type="button"
+                                                            id="search_teacher-button"
+                                                            @click="getEvents(year)">
+                                                        {% trans "Search" %}
+                                                    </button>
+                                                </div>
+                                                <div class="input-group">
+                                                    <label for="search_location"></label>
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="search_location"
+                                                           name="search_location"
+                                                           placeholder="{% trans 'Location' %}"
+                                                           v-model="search_location"
+                                                           v-on:keyup.enter="getEvents(year)">
+
+                                                    <button class="btn btn-primary btn-xs"
+                                                            type="button"
+                                                            id="search_location-button"
+                                                            @click="getEvents(year)">
+                                                        {% trans "Search" %}
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="input-group">
-                                                <label for="search_location"></label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="search_location"
-                                                       name="search_location"
-                                                       placeholder="{% trans 'Location' %}"
-                                                       v-model="search_location"
-                                                       v-on:keyup.enter="getEvents(year)">
-
-                                                <button class="btn btn-primary btn-xs"
-                                                        type="button"
-                                                        id="search_location-button"
-                                                        @click="getEvents(year)">
-                                                    {% trans "Search" %}
-                                                </button>
+                                            <div class="alert alert-info mt-3" role="alert" v-else>
+                                                {% trans "No teaching available for the selected period in the academic year" %} {{ current_year }}/{{ current_year|add:1 }}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <loading-icon
-                                    v-if="is_loading_up"
-                                    :loader_source="loader_source_up">
-                                </loading-icon>
+                                <div :style="[studyplans.length > 0 ? {'display': 'block'} : {'display': 'none'}]">
+                                    <loading-icon
+                                        v-if="is_loading_up"
+                                        :loader_source="loader_source_up">
+                                    </loading-icon>
 
-                                <div :style="'display: ' + css_display">
-                                    <ul class="nav nav-tabs nav-tabs-icon-text" id="myTab3" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="tab1b-tab" data-bs-toggle="tab" href="#tab1b" role="tab" aria-controls="tab1b" aria-selected="true">
-                                                <svg class="icon">
-                                                    <use href="{% static 'svg/sprites.svg' %}#it-calendar"></use>
-                                                </svg> {% trans "Calendar" %}
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab2b-tab" data-bs-toggle="tab" href="#tab2b" role="tab" aria-controls="tab2b">
-                                                <svg class="icon">
-                                                    <use href="{% static 'svg/sprites.svg' %}#it-list"></use>
-                                                </svg> {% trans "List" %}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTab3Content">
-                                        <div class="tab-pane p-4 fade show active" id="tab1b" role="tabpanel" aria-labelledby="tab1b-tab">
-                                            <v-calendar
-                                                ref="calendar"
-                                                class="custom-calendar"
-                                                :masks="masks"
-                                                :attributes="attributes"
-                                                locale="{{ LANGUAGE_CODE }}"
-                                                disable-page-swipe
-                                                @update:from-page="switchPage"
-                                                {% comment %}
-                                                :min-date="new Date()"
-                                                :max-date="new Date()"
-                                                is-expanded
-                                                v-if="attr.customData.dataInizio=[[ day.id ]]"
-                                                :href="'http://localhost/' + attr.customData.id"
-                                                {% endcomment %}>
-                                                <template v-slot:day-content="{ day, attributes }">
-                                                    <div class="flex flex-col h-100 overflow-hidden" style="font-size: 0.875rem">
-                                                        <span class="day-label text-sm text-gray-900">[[ day.day ]]</span>
-                                                        <div class="overflow-auto">
-                                                                <p :key="attr.key" v-for="attr in attributes"
-                                                                   class="rounded p-1 mt-0 mb-1 mx-1"
-                                                                   :class="attr.customData.class"
-                                                                   style="background: #feff9c; border: 1px solid #d5ba2a;">
-                                                                    <span style="font-size: smaller;">
-                                                                        <!--[[ attr.customData.title ]]<br />-->
-                                                                        <b>[[ attr.customData.title ]]</b>
-                                                                        <br />
-                                                                        [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
-                                                                        <span v-if="attr.customData.docente">
+                                    <div :style="'display: ' + css_display">
+                                        <ul class="nav nav-tabs nav-tabs-icon-text" id="myTab3" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="tab1b-tab" data-bs-toggle="tab" href="#tab1b" role="tab" aria-controls="tab1b" aria-selected="true">
+                                                    <svg class="icon">
+                                                        <use href="{% static 'svg/sprites.svg' %}#it-calendar"></use>
+                                                    </svg> {% trans "Calendar" %}
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab2b-tab" data-bs-toggle="tab" href="#tab2b" role="tab" aria-controls="tab2b">
+                                                    <svg class="icon">
+                                                        <use href="{% static 'svg/sprites.svg' %}#it-list"></use>
+                                                    </svg> {% trans "List" %}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="myTab3Content">
+                                            <div class="tab-pane p-4 fade show active" id="tab1b" role="tabpanel" aria-labelledby="tab1b-tab">
+                                                <v-calendar
+                                                    ref="calendar"
+                                                    class="custom-calendar"
+                                                    :masks="masks"
+                                                    :attributes="attributes"
+                                                    locale="{{ LANGUAGE_CODE }}"
+                                                    disable-page-swipe
+                                                    @update:from-page="switchPage"
+                                                    {% comment %}
+                                                    :min-date="new Date()"
+                                                    :max-date="new Date()"
+                                                    is-expanded
+                                                    v-if="attr.customData.dataInizio=[[ day.id ]]"
+                                                    :href="'http://localhost/' + attr.customData.id"
+                                                    {% endcomment %}>
+                                                    <template v-slot:day-content="{ day, attributes }">
+                                                        <div class="flex flex-col h-100 overflow-hidden" style="font-size: 0.875rem">
+                                                            <span class="day-label text-sm text-gray-900">[[ day.day ]]</span>
+                                                            <div class="overflow-auto">
+                                                                    <p :key="attr.key" v-for="attr in attributes"
+                                                                       class="rounded p-1 mt-0 mb-1 mx-1"
+                                                                       :class="attr.customData.class"
+                                                                       style="background: #feff9c; border: 1px solid #d5ba2a;">
+                                                                        <span style="font-size: smaller;">
+                                                                            <!--[[ attr.customData.title ]]<br />-->
+                                                                            <b>[[ attr.customData.title ]]</b>
                                                                             <br />
-                                                                            [[ attr.customData.docente ]]
+                                                                            [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
+                                                                            <span v-if="attr.customData.docente">
+                                                                                <br />
+                                                                                [[ attr.customData.docente ]]
+                                                                            </span>
+                                                                            <span v-if="attr.customData.aula">
+                                                                                <br />
+                                                                                [[ attr.customData.aula ]]
+                                                                            </span>
+                                                                            <span v-if="attr.customData.edificio">
+                                                                                <br />
+                                                                                [[ attr.customData.edificio ]]
+                                                                            </span>
                                                                         </span>
-                                                                        <span v-if="attr.customData.aula">
-                                                                            <br />
-                                                                            [[ attr.customData.aula ]]
-                                                                        </span>
-                                                                        <span v-if="attr.customData.edificio">
-                                                                            <br />
-                                                                            [[ attr.customData.edificio ]]
-                                                                        </span>
-                                                                    </span>
-                                                                </p>
+                                                                    </p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </template>
-                                            </v-calendar>
-                                        </div>
-                                        <div class="tab-pane p-4 fade" id="tab2b" role="tabpanel" aria-labelledby="tab2c-tab">
+                                                    </template>
+                                                </v-calendar>
+                                            </div>
+                                            <div class="tab-pane p-4 fade" id="tab2b" role="tabpanel" aria-labelledby="tab2c-tab">
 
-                                            <v-calendar
-                                                ref="calendar2"
-                                                class="custom-calendar calendar-hidden"
-                                                :masks="masks"
-                                                :attributes="attributes"
-                                                locale="{{ LANGUAGE_CODE }}"
-                                                disable-page-swipe
-                                                @update:from-page="switchPage">
-                                            </v-calendar>
+                                                <v-calendar
+                                                    ref="calendar2"
+                                                    class="custom-calendar calendar-hidden"
+                                                    :masks="masks"
+                                                    :attributes="attributes"
+                                                    locale="{{ LANGUAGE_CODE }}"
+                                                    disable-page-swipe
+                                                    @update:from-page="switchPage">
+                                                </v-calendar>
 
-                                            <div id="accordionDivEvents-lft" class="accordion accordion-left-icon" v-if="Object.keys(events).length > 0">
-                                                <div class="accordion-item" v-for="(day_events, day, index) in events">
-                                                    <div class="accordion-header" :id="'heading-' + index + '-lft'">
-                                                        <button class="accordion-button"
-                                                                type="button"
-                                                                data-bs-toggle="collapse"
-                                                                :data-bs-target="'#collapse-' + index +'-lft'"
-                                                                aria-expanded="false"
-                                                                :aria-controls="'collapse-' + index +'-lft'"
-                                                                style="text-transform: capitalize;">
-                                                            [[ new Date(day).toLocaleString("{{ LANGUAGE_CODE }}",
-                                                                                            {weekday: 'long',
-                                                                                             day: '2-digit'})]]
-                                                        </button>
-                                                    </div>
-                                                    <div :id="'collapse-' + index +'-lft'"
-                                                         class="accordion-collapse collapse"
-                                                         data-bs-parent="#accordionDivEvents-lft"
-                                                         role="region"
-                                                         :aria-labelledby="'heading-' + index +'-lft'">
-                                                        <div class="accordion-body">
-                                                            <ul>
-                                                                <li v-for="event in day_events" class="mt-3">
-                                                                    <b>[[ event.insegnamento ]]</b>
-                                                                    <br>
-                                                                    <svg class="icon icon-xs me-2">
-                                                                        <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                                                                    </svg> [[ event.orarioInizio ]] / [[ event.orarioFine ]]
-                                                                    <br>
-                                                                    <span v-if="event.aula">
-                                                                        <svg class="icon icon-xs me-2">
-                                                                            <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                                                                        </svg> [[ event.aula ]]
+                                                <div id="accordionDivEvents-lft" class="accordion accordion-left-icon" v-if="Object.keys(events).length > 0">
+                                                    <div class="accordion-item" v-for="(day_events, day, index) in events">
+                                                        <div class="accordion-header" :id="'heading-' + index + '-lft'">
+                                                            <button class="accordion-button"
+                                                                    type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    :data-bs-target="'#collapse-' + index +'-lft'"
+                                                                    aria-expanded="false"
+                                                                    :aria-controls="'collapse-' + index +'-lft'"
+                                                                    style="text-transform: capitalize;">
+                                                                [[ new Date(day).toLocaleString("{{ LANGUAGE_CODE }}",
+                                                                                                {weekday: 'long',
+                                                                                                 day: '2-digit'})]]
+                                                            </button>
+                                                        </div>
+                                                        <div :id="'collapse-' + index +'-lft'"
+                                                             class="accordion-collapse collapse"
+                                                             data-bs-parent="#accordionDivEvents-lft"
+                                                             role="region"
+                                                             :aria-labelledby="'heading-' + index +'-lft'">
+                                                            <div class="accordion-body">
+                                                                <ul>
+                                                                    <li v-for="event in day_events" class="mt-3">
+                                                                        <b>[[ event.insegnamento ]]</b>
                                                                         <br>
-                                                                    </span>
-                                                                    <span v-if="event.edificio">
                                                                         <svg class="icon icon-xs me-2">
-                                                                            <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
-                                                                        </svg> [[ event.edificio ]]
+                                                                            <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                                                                        </svg> [[ event.orarioInizio ]] / [[ event.orarioFine ]]
                                                                         <br>
-                                                                    </span>
-                                                                    <span v-if="event.docente">
-                                                                        <svg class="icon icon-xs me-2">
-                                                                            <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                                                                        </svg> [[ event.docente ]]
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
+                                                                        <span v-if="event.aula">
+                                                                            <svg class="icon icon-xs me-2">
+                                                                                <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                                                                            </svg> [[ event.aula ]]
+                                                                            <br>
+                                                                        </span>
+                                                                        <span v-if="event.edificio">
+                                                                            <svg class="icon icon-xs me-2">
+                                                                                <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
+                                                                            </svg> [[ event.edificio ]]
+                                                                            <br>
+                                                                        </span>
+                                                                        <span v-if="event.docente">
+                                                                            <svg class="icon icon-xs me-2">
+                                                                                <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
+                                                                            </svg> [[ event.docente ]]
+                                                                        </span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div v-else>
-                                                {% trans "No items here" %}
+                                                <div v-else>
+                                                    {% trans "No items here" %}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -428,6 +435,8 @@
             },
             choseAF(af_string){
                 this.chosen_af_cod = af_string.substring(0, af_string.indexOf('-'))
+                this.getEvents()
+                this.is_loading = true
             },
             callStudyPlans(regdid=null) {
                 if(!regdid) regdid = this.regdidid
@@ -455,7 +464,6 @@
                         .then(response => {
                             this.studyplans = []
                             if(response.data.results && response.data.results.length > 0){
-                                console.log(this.old_cds_identifiers[i])
                                 this.old_cds_found = true
                                 this.cds_identifier = this.old_cds_identifiers[i]
                                 this.callStudyPlans(response.data.results[0].RegDidId)
@@ -468,21 +476,24 @@
             resetCalendar(year=1) {
                 this.year = year
                 this.chosen_af_cod = ''
-                this.chosen_af_bane = ''
-                let ac_year = _cds_data.cds.AcademicYear - year + 1
-                let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_cod }}&academicyear=' + ac_year
-                axios
-                    .get(url)
-                    .then(response => {
-                        this.studyplans = []
-                        if(response.data.results && response.data.results.length == 0){
-                            this.getOldYears(ac_year)
-                        }
-                        else if(response.data.results && response.data.results.length > 0){
-                            this.callStudyPlans(response.data.results[0].RegDidId)
-                            this.getEvents()
-                        }
-                    })
+                //let ac_year = _cds_data.cds.AcademicYear - year + 1
+                let ac_year = {{ current_year }} - year + 1
+                if(this.year > ({{ current_year }} - ac_year)) {
+                    let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod={{ cds_cod }}&academicyear=' + ac_year
+                    axios
+                        .get(url)
+                        .then(response => {
+                            this.studyplans = []
+                            if(response.data.results && response.data.results.length == 0){
+                                this.getOldYears(ac_year)
+                            }
+                            else if(response.data.results && response.data.results.length > 0){
+                                this.callStudyPlans(response.data.results[0].RegDidId)
+                                this.getEvents()
+                            }
+                        })
+                }
+                else this.getEvents();
             },
         }, //methods
         watch: {
@@ -493,13 +504,16 @@
                     this.years.push(year_index)
                     year_index += 1
                 }
-                this.callStudyPlans()
+
+                if(this.year > ({{ current_year }} - this.regdid_year))
+                    this.callStudyPlans()
+
                 this.getEvents()
             },
-            chosen_af_cod: function(val) {
-                this.getEvents()
-                this.is_loading = true
-            },
+            //chosen_af_cod: function(val) {
+                //this.getEvents()
+                //this.is_loading = true
+            //},
         }
     }) //end "new Vue"
 </script>
