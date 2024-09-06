@@ -81,15 +81,17 @@
                                 <li v-for="coverage in item.StudyActivityHours">
                                     [[ coverage.ActivityType ]]
                                     (h. [[ coverage.Hours ]])
-                                    -
-                                    <a v-if="coverage.StudyActivityTeacherID && coverage.TeacherEmail && coverage.TeacherEmail.length > 0 && coverage.TeacherEmail[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + coverage.TeacherEmail[0].split('@')[0] +'/'">
-                                        [[ coverage.StudyActivityTeacherName ]]
-                                    </a>
-                                    <a v-else-if="coverage.StudyActivityTeacherID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + coverage.StudyActivityTeacherID +'/'">
-                                        [[ coverage.StudyActivityTeacherName ]]
-                                    </a>
-                                    <span v-else>
-                                        [[ coverage.StudyActivityTeacherName ]]
+                                    <span v-if="coverage.StudyActivityTeacherName">
+                                        -
+                                        <a v-if="coverage.StudyActivityTeacherID && coverage.TeacherEmail && coverage.TeacherEmail.length > 0 && coverage.TeacherEmail[0].includes('@{{ addressbook_friendly_main_url_email_domain }}')" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + coverage.TeacherEmail[0].split('@')[0] +'/'">
+                                            [[ coverage.StudyActivityTeacherName ]]
+                                        </a>
+                                        <a v-else-if="coverage.StudyActivityTeacherID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + coverage.StudyActivityTeacherID +'/'">
+                                            [[ coverage.StudyActivityTeacherName ]]
+                                        </a>
+                                        <span v-else>
+                                            [[ coverage.StudyActivityTeacherName ]]
+                                        </span>
                                     </span>
                                 </li>
                             </ul>
