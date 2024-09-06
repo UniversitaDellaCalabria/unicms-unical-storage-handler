@@ -56,10 +56,7 @@
                                     :data-bs-target="'#collapse-{{ id }}-1' + index +'-lft'"
                                     aria-expanded="false"
                                     :aria-controls="'collapse-{{ id }}-1' + index +'-lft'">
-								[[ year ]] {% trans "year" %} 
-								<span v-if="teachings_dictionary[year][0].StudyActivities.length > 0">
-									- ([[ teachings_dictionary[year][0].StudyActivities[year][0].StudyActivityCdSCod ]])
-								</span>
+								[[ year ]] {% trans "year" %} - ([[ teachings_dictionary[year].cdscod ]])
                             </button>
                         </div>
                         <div :id="'collapse-{{ id }}-1' + index +'-lft'"
@@ -67,7 +64,7 @@
                              :data-bs-parent="'studyPlanAccordionInnerDiv{{ id }}-1-lft'"
                              role="region"
                              :aria-labelledby="'heading-{{ id }}-1' + index + '-lft'">
-                            <div class="accordion-body" v-if="teachings_dictionary[year].length == 1">
+                            <div class="accordion-body" v-if="teachings_dictionary[year].data.length == 1">
                                 <div class="it-list-wrapper">
                                     <div class="table-responsive">
                                         <span>
@@ -87,7 +84,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="activity in teachings_dictionary[year][0].StudyActivities[year]" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                    <tr v-for="activity in teachings_dictionary[year].data[0].StudyActivities[year]" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
                                                         <td>
 <!--
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
@@ -113,7 +110,7 @@
                                 </div>
                             </div>
                             <div :id="'studyPlanAccordionDivInner{{ id }}-lft'" class="accordion accordion-left-icon" v-else>
-                                <div v-for="(item, index2) in teachings_dictionary[year]" class="accordion-item">
+                                <div v-for="(item, index2) in teachings_dictionary[year].data" class="accordion-item">
                                     <div class="accordion-header" :id="'studyPlanHeading-{{ id }}-' + index + '-' + index2 + '-lft'">
                                         <button class="accordion-button"
                                                 type="button"
@@ -219,12 +216,12 @@ old_cds_found: false
 {% get_cds_website_morph cds_identifier as old_cds_identifiers %}
 {% get_current_language as LANGUAGE_CODE %}
 
-async setTeachingDictionary(regdidid, index) {
+async setTeachingDictionary(regdidid, cdscod,index) {
     let teachings_url = "{{ base_api }}{{ cds_api }}" + regdidid + "/studyplans/?lang={{ LANGUAGE_CODE }}"
     await axios
         .get(teachings_url)
         .then(response => {
-            Vue.set(this.teachings_dictionary, index, response.data.results)
+            Vue.set(this.teachings_dictionary, index, {cdscod: cdscod, data: response.data.results})
         })
 },
 async getOldTeachings(year, index) {
@@ -236,7 +233,7 @@ async getOldTeachings(year, index) {
             .then(response => {
                 if(response.data.results && response.data.results.length > 0){
                     this.old_cds_found = true
-                    this.setTeachingDictionary(response.data.results[0].RegDidId, index)
+                    this.setTeachingDictionary(response.data.results[0].RegDidId, this.old_cds_identifiers[i], index)
                 }
         })
     }
@@ -248,7 +245,7 @@ async getTeachingsInYear(year, index) {
         .get(url)
         .then(response => {
             if(response.data.results && response.data.results.length > 0){
-                this.setTeachingDictionary(response.data.results[0].RegDidId, index)
+                this.setTeachingDictionary(response.data.results[0].RegDidId, _cds_data.cds.CdSCod, index)
             }
             else {
                 this.getOldTeachings(year, index)
