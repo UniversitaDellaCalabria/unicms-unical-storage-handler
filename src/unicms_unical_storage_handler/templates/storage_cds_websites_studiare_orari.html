@@ -243,9 +243,9 @@
                                                                             <b>[[ attr.customData.title ]]</b>
                                                                             <br />
                                                                             [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
-                                                                            <span v-if="attr.customData.docente">
+                                                                            <span v-for="docente in attr.customData.docenti">
                                                                                 <br />
-                                                                                [[ attr.customData.docente ]]
+                                                                                [[ docente ]]
                                                                             </span>
                                                                             <span v-if="attr.customData.aula">
                                                                                 <br />
@@ -302,23 +302,23 @@
                                                                         <svg class="icon icon-xs me-2">
                                                                             <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
                                                                         </svg> [[ event.orarioInizio ]] / [[ event.orarioFine ]]
-                                                                        <br>
                                                                         <span v-if="event.aula">
+                                                                            <br>
                                                                             <svg class="icon icon-xs me-2">
                                                                                 <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
                                                                             </svg> [[ event.aula ]]
-                                                                            <br>
                                                                         </span>
                                                                         <span v-if="event.edificio">
+                                                                            <br>
                                                                             <svg class="icon icon-xs me-2">
                                                                                 <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
                                                                             </svg> [[ event.edificio ]]
-                                                                            <br>
                                                                         </span>
-                                                                        <span v-if="event.docente">
+                                                                        <span v-for="docente in event.docenti">
+                                                                            <br>
                                                                             <svg class="icon icon-xs me-2">
                                                                                 <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                                                                            </svg> [[ event.docente ]]
+                                                                            </svg> [[ docente ]]
                                                                         </span>
                                                                     </li>
                                                                 </ul>
@@ -420,7 +420,7 @@
                                         dataFine: item.dataFine,
                                         orarioInizio: item.orarioInizio,
                                         orarioFine: item.orarioFine,
-                                        docente: item.docente,
+                                        docenti: item.docenti,
                                         aula: item.aula,
                                         edificio: item.edificio,
                                     },
