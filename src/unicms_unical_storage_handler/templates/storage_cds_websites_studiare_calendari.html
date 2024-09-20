@@ -227,12 +227,12 @@
                                                             <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
                                                         </svg> [[ event.edificio ]]
                                                     </span>
-                                                    <span v-if="event.docente">
+                                                    <span v-for="docente in event.docenti">
                                                         <br>
                                                         <svg class="icon icon-xs me-2" aria-labelledby="event_teacher">
                                                             <title id="event_teacher">{% trans "Teacher" %}</title>
                                                             <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                                                        </svg> [[ event.docente ]]
+                                                        </svg> [[ docente ]]
                                                     </span>
                                                     <span v-if="event.extra.dataInizioIscrizioni">
                                                         <br>
