@@ -201,14 +201,21 @@
                                                     <span class="badge bg-warning" v-else>
                                                         {% trans "To be confirmed" %}
                                                     </span>
-                                                    <br>
+                                                    <span v-if="event.insegnamento != chosen_af_name">
+                                                        <br>
+                                                        <svg class="icon icon-xs me-2" aria-labelledby="event_insegnamento">
+                                                            <title id="event_insegnamento">{% trans "Teaching" %}</title>
+                                                            <use href="{% static 'svg/sprites.svg' %}#it-chevron-right"></use>
+                                                        </svg> [[ event.insegnamento ]]
+                                                    </span>
                                                     <span v-if="event.extra.descr">
+                                                        <br>
                                                         <svg class="icon icon-xs me-2" aria-labelledby="event_descr">
                                                             <title id="event_descr">{% trans "Description" %}</title>
                                                             <use href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
                                                         </svg> [[ event.extra.descr ]]
-                                                        <br>
                                                     </span>
+                                                    <br>
                                                     <svg class="icon icon-xs me-2" aria-labelledby="event_hour">
                                                         <title id="event_hour">{% trans "Hour" %}</title>
                                                         <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
