@@ -61,7 +61,7 @@
         {% block centered_container %}
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-lg-8">
+                    <div class="col-12 col-lg-12">
                         <p class="h1 lighter mb-4">
                             <a class="no-color" href="{{ webpath.fullpath }}{{ cds_base_path }}/{{ cds_studiare_path }}/">
                                 {{ page_title }}
@@ -350,11 +350,13 @@
                         </div>
                         <!-- END Orario lezioni -->
                     </div>
+                    {% comment %}
                     <div class="col-12 col-lg-3 offset-lg-1">
                         {% include "includes/unical_storage_cds_website_right_static.html" %}
                         <hr style="color: transparent" class="my-3" />
                         {% include "includes/unical_storage_cds_website_right_contacts.html" %}
                     </div>
+                    {% endcomment %}
                 </div>
             </div>
         {% endblock %}
