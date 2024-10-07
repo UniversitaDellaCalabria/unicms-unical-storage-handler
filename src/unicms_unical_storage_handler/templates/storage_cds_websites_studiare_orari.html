@@ -255,6 +255,10 @@
                                                                                 <br />
                                                                                 [[ attr.customData.edificio ]]
                                                                             </span>
+                                                                            <span v-if="attr.customData.note">
+                                                                                <br />
+                                                                                [[ attr.customData.note ]]
+                                                                            </span>
                                                                         </span>
                                                                     </p>
                                                             </div>
@@ -319,6 +323,15 @@
                                                                             <svg class="icon icon-xs me-2">
                                                                                 <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
                                                                             </svg> [[ docente ]]
+                                                                        </span>
+                                                                        <span v-if="event.extra.note">
+                                                                            <br>
+                                                                            <svg class="icon icon-xs me-2">
+                                                                                <use href="{% static 'svg/sprites.svg' %}#it-clip"></use>
+                                                                            </svg>
+                                                                            <span style="white-space:break-spaces;display:inline-flex;">
+                                                                                [[ event.extra.note ]]
+                                                                            </span>
                                                                         </span>
                                                                     </li>
                                                                 </ul>
@@ -423,6 +436,7 @@
                                         docenti: item.docenti,
                                         aula: item.aula,
                                         edificio: item.edificio,
+                                        note: item.extra.note,
                                     },
                                     dates: { start: new Date(item.dataInizio),
                                              end: new Date(item.dataFine) }
