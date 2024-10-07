@@ -197,7 +197,7 @@
                                     </loading-icon>
 
                                     <div :style="'display: ' + css_display">
-                                        <ul class="nav nav-tabs nav-tabs-icon-text" id="myTab3" role="tablist">
+                                        <ul class="nav nav-tabs nav-tabs-icon-text d-none" id="myTab3" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link active" id="tab1b-tab" data-bs-toggle="tab" href="#tab1b" role="tab" aria-controls="tab1b" aria-selected="true">
                                                     <svg class="icon">
@@ -240,24 +240,34 @@
                                                                        style="background: #feff9c; border: 1px solid #d5ba2a;">
                                                                         <span style="font-size: smaller;">
                                                                             <!--[[ attr.customData.title ]]<br />-->
-                                                                            <b>[[ attr.customData.title ]]</b>
+                                                                            <svg class="icon icon-xs me-2">
+                                                                                <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                                                                            </svg> [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
                                                                             <br />
-                                                                            [[ attr.customData.orarioInizio ]]/[[ attr.customData.orarioFine ]]
+                                                                            <b>[[ attr.customData.title ]]</b>
                                                                             <span v-for="docente in attr.customData.docenti">
                                                                                 <br />
-                                                                                [[ docente ]]
+                                                                                <svg class="icon icon-xs me-2">
+                                                                                    <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
+                                                                                </svg> [[ docente ]]
                                                                             </span>
                                                                             <span v-if="attr.customData.aula">
                                                                                 <br />
-                                                                                [[ attr.customData.aula ]]
+                                                                                <svg class="icon icon-xs me-2">
+                                                                                    <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
+                                                                                </svg> [[ attr.customData.aula ]]
                                                                             </span>
                                                                             <span v-if="attr.customData.edificio">
                                                                                 <br />
-                                                                                [[ attr.customData.edificio ]]
+                                                                                <svg class="icon icon-xs me-2">
+                                                                                    <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
+                                                                                </svg> [[ attr.customData.edificio ]]
                                                                             </span>
                                                                             <span v-if="attr.customData.note">
                                                                                 <br />
-                                                                                [[ attr.customData.note ]]
+                                                                                <svg class="icon icon-xs me-2">
+                                                                                    <use href="{% static 'svg/sprites.svg' %}#it-clip"></use>
+                                                                                </svg> [[ attr.customData.note ]]
                                                                             </span>
                                                                         </span>
                                                                     </p>
