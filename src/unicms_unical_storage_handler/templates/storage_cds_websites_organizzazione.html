@@ -76,7 +76,7 @@
                                                                     <svg class="icon icon-sm icon-muted me-2">
                                                                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
                                                                     </svg>
-                                                                    <a :href="'email:'+_cds_data.coordinator_data.Email[0]">
+                                                                    <a :href="'mailto:'+_cds_data.coordinator_data.Email[0]">
                                                                         [[ _cds_data.coordinator_data.Email[0] ]]
                                                                     </a>
                                                                 </div>
@@ -105,7 +105,7 @@
                                                                     <svg class="icon icon-sm icon-muted me-2">
                                                                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
                                                                     </svg>
-                                                                    <a :href="'email:'+_cds_data.deputy_coordinator_data.Email[0]">
+                                                                    <a :href="'mailto:'+_cds_data.deputy_coordinator_data.Email[0]">
                                                                         [[ _cds_data.deputy_coordinator_data.Email[0] ]]
                                                                     </a>
                                                                 </div>
@@ -213,7 +213,7 @@
                                                         </svg>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <a :href="'email:'+office.Email">
+                                                        <a :href="'mailto:'+office.Email">
                                                             [[ office.Email ]]
                                                         </a>
                                                     </div>
