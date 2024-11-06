@@ -428,7 +428,8 @@ CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsi
 CMS_STORAGE_APP_REGEXP_URLPATHS['unicms_unical_storage_handler.handlers.CdsWebsitesStudiareScheduleHandler'] = CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_URL_VIEW_REGEXP
 
 # APIs
-CMS_STORAGE_CDS_WEBSITES_API = 'cds-brochures/'
+CMS_STORAGE_CDS_BROCHURES_API = 'cds-brochures/'
+CMS_STORAGE_CDS_WEBSITES_API = 'cds-websites/'
 CMS_STORAGE_CDS_WEBSITES_TOPICS_API = 'cds-websites-topic/'
 CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API = 'cds-websites-topic-articles/'
 CMS_STORAGE_CDS_WEBSITES_STUDYPLANS_API = 'cds-websites-studyplans/'
