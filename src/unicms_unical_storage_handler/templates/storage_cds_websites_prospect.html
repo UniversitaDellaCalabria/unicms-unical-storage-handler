@@ -905,7 +905,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
         },
         methods: {
             callWebsite() {
-                let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
+                let url = '{{ base_api }}{{ cds_brochures_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
                 axios
                     .get(url)
                     .then(response => {
