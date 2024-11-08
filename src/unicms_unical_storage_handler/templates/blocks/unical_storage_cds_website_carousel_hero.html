@@ -10,7 +10,7 @@
 {% settings_value "CAROUSEL_HERO_AUTOPLAY_TIMEOUT" as carousel_timeout %}
 
 {% storage_settings_value "CMS_STORAGE_BASE_API" as base_api %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_BROCHURES_API" as cds_brochures_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH" as prospect_page_path %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_website_prospect_redirect %}
@@ -113,7 +113,7 @@ var _{{ cds_cod }}_hero_slider = new Vue({
     },
     methods: {
         callWebsite() {
-            let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
+            let url = '{{ base_api }}{{ cds_brochures_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
             axios
                 .get(url)
                 .then(response => {
