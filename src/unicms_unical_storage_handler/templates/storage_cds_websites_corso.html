@@ -41,7 +41,7 @@ if(!year)year = "{{ cds_website_current_year }}"
 {% storage_api_root "CMS_STORAGE_ACADEMICYEARS_API" as academicyears_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL" as page_title %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
-{% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_API" as cds_websites_api %}
+{% storage_settings_value "CMS_STORAGE_CDS_BROCHURES_API" as cds_brochures_api %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_STUDYPLANS_API" as cds_websites_studyplans_api %}
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_base_path %}
@@ -455,7 +455,7 @@ var _cds_website_text = new Vue({
     },
     methods: {
         callWebsite() {
-            let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
+            let url = '{{ base_api }}{{ cds_brochures_api }}{{ cds_cod }}/?lang={{ LANGUAGE_CODE }}'
             axios
                 .get(url)
                 .then(response => {
@@ -612,14 +612,8 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
         },
         changeYear(value) {
             this.selected_year = value
-            let url = '{{ base_api }}{{ cds_websites_api }}{{ cds_identifier }}/?lang={{ LANGUAGE_CODE }}&academicyear=' + value
-            axios
-                .get(url)
-                .then(response => {
-                    this.callCdsByYear(value)
-                    _{{ cds_cod }}_studyplans_others.callStudyPlans(value)
-                }
-            )
+            this.callCdsByYear(value)
+            _{{ cds_cod }}_studyplans_others.callStudyPlans(value)
         },
     },
 })
