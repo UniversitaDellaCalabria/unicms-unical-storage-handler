@@ -235,8 +235,8 @@
                                             {% block role %}
                                             <br>
                                             <ul class="mt-2 mb-1 ps-0" style="list-style: none">
-                                                <li v-for="role in item.Roles" v-if="((allowed_roles.length==0 || allowed_roles.includes(role.Role)) && (allowed_structure_types.length==0 || allowed_structure_types.includes(role.StructureTypeCOD))) || special_roles.includes(item.ProfileId)">
-                                                    <span v-if="role.StructureTypeCOD != '000'">
+                                                <li v-for="role in item.Roles" v-if="((allowed_roles.length==0 || allowed_roles.includes(role.Role))) || special_roles.includes(item.ProfileId)">
+                                                    <span v-if="role.StructureTypeCOD && role.StructureTypeCOD != '000'">
                                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + role.StructureCod +'/'">
                                                             [[ role.Structure ]]
                                                         </a>
@@ -400,7 +400,10 @@ loader_source_structure_types: '{{ structuretypes_api }}?lang={{ LANGUAGE_CODE }
 loader_source_roles: '{{ roles_api }}?lang={{ LANGUAGE_CODE }}',
 
 allowed_structure_id: {{ allowed_structure_id|safe }},
+{% comment %}
 allowed_structure_types: {{ allowed_structure_types|safe }},
+{% endcomment %}
+allowed_structure_types: [],
 allowed_roles: {{ allowed_roles|safe }},
 special_roles: {{ addressbook_special_roles|safe }},
 
@@ -415,9 +418,6 @@ fields_to_not_show: {{ fields_to_hide|safe }}
 {% endblock extra_data %}
 
 {% block extra_mounted %}
-    // "000 - Non assegnato" in structure_types
-    this.allowed_structure_types.push('000');
-
     // if url if pre-filtered resize select field
     // this allows to auto generate select options according to URL get filters!
     let params = new URLSearchParams(this.url.split('?')[1]);
@@ -437,6 +437,8 @@ fields_to_not_show: {{ fields_to_hide|safe }}
     if (get_structure_types != null){
         let get_structure_types_list = get_structure_types.split(',')
         this.allowed_structure_types = get_structure_types_list
+        // "000 - Non assegnato" in structure_types
+        this.allowed_structure_types.push('000');
     }
 
     let get_structure_id = params.get("structure")

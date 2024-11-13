@@ -58,9 +58,9 @@
                         </td>
                         <td v-if="Array.isArray(value)">
                             <ul v-if="name == 'Roles'" style="list-style: none" class="ps-0">
-                                <li v-for="(subvalue, index) in value" v-if="((allowed_roles.length==0 || allowed_roles.includes(subvalue.Role)) && (allowed_structure_types.length==0 || allowed_structure_types.includes(subvalue.StructureTypeCOD))) || special_roles.includes(item.ProfileId)">
+                                <li v-for="(subvalue, index) in value" v-if="((allowed_roles.length==0 || allowed_roles.includes(subvalue.Role))) || special_roles.includes(item.ProfileId)">
                                     <hr v-if="index > 0">
-                                    <span v-if="subvalue.StructureTypeCOD != '000'">
+                                    <span v-if="subvalue.StructureTypeCOD && subvalue.StructureTypeCOD != '000'">
                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.StructureCod +'/'">
                                             [[ subvalue.Structure ]]
                                         </a>
