@@ -22,12 +22,12 @@
 {% include "blocks/includes/unical_storage_check.html" %}
 {% endblock storage_block_top %}
 
+        {% block filters %}
         <div class="row">
             <div class="col-12">
                 <div class="card-wrapper card-space">
                     <div class="card card-bg no-after">
                         <div class="card-body">
-
                             <div class="row form-group">
                                 <div class="col-md">
                                     <div class="input-group">
@@ -83,8 +83,6 @@
 
                                 <!-- Structure and Role -->
                                 <div class="row">
-
-                                    {% block filters %}
 
                                     {% block structure_type_filter %}
                                     <div class="col-sm form-group mb-0">
@@ -181,18 +179,15 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    {% endblock filters %}
                                 </div>
-
                                 <!-- End Structure and Role -->
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% endblock filters %}
 
         <list-panel v-bind:data="items" v-if="items.results" id="{{ id }}"></list-panel>
 
