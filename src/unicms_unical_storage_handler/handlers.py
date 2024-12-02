@@ -350,6 +350,7 @@ class AddressbookInfoViewHandler(BaseStorageHandler):
         self.data['url'] = url
         person_data = requests.get(f'{url}').json()
         self.data['page_title'] = person_data['results']['Name']
+        self.data['page_meta_description'] = f"{person_data['results']['OfficeReference'][0]} - {person_data['results']['Email'][0]} - {person_data['results']['TelOffice'][0]}"
         self.data['person_data'] = json.dumps(person_data)
         return super().as_view()
 
