@@ -285,7 +285,12 @@ class TeacherInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/'
+        url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/'
+        self.data['url'] = url
+        teacher_data = requests.get(f'{url}').json()
+        self.data['page_title'] = f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']} - {teacher_data['results']['TeacherRoleDescription']}"
+        self.data['page_meta_description'] = f"{teacher_data['results']['TeacherDepartmentName']} - {teacher_data['results']['TeacherSSDCod']} {teacher_data['results']['TeacherSSDDescription']}"
+        self.data['teacher_data'] = json.dumps(teacher_data)
         self.data['code'] = self.code
         return super().as_view()
 

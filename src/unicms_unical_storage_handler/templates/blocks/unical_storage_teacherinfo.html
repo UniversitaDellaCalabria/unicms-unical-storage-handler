@@ -393,9 +393,9 @@
         el: '#{{ id }}',
         data() {
             return {
-                item: {},
+                item: {% if teacher_data %}{{ teacher_data|safe }}.results{% else %}{}{% endif %},
                 errors: {},
-                labels: {},
+                labels: {% if teacher_data %}{{ teacher_data|safe }}.labels{% else %}{}{% endif %},
                 url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
                 is_loading: true,
                 loader_source: '{{ url }}',
@@ -403,7 +403,7 @@
             }
         },
         mounted() {
-            this.CallURL();
+            {% if teacher_data %}this.FetchData();{% else %}this.CallURL();{% endif %}
         },
         methods: {
             containsHTML(s) {
@@ -424,10 +424,6 @@
                         this.labels = response.data.labels;
                         {{ id }}_datas.labels = response.data.labels;
                         this.is_loading = false
-                        {% if change_breadcrumb %}
-                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.TeacherFirstName.concat(" ", this.item.TeacherLastName)
-                        document.title = this.item.TeacherFirstName.concat(" ", this.item.TeacherLastName)
-                        {% endif %}
                     })
                     .catch(error => {
                         if(error.response){
@@ -439,6 +435,18 @@
                         this.is_loading = false
                         document.getElementById("{{ id }}_collapse-3-lft").style.display = "none";
                     });
+            },
+            FetchData() {
+                {{ id }}_head.item = this.item;
+                {{ id }}_head.is_loading = false;
+                {{ id }}_tabList.item = this.item;
+                {{ id }}_researchFields.item = this.item;
+                {{ id }}_researchFields.labels = this.labels;
+                {{ id }}_cv.item = this.item;
+                {{ id }}_datas.item = this.item;
+                {{ id }}_datas.labels = this.labels;
+                this.is_loading = false
+                document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.TeacherFirstName.concat(" ", this.item.TeacherLastName)
             }
         }
     })
