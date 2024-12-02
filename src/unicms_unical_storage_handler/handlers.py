@@ -346,7 +346,11 @@ class AddressbookInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}{self.code}/'
+        url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}{self.code}/'
+        self.data['url'] = url
+        person_data = requests.get(f'{url}').json()
+        self.data['page_title'] = person_data['results']['Name']
+        self.data['person_data'] = json.dumps(person_data)
         return super().as_view()
 
     @property

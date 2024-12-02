@@ -137,9 +137,9 @@
                 allowed_roles: {{ allowed_roles|safe }},
                 allowed_structure_types: {{ allowed_structure_types|safe }},
                 addressbook_special_roles: {{ addressbook_special_roles|safe }},
-                item: {},
+                item: {% if person_data %}{{ person_data|safe }}.results{% else %}{}{% endif %},
                 errors: {},
-                labels: {},
+                labels: {% if person_data %}{{ person_data|safe }}.labels{% else %}{}{% endif %},
                 url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
                 is_loading: true,
                 loader_source: '{{ url }}',
@@ -148,7 +148,7 @@
             }
         },
         mounted() {
-            this.CallURL();
+            {% if person_data %}this.FetchData();{% else %}this.CallURL();{% endif %}
         },
         methods: {
             CallURL() {
@@ -158,10 +158,6 @@
                         this.item = response.data.results;
                         this.labels = response.data.labels;
                         this.is_loading = false
-                        {% if change_breadcrumb %}
-                        document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.Name
-                        document.title = this.item.Name
-                        {% endif %}
                     })
                     .catch(error => {
                         if(error.response)
@@ -170,6 +166,10 @@
                             }
                         this.is_loading = false
                     });
+            },
+            FetchData() {
+                this.is_loading = false
+                document.getElementsByClassName("{{ breadcrumb_last }}")[0].innerHTML = this.item.Name
             }
         }
     })
