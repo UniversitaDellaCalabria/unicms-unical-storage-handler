@@ -58,16 +58,14 @@ Vue.component('list-panel', {
 
                     <div class="col w-50" v-if="data.total_pages > 1">
                         <div class="float-end">
-                            <span>
-                                <a class="" style="color:#050b12;" v-if="data.page_number > 1" :onclick="[[ id ]] + '.CallURL(' + [[ id ]] + '.previous_page)'">
-                                    <span class="visually-hidden"> {% trans "page" %} </span> &lt; {% trans "previous" %}
-                                </a>
+                            <span class="" style="cursor: pointer; color:#050b12;" v-if="data.page_number > 1" :onclick="[[ id ]] + '.CallURL(' + [[ id ]] + '.previous_page)'">
+                                <span class="visually-hidden"> {% trans "page" %} </span> &lt; {% trans "previous" %}
                             </span>
 
                             <span class="me-2 ms-2" >[[ data.page_number ]] / <b>[[ data.total_pages ]]</b></span>
-                            <a class="" style="color:#050b12;" :onclick="[[ id ]] + '.CallURL(' + [[ id ]] + '.next_page)'" v-if="data.page_number < data.total_pages">
+                            <span class="" style="cursor: pointer; color:#050b12;" :onclick="[[ id ]] + '.CallURL(' + [[ id ]] + '.next_page)'" v-if="data.page_number < data.total_pages">
                                 <span class="visually-hidden">{% trans "page" %} </span>{% trans "next" %} &gt;
-                            </a>
+                            </span>
                         </div>
                     </div>
                 </div>
