@@ -269,6 +269,15 @@
                                                                                     <use href="{% static 'svg/sprites.svg' %}#it-clip"></use>
                                                                                 </svg> [[ attr.customData.note ]]
                                                                             </span>
+                                                                            <span v-if="attr.customData.link_teledidattica">
+                                                                                <br />
+                                                                                <svg class="icon icon-xs me-2">
+                                                                                    <use href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                                </svg>
+                                                                                <a :href="attr.customData.link_teledidattica" target="_blank">
+                                                                                    {% trans "Go to the online lesson" %}
+                                                                                </a>
+                                                                            </span>
                                                                         </span>
                                                                     </p>
                                                             </div>
@@ -342,6 +351,15 @@
                                                                             <span style="white-space:break-spaces;display:inline-flex;">
                                                                                 [[ event.extra.note ]]
                                                                             </span>
+                                                                        </span>
+                                                                        <span v-if="event.extra.link_teledidattica">
+                                                                            <br>
+                                                                            <svg class="icon icon-xs me-2">
+                                                                                <use href="{% static 'svg/sprites.svg' %}#it-link"></use>
+                                                                            </svg>
+                                                                            <a :href="event.extra.link_teledidattica" target="_blank" style="display:inline-flex;">
+                                                                                {% trans "Go to the online lesson" %}
+                                                                            </a>
                                                                         </span>
                                                                     </li>
                                                                 </ul>
@@ -449,6 +467,7 @@
                                         aula: item.aula,
                                         edificio: item.edificio,
                                         note: item.extra.note,
+                                        link_teledidattica: item.extra.link_teledidattica
                                     },
                                     dates: { start: new Date(item.dataInizio),
                                              end: new Date(item.dataFine) }
