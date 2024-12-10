@@ -285,7 +285,7 @@ class TeacherInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/'
+        url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/?lang={self.request.LANGUAGE_CODE}'
         self.data['url'] = url
         teacher_data = requests.get(f'{url}').json()
         self.data['page_title'] = f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']} - {teacher_data['results']['TeacherRoleDescription']}"
@@ -346,7 +346,7 @@ class AddressbookInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
-        url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}{self.code}/'
+        url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}{self.code}/?lang={self.request.LANGUAGE_CODE}'
         self.data['url'] = url
         person_data = requests.get(f'{url}').json()
         self.data['page_title'] = person_data['results']['Name']
