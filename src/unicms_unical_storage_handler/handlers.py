@@ -87,7 +87,7 @@ INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL
 
 # CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
 CMS_WEBPATH_CDS_OLD = getattr(settings, 'CMS_WEBPATH_CDS_OLD', CMS_WEBPATH_CDS_OLD)
-CMS_WEBPATH_CDS_MORPH = getattr(settings, 'CMS_WEBPATH_CDS_MORPH', CMS_WEBPATH_CDS_MORPH)
+# CMS_WEBPATH_CDS_MORPH = getattr(settings, 'CMS_WEBPATH_CDS_MORPH', CMS_WEBPATH_CDS_MORPH)
 CMS_WEBPATH_PROSPECT = getattr(settings, 'CMS_WEBPATH_PROSPECT', CMS_WEBPATH_PROSPECT)
 CMS_WEBPATH_PROSPECT_DEFAULT = getattr(settings, 'CMS_WEBPATH_PROSPECT_DEFAULT', CMS_WEBPATH_PROSPECT_DEFAULT)
 CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
@@ -1118,8 +1118,9 @@ class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
         cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
 
         if not cds_data or cds_data.status_code != 200 or not cds_data.json()['results']:
-            for new_cds in CMS_WEBPATH_CDS_MORPH:
-                if self.cds_cod in CMS_WEBPATH_CDS_MORPH[new_cds]:
+            cds_morph_list = request.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}').json()
+            for new_cds in cds_morph_list:
+                if self.cds_cod in cds_morph_list[new_cds]:
                     cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={new_cds}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
                     break
             if not cds_data or cds_data.status_code != 200 or not cds_data.json()['results']:

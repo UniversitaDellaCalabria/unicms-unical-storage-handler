@@ -21,11 +21,11 @@
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 {% storage_settings_value "ALLOWED_CDS_JOINT_DEGREES" as allowed_joint_degrees %}
 {% storage_api_root "CMS_STORAGE_ADDRESSBOOK_API" as addressbook_api %}
-{% storage_settings_value "CMS_WEBPATH_CDS_MORPH" as cms_webpath_cds_morph %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_cds_website_cds_cod webpath.pk cds_cod as cds_identifier %}
 {% get_cds_website_current_year cds_identifier as current_year %}
+{% get_cds_websites_morph as cms_webpath_cds_morph %}
 {% get_webpath_cds_dict as cms_webpath_cds %}
 
 

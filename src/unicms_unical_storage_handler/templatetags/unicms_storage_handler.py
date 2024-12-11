@@ -1,4 +1,5 @@
 import logging
+import requests
 
 from django import template
 from django.conf import settings
@@ -15,6 +16,8 @@ register = template.Library()
 
 ALLOWED_UNICMS_SITES = getattr(settings, 'ALLOWED_UNICMS_SITES',
                                app_settings.ALLOWED_UNICMS_SITES)
+CMS_STORAGE_BASE_API = getattr(settings, 'CMS_STORAGE_BASE_API',
+                               app_settings.CMS_STORAGE_BASE_API)
 CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS',
                                                 app_settings.CMS_STORAGE_CDS_WEBSITE_PROSPECT_DOCS)
 
@@ -129,11 +132,21 @@ def get_cds_website_new_year(cds_cod):
 
 
 @register.simple_tag
+def get_cds_websites_morph():
+    cds_morph_api = getattr(settings,
+                            'CMS_STORAGE_CDS_MORPH_LIST_API',
+                            app_settings.CMS_STORAGE_CDS_MORPH_LIST_API)
+    cds_morph_list = requests.get(f'{CMS_STORAGE_BASE_API}{cds_morph_api}')
+    return cds_morph_list.json()
+
+
+@register.simple_tag
 def get_cds_website_morph(cds_cod):
-    cds_morph = getattr(settings,
-                        'CMS_WEBPATH_CDS_MORPH',
-                        app_settings.CMS_WEBPATH_CDS_MORPH)
-    return cds_morph.get(cds_cod, [])
+    cds_morph_api = getattr(settings,
+                            'CMS_STORAGE_CDS_MORPH_DETAIL_API',
+                            app_settings.CMS_STORAGE_CDS_MORPH_DETAIL_API)
+    cds_morph_list = requests.get(f'{CMS_STORAGE_BASE_API}{cds_morph_api.format(cds_cod)}')
+    return cds_morph_list.json()
 
 
 @register.simple_tag

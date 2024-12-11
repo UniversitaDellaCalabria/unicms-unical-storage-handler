@@ -149,6 +149,8 @@ CMS_STORAGE_BASE_RESEARCH_LINE_API = 'baseresearchlines/'
 CMS_STORAGE_RESEARCH_LINE_API = 'allresearchlines/'
 CMS_STORAGE_CDS_API = 'cds/'
 CMS_STORAGE_CDS_AREAS_API = 'cds-areas/'
+CMS_STORAGE_CDS_MORPH_LIST_API = 'cds-morph/'
+CMS_STORAGE_CDS_MORPH_DETAIL_API = 'cds-morph/{}/'
 CMS_STORAGE_COMMUNITYTYPES_API = 'publicationscommunitytypes/'
 CMS_STORAGE_DEGREETYPES_API = 'degreetypes/'
 CMS_STORAGE_DEPARTMENTS_API = 'departments/'
@@ -363,7 +365,7 @@ HIGH_FORMATION_COURSES_LINK = 'https://unical.portaleamministrazionetrasparente.
 
 # CMS_WEBPATH_CDS = {} # {id_webpath: cds_cod}
 CMS_WEBPATH_CDS_OLD = {} # {cds_cod: last_year, 2022: [], 2021: []}
-CMS_WEBPATH_CDS_MORPH = {} #'0825': ['0762','0761']
+# CMS_WEBPATH_CDS_MORPH = {} #'0825': ['0762','0761']
 CMS_WEBPATH_PROSPECT = {} # {'L': 12, 'LM': 23, 'LM5': 12, ...} webpath id to nest prospect pages
 CMS_WEBPATH_PROSPECT_DEFAULT = None # default webpath id to nest prospect pages
 CMS_STORAGE_CDS_WEBSITES_BASE_PATH = 'cds'
