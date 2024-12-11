@@ -8,7 +8,7 @@ from . models import *
 class WebPathCdsCodAdmin(admin.ModelAdmin):
     list_display = ('webpath', 'cds_cod', 'webpath_status')
     list_filter = ('webpath__is_active',)
-    search_fields = ('webpath', 'cds_cod')
+    search_fields = ('webpath__name' ,'webpath__fullpath', 'cds_cod')
     raw_id_fields = ('webpath',)
 
     def webpath_status(self, obj):
