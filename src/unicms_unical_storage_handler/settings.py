@@ -361,7 +361,7 @@ HIGH_FORMATION_COURSES_LINK = 'https://unical.portaleamministrazionetrasparente.
 
 ############# CDS WEBSITES ###################
 
-CMS_WEBPATH_CDS = {} # {id_webpath: cds_cod}
+# CMS_WEBPATH_CDS = {} # {id_webpath: cds_cod}
 CMS_WEBPATH_CDS_OLD = {} # {cds_cod: last_year, 2022: [], 2021: []}
 CMS_WEBPATH_CDS_MORPH = {} #'0825': ['0762','0761']
 CMS_WEBPATH_PROSPECT = {} # {'L': 12, 'LM': 23, 'LM5': 12, ...} webpath id to nest prospect pages

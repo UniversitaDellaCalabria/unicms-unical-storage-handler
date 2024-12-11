@@ -5,7 +5,8 @@ from django.conf import settings
 
 from cms.contexts.models import WebPath, WebSite
 
-import unicms_unical_storage_handler.settings as app_settings
+from .. models import WebPathCdsCod
+from .. import settings as app_settings
 
 
 logger = logging.getLogger(__name__)
@@ -89,10 +90,10 @@ def storage_api_root(value):
 def get_cds_website_cds_cod(value=None, cds_cod=None):
     if cds_cod: return cds_cod
     if not value: return None
-    cms_webpath_cds = getattr(settings, 'CMS_WEBPATH_CDS', {})
-    if not cms_webpath_cds: return None
-    found = cms_webpath_cds.get(value, None)
-    if found: return found
+    webpath_cds = WebPathCdsCod.objects.filter(webpath__is_active=True)
+    if not webpath_cds.exists(): return None
+    found = webpath_cds.filter(webpath__pk=value).first()
+    if found: return found.cds_cod
     webpath = WebPath.objects.filter(pk=value).select_related('parent').first()
     if not webpath: return None
     parent = webpath.parent
@@ -101,16 +102,12 @@ def get_cds_website_cds_cod(value=None, cds_cod=None):
 
 
 @register.simple_tag
-def get_cds_website_root_path(webpath=None, cds_cod=None):
+def get_cds_website_root_path(cds_cod=None):
     if not cds_cod: return None
-    cms_webpath_cds = getattr(settings, 'CMS_WEBPATH_CDS', {})
-    if not cms_webpath_cds: return None
-    if webpath and cms_webpath_cds.get(webpath.pk) == cds_cod:
-        return webpath
-    for k,v in cms_webpath_cds.items():
-        if v == cds_cod:
-            return WebPath.objects.get(pk=k, is_active=True)
-    return None
+    webpath_cds = WebPathCdsCod.objects.filter(webpath__is_active=True,
+                                               cds_cod=cds_cod).first()
+    if not webpath_cds: return None
+    return webpath_cds.webpath
 
 
 @register.simple_tag
@@ -149,4 +146,13 @@ def get_prospect_docs(lang, cds):
         cds_docs = doc.get(cds, [])
         for cds_doc in cds_docs:
             result.append(cds_doc)
+    return result
+
+
+@register.simple_tag
+def get_webpath_cds_dict():
+    webpath_cds = WebPathCdsCod.objects.filter(webpath__is_active=True)
+    result = {}
+    for wpcds in webpath_cds:
+        result[wpcds.webpath.pk] = wpcds.cds_cod
     return result

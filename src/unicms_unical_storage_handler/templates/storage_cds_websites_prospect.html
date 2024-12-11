@@ -55,7 +55,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
 {% storage_settings_value "CDS_STORAGE_CDS_WEBSITE_DEFAULT_IMAGE" as cds_website_default_image %}
 {% storage_settings_value "MAIN_DOMAIN" as unicms_root_url %}
 
-{% get_cds_website_root_path webpath cds_cod as cds_webpath %}
+{% get_cds_website_root_path cds_cod as cds_webpath %}
 
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_CAROUSEL_BACKGROUNDS_URL" as carousel_backgrounds %}
 
@@ -217,7 +217,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                     {% else %}
                                     {% get_cds_website_morph cds_cod as old_cds_list %}
                                     {% for old_cds_cod in old_cds_list %}
-                                        {% get_cds_website_root_path cds_cod=old_cds_cod as old_webpath %}
+                                        {% get_cds_website_root_path old_cds_cod as old_webpath %}
                                         {% if old_webpath %}
                                         <div class="accordion-item mt-2" style="background: var(--bordeaux_unical)">
                                             <h2 class="accordion-header" id="heading5l">

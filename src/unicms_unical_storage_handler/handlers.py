@@ -25,6 +25,7 @@ from cms.contexts.utils import contextualize_template, sanitize_path
 from cms.pages.models import Page
 
 from . forms import CdsWebsiteContactForm, DynCdsWebsiteContactForm
+from . models import WebPathCdsCod
 from . settings import *
 
 
@@ -84,7 +85,7 @@ CMS_STORAGE_TEACHERS_LABEL = getattr(settings, 'CMS_STORAGE_TEACHERS_LABEL', CMS
 CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH', CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH)
 INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
 
-CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
+# CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
 CMS_WEBPATH_CDS_OLD = getattr(settings, 'CMS_WEBPATH_CDS_OLD', CMS_WEBPATH_CDS_OLD)
 CMS_WEBPATH_CDS_MORPH = getattr(settings, 'CMS_WEBPATH_CDS_MORPH', CMS_WEBPATH_CDS_MORPH)
 CMS_WEBPATH_PROSPECT = getattr(settings, 'CMS_WEBPATH_PROSPECT', CMS_WEBPATH_PROSPECT)
@@ -846,12 +847,14 @@ class SingleActivityViewHandler(BaseStorageHandler):
 
 class CdsWebsiteBaseHandler(BaseContentHandler):
     def check_webpath(self):
-        if not self.webpath.pk in CMS_WEBPATH_CDS:
+        webpath_cds = WebPathCdsCod.objects.filter(webpath=self.webpath,
+                                                   webpath__is_active=True).first()
+        if not webpath_cds:
             raise Http404('No degree course linked to this webpath')
 
         self.page = Page.objects.filter(is_active=True,
                                         webpath=self.webpath).first()
-        self.cds_cod = CMS_WEBPATH_CDS[self.webpath.pk]
+        self.cds_cod = webpath_cds.cds_cod
 
     def __init__(self, **kwargs):
         super(CdsWebsiteBaseHandler, self).__init__(**kwargs)
@@ -1095,13 +1098,9 @@ class CdsWebsitesRedirectHandler(BaseContentHandler):
     def __init__(self, **kwargs):
         super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
         path_dict = getattr(settings, 'CMS_WEBPATH_CDS', {})
-        self.webpath = None
-        for path in path_dict:
-            if path_dict[path] == kwargs['cds_cod']:
-                self.webpath = get_object_or_404(WebPath,
-                                                 pk=path,
-                                                 is_active=True)
-                break
+        webpath_cds = WebPathCdsCod.objects.filter(webpath__is_active=True,
+                                                   cds_cod=kwargs['cds_cod']).first()
+        self.webpath = webpath_cds.webpath
 
     def as_view(self):
         if not self.webpath: raise Http404()
