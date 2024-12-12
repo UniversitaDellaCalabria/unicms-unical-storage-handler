@@ -21,7 +21,7 @@ class WebPathCdsCodAdmin(admin.ModelAdmin):
 @admin.register(CdsWebsiteHomeBlocks)
 class CdsWebsiteHomeBlocksAdmin(admin.ModelAdmin):
     list_display = ('block', 'section', 'order', 'is_active')
-    list_filter = ('section',)
+    list_filter = ('section', 'is_active')
     search_fields = ('block' ,'section')
     list_editable = ('order', 'is_active',)
     raw_id_fields = ('block',)
