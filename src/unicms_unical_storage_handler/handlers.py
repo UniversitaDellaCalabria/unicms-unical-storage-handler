@@ -1101,7 +1101,6 @@ class CdsWebsitesIsodidHandler(CdsWebsiteBaseHandler):
 class CdsWebsitesRedirectHandler(BaseContentHandler):
     def __init__(self, **kwargs):
         super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
-        path_dict = getattr(settings, 'CMS_WEBPATH_CDS', {})
         webpath_cds = WebPathCdsCod.objects.filter(webpath__is_active=True,
                                                    cds_cod=kwargs['cds_cod']).first()
         self.webpath = webpath_cds.webpath
