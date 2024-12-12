@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.urls import path
 from django.utils.html import format_html
 
+from . admin_views import create_course_websites
 from . models import *
 
 
@@ -10,6 +12,17 @@ class WebPathCdsCodAdmin(admin.ModelAdmin):
     list_filter = ('webpath__is_active',)
     search_fields = ('webpath__name' ,'webpath__fullpath', 'cds_cod')
     raw_id_fields = ('webpath',)
+
+    change_list_template = "admin/admin_changelist_custom.html"
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path("create-course-websites/",
+                 self.admin_site.admin_view(create_course_websites),
+                 name="unicms_unical_storage_handler_create_course_websites"),
+        ]
+        return custom_urls + urls
 
     def webpath_status(self, obj):
         if obj.webpath.is_active:

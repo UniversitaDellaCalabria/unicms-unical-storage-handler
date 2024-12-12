@@ -1,9 +1,23 @@
 from django import forms
+from django.contrib import admin
+from django.contrib.admin import widgets
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 
 from django_form_builder.forms import BaseDynamicForm
 from django_form_builder import dynamic_fields
+
+from cms.templates.models import PageTemplate
+
+from . models import WebPathCdsCod
+
+
+class CdsWebsiteCreationYear(forms.Form):
+    api_source = forms.URLField(required=True, help_text='Es: https://storage.portale.unical.it/api/ricerca/cds/?page_size=300&coursetype=L,LM5,LM6&academicyear=2024')
+    webpath = forms.CharField(widget=widgets.ForeignKeyRawIdWidget(
+                                rel=WebPathCdsCod._meta.get_field('webpath').remote_field,
+                                admin_site=admin.site,
+                             ), required=True)
+    template = forms.ModelChoiceField(queryset=PageTemplate.objects.filter(), required=True)
 
 
 class CdsWebsiteContactForm(forms.Form):
