@@ -18,4 +18,10 @@ class WebPathCdsCodAdmin(admin.ModelAdmin):
     webpath_status.admin_order_field  = 'webpath__is_active'
 
 
-
+@admin.register(CdsWebsiteHomeBlocks)
+class CdsWebsiteHomeBlocksAdmin(admin.ModelAdmin):
+    list_display = ('block', 'section', 'is_active')
+    list_filter = ('section',)
+    search_fields = ('block' ,'section')
+    list_editable = ('is_active',)
+    raw_id_fields = ('block',)
