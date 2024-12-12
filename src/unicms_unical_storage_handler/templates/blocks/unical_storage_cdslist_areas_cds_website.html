@@ -39,7 +39,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 {% endblock cds_area_item_special_tag_mobile %}
 
 {% block method_callurl %}
-{% storage_settings_value "CMS_WEBPATH_CDS_OLD" as cms_webpath_cds_old %}
+{% get_cds_websites_expired as cms_webpath_cds_expired %}
 
 async CallURL(url, initial=false) {
     this.is_loading = true
@@ -59,11 +59,11 @@ async CallURL(url, initial=false) {
             this.labels = response.data.labels;
         })
 
-    const cms_webpath_cds_old = {{ cms_webpath_cds_old|safe }}
+    const cms_webpath_cds_expired = {{ cms_webpath_cds_expired|safe }}
 
-    for (const [cdscod, year] of Object.entries(cms_webpath_cds_old)) {
+    for (let i=0; i<cms_webpath_cds_expired.length; i++) {
         axios
-            .get(url + '&academicyear=' + year + '&cdscod=' + cdscod)
+            .get(url + '&academicyear=' + cms_webpath_cds_expired[i]["LastErogationYear"] + '&cdscod=' + cms_webpath_cds_expired[i]["CdsCod"])
             .then(response => {
                 for(const c of response.data.results){
                     c.Old = 1;

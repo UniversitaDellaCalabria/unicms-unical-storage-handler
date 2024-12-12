@@ -113,22 +113,40 @@ def get_cds_website_root_path(cds_cod=None):
     return webpath_cds.webpath
 
 
+def _cds_is_expired(cds_cod):
+    cds_expired_api = getattr(settings,
+                             'CMS_STORAGE_CDS_EXPIRED_API',
+                              app_settings.CMS_STORAGE_CDS_EXPIRED_API)
+    cds_expired = requests.get(f'{CMS_STORAGE_BASE_API}{cds_expired_api}?page_size=200').json()['results']
+    for ce in cds_expired:
+        if ce['CdsCod'] == cds_cod:
+            return ce['LastErogationYear']
+    return None
+
+
 @register.simple_tag
 def get_cds_website_current_year(cds_cod):
     current_year = settings.CURRENT_YEAR
-    old_year_dict = getattr(settings,
-                            'CMS_WEBPATH_CDS_OLD',
-                            app_settings.CMS_WEBPATH_CDS_OLD)
-    return old_year_dict.get(cds_cod, current_year)
+    expiration_year = _cds_is_expired(cds_cod)
+    if expiration_year: return expiration_year
+    return current_year
 
 
 @register.simple_tag
 def get_cds_website_new_year(cds_cod):
     current_year = settings.CDS_WEBSITE_CURRENT_YEAR
-    old_year_dict = getattr(settings,
-                            'CMS_WEBPATH_CDS_OLD',
-                            app_settings.CMS_WEBPATH_CDS_OLD)
-    return old_year_dict.get(cds_cod, current_year)
+    expiration_year = _cds_is_expired(cds_cod)
+    if expiration_year: return expiration_year
+    return current_year
+
+
+@register.simple_tag
+def get_cds_websites_expired():
+    cds_expired_api = getattr(settings,
+                              'CMS_STORAGE_CDS_EXPIRED_API',
+                              app_settings.CMS_STORAGE_CDS_EXPIRED_API)
+    cds_expired = requests.get(f'{CMS_STORAGE_BASE_API}{cds_expired_api}?page_size=200')
+    return cds_expired.json()['results']
 
 
 @register.simple_tag

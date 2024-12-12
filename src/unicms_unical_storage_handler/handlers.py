@@ -51,7 +51,10 @@ CMS_STORAGE_BASE_PATH = getattr(settings, 'CMS_STORAGE_BASE_PATH', CMS_STORAGE_B
 CMS_STORAGE_BASE_RESEARCH_LINE_API = getattr(settings, 'CMS_STORAGE_BASE_RESEARCH_LINE_API', CMS_STORAGE_BASE_RESEARCH_LINE_API)
 CMS_STORAGE_BASE_RESEARCH_LINE_LABEL = getattr(settings, 'CMS_STORAGE_BASE_RESEARCH_LINE_LABEL', CMS_STORAGE_BASE_RESEARCH_LINE_LABEL)
 CMS_STORAGE_CDS_API = getattr(settings, 'CMS_STORAGE_CDS_API', CMS_STORAGE_CDS_API)
+CMS_STORAGE_CDS_EXPIRED_API = getattr(settings, 'CMS_STORAGE_CDS_EXPIRED_API', CMS_STORAGE_CDS_EXPIRED_API)
 CMS_STORAGE_CDS_LIST_LABEL = getattr(settings, 'CMS_STORAGE_CDS_LIST_LABEL', CMS_STORAGE_CDS_LIST_LABEL)
+CMS_STORAGE_CDS_MORPH_DETAIL_API = getattr(settings, 'CMS_STORAGE_CDS_MORPH_DETAIL_API', CMS_STORAGE_CDS_MORPH_DETAIL_API)
+CMS_STORAGE_CDS_MORPH_LIST_API = getattr(settings, 'CMS_STORAGE_CDS_MORPH_LIST_API', CMS_STORAGE_CDS_MORPH_LIST_API)
 CMS_STORAGE_CDS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_CDS_VIEW_PREFIX_PATH', CMS_STORAGE_CDS_VIEW_PREFIX_PATH)
 CMS_STORAGE_HIGH_FORMATION_MASTERS_API = getattr(settings, 'CMS_STORAGE_HIGH_FORMATION_MASTERS_API', CMS_STORAGE_HIGH_FORMATION_MASTERS_API)
 CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL = getattr(settings, 'CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL', CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
@@ -86,7 +89,7 @@ CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_TEACHER_VI
 INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
 
 # CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
-CMS_WEBPATH_CDS_OLD = getattr(settings, 'CMS_WEBPATH_CDS_OLD', CMS_WEBPATH_CDS_OLD)
+# CMS_WEBPATH_CDS_OLD = getattr(settings, 'CMS_WEBPATH_CDS_OLD', CMS_WEBPATH_CDS_OLD)
 # CMS_WEBPATH_CDS_MORPH = getattr(settings, 'CMS_WEBPATH_CDS_MORPH', CMS_WEBPATH_CDS_MORPH)
 CMS_WEBPATH_PROSPECT = getattr(settings, 'CMS_WEBPATH_PROSPECT', CMS_WEBPATH_PROSPECT)
 CMS_WEBPATH_PROSPECT_DEFAULT = getattr(settings, 'CMS_WEBPATH_PROSPECT_DEFAULT', CMS_WEBPATH_PROSPECT_DEFAULT)
@@ -908,8 +911,10 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
         self.cds_cod = kwargs['cds_cod']
 
         # old study course!
-        if CMS_WEBPATH_CDS_OLD.get(self.cds_cod):
-            raise Http404
+        cds_expired = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_EXPIRED_API}?page_size=200').json()['results']
+        for ce in cds_expired:
+            if ce['CdsCod'] == self.cds_cod:
+                raise Http404
 
         cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
 
@@ -1111,8 +1116,10 @@ class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
         self.cds_cod = kwargs['cds_cod']
 
         # old study course!
-        if CMS_WEBPATH_CDS_OLD.get(self.cds_cod):
-            raise Http404
+        cds_expired = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_EXPIRED_API}?page_size=200').json()['results']
+        for ce in cds_expired:
+            if ce['CdsCod'] == self.cds_cod:
+                raise Http404
 
         cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
 
