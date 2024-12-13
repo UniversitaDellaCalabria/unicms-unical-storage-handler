@@ -11,6 +11,7 @@ from django.shortcuts import redirect, reverse
 from django.urls import path
 from django.utils import timezone
 from django.utils.text import slugify
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from cms.contexts.models import WebPath
@@ -29,14 +30,14 @@ def create_course_websites(request):
             # retrieve form data
             api_source = form.cleaned_data['api_source']
             root_id = form.cleaned_data['webpath']
-            template_id = form.cleaned_data['template']
+            template = form.cleaned_data['template']
             try:
                 # call source api to retrieve courses list
                 courses = requests.get(api_source).json()['results']
                 if not courses:
                     messages.success(request, _("No courses to import"))
                 else:
-                    template = PageTemplate.objects.get(pk=template_id)
+                    template = PageTemplate.objects.get(pk=template.pk)
                     root = WebPath.objects.filter(pk=root_id).select_related('site').first()
                     actual_cds_websites = WebPathCdsCod.objects.all().values_list('cds_cod', flat=True)
                     chosen_blocks = CdsWebsiteHomeBlocks.objects.filter()
@@ -49,15 +50,20 @@ def create_course_websites(request):
                             existent_webpath = WebPath.objects.filter(site=root.site,
                                                                       parent=root,
                                                                       path=f"{slugify(course['CdSName'])}/").exists()
-
+                            # if there is a webpath with same path
+                            # append a timestamp to disambiguate
+                            p = slugify(course['CdSName'])
                             if existent_webpath:
-                                messages.warning(request, f"{_('Existent webpath')} {root}{slugify(course['CdSName'])}")
-                                continue
+                                d = int(timezone.now().timestamp())
+                                wpath = f"{p}-{d}"
+                                messages.warning(request, f"{_('Existent webpath')} {root}{p}: new webpath created with {root}{wpath}")
+                            else:
+                                wpath = p
 
                             webpath = WebPath.objects.create(site=root.site,
                                                              name=course['CdSName'],
                                                              parent=root,
-                                                             path=f"{slugify(course['CdSName'])}",
+                                                             path=wpath,
                                                              is_active=True,
                                                              robots="index follow")
 
