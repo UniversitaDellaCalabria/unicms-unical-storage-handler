@@ -64,8 +64,7 @@ def create_course_websites(request):
                                                              name=course['CdSName'],
                                                              parent=root,
                                                              path=wpath,
-                                                             is_active=True,
-                                                             robots="index follow")
+                                                             is_active=True)
 
                             page = Page.objects.create(webpath=webpath,
                                                        title=webpath.name,
