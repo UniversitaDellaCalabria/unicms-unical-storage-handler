@@ -524,7 +524,6 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
             is_loading_academicyears: true,
             selected_year: '',
             old_cds_identifiers: {{ old_cds_identifiers|safe }},
-            old_cds_found: false
         }
     },
     mounted() {
@@ -533,14 +532,16 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
     methods: {
         {% include "includes/unical_storage_cds_website_scroll.html" %}
         async getOldPlans(year) {
+            let old_cds_found = false
             for(let i=0;i<this.old_cds_identifiers.length;i++) {
-                if(this.old_cds_found) break;
+                //this.curricula = []
+                if(old_cds_found) break;
                 await axios
                     .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod=' + this.old_cds_identifiers[i] + '&year=' + year)
                     .then(response => {
                         let curricula = []
                         if(response.data.results.length > 0) {
-                            this.old_cds_found = true
+                            old_cds_found = true
                             response.data.results[0].PlanTabs.forEach(
                                 function (plantab) {
                                     if (!curricula.includes(plantab.PdsDes)) {
@@ -551,12 +552,11 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                             this.curricula = curricula
                             this.items = response.data.results[0]
                             _cds_data.CallURL(response.data.results[0]['RegDidId'])
-                            this.is_loading = false
                             this.scrollPage()
                         }
                     })
             }
-            this.old_cds_found = false
+            //this.old_cds_found = false
         },
         callStudyPlans(year={{ cds_website_future_year }}) {
             this.is_loading = true
@@ -574,13 +574,12 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                         )
                         this.curricula = curricula
                         this.items = response.data.results[0]
-                        this.is_loading = false
                         this.scrollPage()
                     }
                     else{
                         this.getOldPlans(year)
                     }
-
+                    this.is_loading = false
                 })
         },
         callAcademicYears() {
@@ -601,12 +600,18 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                 })
         },
         callCdsByYear(year) {
+            this.curricula = []
+            this.items = {}
             let cds_year_url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&academicyear=' + year + '&cdscod={{ cds_identifier }}'
             axios
                 .get(cds_year_url)
                 .then(response => {
-                    if(response.data.results.length>0 && 'RegDidId' in response.data.results[0])
+                    if(response.data.results.length>0 && 'RegDidId' in response.data.results[0]) {
                         _cds_data.CallURL(response.data.results[0]['RegDidId'])
+                    } else {
+                        _cds_data.cds = {}
+                        _cds_data.cds_labels = {}
+                    }
                 }
             )
         },
