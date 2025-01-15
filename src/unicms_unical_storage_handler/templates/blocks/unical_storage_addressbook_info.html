@@ -83,7 +83,13 @@
                             </ul>
                             <ul class="list-unstyled" v-else>
                                 <li v-for="subvalue in value">
-                                    [[ subvalue ]]
+                                    <a v-if="name == 'WebSite'"
+                                       :href="[[ subvalue ]]" target="_blank">
+                                        [[ subvalue ]]
+                                    </a>
+                                    <span v-else>
+                                        [[ subvalue ]]
+                                    </span>
                                 </li>
                             </ul>
                         </td>
