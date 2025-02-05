@@ -228,13 +228,15 @@ types_filter: []
 
 {% block method_callurl %}
 CallURL(url, initial=false) {
+    this.controller = new AbortController()
+    let signal = this.controller.signal
     this.is_loading = true
     this.loader_source = url
     if (!url.includes("year") && this.selected_year){
         url = url + '&year=' + this.selected_year
     }
     axios
-        .get(url)
+        .get(url, {signal})
         .then(response => {
             if(initial) this.initial_items = response.data.results;
             this.items = response.data;
@@ -243,6 +245,7 @@ CallURL(url, initial=false) {
             this.labels = response.data.labels;
             this.is_loading = false;
         })
+        .catch((error) => {});
 },
 {% endblock method_callurl %}
 

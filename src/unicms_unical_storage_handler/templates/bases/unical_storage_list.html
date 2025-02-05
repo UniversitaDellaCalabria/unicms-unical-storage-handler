@@ -91,7 +91,7 @@ var {{ id }} = new Vue({
             previous_page: "",
             is_loading: true,
             loader_source: '',
-
+            controller: null,
             {% block extra_data %}
             {% endblock extra_data %}
         }
@@ -129,6 +129,7 @@ var {{ id }} = new Vue({
 
         {% block method_search %}
         search(keyword=null, value=null) {
+            this.controller.abort()
             if(this.initial_parameters)
                 this.parameters = this.initial_parameters + {{ id }}_encodeQueryData({{ id }}_get_form_paramenters(keyword, value)).replace('?','&');
             else
@@ -139,10 +140,12 @@ var {{ id }} = new Vue({
 
         {% block method_callurl %}
         CallURL(url, initial=false) {
+            this.controller = new AbortController()
+            let signal = this.controller.signal
             this.is_loading = true
             this.loader_source = url
             axios
-                .get(url)
+                .get(url, {signal})
                 .then(response => {
                     if(initial) this.initial_items = response.data.results;
                     this.items = response.data;
@@ -151,6 +154,7 @@ var {{ id }} = new Vue({
                     this.labels = response.data.labels;
                     this.is_loading = false;
                 })
+                .catch((error) => {});
         },
         {% endblock method_callurl %}
 

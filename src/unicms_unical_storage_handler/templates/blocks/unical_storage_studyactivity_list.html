@@ -475,12 +475,14 @@ callDepartments() {
 },
 {% block method_callurl %}
 CallURL(url, initial=false) {
+    this.controller = new AbortController()
+    let signal = this.controller.signal
     this.is_loading = true
     this.loader_source = url
     if (!url.includes("academic_year"))
         url = url + '&academic_year=' + this.initial_academic_year
     axios
-        .get(url)
+        .get(url, {signal})
         .then(response => {
             if(initial) this.initial_items = response.data.results;
             this.items = response.data;
@@ -489,6 +491,7 @@ CallURL(url, initial=false) {
             this.labels = response.data.labels;
             this.is_loading = false;
         })
+        .catch((error) => {});
 },
 {% endblock method_callurl %}
 {% endblock extra_methods %}

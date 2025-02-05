@@ -456,6 +456,8 @@ search(keyword=null, value=null) {
 
 {% block method_callurl %}
 CallURL(url, initial=false) {
+    this.controller = new AbortController()
+    let signal = this.controller.signal
     let exclude_list = this.cds_to_exclude
     this.is_loading = true
     this.loader_source = url
@@ -464,7 +466,7 @@ CallURL(url, initial=false) {
     if (!url.includes("coursetype") && this.allowed_course_types.length > 0)
         url = url + '&coursetype=' + this.allowed_course_types.toString()
     axios
-        .get(url)
+        .get(url, {signal})
         .then(response => {
             if(this.check_exclusion)
                 response.data.results = response.data.results.filter(function( obj ) {
@@ -477,6 +479,7 @@ CallURL(url, initial=false) {
             this.labels = response.data.labels;
             this.is_loading = false;
         })
+        .catch((error) => {});
 },
 {% endblock method_callurl %}
 
