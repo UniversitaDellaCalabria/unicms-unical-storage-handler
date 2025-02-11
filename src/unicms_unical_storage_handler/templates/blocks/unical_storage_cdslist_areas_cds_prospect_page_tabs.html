@@ -46,8 +46,8 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 :aria-controls="'nav-vertical-tab' + index"
                                 :aria-selected="index==0?true:false"
                                 v-for="(area, index) in cds_areas"
-                                v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
-                                <p class="h6" v-if="area.AreaCds == 'Medico Sanitaria'">
+                                v-if="area.AreaCdS && items.results.filter(result => (result.AreaCdS == area.AreaCdS)).length">
+                                <p class="h6" v-if="area.AreaCdS == 'Medico Sanitaria'">
                                     {% if LANGUAGE_CODE == 'it' %}
                                         Area
                                     {% endif %}
@@ -60,7 +60,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                     {% if LANGUAGE_CODE == 'it' %}
                                         Area
                                     {% endif %}
-                                    [[ area.AreaCds ]]
+                                    [[ area.AreaCdS ]]
                                     {% if LANGUAGE_CODE != 'it' %}
                                         {% trans "Course Area" %}
                                     {% endif %}
@@ -76,14 +76,16 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 role="tabpanel"
                                 :aria-labelledby="'nav-vertical-tab' + index + '-tab'"
                                 v-for="(area, index) in cds_areas"
-                                v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
+                                v-if="area.AreaCdS && items.results.filter(result => (result.AreaCdS == area.AreaCdS)).length">
                                 <ul class="list-unstyled">
-                                    <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
+                                    <li v-for="item in items.results" v-if="item.AreaCdS == area.AreaCdS">
                                         <a class="no-color"
                                            {% block cds_area_item_link %}:href="'/{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"{% endblock cds_area_item_link %}
                                            {% if request.get_host != host %}target="_blank"{% endif %}>
                                             <span>
                                             <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
+
+                                            {% comment %}
                                             <b v-if="item.RegDidId == 21540">
                                             {% if LANGUAGE_CODE != 'it' %}
                                                 (inter-university)
@@ -91,12 +93,18 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                                 (interateneo)
                                             {% endif %}
                                             </b>
+                                            {% endcomment %}
+
                                             <span>
-                                                - [[ item.CourseType ]]
+                                                - [[ item.CdSCourseType ]]
                                             </span>
+
+                                            {% comment %}
                                             <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
                                                 ([[ item.ErogationMode ]])
                                             </span>
+                                            {% endcomment %}
+
                                             <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
                                                 <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
                                                     <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
@@ -116,7 +124,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 
                 <div class="accordion-item"
                      v-for="(area, index) in cds_areas"
-                     v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
+                     v-if="area.AreaCdS && items.results.filter(result => (result.AreaCdS == area.AreaCdS)).length">
                     <div class="accordion-header" :id="'{{ id }}_heading-' + index +'-lft'">
                         <button class="accordion-button"
                                 type="button"
@@ -124,7 +132,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 :data-bs-target="'#{{ id }}_collapse-' + index +'-lft'"
                                 aria-expanded="false"
                                 :aria-controls="'{{ id }}_collapse-' + index +'-lft'">
-                            <span v-if="area.AreaCds == 'Medico Sanitaria'">
+                            <span v-if="area.AreaCdS == 'Medico Sanitaria'">
                                 {% if LANGUAGE_CODE == 'it' %}
                                     Area
                                 {% endif %}
@@ -137,7 +145,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 {% if LANGUAGE_CODE == 'it' %}
                                     Area
                                 {% endif %}
-                                [[ area.AreaCds ]]
+                                [[ area.AreaCdS ]]
                                 {% if LANGUAGE_CODE != 'it' %}
                                     {% trans "Course Area" %}
                                 {% endif %}
@@ -149,15 +157,17 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                          data-bs-parent="#{{ id }}_accordionDivCds-lft"
                          role="region"
                          :aria-labelledby="'{{ id }}_heading-' + index +'-lft'"
-                         v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
+                         v-if="area.AreaCdS && items.results.filter(result => (result.AreaCdS == area.AreaCdS)).length">
                         <div class="accordion-body">
                             <ul class="list-unstyled">
-                                <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
+                                <li v-for="item in items.results" v-if="item.AreaCdS == area.AreaCdS">
                                     <a class="no-color"
                                        {% block cds_area_item_link_mobile %}:href="'/{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"{% endblock cds_area_item_link_mobile %}
                                        {% if request.get_host != host %}target="_blank"{% endif %}>
                                         <span>
                                         <b>[[ item.CdSName.charAt(0).toUpperCase() + item.CdSName.slice(1).toLowerCase() ]]</b>
+
+                                        {% comment %}
                                         <b v-if="item.RegDidId == 21540">
                                         {% if LANGUAGE_CODE != 'it' %}
                                             (inter-university)
@@ -165,14 +175,20 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                             (interateneo)
                                         {% endif %}
                                         </b>
+                                        {% endcomment %}
+
                                         <span>
-                                            - [[ item.CourseType ]]
+                                            - [[ item.CdSCourseType ]]
                                         </span>
+
+                                        {% comment %}
                                         <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
                                             ([[ item.ErogationMode ]])
                                         </span>
-                                        <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
-                                            <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                        {% endcomment %}
+
+                                        <span v-if="arrayLower(item.CdSLanguages, 'eng')">
+                                            <span class="me-1" v-if="arrayLower(item.CdSLanguages, 'ita')">
                                                 <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
                                             </span>
                                             <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
