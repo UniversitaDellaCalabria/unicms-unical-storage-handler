@@ -46,8 +46,8 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 :aria-controls="'nav-vertical-tab' + index"
                                 :aria-selected="index==0?true:false"
                                 v-for="(area, index) in cds_areas"
-                                v-if="area.AreaCdS && items.results.filter(result => (result.AreaCdS == area.AreaCdS)).length">
-                                <p class="h6" v-if="area.AreaCdS == 'Medico Sanitaria'">
+                                v-if="area.AreaCds && items.results.filter(result => (result.AreaCdS == area.AreaCds)).length">
+                                <p class="h6" v-if="area.AreaCds == 'Medico Sanitaria'">
                                     {% if LANGUAGE_CODE == 'it' %}
                                         Area
                                     {% endif %}
@@ -60,7 +60,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                     {% if LANGUAGE_CODE == 'it' %}
                                         Area
                                     {% endif %}
-                                    [[ area.AreaCdS ]]
+                                    [[ area.AreaCds ]]
                                     {% if LANGUAGE_CODE != 'it' %}
                                         {% trans "Course Area" %}
                                     {% endif %}
@@ -76,9 +76,9 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 role="tabpanel"
                                 :aria-labelledby="'nav-vertical-tab' + index + '-tab'"
                                 v-for="(area, index) in cds_areas"
-                                v-if="area.AreaCdS && items.results.filter(result => (result.AreaCdS == area.AreaCdS)).length">
+                                v-if="area.AreaCds && items.results.filter(result => (result.AreaCdS == area.AreaCds)).length">
                                 <ul class="list-unstyled">
-                                    <li v-for="item in items.results" v-if="item.AreaCdS == area.AreaCdS">
+                                    <li v-for="item in items.results" v-if="item.AreaCdS == area.AreaCds">
                                         <a class="no-color"
                                            {% block cds_area_item_link %}:href="'/{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"{% endblock cds_area_item_link %}
                                            {% if request.get_host != host %}target="_blank"{% endif %}>
@@ -124,7 +124,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 
                 <div class="accordion-item"
                      v-for="(area, index) in cds_areas"
-                     v-if="area.AreaCdS && items.results.filter(result => (result.AreaCdS == area.AreaCdS)).length">
+                     v-if="area.AreaCds && items.results.filter(result => (result.AreaCdS == area.AreaCds)).length">
                     <div class="accordion-header" :id="'{{ id }}_heading-' + index +'-lft'">
                         <button class="accordion-button"
                                 type="button"
@@ -132,7 +132,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 :data-bs-target="'#{{ id }}_collapse-' + index +'-lft'"
                                 aria-expanded="false"
                                 :aria-controls="'{{ id }}_collapse-' + index +'-lft'">
-                            <span v-if="area.AreaCdS == 'Medico Sanitaria'">
+                            <span v-if="area.AreaCds == 'Medico Sanitaria'">
                                 {% if LANGUAGE_CODE == 'it' %}
                                     Area
                                 {% endif %}
@@ -145,7 +145,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 {% if LANGUAGE_CODE == 'it' %}
                                     Area
                                 {% endif %}
-                                [[ area.AreaCdS ]]
+                                [[ area.AreaCds ]]
                                 {% if LANGUAGE_CODE != 'it' %}
                                     {% trans "Course Area" %}
                                 {% endif %}
@@ -157,10 +157,10 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                          data-bs-parent="#{{ id }}_accordionDivCds-lft"
                          role="region"
                          :aria-labelledby="'{{ id }}_heading-' + index +'-lft'"
-                         v-if="area.AreaCdS && items.results.filter(result => (result.AreaCdS == area.AreaCdS)).length">
+                         v-if="area.AreaCds && items.results.filter(result => (result.AreaCdS == area.AreaCds)).length">
                         <div class="accordion-body">
                             <ul class="list-unstyled">
-                                <li v-for="item in items.results" v-if="item.AreaCdS == area.AreaCdS">
+                                <li v-for="item in items.results" v-if="item.AreaCdS == area.AreaCds">
                                     <a class="no-color"
                                        {% block cds_area_item_link_mobile %}:href="'/{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"{% endblock cds_area_item_link_mobile %}
                                        {% if request.get_host != host %}target="_blank"{% endif %}>
