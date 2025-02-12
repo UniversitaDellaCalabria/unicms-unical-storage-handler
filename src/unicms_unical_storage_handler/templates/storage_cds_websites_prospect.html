@@ -249,7 +249,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12 col-lg-4">
+                                            <div class="col-12 col-lg-4" v-if="website.CDSSeatsNumber">
                                                 [[ website_labels['CDSSeatsNumber'] ]]
                                                 <b class="h2 lighter ms-3 mb-0">[[ website.CDSSeatsNumber ]]</b>
                                             </div>
