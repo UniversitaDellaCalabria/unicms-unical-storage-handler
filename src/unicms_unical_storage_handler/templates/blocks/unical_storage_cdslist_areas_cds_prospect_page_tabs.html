@@ -105,8 +105,8 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                             </span>
                                             {% endcomment %}
 
-                                            <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
-                                                <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                            <span v-if="arrayLower(item.CdSLanguages, 'english') || arrayLower(item.CdSLanguages, 'inglese')">
+                                                <span class="me-1" v-if="arrayLower(item.CdSLanguages, 'italian')">
                                                     <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
                                                 </span>
                                                 <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
@@ -187,8 +187,8 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                         </span>
                                         {% endcomment %}
 
-                                        <span v-if="arrayLower(item.CdSLanguages, 'eng')">
-                                            <span class="me-1" v-if="arrayLower(item.CdSLanguages, 'ita')">
+                                        <span v-if="arrayLower(item.CdSLanguagess, 'eng')">
+                                            <span class="me-1" v-if="arrayLower(item.CdSLanguagess, 'ita')">
                                                 <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
                                             </span>
                                             <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
