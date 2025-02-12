@@ -220,19 +220,12 @@
                                                         <title id="event_hour">{% trans "Hour" %}</title>
                                                         <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
                                                     </svg> [[ event.orarioInizio ]] <span v-if="event.orarioFine">/ [[ event.orarioFine ]]</span>
-                                                    <span v-if="event.aula">
-                                                        <br>
+                                                    <span v-for="aula in event.aule">
+                                                        <br />
                                                         <svg class="icon icon-xs me-2" aria-labelledby="event_location">
-                                                            <title id="event_location">{% trans "Location" %}</title>
                                                             <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                                                        </svg> [[ event.aula ]]
-                                                    </span>
-                                                    <span v-if="event.edificio">
-                                                        <br>
-                                                        <svg class="icon icon-xs me-2" aria-labelledby="event_building">
-                                                            <title id="event_building">{% trans "Building" %}</title>
-                                                            <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
-                                                        </svg> [[ event.edificio ]]
+                                                        </svg> [[ aula.nome ]]
+                                                        <span v-if="aula.edificio">([[ aula.edificio ]])</span>
                                                     </span>
                                                     <span v-for="docente in event.docenti">
                                                         <br>

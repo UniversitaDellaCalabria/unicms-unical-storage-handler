@@ -251,17 +251,12 @@
                                                                                     <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
                                                                                 </svg> [[ docente ]]
                                                                             </span>
-                                                                            <span v-if="attr.customData.aula">
+                                                                            <span v-for="aula in attr.customData.aule">
                                                                                 <br />
                                                                                 <svg class="icon icon-xs me-2">
                                                                                     <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                                                                                </svg> [[ attr.customData.aula ]]
-                                                                            </span>
-                                                                            <span v-if="attr.customData.edificio">
-                                                                                <br />
-                                                                                <svg class="icon icon-xs me-2">
-                                                                                    <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
-                                                                                </svg> [[ attr.customData.edificio ]]
+                                                                                </svg> [[ aula.nome ]]
+                                                                                <span v-if="aula.edificio">([[ aula.edificio ]])</span>
                                                                             </span>
                                                                             <span v-if="attr.customData.note">
                                                                                 <br />
@@ -325,17 +320,12 @@
                                                                         <svg class="icon icon-xs me-2">
                                                                             <use href="{% static 'svg/sprites.svg' %}#it-clock"></use>
                                                                         </svg> [[ event.orarioInizio ]] / [[ event.orarioFine ]]
-                                                                        <span v-if="event.aula">
-                                                                            <br>
+                                                                        <span v-for="aula in event.aule">
+                                                                            <br />
                                                                             <svg class="icon icon-xs me-2">
                                                                                 <use href="{% static 'svg/sprites.svg' %}#it-map-marker"></use>
-                                                                            </svg> [[ event.aula ]]
-                                                                        </span>
-                                                                        <span v-if="event.edificio">
-                                                                            <br>
-                                                                            <svg class="icon icon-xs me-2">
-                                                                                <use href="{% static 'svg/sprites.svg' %}#it-pa"></use>
-                                                                            </svg> [[ event.edificio ]]
+                                                                            </svg> [[ aula.nome ]]
+                                                                            <span v-if="aula.edificio">([[ aula.edificio ]])</span>
                                                                         </span>
                                                                         <span v-for="docente in event.docenti">
                                                                             <br>
@@ -464,8 +454,7 @@
                                         orarioInizio: item.orarioInizio,
                                         orarioFine: item.orarioFine,
                                         docenti: item.docenti,
-                                        aula: item.aula,
-                                        edificio: item.edificio,
+                                        aule: item.aule,
                                         note: item.extra.note,
                                         link_teledidattica: item.extra.link_teledidattica
                                     },
