@@ -909,6 +909,7 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
 
     def __init__(self, **kwargs):
         self.redirect = False
+        self.redirect_url = ''
         self.cds_cod = kwargs['cds_cod']
 
         # old study course!
@@ -917,68 +918,77 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
             if ce['CdsCod'] == self.cds_cod:
                 raise Http404
 
-        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
+        # morphed study course!
+        cds_morphed = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}?page_size=200').json()
+        for cm in cds_morphed:
+            if self.cds_cod in cds_morphed[cm]:
+                self.redirect = True
+                self.redirect_url =  f'/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cm}/{CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'
 
-        if not cds_data or cds_data.status_code != 200:
-            raise Http404
+        if not self.redirect:
+            cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
 
-        self.cds_json = cds_data.json()['results'][0]
+            if not cds_data or cds_data.status_code != 200:
+                raise Http404
 
-        super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
+            self.cds_json = cds_data.json()['results'][0]
 
-        if self.request.POST:
-            form = DynCdsWebsiteContactForm(data=self.request.POST)
-            if form.is_valid():
-                name = f"{form.cleaned_data['first_name']} {form.cleaned_data['last_name']}"
-                course = f"{self.cds_json['CdSCod']} - {self.cds_json['CdSName']}"
-                try:
-                    subject=f"Richiesta informazioni: {course} - {name}"
-                    plain_text=f"{form.cleaned_data['message']} Email: {form.cleaned_data['email']}"
-                    html_text=f"<b>Utente:</b> {name}<br><b>Email:</b> {form.cleaned_data['email']}<br><b>Telefono:</b> {form.cleaned_data['phone']}<br><br><b>Messaggio:</b><p>{form.cleaned_data['message']}</p><br>"
-                    from_email=settings.EMAIL_SENDER
-                    to=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS
-                    bcc=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS
-                    reply_to=[form.cleaned_data['email']]
+            super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
 
-                    msg = EmailMultiAlternatives(subject=subject,
-                                                 body=plain_text,
-                                                 from_email=from_email,
-                                                 to=to,
-                                                 bcc=bcc,
-                                                 reply_to=reply_to)
-                    msg.attach_alternative(html_text, "text/html")
-                    msg.send()
+            if self.request.POST:
+                form = DynCdsWebsiteContactForm(data=self.request.POST)
+                if form.is_valid():
+                    name = f"{form.cleaned_data['first_name']} {form.cleaned_data['last_name']}"
+                    course = f"{self.cds_json['CdSCod']} - {self.cds_json['CdSName']}"
+                    try:
+                        subject=f"Richiesta informazioni: {course} - {name}"
+                        plain_text=f"{form.cleaned_data['message']} Email: {form.cleaned_data['email']}"
+                        html_text=f"<b>Utente:</b> {name}<br><b>Email:</b> {form.cleaned_data['email']}<br><b>Telefono:</b> {form.cleaned_data['phone']}<br><br><b>Messaggio:</b><p>{form.cleaned_data['message']}</p><br>"
+                        from_email=settings.EMAIL_SENDER
+                        to=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS
+                        bcc=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS
+                        reply_to=[form.cleaned_data['email']]
 
-                    messages.add_message(
-                        self.request,
-                        messages.SUCCESS,
-                        _("Your message has been successfully sent"),
-                    )
+                        msg = EmailMultiAlternatives(subject=subject,
+                                                     body=plain_text,
+                                                     from_email=from_email,
+                                                     to=to,
+                                                     bcc=bcc,
+                                                     reply_to=reply_to)
+                        msg.attach_alternative(html_text, "text/html")
+                        msg.send()
 
-                    self.redirect = True
-                except:
-                    messages.add_message(
-                        self.request,
-                        messages.ERROR,
-                        _("Your message was not sent due to a technical problem. Try later"),
-                    )
+                        messages.add_message(
+                            self.request,
+                            messages.SUCCESS,
+                            _("Your message has been successfully sent"),
+                        )
+
+                        self.redirect = True
+                    except:
+                        messages.add_message(
+                            self.request,
+                            messages.ERROR,
+                            _("Your message was not sent due to a technical problem. Try later"),
+                        )
+                else:
+                    for k, v in form.errors.items():
+                        messages.add_message(
+                            self.request,
+                            messages.ERROR,
+                            f"{k}: {v}"
+                        )
             else:
-                for k, v in form.errors.items():
-                    messages.add_message(
-                        self.request,
-                        messages.ERROR,
-                        f"{k}: {v}"
-                    )
-        else:
-            form = DynCdsWebsiteContactForm()
+                form = DynCdsWebsiteContactForm()
 
-        self.data['messages'] = messages.get_messages(self.request)
-        self.data['form'] = form
-        self.data['hide_cds_auto_menu'] = 1
+            self.data['messages'] = messages.get_messages(self.request)
+            self.data['form'] = form
+            self.data['hide_cds_auto_menu'] = 1
 
     def as_view(self):
-        if self.redirect: return HttpResponseRedirect(self.request.path_info)
-        return super(CdsWebsitesProspectHandler, self).as_view()
+        if not self.redirect: return super(CdsWebsitesProspectHandler, self).as_view()
+        if self.redirect_url: return redirect(self.redirect_url)
+        return HttpResponseRedirect(self.request.path_info)
 
     @property
     def breadcrumbs(self):
