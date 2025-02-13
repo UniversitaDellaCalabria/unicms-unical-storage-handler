@@ -38,7 +38,7 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                     <div class="col-4 col-md-4">
                         <div class="nav nav-tabs nav-tabs-vertical" id="nav-vertical-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link"
-                                :class="{'active': index==0}"
+                                :class="{'active': first_filled_area==area.AreaCds}"
                                 :id="'nav-vertical-tab' + index + '-tab'"
                                 data-bs-toggle="tab"
                                 :href="'#nav-vertical-tab' + index"
@@ -46,17 +46,8 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                                 :aria-controls="'nav-vertical-tab' + index"
                                 :aria-selected="index==0?true:false"
                                 v-for="(area, index) in cds_areas"
-                                v-if="area.AreaCds && items.results.filter(result => (result.CdSArea == area.AreaCds)).length">
-                                <p class="h6" v-if="area.AreaCds == 'Medico Sanitaria'">
-                                    {% if LANGUAGE_CODE == 'it' %}
-                                        Area
-                                    {% endif %}
-                                    Medico-Sanitaria
-                                    {% if LANGUAGE_CODE != 'it' %}
-                                        {% trans "Course Area" %}
-                                    {% endif %}
-                                </p>
-                                <p class="h6" v-else>
+                                v-if="findFirstFilledArea(area)">
+                                <p class="h6">
                                     {% if LANGUAGE_CODE == 'it' %}
                                         Area
                                     {% endif %}
@@ -71,12 +62,11 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
                     <div class="col-8 col-md-8">
                         <div class="tab-content" id="nav-vertical-tabContent">
                             <div class="tab-pane p-3 fade"
-                                :class="{'show active': index==0}"
+                                :class="{'show active': first_filled_area==area.AreaCds}"
                                 :id="'nav-vertical-tab' + index"
                                 role="tabpanel"
                                 :aria-labelledby="'nav-vertical-tab' + index + '-tab'"
-                                v-for="(area, index) in cds_areas"
-                                v-if="area.AreaCds && items.results.filter(result => (result.CdSArea == area.AreaCds)).length">
+                                v-for="(area, index) in cds_areas">
                                 <ul class="list-unstyled">
                                     <li v-for="item in items.results" v-if="item.CdSArea == area.AreaCds">
                                         <a class="no-color"
@@ -231,3 +221,18 @@ initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}
 
 </div>
 {% endblock content %}
+
+{% block extra_data %}
+{{ block.super }}
+first_filled_area: '',
+{% endblock extra_data %}
+
+{% block extra_methods %}
+{{ block.super }}
+findFirstFilledArea(area) {
+    courses = area.AreaCds && this.items.results.filter(result => (result.CdSArea == area.AreaCds)).length
+    if (courses && this.first_filled_area == '')
+        this.first_filled_area = area.AreaCds
+    return courses
+}
+{% endblock extra_methods %}

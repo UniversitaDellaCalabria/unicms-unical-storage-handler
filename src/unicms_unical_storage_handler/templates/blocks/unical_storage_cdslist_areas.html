@@ -419,7 +419,7 @@ cds_languages_filter: {{ allowed_languages|safe }},
 joint_degree_filter: {{ allowed_joint_degrees|safe }},
 
 cds_to_exclude: {{ cds_to_exclude|safe }},
-check_exclusion: false
+check_exclusion: false,
 {% endblock extra_data %}
 
 {% block extra_mounted %}
@@ -518,6 +518,6 @@ callCdSAreas()  {
 },
 arrayLower(list, item) {
     return list.toString().toLowerCase().includes(item.toLowerCase())
-}
+},
 {% endblock extra_methods %}
 </script>
