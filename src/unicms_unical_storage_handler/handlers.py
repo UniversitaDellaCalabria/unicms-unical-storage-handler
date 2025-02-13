@@ -927,8 +927,7 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
 
         if not self.redirect:
             cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
-
-            if not cds_data or cds_data.status_code != 200:
+            if not cds_data or not cds_data.json()['results'] or cds_data.status_code != 200:
                 raise Http404
 
             self.cds_json = cds_data.json()['results'][0]
