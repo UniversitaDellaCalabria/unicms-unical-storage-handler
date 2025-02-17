@@ -151,41 +151,41 @@
                     if(!year)year = "{{ current_year }}"
                     {% endblock website_page_year %}
 
-                    const cms_webpath_cds = {{ cms_webpath_cds|safe }}
-                    const cms_webpath_cds_morph = {{ cms_webpath_cds_morph|safe }}
-                    let cds_identifier = '{{ cds_identifier }}'
-                    let active_webpath_cds = false
-                    for (const [webpath, cds_id] of Object.entries(cms_webpath_cds)) {
-                        if(cds_id == '{{ cds_identifier }}'){
-                            active_webpath_cds = true
-                            break
+                    if(regdidid) {
+                        this.CallRegDid(regdidid, year)
+                    } else {
+                        const cms_webpath_cds = {{ cms_webpath_cds|safe }}
+                        const cms_webpath_cds_morph = {{ cms_webpath_cds_morph|safe }}
+                        let cds_identifier = '{{ cds_identifier }}'
+                        let active_webpath_cds = false
+                        for (const [webpath, cds_id] of Object.entries(cms_webpath_cds)) {
+                            if(cds_id == '{{ cds_identifier }}'){
+                                active_webpath_cds = true
+                                break
+                            }
                         }
-                    }
-                    if (!active_webpath_cds) {
-                        for (const [new_cds, old_cds] of Object.entries(cms_webpath_cds_morph)) {
-                            for (let i=0; i<old_cds.length; i++) {
-                                if(old_cds[i] == '{{ cds_identifier }}'){
-                                    cds_identifier = new_cds
-                                    //year = "{{ current_year }}"
-                                    break
+                        if (!active_webpath_cds) {
+                            for (const [new_cds, old_cds] of Object.entries(cms_webpath_cds_morph)) {
+                                for (let i=0; i<old_cds.length; i++) {
+                                    if(old_cds[i] == '{{ cds_identifier }}'){
+                                        cds_identifier = new_cds
+                                        //year = "{{ current_year }}"
+                                        break
+                                    }
                                 }
                             }
                         }
-                    }
-
-                    let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod=' + cds_identifier + '&academicyear=' + year
-                    axios
-                        .get(url)
-                        .then(response => {
-                            if(!regdidid) {
+                        let url = '{{ base_api }}{{ cds_api }}?lang={{ LANGUAGE_CODE }}&cdscod=' + cds_identifier + '&academicyear=' + year
+                        axios
+                            .get(url)
+                            .then(response => {
                                 regdidid = response.data.results[0]['RegDidId']
                                 this.CallRegDid(regdidid, year,true)
+                                {% block cds_website_extra_main %}
+                                {% endblock cds_website_extra_main %}
                             }
-                            else this.CallRegDid(regdidid, year)
-                            {% block cds_website_extra_main %}
-                            {% endblock cds_website_extra_main %}
-                        }
-                    )
+                        )
+                    }
                 },
                 {% block cds_website_extra_methods %}
                 {% endblock cds_website_extra_methods %}
