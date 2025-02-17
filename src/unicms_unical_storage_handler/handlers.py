@@ -983,6 +983,8 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
             self.data['messages'] = messages.get_messages(self.request)
             self.data['form'] = form
             self.data['hide_cds_auto_menu'] = 1
+            self.data['title'] = self.cds_json['CdSName']
+            self.data['meta_description'] = f"{self.cds_json['CourseTypeDescription']} - {self.cds_json['CourseClassName']} - {self.cds_json['DepartmentName']}"
 
     def as_view(self):
         if not self.redirect: return super(CdsWebsitesProspectHandler, self).as_view()

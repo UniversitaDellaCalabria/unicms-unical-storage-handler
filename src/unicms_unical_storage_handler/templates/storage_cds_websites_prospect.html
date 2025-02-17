@@ -20,8 +20,10 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
 {% endblock website_page_year %}
 
 {% block page_title %}
-{% trans "Course in summary" %} - {{ block.super }}
+{{ title }} - {% trans "Course in summary" %}
 {% endblock page_title %}
+
+{% block page_meta_description %}{{ meta_description}}{% endblock page_meta_description %}
 
 {% block messages %}
 {% endblock messages %}
