@@ -183,10 +183,7 @@
                             {% if LANGUAGE_CODE == 'it' %}
                                 Area
                             {% endif %}
-                            <span v-if="area.AreaCds == 'Medico Sanitaria'">
-                                Medico-Sanitaria
-                            </span>
-                            <span v-else>[[ area.AreaCds ]]</span>
+                            [[ area.AreaCds ]]
                             {% if LANGUAGE_CODE != 'it' %}
                                 {% trans "Course Area" %}
                             {% endif %}
@@ -237,24 +234,13 @@
                                 :data-bs-target="'#{{ id }}_collapse-' + index +'-lft'"
                                 aria-expanded="false"
                                 :aria-controls="'{{ id }}_collapse-' + index +'-lft'">
-                            <span v-if="area.AreaCds == 'Medico Sanitaria'">
-                                {% if LANGUAGE_CODE == 'it' %}
-                                    Area
-                                {% endif %}
-                                Medico-Sanitaria
-                                {% if LANGUAGE_CODE != 'it' %}
-                                    {% trans "Course Area" %}
-                                {% endif %}
-                            </span>
-                            <span v-else>
-                                {% if LANGUAGE_CODE == 'it' %}
-                                    Area
-                                {% endif %}
-                                [[ area.AreaCds ]]
-                                {% if LANGUAGE_CODE != 'it' %}
-                                    {% trans "Course Area" %}
-                                {% endif %}
-                            </span>
+                            {% if LANGUAGE_CODE == 'it' %}
+                                Area
+                            {% endif %}
+                            [[ area.AreaCds ]]
+                            {% if LANGUAGE_CODE != 'it' %}
+                                {% trans "Course Area" %}
+                            {% endif %}
                         </button>
                     </div>
                     <div :id="'{{ id }}_collapse-' + index +'-lft'"
