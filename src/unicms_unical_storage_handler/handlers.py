@@ -1113,8 +1113,9 @@ class CdsWebsitesIsodidHandler(CdsWebsiteBaseHandler):
 class CdsWebsitesRedirectHandler(BaseContentHandler):
     def __init__(self, **kwargs):
         super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
-        webpath_cds = WebPathCdsCod.objects.filter(webpath__is_active=True,
-                                                   cds_cod=kwargs['cds_cod']).first()
+        webpath_cds = get_object_or_404(WebPathCdsCod,
+                                        webpath__is_active=True,
+                                        cds_cod=kwargs['cds_cod'])
         self.webpath = webpath_cds.webpath
 
     def as_view(self):
