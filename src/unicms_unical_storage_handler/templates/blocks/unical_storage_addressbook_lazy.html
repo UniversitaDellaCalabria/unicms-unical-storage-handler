@@ -1,0 +1,28 @@
+{% extends "blocks/unical_storage_addressbook_without_structure_type_filter.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load unicms_storage_handler %}
+{% load unicms_templates %}
+
+{% block call_url %}
+if(this.getItemsFromSession("{{ id }}") && Object.keys(this.getItemsFromSession("{{ id }}")).length > 0) {
+    this.CallURL(this.url + this.parameters, true);
+}
+else this.is_loading = false;
+{% endblock call_url %}
+
+{% block method_search %}
+search(keyword=null, value=null) {
+    if(this.controller) this.controller.abort()
+    if(this.initial_parameters)
+        this.parameters = this.initial_parameters + {{ id }}_encodeQueryData({{ id }}_get_form_paramenters(keyword, value)).replace('?','&')
+    else
+        this.parameters = {{ id }}_encodeQueryData({{ id }}_get_form_paramenters(keyword, value))
+
+    if(this.getItemsFromSession("{{ id }}") && Object.keys(this.getItemsFromSession("{{ id }}")).length > 0) {
+        this.CallURL(this.url + this.parameters)
+    }
+    else this.items = []
+},
+{% endblock method_search %}
