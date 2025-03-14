@@ -451,11 +451,15 @@ CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL = _("Class schedule")
 CMS_STORAGE_CDS_WEBSITES_PAGE_TOPICS = {}
 
 CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS = [
-    'CDSAdmission', 'CDSGoals', 'CDSJobOpportunities'
+    #'CDSAdmission',
+    'CDSGoals',
+    'CDSJobOpportunities'
 ]
 
 CMS_STORAGE_CDS_WEBSITE_PROSPECT_COLLAPSE_FIELDS_2 = [
-    'CDSTaxes', 'CDSScholarships', 'CDSConcessions'
+    'CDSTaxes',
+    'CDSScholarships',
+    'CDSConcessions'
 ]
 
 CMS_STORAGE_CDS_WEBSITE_BROCHURE_IS_VISIBLE = True
