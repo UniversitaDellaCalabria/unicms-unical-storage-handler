@@ -100,7 +100,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                             {% comment %}
                             <div class="col-12 col-lg mt-3 mt-lg-0" :class="{'ps-lg-4': _cds_data.cds.CdSVideo}">
                             {% endcomment %}
-                            <div class="col-12 col-lg mt-3 mt-lg-0 ps-lg-4">
+                            <div class="col-12 col-lg mt-3 mt-lg-0 ps-lg-4" style="display: flex; flex-direction: column;">
 
                                 <div class="accordion accordionUnicalRightIcon" id="accordionExampleLft">
                                     <div class="accordion-item">
@@ -238,7 +238,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                     {% endif %}
                                 </div>
 
-                                <div class="mt-4" style="background: var(--bordeaux_unical)">
+                                <div class="mt-auto" style="background: var(--bordeaux_unical)">
                                     <h2 class="accordion-header" id="heading5l">
                                         <a href="#requestInfoForm" style="text-decoration: none !important" title="{% trans 'request info' %}">
                                             <button class="py-1 accordion-button no-icon" type="button" aria-expanded="false">
