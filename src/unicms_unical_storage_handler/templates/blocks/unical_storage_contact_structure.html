@@ -18,12 +18,12 @@
     </loading-icon>
 
     <div v-else-if="Object.keys(item).length" class="row">
-        <div class="col-2">
+        <div class="col-auto">
             <svg class="icon icon-lg icon-muted">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
             </svg>
         </div>
-        <div class="col-9 ps-3 align-left">
+        <div class="col-auto ps-3 align-left">
             <span>
                 <b>[[ item.StructureName ]]</b>
                 <br>
