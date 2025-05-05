@@ -56,7 +56,7 @@
                                     :data-bs-target="'#collapse-{{ id }}-1' + index +'-lft'"
                                     aria-expanded="false"
                                     :aria-controls="'collapse-{{ id }}-1' + index +'-lft'">
-								[[ year ]] {% trans "year" %} - ([[ teachings_dictionary[year].cdscod ]])
+                                [[ year ]] {% trans "year" %} - ([[ teachings_dictionary[year].cdscod ]])
                             </button>
                         </div>
                         <div :id="'collapse-{{ id }}-1' + index +'-lft'"
@@ -84,7 +84,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="activity in teachings_dictionary[year].data[0].StudyActivities[year]" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                    <tr v-for="activity in teachings_dictionary[year].data[0].StudyActivities[year]" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
                                                         <td>
 <!--
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
@@ -146,7 +146,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr v-for="activity in item.StudyActivities[year]" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                                <tr v-for="activity in item.StudyActivities[year]" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
                                                                     <td>
             <!--
                                                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
@@ -194,7 +194,10 @@
 {% block extra_data %}
 
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
+{% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_ID" as exclude_studyactivity_id %}
+
 exclude_studyactivity_codes: {{ exclude_studyactivity_codes|safe }},
+exclude_studyactivity_id: {{ exclude_studyactivity_id|safe }},
 old_cds_identifiers: {{ old_cds_identifiers|safe }},
 degree_class: '',
 interclass_degree_class: '',

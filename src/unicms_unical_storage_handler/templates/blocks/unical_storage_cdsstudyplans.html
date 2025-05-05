@@ -77,7 +77,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod)">
+                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
                                                         <td>
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                 [[ activity.StudyActivityName ]]
@@ -112,6 +112,8 @@
 
 {% block extra_data %}
 {% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_CODES" as exclude_studyactivity_codes %}
+{% storage_settings_value "EXCLUDE_STUDY_ACTIVITIES_ID" as exclude_studyactivity_id %}
 
 exclude_studyactivity_codes: {{ exclude_studyactivity_codes|safe }},
+exclude_studyactivity_id: {{ exclude_studyactivity_id|safe }},
 {% endblock extra_data %}
