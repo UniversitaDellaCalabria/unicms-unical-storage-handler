@@ -187,3 +187,11 @@ def get_webpath_cds_dict():
     for wpcds in webpath_cds:
         result[wpcds.webpath.pk] = wpcds.cds_cod
     return result
+
+
+@register.filter
+def add_int_to_string(value, arg):
+    try:
+        return int(value) + int(arg)
+    except (ValueError, TypeError):
+        return ''

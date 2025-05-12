@@ -24,6 +24,7 @@
             <div class="col-12">
 
                 {% block academic_year_select %}
+                {% now "Y" as date_year_current %}
                 <loading-icon
                     v-if="is_loading_academicyears"
                     :loader_source="loader_source_academicyears">
@@ -42,6 +43,11 @@
                               <option value="" v-if="initial_academic_year==''">
                                   - {% trans 'Choose an option' %} -
                               </option>
+                              {% if date_year_current > current_year %}
+                              <option value="{{ date_year_current }}" :selected="selected_academic_year == {{ date_year_current }}">
+                                  - {% trans "Select a year prior to" %} {{ date_year_current }}/{{ date_year_current|add_int_to_string:1 }} -
+                              </option>
+                              {% endif %}
                               <option v-for="item in academic_years_filter"
                                       v-if="item.AcademicYear <= '{{ current_year }}'"
                                       :value="item.AcademicYear"
@@ -175,7 +181,7 @@
             :loader_source="loader_source">
         </loading-icon>
 
-        <div v-else>
+        <div v-else-if="items.results.length > 0">
             <div class="d-none d-lg-block">
                 <div class="card-columns card-columns-2">
                     <div class="card d-inline-block" v-for="area in cds_areas" v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
@@ -376,6 +382,7 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% block current_year %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
 initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
+compare_with_data_current_year: true,
 {% endblock current_year %}
 
 selected_coursetype: this.getItemFromSession("{{ id }}", 'coursetype'),
@@ -441,31 +448,46 @@ search(keyword=null, value=null) {
 {% endblock method_search %}
 
 {% block method_callurl %}
+{% now "Y" as date_year_current %}
 CallURL(url, initial=false) {
-    this.controller = new AbortController()
-    let signal = this.controller.signal
-    let exclude_list = this.cds_to_exclude
-    this.is_loading = true
-    this.loader_source = url
-    if (!url.includes("academicyear") && this.initial_academic_year)
-        url = url + '&academicyear=' + this.initial_academic_year
-    if (!url.includes("coursetype") && this.allowed_course_types.length > 0)
-        url = url + '&coursetype=' + this.allowed_course_types.toString()
-    axios
-        .get(url, {signal})
-        .then(response => {
-            if(this.check_exclusion)
-                response.data.results = response.data.results.filter(function( obj ) {
-                    return !exclude_list.includes(obj.CdSCod);
-                });
-            if(initial) this.initial_items = response.data.results;
-            this.items = response.data;
-            this.next_page = response.data.next;
-            this.previous_page = response.data.previous;
-            this.labels = response.data.labels;
-            this.is_loading = false;
-        })
-        .catch((error) => {});
+    let splitted_params = this.parameters.substring(1).split('&')
+    let academicYear = {{ date_year_current }};
+    for (const param of splitted_params) {
+      const [k, v] = param.split('=');
+      if (k === "academicyear") {
+        academicYear = v;
+        break;
+      }
+    }
+    if (this.compare_with_data_current_year && {{ date_year_current }} > '{{ current_year }}' && academicYear && academicYear >= {{ date_year_current }} ){
+        this.items = {'results': []}
+        this.is_loading = false
+    } else {
+        this.controller = new AbortController()
+        let signal = this.controller.signal
+        let exclude_list = this.cds_to_exclude
+        this.is_loading = true
+        this.loader_source = url
+        if (!url.includes("academicyear") && this.initial_academic_year)
+            url = url + '&academicyear=' + this.initial_academic_year
+        if (!url.includes("coursetype") && this.allowed_course_types.length > 0)
+            url = url + '&coursetype=' + this.allowed_course_types.toString()
+        axios
+            .get(url, {signal})
+            .then(response => {
+                if(this.check_exclusion)
+                    response.data.results = response.data.results.filter(function( obj ) {
+                        return !exclude_list.includes(obj.CdSCod);
+                    });
+                if(initial) this.initial_items = response.data.results;
+                this.items = response.data;
+                this.next_page = response.data.next;
+                this.previous_page = response.data.previous;
+                this.labels = response.data.labels;
+                this.is_loading = false;
+            })
+            .catch((error) => {});
+    }
 },
 {% endblock method_callurl %}
 
