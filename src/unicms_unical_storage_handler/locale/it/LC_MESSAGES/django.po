@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-12 14:48+0200\n"
-"PO-Revision-Date: 2025-05-12 14:49+0200\n"
+"PO-Revision-Date: 2025-05-13 14:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -1732,12 +1732,18 @@ msgid ""
 "refreshment points and other meeting spaces. A citadel that allows you to "
 "live an extraordinary human experience, as well as an educational one."
 msgstr ""
+"Nel Campus più grande e attrezzato d’Italia si vive un’esperienza di "
+"comunità universitaria unica, condividendo con colleghi e docenti momenti "
+"formativi, ludici, sportivi e culturali. Il Campus è dotato di aule studio, "
+"di un centro sportivo, teatri, anfiteatri, musei, orto botanico, cinema, "
+"bar, punti ristoro e altri spazi aggregativi. Una cittadella che consente di "
+"vivere una straordinaria esperienza umana, oltre che formativa."
 
 #: templates/storage_cds_websites_prospect.html:827
 #: templates/storage_cds_websites_prospect.html:845
 #: templates/storage_cds_websites_prospect.html:863
 msgid "Discover more"
-msgstr ""
+msgstr "Scopri di più"
 
 #: templates/storage_cds_websites_prospect.html:840
 msgid ""
@@ -1747,6 +1753,11 @@ msgid ""
 "inclusion services. On the Campus there is also a health center, a post "
 "office, a bank branch and a space for silence."
 msgstr ""
+"Una cittadella che ospita nel migliore dei modi chi vive nel Campus, perché "
+"offre molteplici servizi per lo studio e per il benessere individuale e "
+"collettivo: biblioteche, centro per l’apprendimento linguistico, servizi di "
+"counselling e di inclusione. Nel Campus vi sono anche un centro sanitario, "
+"un ufficio postale, uno sportello bancario e uno spazio per il silenzio."
 
 #: templates/storage_cds_websites_prospect.html:858
 msgid ""
@@ -1760,85 +1771,81 @@ msgid ""
 "free Wi-Fi services, games rooms and gyms; laundry and bicycle rental "
 "services are also available in every neighbourhood."
 msgstr ""
+"Completa e valorizza l’offerta dell’Università della Calabria e concretizza "
+"l’idea di campus universitario di tipo anglosassone. È distribuito in 10 "
+"quartieri nei quali sono ubicate le residenze universitarie, costituite da "
+"monolocali e appartamenti con camere doppie e singole, soggiorno, cucina e "
+"servizi. I quartieri sono dotati di spazi comuni per lo studio e per le "
+"attività ricreative e sportive, con la presenza di sale tv, servizi Wi-Fi "
+"gratuiti, sale giochi e palestre; sono disponibili, altresì, servizi di "
+"lavanderia e di noleggio bici."
 
 #: templates/storage_cds_websites_prospect.html:878
 msgid "Request information for this course"
-msgstr ""
+msgstr "Richiedi informazioni per questo corso"
 
 #: templates/storage_cds_websites_prospect.html:920
 msgid "Submit"
-msgstr ""
+msgstr "Invia"
 
 #: templates/storage_cds_websites_prospect.html:928
 msgid "Confirm"
-msgstr ""
+msgstr "Conferma"
 
 #: templates/storage_cds_websites_prospect.html:938
 msgid "Do you want to confirm the entered data?"
-msgstr ""
+msgstr "Vuoi confermare i dati immessi?"
 
 #: templates/storage_cds_websites_prospect.html:945
 msgid "Yes, proceed"
-msgstr ""
+msgstr "Si, procedi"
 
 #: templates/storage_cds_websites_studiare_calendari.html:91
 msgid "Include exams for not offered teachings"
-msgstr ""
+msgstr "Includere gli esami per gli insegnamenti non erogati"
 
 #: templates/storage_cds_websites_studiare_calendari.html:100
 msgid "Show past events"
-msgstr ""
+msgstr "Mostra eventi passati"
 
 #: templates/storage_cds_websites_studiare_calendari.html:131
 #: templates/storage_cds_websites_studiare_orari.html:105
-#, fuzzy
-#| msgid "Degree course type"
 msgid "Degree course year"
-msgstr "Tipologia corso"
+msgstr "Anno del corso di laurea"
 
 #: templates/storage_cds_websites_studiare_calendari.html:152
 #: templates/storage_cds_websites_studiare_calendari.html:168
 #: templates/storage_cds_websites_studiare_orari.html:128
 #: templates/storage_cds_websites_studiare_orari.html:144
-#, fuzzy
-#| msgid "Choose an option"
 msgid "Choose a teaching"
-msgstr "Scegli un'opzione"
+msgstr "Scegli un insegnamento"
 
 #: templates/storage_cds_websites_studiare_calendari.html:175
 #: templates/storage_cds_websites_studiare_orari.html:187
-#, fuzzy
-#| msgid ""
-#| "No data available for the selected year. It is possible to consult those "
-#| "from previous years"
 msgid "No teaching available for the selected period in the academic year"
 msgstr ""
-"Nessun dato disponibile per l'anno selezionato. E' possibile consultare "
-"quelli degli anni precedenti"
+"Nessun insegnamento disponibile per il periodo selezionato nell'anno "
+"accademico"
 
 #: templates/storage_cds_websites_studiare_calendari.html:199
 msgid "Confirmed"
-msgstr ""
+msgstr "Confermato"
 
 #: templates/storage_cds_websites_studiare_calendari.html:202
 msgid "To be confirmed"
-msgstr ""
+msgstr "Da confermare"
 
 #: templates/storage_cds_websites_studiare_calendari.html:214
-#, fuzzy
-#| msgid "Duration"
 msgid "Description"
-msgstr "Durata"
+msgstr "Descrizione"
 
 #: templates/storage_cds_websites_studiare_calendari.html:220
 msgid "Hour"
-msgstr ""
+msgstr "Ora"
 
 #: templates/storage_cds_websites_studiare_calendari.html:240
-#, fuzzy
-#| msgid "Publications"
 msgid "Subscriptions"
-msgstr "Pubblicazioni"
+msgstr "Iscrizioni"
 
 #: templates/storage_cds_websites_studiare_calendari.html:243
 msgid "Prenotazioni"
@@ -1853,112 +1860,80 @@ msgid "al"
 msgstr ""
 
 #: templates/storage_cds_websites_studiare_orari.html:174
-#, fuzzy
-#| msgid "Duration"
 msgid "Location"
-msgstr "Durata"
+msgstr "Aula"
 
 #: templates/storage_cds_websites_studiare_orari.html:205
-#, fuzzy
-#| msgid "Exam calendar"
 msgid "Calendar"
-msgstr "Calendario esami"
+msgstr "Calendario"
 
 #: templates/storage_cds_websites_studiare_orari.html:212
 msgid "List"
-msgstr ""
+msgstr "Lista"
 
 #: templates/storage_cds_websites_studiare_orari.html:274
 #: templates/storage_cds_websites_studiare_orari.html:352
 msgid "Go to the online lesson"
-msgstr ""
+msgstr "Vai alla lezione online"
 
 #: templates/storage_cdsinfo.html:11
-#, fuzzy
-#| msgid "Course Area"
 msgid "Course detail"
-msgstr "Area"
+msgstr "Dettagli del corso"
 
 #: templates/storage_cdslist.html:10 templates/storage_cdslist.html:19
-#, fuzzy
-#| msgid "Training Project"
 msgid "Training offer"
-msgstr "Progetto Formativo"
+msgstr "Offerta formativa"
 
 #: templates/storage_departments_info.html:11
-#, fuzzy
-#| msgid "Department"
 msgid "Department detail"
-msgstr "Dipartimento"
+msgstr "Dettagli del dipartimento"
 
 #: templates/storage_departments_list.html:10
 #: templates/storage_departments_list.html:19
-#, fuzzy
-#| msgid "Department"
 msgid "Departments"
-msgstr "Dipartimento"
+msgstr "Dipartimenti"
 
 #: templates/storage_high_formation_master_info.html:11
-#, fuzzy
-#| msgid "High Formation Master Partners"
 msgid "High Formation Master"
-msgstr "Partner"
+msgstr "Master e Alta formazione"
 
 #: templates/storage_high_formation_master_info.html:43
 #: templates/storage_high_formation_masters_list.html:43
-#, fuzzy
-#| msgid "Master's degree (2 years)"
 msgid "Master's degrees announcements"
-msgstr "Laurea Magistrale (2 anni)"
+msgstr "Annunci lauree magistrali"
 
 #: templates/storage_high_formation_master_info.html:48
 #: templates/storage_high_formation_masters_list.html:48
-#, fuzzy
-#| msgid "Masters and Advanced training courses"
 msgid "Advanced training courses announcements"
-msgstr "Master e Corsi alta formazione"
+msgstr "Annunci corsi alta formazione"
 
 #: templates/storage_high_formation_masters_list.html:12
-#, fuzzy
-#| msgid "High Formation Master Partners"
 msgid "High Formation Masters"
-msgstr "Partner"
+msgstr "Master e Alta formazione"
 
 #: templates/storage_laboratory_info.html:11
-#, fuzzy
-#| msgid "Laboratory Equipment"
 msgid "Laboratory detail"
-msgstr "Strumentazione"
+msgstr "Dettagli laboratorio"
 
 #: templates/storage_phd_activities_info.html:10
-#, fuzzy
-#| msgid "PhD Activities"
 msgid "PhD Activity"
-msgstr "Attività dei Dottorati"
+msgstr "Attività del Dottorato"
 
 #: templates/storage_projects_info.html:11
-#, fuzzy
-#| msgid "Projects"
 msgid "Project detail"
-msgstr "Progetti"
+msgstr "Dettagli progetto"
 
 #: templates/storage_publications_info.html:11
-#, fuzzy
-#| msgid "Publications"
 msgid "Publication detail"
-msgstr "Pubblicazioni"
+msgstr "Dettagli pubblicazione"
 
 #: templates/storage_spinoff_info.html:11
-#, fuzzy
-#| msgid "Companies"
 msgid "Company detail"
-msgstr "Imprese"
+msgstr "Dettagli impresa"
 
 #: templates/storage_structure_info.html:11
-#, fuzzy
-#| msgid "Structure type"
 msgid "Structure detail"
-msgstr "Tipo struttura"
+msgstr "Dettagli struttura"
 
 #: templates/widgets/captcha.html:32
 msgid "REFRESH"
