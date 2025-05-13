@@ -165,7 +165,7 @@
                                                         name="teaching_input"
                                                         class="form-control"
                                                         @change="choseAF($event.target.value)">
-                                                  <option value="">- {% trans "Choose a teaching" %} </option>
+                                                  <option value="">- {% trans "Choose a teaching" %} -</option>
                                                   <option v-if="studyplans.length > 0" v-for="teaching in studyplans[0].StudyActivities[year]" :value="teaching.StudyActivityCod + '-' + teaching.StudyActivityName">
                                                         [[ teaching.StudyActivityCod ]] - [[ teaching.StudyActivityName ]]
                                                   </option>
