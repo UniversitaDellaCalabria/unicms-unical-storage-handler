@@ -318,6 +318,7 @@ PROJECTS_INFO_NOT_SHOW = ['ProjectId', 'ProjectDepartmentId',
                           'ProjectImage', 'InfrastructureId', 'IsActive']
 
 PROJECTS_PRIN_ID_LIST = []
+PROJECTS_PRIN_BANNER_URL = "https://www.unical.it/media/medias/2024/TESTATA_PNRR_PER_UNICAL_ok.webp"
 
 INITIAL_STRUCTURE_FATHER = ''
 
