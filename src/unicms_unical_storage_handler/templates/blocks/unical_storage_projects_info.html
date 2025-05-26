@@ -27,16 +27,16 @@
     <div v-else-if="Object.keys(item).length">
 
         <div class="row">
-            {% comment %}
             <div class="col-12 col-lg-3" v-if="item.ProjectImage">
                 <img :src="item.ProjectImage" class="w-100"/>
             </div>
-            {% endcomment %}
+            {% comment %}
             <div class="col-12 col-lg-2 text-center">
                 <svg class="m-auto icon icon-xl icon-muted">
                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
                 </svg>
             </div>
+            {% endcomment %}
             <div class="col-12 col-lg my-3 my-lg-0">
                 <h1 class="lighter">
                     [[ item.ProjectTitle ]]
