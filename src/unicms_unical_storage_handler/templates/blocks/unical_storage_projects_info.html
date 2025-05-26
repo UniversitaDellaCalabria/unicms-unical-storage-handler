@@ -65,6 +65,9 @@
                                 </li>
                             </ul>
                         </td>
+                        <td v-else-if="name == 'WebSite' ">
+                            <a :href="value" target="_blank">[[ value ]]</a>
+                        </td>
                         <td v-else-if="name == 'Researchers' ">
                             <ul>
                                 <li v-for="v in value">
