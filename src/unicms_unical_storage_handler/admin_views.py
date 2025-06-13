@@ -47,11 +47,15 @@ def create_course_websites(request):
 
                     with transaction.atomic():
                         for course in courses:
+                            website_found = False
                             if course['CdSCod'] in actual_cds_websites:
-                                continue
+                                website_found = True
+
+                            if website_found: continue
 
                             if morphed_courses.get(course['CdSCod'], []):
-                                if morphed_courses[course['CdSCod']][0] in actual_cds_websites:
+                                mc = morphed_courses[course['CdSCod']][0]
+                                if mc in actual_cds_websites:
                                     cds_website = WebPathCdsCod.objects.filter(cds_cod=mc).select_related('webpath').first()
                                     cds_website.cds_cod = course['CdSCod']
                                     cds_website.save()
@@ -60,16 +64,17 @@ def create_course_websites(request):
                                     old_path = cds_webpath.path
                                     cds_webpath.path = slugify(course['CdSName'])
                                     cds_webpath.name = course['CdSName']
-                                    cds_webpath.save(update_fields=['path','name'])
+                                    cds_webpath.save(update_fields=['path','name','modified'])
 
                                     cds_webpath_page = Page.objects.filter(webpath=cds_webpath).first()
                                     cds_webpath_page.title = course['CdSName']
                                     cds_webpath_page.name = course['CdSName']
-                                    cds_webpath_page.save(update_fields=['title','name'])
+                                    cds_webpath_page.save(update_fields=['title','name','modified'])
 
+                                    website_found = True
                                     messages.warning(request, f"{_('Updated webpath')} {root}{old_path} in {root}{cds_webpath.path}")
 
-                            else:
+                            if not website_found:
                                 existent_webpath = WebPath.objects.filter(site=root.site,
                                                                           parent=root,
                                                                           path=f"{slugify(course['CdSName'])}/").exists()
