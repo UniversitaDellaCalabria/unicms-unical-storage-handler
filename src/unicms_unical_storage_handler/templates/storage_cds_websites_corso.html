@@ -62,9 +62,6 @@ if(!year)year = "{{ cds_website_current_year }}"
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <p class="h1 lighter">{{ page_title }}</p>
-                    <p class="h4 lighter">
-                        {% trans "A.Y." %} [[ _cds_data.cds_labels['AcademicYear'] ]]/[[ _cds_data.cds_labels['AcademicYear'] + 1]]
-                    </p>
                     <div class="mt-5" id="_{{ cds_cod }}_1">
                         <p v-html="item.CDSIntro"></p>
                         <div id="accordionDiv1-lft" class="accordion accordion-left-icon">
