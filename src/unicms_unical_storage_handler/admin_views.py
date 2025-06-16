@@ -102,12 +102,16 @@ def create_course_websites(request):
                                                            state='published',
                                                            is_active=True)
 
+                                blocks = []
                                 for cb in chosen_blocks:
-                                    PageBlock.objects.create(page=page,
-                                                             block=cb.block,
-                                                             order=cb.order,
-                                                             is_active=cb.is_active,
-                                                             section=cb.section)
+                                    blocks.append(
+                                        PageBlock(page=page,
+                                                  block=cb.block,
+                                                  order=cb.order,
+                                                  is_active=cb.is_active,
+                                                  section=cb.section)
+                                    )
+                                PageBlock.objects.bulk_create(blocks)
 
                                 WebPathCdsCod.objects.create(webpath=webpath,
                                                              cds_cod=course['CdSCod'])
