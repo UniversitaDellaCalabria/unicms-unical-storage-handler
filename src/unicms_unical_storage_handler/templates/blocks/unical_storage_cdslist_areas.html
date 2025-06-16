@@ -449,6 +449,8 @@ search(keyword=null, value=null) {
 
 {% block method_callurl %}
 {% now "Y" as date_year_current %}
+{% storage_settings_value "CURRENT_YEAR" as current_year %}
+
 CallURL(url, initial=false) {
     let splitted_params = this.parameters.substring(1).split('&')
     let academicYear = {{ date_year_current }};
