@@ -306,7 +306,7 @@ if(!year)year = "{{ cds_website_current_year }}"
 
                                 <div v-if="selected_year" class="mt-4">
 
-                                    <p class="h4 mb-3">{% trans "Study plan" %}</p>
+                                    <p class="h4 mb-3">{% trans "Study plan" %} <span v-if="items && 'PlanTabs' in items">([[ _cds_data.cds["CdSCod"] ]])</span></p>
                                     <loading-icon
                                         v-if="is_loading"
                                         :loader_source="loader_source">
@@ -555,9 +555,9 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                             _cds_data.CallURL(response.data.results[0]['RegDidId'])
                             this.scrollPage()
                         }
-                        this.is_loading = false
                     })
             }
+            this.is_loading = false
             //this.old_cds_found = false
         },
         callStudyPlans(year={{ cds_website_future_year }}) {
