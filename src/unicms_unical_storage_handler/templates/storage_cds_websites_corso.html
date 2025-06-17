@@ -555,6 +555,7 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                             _cds_data.CallURL(response.data.results[0]['RegDidId'])
                             this.scrollPage()
                         }
+                        this.is_loading = false
                     })
             }
             //this.old_cds_found = false
@@ -576,11 +577,11 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                         this.curricula = curricula
                         this.items = response.data.results[0]
                         this.scrollPage()
+                        this.is_loading = false
                     }
                     else{
                         this.getOldPlans(year)
                     }
-                    this.is_loading = false
                 })
         },
         callAcademicYears() {
