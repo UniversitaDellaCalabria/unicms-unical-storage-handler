@@ -1113,10 +1113,22 @@ class CdsWebsitesIsodidHandler(CdsWebsiteBaseHandler):
 class CdsWebsitesRedirectHandler(BaseContentHandler):
     def __init__(self, **kwargs):
         super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
-        webpath_cds = get_object_or_404(WebPathCdsCod,
-                                        webpath__is_active=True,
-                                        cds_cod=kwargs['cds_cod'])
-        self.webpath = webpath_cds.webpath
+        webpath_cds = WebPathCdsCod.objects.filter(
+            webpath__is_active=True,
+            cds_cod=kwargs['cds_cod']
+        ).first()
+        if webpath_cds:
+            self.webpath = webpath_cds.webpath
+        else:
+            cds_morph_list = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}').json()
+            for new_cds in cds_morph_list:
+                if kwargs['cds_cod'] in cds_morph_list[new_cds]:
+                    webpath_cds = get_object_or_404(WebPathCdsCod,
+                        webpath__is_active=True,
+                        cds_cod=new_cds
+                    )
+                    self.webpath = webpath_cds.webpath
+                    break
 
     def as_view(self):
         if not self.webpath: raise Http404()
