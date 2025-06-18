@@ -299,9 +299,9 @@
             getEvents() {
                 this.is_loading = true
                 this.events = []
-                let up_url = '{{ base_api }}{{ cds_websites_api }}' + this.cds_identifier + '/exams/?lang={{ LANGUAGE_CODE }}&academic_year=' + this.academic_year + '&year=' + this.year + '&af_name=' + this.chosen_af_name + '&af_cod=' + this.chosen_af_cod + '&show_past=' + this.show_past
+                let url = '{{ base_api }}{{ cds_websites_api }}' + this.cds_identifier + '/exams/?lang={{ LANGUAGE_CODE }}&academic_year=' + this.academic_year + '&year=' + this.year + '&af_name=' + this.chosen_af_name + '&af_cod=' + this.chosen_af_cod + '&show_past=' + this.show_past
                 axios
-                    .get(up_url)
+                    .get(url)
                     .then(response => {
                         this.events = response.data
                         this.is_loading = false
@@ -341,6 +341,7 @@
                 this.old_cds_found = false
             },
             changeYear(year=1){
+                this.cds_identifier = '{{ cds_cod }}'
                 this.year = year
                 this.chosen_af_cod = ''
                 this.chosen_af_bane = ''
