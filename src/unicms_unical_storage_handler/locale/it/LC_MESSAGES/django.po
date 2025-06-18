@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-12 14:48+0200\n"
-"PO-Revision-Date: 2025-05-13 14:15+0200\n"
+"POT-Creation-Date: 2025-06-18 10:58+0200\n"
+"PO-Revision-Date: 2025-06-18 10:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -18,66 +18,66 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: admin_views.py:38
+#: admin_views.py:41
 msgid "No courses to import"
 msgstr "Nessun corso da importare"
 
-#: admin_views.py:103 templates/admin/admin_changelist_custom.html:9
+#: admin_views.py:135 templates/admin/admin_changelist_custom.html:9
 msgid "Create course websites starting from the training offer"
 msgstr "Crea i siti dei corsi partendo dall'offerta formativa"
 
-#: admin_views.py:108
+#: admin_views.py:140
 msgid "Create course websites"
 msgstr "Crea i siti dei corsi"
 
-#: forms.py:24
+#: forms.py:25
 msgid "First name"
 msgstr "Nome"
 
-#: forms.py:25
+#: forms.py:26
 msgid "Last name"
 msgstr "Cognome"
 
-#: forms.py:26
+#: forms.py:27
 msgid "E-mail"
 msgstr ""
 
-#: forms.py:27
+#: forms.py:28
 msgid "Telephone"
 msgstr "Telefono"
 
-#: forms.py:28 forms.py:87
+#: forms.py:29 forms.py:88
 msgid "Message"
 msgstr "Messaggio"
 
-#: forms.py:29
+#: forms.py:30
 msgid "Preso atto dell'informativa di cui all' art. 13 del GDPR EU 2016/679"
 msgstr ""
 
-#: forms.py:43
+#: forms.py:44
 msgid "Name"
 msgstr ""
 
-#: forms.py:54 templates/blocks/unical_storage_addressbook.html:39
+#: forms.py:55 templates/blocks/unical_storage_addressbook.html:39
 msgid "Surname"
 msgstr "Cognome"
 
-#: forms.py:65
+#: forms.py:66
 msgid "Email"
 msgstr ""
 
-#: forms.py:76
+#: forms.py:77
 msgid "Phone"
 msgstr ""
 
-#: forms.py:99
+#: forms.py:100
 msgid ""
 "I have taken note of the information referred to in art. 13 of the GDPR EU "
 "2016/679"
 msgstr ""
 "Ho preso atto dell'informativa di cui all' art. 13 del GDPR EU 2016/679"
 
-#: forms.py:108
+#: forms.py:109
 msgid "Verification code"
 msgstr "Codice di verifica"
 
@@ -123,6 +123,7 @@ msgid "Degree courses"
 msgstr "Corsi di laurea"
 
 #: settings.py:199 templates/storage_base.html:72
+#: templates/storage_high_formation_masters_list.html:12
 #: templates/storage_high_formation_masters_list.html:25
 msgid "Masters and Advanced training courses"
 msgstr "Master e Corsi alta formazione"
@@ -221,48 +222,48 @@ msgstr "Titolo congiunto"
 msgid "Double title"
 msgstr "Doppio titolo"
 
-#: settings.py:442
+#: settings.py:443
 msgid "The Course"
 msgstr "Il Corso"
 
-#: settings.py:443
+#: settings.py:444
 msgid "Enroll"
 msgstr "Iscriversi"
 
-#: settings.py:444
+#: settings.py:445
 msgid "Opportunities"
 msgstr "Opportunità"
 
-#: settings.py:445
+#: settings.py:446
 #: templates/blocks/collapse/unical_storage_collapse_structure_list.html:7
 #: templates/blocks/unical_storage_high_formation_master_info.html:559
 msgid "Organization"
 msgstr "Organizzazione"
 
-#: settings.py:446
+#: settings.py:447
 msgid "Brochure"
 msgstr ""
 
-#: settings.py:447
+#: settings.py:448
 #: templates/includes/unical_storage_cds_website_right_links.html:31
 #: templates/includes/unical_storage_cds_website_right_links.html:36
 #: templates/includes/unical_storage_cds_website_right_links.html:41
 msgid "Student opinions survey"
 msgstr "Rilevazione opinioni degli studenti"
 
-#: settings.py:448 templates/storage_cds_websites_corso.html:238
+#: settings.py:449 templates/storage_cds_websites_corso.html:238
 #: templates/storage_cds_websites_corso.html:383
 msgid "Study"
 msgstr "Studiare"
 
-#: settings.py:449
+#: settings.py:450
 #: templates/blocks/unical_storage_cds_website_menu_secondary.html:47
 #: templates/blocks/unical_storage_cds_website_menu_secondary.html:52
 #: templates/storage_cds_websites_studiare.html:304
 msgid "Exam calendar"
 msgstr "Calendario esami"
 
-#: settings.py:450
+#: settings.py:451
 #: templates/blocks/unical_storage_cds_website_menu_secondary.html:33
 #: templates/blocks/unical_storage_cds_website_menu_secondary.html:38
 #: templates/storage_cds_websites_studiare.html:283
@@ -308,8 +309,8 @@ msgstr "prossimo"
 #: templates/blocks/unical_storage_patents_list.html:137
 #: templates/blocks/unical_storage_phd_activities_list.html:356
 #: templates/blocks/unical_storage_phd_list.html:191
-#: templates/blocks/unical_storage_projects_list.html:251
-#: templates/blocks/unical_storage_projects_list_prin_filters.html:176
+#: templates/blocks/unical_storage_projects_list.html:248
+#: templates/blocks/unical_storage_projects_list_prin_filters.html:173
 #: templates/blocks/unical_storage_publications_list.html:165
 #: templates/blocks/unical_storage_research_group_list.html:182
 #: templates/blocks/unical_storage_research_line_list.html:228
@@ -974,8 +975,8 @@ msgstr "Responsabile"
 
 #: templates/blocks/unical_storage_patents_list.html:41
 #: templates/blocks/unical_storage_projects_list.html:59
-#: templates/blocks/unical_storage_projects_list.html:226
-#: templates/blocks/unical_storage_projects_list_prin_filters.html:151
+#: templates/blocks/unical_storage_projects_list.html:223
+#: templates/blocks/unical_storage_projects_list_prin_filters.html:148
 #: templates/blocks/unical_storage_spinoff_list.html:34
 #: templates/blocks/unical_storage_spinoff_list.html:155
 msgid "Tech Area"
@@ -1220,12 +1221,12 @@ msgstr "CV caricato (it)"
 
 #: templates/blocks/unical_storage_teacherinfo.html:162
 #: templates/blocks/unical_storage_teacherinfo.html:173
-#: templates/storage_cds_websites_iscriversi.html:144
-#: templates/storage_cds_websites_iscriversi.html:203
-#: templates/storage_cds_websites_opportunita.html:143
-#: templates/storage_cds_websites_opportunita.html:202
-#: templates/storage_cds_websites_organizzazione.html:361
-#: templates/storage_cds_websites_organizzazione.html:420
+#: templates/storage_cds_websites_iscriversi.html:146
+#: templates/storage_cds_websites_iscriversi.html:205
+#: templates/storage_cds_websites_opportunita.html:145
+#: templates/storage_cds_websites_opportunita.html:204
+#: templates/storage_cds_websites_organizzazione.html:363
+#: templates/storage_cds_websites_organizzazione.html:422
 #: templates/storage_cds_websites_studiare.html:157
 #: templates/storage_cds_websites_studiare.html:216
 #: templates/storage_cds_websites_studiare.html:420
@@ -1576,12 +1577,12 @@ msgstr "Manifesto degli studi"
 msgid "Choose an academic year"
 msgstr "Scegli un anno accademico"
 
-#: templates/storage_cds_websites_iscriversi.html:151
-#: templates/storage_cds_websites_iscriversi.html:210
-#: templates/storage_cds_websites_opportunita.html:150
-#: templates/storage_cds_websites_opportunita.html:209
-#: templates/storage_cds_websites_organizzazione.html:368
-#: templates/storage_cds_websites_organizzazione.html:427
+#: templates/storage_cds_websites_iscriversi.html:153
+#: templates/storage_cds_websites_iscriversi.html:212
+#: templates/storage_cds_websites_opportunita.html:152
+#: templates/storage_cds_websites_opportunita.html:211
+#: templates/storage_cds_websites_organizzazione.html:370
+#: templates/storage_cds_websites_organizzazione.html:429
 #: templates/storage_cds_websites_studiare.html:164
 #: templates/storage_cds_websites_studiare.html:223
 #: templates/storage_cds_websites_studiare.html:427
@@ -1589,12 +1590,12 @@ msgstr "Scegli un anno accademico"
 msgid "Open"
 msgstr ""
 
-#: templates/storage_cds_websites_iscriversi.html:158
-#: templates/storage_cds_websites_iscriversi.html:217
-#: templates/storage_cds_websites_opportunita.html:157
-#: templates/storage_cds_websites_opportunita.html:216
-#: templates/storage_cds_websites_organizzazione.html:375
-#: templates/storage_cds_websites_organizzazione.html:434
+#: templates/storage_cds_websites_iscriversi.html:160
+#: templates/storage_cds_websites_iscriversi.html:219
+#: templates/storage_cds_websites_opportunita.html:159
+#: templates/storage_cds_websites_opportunita.html:218
+#: templates/storage_cds_websites_organizzazione.html:377
+#: templates/storage_cds_websites_organizzazione.html:436
 #: templates/storage_cds_websites_studiare.html:171
 #: templates/storage_cds_websites_studiare.html:230
 #: templates/storage_cds_websites_studiare.html:434
@@ -1602,12 +1603,12 @@ msgstr ""
 msgid "Watch video"
 msgstr "Guarda il video"
 
-#: templates/storage_cds_websites_iscriversi.html:165
-#: templates/storage_cds_websites_iscriversi.html:224
-#: templates/storage_cds_websites_opportunita.html:164
-#: templates/storage_cds_websites_opportunita.html:223
-#: templates/storage_cds_websites_organizzazione.html:382
-#: templates/storage_cds_websites_organizzazione.html:441
+#: templates/storage_cds_websites_iscriversi.html:167
+#: templates/storage_cds_websites_iscriversi.html:226
+#: templates/storage_cds_websites_opportunita.html:166
+#: templates/storage_cds_websites_opportunita.html:225
+#: templates/storage_cds_websites_organizzazione.html:384
+#: templates/storage_cds_websites_organizzazione.html:443
 #: templates/storage_cds_websites_studiare.html:178
 #: templates/storage_cds_websites_studiare.html:237
 #: templates/storage_cds_websites_studiare.html:441
@@ -1615,12 +1616,12 @@ msgstr "Guarda il video"
 msgid "Open URL"
 msgstr ""
 
-#: templates/storage_cds_websites_iscriversi.html:172
-#: templates/storage_cds_websites_iscriversi.html:231
-#: templates/storage_cds_websites_opportunita.html:171
-#: templates/storage_cds_websites_opportunita.html:230
-#: templates/storage_cds_websites_organizzazione.html:389
-#: templates/storage_cds_websites_organizzazione.html:448
+#: templates/storage_cds_websites_iscriversi.html:174
+#: templates/storage_cds_websites_iscriversi.html:233
+#: templates/storage_cds_websites_opportunita.html:173
+#: templates/storage_cds_websites_opportunita.html:232
+#: templates/storage_cds_websites_organizzazione.html:391
+#: templates/storage_cds_websites_organizzazione.html:450
 #: templates/storage_cds_websites_studiare.html:185
 #: templates/storage_cds_websites_studiare.html:244
 #: templates/storage_cds_websites_studiare.html:448
@@ -1628,12 +1629,12 @@ msgstr ""
 msgid "Send email"
 msgstr ""
 
-#: templates/storage_cds_websites_iscriversi.html:179
-#: templates/storage_cds_websites_iscriversi.html:238
-#: templates/storage_cds_websites_opportunita.html:178
-#: templates/storage_cds_websites_opportunita.html:237
-#: templates/storage_cds_websites_organizzazione.html:396
-#: templates/storage_cds_websites_organizzazione.html:455
+#: templates/storage_cds_websites_iscriversi.html:181
+#: templates/storage_cds_websites_iscriversi.html:240
+#: templates/storage_cds_websites_opportunita.html:180
+#: templates/storage_cds_websites_opportunita.html:239
+#: templates/storage_cds_websites_organizzazione.html:398
+#: templates/storage_cds_websites_organizzazione.html:457
 #: templates/storage_cds_websites_studiare.html:192
 #: templates/storage_cds_websites_studiare.html:251
 #: templates/storage_cds_websites_studiare.html:455
@@ -1641,7 +1642,7 @@ msgstr ""
 msgid "Open ticket"
 msgstr ""
 
-#: templates/storage_cds_websites_iscriversi.html:268
+#: templates/storage_cds_websites_iscriversi.html:270
 msgid "Informations"
 msgstr "Informazioni"
 
@@ -1662,7 +1663,7 @@ msgstr ""
 "Nessun dato disponibile per l'anno selezionato. E' possibile consultare "
 "quelli degli anni precedenti"
 
-#: templates/storage_cds_websites_organizzazione.html:475
+#: templates/storage_cds_websites_organizzazione.html:477
 #: templates/storage_cds_websites_studiare.html:271
 msgid "Consult the page with study plans"
 msgstr "Consulta la pagina con i piani di studio"
@@ -1801,8 +1802,8 @@ msgid "Yes, proceed"
 msgstr "Si, procedi"
 
 #: templates/storage_cds_websites_studiare_calendari.html:91
-msgid "Include exams for not offered teachings"
-msgstr "Includere gli esami per gli insegnamenti non erogati"
+msgid "Change academic year"
+msgstr "Cambia anno accademico"
 
 #: templates/storage_cds_websites_studiare_calendari.html:100
 msgid "Show past events"
@@ -1907,10 +1908,6 @@ msgstr "Annunci lauree magistrali"
 msgid "Advanced training courses announcements"
 msgstr "Annunci corsi alta formazione"
 
-#: templates/storage_high_formation_masters_list.html:12
-msgid "High Formation Masters"
-msgstr "Master e Alta formazione"
-
 #: templates/storage_laboratory_info.html:11
 msgid "Laboratory detail"
 msgstr "Dettagli laboratorio"
@@ -1946,3 +1943,9 @@ msgstr ""
 #: templates/widgets/captcha.html:54
 msgid "Enter the value represented in the CaPTCHA image"
 msgstr ""
+
+#~ msgid "Include exams for not offered teachings"
+#~ msgstr "Includere gli esami per gli insegnamenti non erogati"
+
+#~ msgid "High Formation Masters"
+#~ msgstr "Master e Alta formazione"
