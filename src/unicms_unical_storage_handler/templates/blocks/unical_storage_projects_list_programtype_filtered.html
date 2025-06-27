@@ -50,7 +50,7 @@
                                                             @change="{{ id }}.search()">
                                                         <option value="">- {% trans 'Choose an option' %} -</option>
                                                         <option v-for="item in programtypes"
-                                                                v-if="!excluded_programtypes.includes(String(item.TypeProgramId))"
+                                                                v-if="programtypes_filter.includes(String(item.TypeProgramId))"
                                                                 :value="item.TypeProgramId"
                                                                 :selected="item.TypeProgramId == selected_programtype">
                                                             [[ item.TypeProgramDescription ]]
@@ -210,7 +210,6 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 {% storage_api_root "CMS_STORAGE_PROJECTS_PROGRAMS_TYPES_API" as programtypes_api %}
 {% storage_api_root "CMS_STORAGE_DEPARTMENTS_API" as departments_api %}
 {% storage_api_root "CMS_STORAGE_PROJECTS_INFRASTRUCTURES_API" as infrastructures_api %}
-{% storage_settings_value "PROJECTS_PRIN_ID_LIST" as prin_id_list %}
 
 search_dict: {},
 programtypes: [],
@@ -225,8 +224,6 @@ loader_source_infrastructures: '{{ departments_api }}?lang={{ LANGUAGE_CODE }}&p
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 selected_programtype: this.getItemFromSession("{{ id }}", 'programtype'),
 selected_infrastructure: this.getItemFromSession("{{ id }}", 'infrastructure'),
-
-id_list: {{ prin_id_list|safe }},
 {% endblock extra_data %}
 
 {% block extra_mounted %}
@@ -235,7 +232,7 @@ this.parameters = {{ id }}_encodeQueryData(this.getItemsFromSession("{{ id }}"))
 this.callProgramTypes();
 this.callInfrastructures();
 
-this.excluded_programtypes = {{ id }}_get_param("-programtype").split(",");
+this.programtypes_filter = {{ id }}_get_param("programtype").split(",");
 {% endblock extra_mounted %}
 
 {% block extra_methods %}
@@ -243,7 +240,7 @@ callProgramTypes() {
     axios
         .get(this.loader_source_programtypes)
         .then(response => {
-            this.programtypes = response.data.results.filter( p => this.id_list.includes( p.TypeProgramId ) );
+            this.programtypes = response.data.results
             this.is_loading_programtypes = false
         })
 },
