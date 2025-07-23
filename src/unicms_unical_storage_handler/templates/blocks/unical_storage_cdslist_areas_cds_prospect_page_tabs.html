@@ -69,7 +69,7 @@ compare_with_data_current_year: false,
                                 :aria-labelledby="'nav-vertical-tab' + index + '-tab'"
                                 v-for="(area, index) in cds_areas">
                                 <ul class="list-unstyled">
-                                    <li v-for="item in items.results" v-if="item.CdSArea == area.AreaCds">
+                                    <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
                                         <a class="no-color"
                                            {% block cds_area_item_link %}:href="'/{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"{% endblock cds_area_item_link %}
                                            {% if request.get_host != host %}target="_blank"{% endif %}>
@@ -115,7 +115,7 @@ compare_with_data_current_year: false,
 
                 <div class="accordion-item"
                      v-for="(area, index) in cds_areas"
-                     v-if="area.AreaCds && items.results.filter(result => (result.CdSArea == area.AreaCds)).length">
+                     v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
                     <div class="accordion-header" :id="'{{ id }}_heading-' + index +'-lft'">
                         <button class="accordion-button"
                                 type="button"
@@ -137,10 +137,10 @@ compare_with_data_current_year: false,
                          data-bs-parent="#{{ id }}_accordionDivCds-lft"
                          role="region"
                          :aria-labelledby="'{{ id }}_heading-' + index +'-lft'"
-                         v-if="area.AreaCds && items.results.filter(result => (result.CdSArea == area.AreaCds)).length">
+                         v-if="area.AreaCds && items.results.filter(result => (result.AreaCds == area.AreaCds)).length">
                         <div class="accordion-body">
                             <ul class="list-unstyled">
-                                <li v-for="item in items.results" v-if="item.CdSArea == area.AreaCds">
+                                <li v-for="item in items.results" v-if="item.AreaCds == area.AreaCds">
                                     <a class="no-color"
                                        {% block cds_area_item_link_mobile %}:href="'/{{ cds_websites_basepath }}/' + item.CdSCod + '/{{ cds_websites_redirect_path }}/{{ cds_websites_prospect_path }}/'"{% endblock cds_area_item_link_mobile %}
                                        {% if request.get_host != host %}target="_blank"{% endif %}>
@@ -220,7 +220,7 @@ first_filled_area: '',
 {% block extra_methods %}
 {{ block.super }}
 findFirstFilledArea(area) {
-    courses = area.AreaCds && this.items.results.filter(result => (result.CdSArea == area.AreaCds)).length
+    courses = area.AreaCds && this.items.results.filter(result => (result.AreaCds == area.AreaCds)).length
     if (courses && this.first_filled_area == '')
         this.first_filled_area = area.AreaCds
     return courses
