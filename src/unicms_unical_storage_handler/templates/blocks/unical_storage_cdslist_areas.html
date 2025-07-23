@@ -214,8 +214,8 @@
                                         <span v-if="item.ErogationMode && item.ErogationMode != 'Convenzionale'">
                                             ([[ item.ErogationMode ]])
                                         </span>
-                                        <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese')">
-                                            <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian')">
+                                        <span v-if="arrayLower(item.CdSLanguage, 'english') || arrayLower(item.CdSLanguage, 'inglese') || arrayLower(item.CdSLanguage, 'eng')">
+                                            <span class="me-1" v-if="arrayLower(item.CdSLanguage, 'italian') || arrayLower(item.CdSLanguage, 'ita')">
                                                 <img src="{% static 'images/ita.jpg' %}" alt="{% trans 'Italian' %}"/>
                                             </span>
                                             <img src="{% static 'images/eng.jpg' %}" alt="{% trans 'English' %}"/>
