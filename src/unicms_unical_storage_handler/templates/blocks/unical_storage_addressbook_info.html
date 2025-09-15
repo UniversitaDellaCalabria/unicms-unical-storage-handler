@@ -62,7 +62,6 @@
                         <td v-if="Array.isArray(value)">
                             <ul v-if="name == 'Roles'" style="list-style: none" class="ps-0">
                                 <li v-for="(subvalue, index) in value" v-if="((allowed_roles.length==0 || allowed_roles.includes(subvalue.Role))) || special_roles.includes(subvalue.ProfileId)">
-                                    <hr v-if="index > 0">
                                     <span v-if="subvalue.StructureTypeCOD && subvalue.StructureTypeCOD != '000'">
                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.StructureCod +'/'">
                                             [[ subvalue.Structure ]]
@@ -71,6 +70,7 @@
                                     </span>
                                     <span v-if="special_roles.includes(subvalue.ProfileId)">[[ subvalue.ProfileDescription ]]</span>
                                     <span v-else>[[ subvalue.RoleDescription ]]</span>
+                                    <hr v-if="value.length > index + 1">
                                 </li>
                             </ul>
                             <ul v-else-if="name == 'PersonFunctions'">
