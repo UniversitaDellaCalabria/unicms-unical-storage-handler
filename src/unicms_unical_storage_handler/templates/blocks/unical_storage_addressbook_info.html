@@ -47,7 +47,7 @@
                     [[ item.ProfileDescription ]]
                 </h3>
                 <h3 v-for="role in item.Roles.filter(r => special_roles.includes(r.ProfileId))" :key="role.ProfileId" class="lighter">
-                    {{ role.ProfileDescription }}
+                    [[ role.ProfileDescription ]]
                 </h3>
             </div>
         </div>
