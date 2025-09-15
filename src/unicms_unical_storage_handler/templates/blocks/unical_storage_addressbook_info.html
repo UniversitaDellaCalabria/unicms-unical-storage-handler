@@ -46,6 +46,9 @@
                 <h3 class="lighter" v-if="special_roles.includes(item.ProfileId)">
                     [[ item.ProfileDescription ]]
                 </h3>
+                <h3 v-for="role in item.Roles.filter(r => special_roles.includes(r.ProfileId))" :key="role.ProfileId" class="lighter">
+                    {{ role.ProfileDescription }}
+                </h3>
             </div>
         </div>
         <hr class="my-4 bordeaux-unical-bg">
@@ -58,7 +61,7 @@
                         </td>
                         <td v-if="Array.isArray(value)">
                             <ul v-if="name == 'Roles'" style="list-style: none" class="ps-0">
-                                <li v-for="(subvalue, index) in value" v-if="((allowed_roles.length==0 || allowed_roles.includes(subvalue.Role))) || special_roles.includes(item.ProfileId)">
+                                <li v-for="(subvalue, index) in value" v-if="((allowed_roles.length==0 || allowed_roles.includes(subvalue.Role))) || special_roles.includes(subvalue.ProfileId)">
                                     <hr v-if="index > 0">
                                     <span v-if="subvalue.StructureTypeCOD && subvalue.StructureTypeCOD != '000'">
                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + subvalue.StructureCod +'/'">
@@ -66,7 +69,7 @@
                                         </a>
                                         <br>
                                     </span>
-                                    <span v-if="special_roles.includes(item.ProfileId)">[[ item.ProfileDescription ]]</span>
+                                    <span v-if="special_roles.includes(subvalue.ProfileId)">[[ subvalue.ProfileDescription ]]</span>
                                     <span v-else>[[ subvalue.RoleDescription ]]</span>
                                 </li>
                             </ul>

@@ -230,14 +230,14 @@
                                             {% block role %}
                                             <br>
                                             <ul class="mt-2 mb-1 ps-0" style="list-style: none">
-                                                <li v-for="role in item.Roles" v-if="((allowed_roles.length==0 || allowed_roles.includes(role.Role))) || special_roles.includes(item.ProfileId)">
+                                                <li v-for="role in item.Roles" v-if="((allowed_roles.length==0 || allowed_roles.includes(role.Role))) || special_roles.includes(role.ProfileId)">
                                                     <span v-if="role.StructureTypeCOD && role.StructureTypeCOD != '000'">
                                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ structures_prefix }}/' + role.StructureCod +'/'">
                                                             [[ role.Structure ]]
                                                         </a>
                                                         <br>
                                                     </span>
-                                                    <span v-if="special_roles.includes(item.ProfileId)">[[ item.ProfileDescription ]]</span>
+                                                    <span v-if="special_roles.includes(role.ProfileId)">[[ role.ProfileDescription ]]</span>
                                                     <span v-else>[[ role.RoleDescription ]]</span>
                                                     <hr>
                                                 </li>
