@@ -292,7 +292,9 @@ class TeacherInfoViewHandler(BaseStorageHandler):
         url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/?lang={self.request.LANGUAGE_CODE}'
         self.data['url'] = url
         teacher_data = requests.get(f'{url}').json()
-        self.data['page_title'] = f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']} - {teacher_data['results']['TeacherRoleDescription']}"
+        self.data['teacher_name'] = f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']}"
+        self.data['teacher_role'] = f"{teacher_data['results']['TeacherRoleDescription']}"
+        self.data['page_title'] = f"{self.data['teacher_name']} - {self.data['teacher_role']}"
         self.data['page_meta_description'] = f"{teacher_data['results']['TeacherDepartmentName']} - {teacher_data['results']['TeacherSSDCod']} {teacher_data['results']['TeacherSSDDescription']}"
         self.data['teacher_data'] = json.dumps(teacher_data)
         self.data['code'] = self.code
@@ -355,7 +357,7 @@ class AddressbookInfoViewHandler(BaseStorageHandler):
         person_data = requests.get(f'{url}').json()
         self.data['page_title'] = person_data['results']['Name']
         office = f"{person_data['results']['OfficeReference'][0] if person_data['results']['OfficeReference'] else ''}"
-        email = f"{person_data['results']['Email'][0] if person_data['results']['Email'] else ''} "
+        email = f"{person_data['results']['Email'][0] if person_data['results']['Email'] else ''}"
         phone = f"{person_data['results']['TelOffice'][0] if person_data['results']['TelOffice'] else ''}"
         data = ' - '.join([i for i in [office, email, phone] if i])
         self.data['page_meta_description'] = data

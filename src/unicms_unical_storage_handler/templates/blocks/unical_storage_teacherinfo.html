@@ -31,11 +31,16 @@
 
 <!-- Profile photo and name -->
 <div id="{{ id }}_head">
+
+    {% if not teacher_data %}
     <loading-icon
         v-if="is_loading"
         :loader_source="loader_source">
     </loading-icon>
     <div v-else-if="Object.keys(item).length">
+    {% else %}
+    <div>
+    {% endif %}
         <div class="row">
             <div class="col-2">
                 <img :src="item.PhotoPath" class="w-100" style="border-radius: 50%" v-if="item.PhotoPath && item.PhotoPath != ''" alt="{{ page_title }}"/>
@@ -43,10 +48,10 @@
             </div>
             <div class="col my-0 ms-2">
                 <h2 class="lighter">
-                    [[ item.TeacherFirstName ]] [[ item.TeacherLastName ]]
+                    {% if teacher_data %}{{ teacher_name }}{% else %}[[ item.TeacherFirstName ]] [[ item.TeacherLastName ]]{% endif %}
                 </h2>
                 <h3 class="lighter">
-                    [[ item.TeacherRoleDescription ]]
+                    {% if teacher_data %}{{ teacher_role }}{% else %}[[ item.TeacherRoleDescription ]]{% endif %}
                 </h3>
                 <p v-if="!item.TeacherSSDCod.includes('0000')">
                     [[ item.TeacherSSDDescription ]] ([[ item.TeacherSSDCod ]])
@@ -55,9 +60,11 @@
         </div>
         <hr v-if="Object.keys(item).length">
     </div>
+    {% if not teacher_data %}
     <div v-else>
         {% include "includes/unical_storage_empty.html" with url=url %}
     </div>
+    {% endif %}
 </div>
 <!-- END profile photo and name -->
 

@@ -19,18 +19,21 @@
 {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structures_prefix %}
 {% storage_settings_value "ADDRESSBOOK_INFO_NOT_SHOW" as fields_to_hide %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
-{% storage_settings_value "ADDRESSBOOK_SPECIAL_ROLES" as addressbook_special_roles %}
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_FRIENDLY_URL_MAIN_EMAIL_DOMAIN" as addressbook_friendly_main_url_email_domain %}
 
 
 <div id="{{ id }}">
 
+    {% if not person_data %}
     <loading-icon
         v-if="is_loading"
         :loader_source="loader_source">
     </loading-icon>
 
     <div v-else-if="Object.keys(item).length">
+    {% else %}
+    <div>
+    {% endif %}
         <div class="row">
             {% comment %}
             <div class="col-12 col-lg-2 d-flex">
@@ -41,7 +44,7 @@
             {% endcomment %}
             <div class="col-12 my-3 my-lg-0">
                 <h2 class="lighter">
-                    [[ item.Name ]]
+                    {% if page_title %}{{ page_title }}{% else %}[[ item.Name ]]{% endif %}
                 </h2>
                 <h3 class="lighter" v-if="special_roles.includes(item.ProfileId)">
                     [[ item.ProfileDescription ]]
@@ -132,11 +135,11 @@
             </table>
         </div>
     </div>
-
+    {% if not person_data %}
     <div v-else>
         {% include "includes/unical_storage_empty.html" with url=url %}
     </div>
-
+    {% endif %}
 </div>
 <script>
     var {{ id }} = new Vue({
@@ -145,7 +148,6 @@
             return {
                 allowed_roles: {{ allowed_roles|safe }},
                 allowed_structure_types: {{ allowed_structure_types|safe }},
-                addressbook_special_roles: {{ addressbook_special_roles|safe }},
                 item: {% if person_data %}{{ person_data|safe }}.results{% else %}{}{% endif %},
                 errors: {},
                 labels: {% if person_data %}{{ person_data|safe }}.labels{% else %}{}{% endif %},
