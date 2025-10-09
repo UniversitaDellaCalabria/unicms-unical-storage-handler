@@ -33,11 +33,6 @@
                 <img :src="item.LaboratoryLogo"
                      class="w-100"/>
             </div>
-            <div class="col-12 col-lg-2 text-center" v-else>
-                <svg class="m-auto icon icon-xl icon-muted">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-info-circle"></use>
-                </svg>
-            </div>
             <div class="col-12 col-lg my-3 my-lg-0">
                 <h1 class="lighter">
                     [[ item.LaboratoryName ]]
@@ -189,17 +184,20 @@
                         <li v-if="item.LaboratoryServicesScope && item.LaboratoryServicesScope != ''">
                             <b>{% trans 'Services Scope' %}</b>
                             <br>
-                            [[ item.LaboratoryServicesScope ]]
+                            <span v-if="containsHTML(item.LaboratoryServicesScope)" v-html="item.LaboratoryServicesScope"></span>
+                            <span v-else>[[ item.LaboratoryServicesScope ]]</span>
                         </li>
                         <li v-if="item.LaboratoryResearchScope && item.LaboratoryResearchScope != ''">
                             <b>{% trans 'Research Scope' %}</b>
                             <br>
-                            [[ item.LaboratoryResearchScope ]]
+                            <span v-if="containsHTML(item.LaboratoryResearchScope)" v-html="item.LaboratoryResearchScope"></span>
+                            <span v-else>[[ item.LaboratoryResearchScope ]]</span>
                         </li>
                         <li v-if="item.LaboratoryTeachingScope && item.LaboratoryTeachingScope != ''">
                             <b>{% trans 'Teaching Scope' %}</b>
                             <br>
-                            [[ item.LaboratoryTeachingScope ]]
+                            <span v-if="containsHTML(item.LaboratoryTeachingScope)" v-html="item.LaboratoryTeachingScope"></span>
+                            <span v-else>[[ item.LaboratoryTeachingScope ]]</span>
                         </li>
                     </ul>
                 </div>
@@ -207,7 +205,7 @@
         </div>
 
         <!-- OfferedServices -->
-        <div class="accordion-item">
+        <div class="accordion-item" v-if="item.LaboratoryOfferedServices && item.LaboratoryOfferedServices.length">
             <div class="accordion-header" id="{{ id }}_heading-offeredservices-lft">
                 <button class="accordion-button"
                         type="button"
@@ -236,7 +234,7 @@
         </div>
 
         <!-- LaboratoryEquipment -->
-        <div class="accordion-item">
+        <div class="accordion-item" v-if="item.LaboratoryEquipment && item.LaboratoryEquipment != ''">
             <div class="accordion-header" id="{{ id }}_heading-laboratoryequipment-lft">
                 <button class="accordion-button"
                         type="button"
@@ -340,6 +338,9 @@
             this.CallURL();
         },
         methods: {
+            containsHTML(s) {
+                return /<\/?[a-z][\s\S]*>/i.test(s)
+            },
             CallURL() {
                 axios
                     .get(this.url)
