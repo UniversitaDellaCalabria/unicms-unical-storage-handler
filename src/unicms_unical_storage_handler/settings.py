@@ -511,7 +511,7 @@ CMS_STORAGE_CDS_WEBSITES_CAROUSEL_BACKGROUNDS_URL = {
     "Socio-Economics": "cover-area-socio-economica.jpg",
     "Humanities": "cover-area-umanistica.jpg",
     "Sciences": "cover-area-scienze.jpg",
-    "Engineering and Technology ": "cover-area-ingegneria-tecnologica.jpg",
+    "Engineering and Technology": "cover-area-ingegneria-tecnologica.jpg",
     "Medical and Health-care": "cover-area-medico-sanitaria.jpg",
     "Training of Educators and Teachers": "cover-area-formazione-insegnanti.jpg",
 }
