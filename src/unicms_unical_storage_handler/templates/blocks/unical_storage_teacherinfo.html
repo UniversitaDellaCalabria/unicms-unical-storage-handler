@@ -43,8 +43,8 @@
     {% endif %}
         <div class="row">
             <div class="col-2">
-                <img :src="item.PhotoPath" class="w-100" style="border-radius: 50%" v-if="item.PhotoPath && item.PhotoPath != ''" alt="{{ page_title }}"/>
-                <img src="{% static 'images/user.avif' %}" class="w-100" style="height: fit-content;"  alt="{{ page_title }}" v-else />
+                <div alt="{{ page_title }}" style="width:100%; background-size: cover; border-radius: 50%; aspect-ratio: 1 / 1;" :style="'background-image: url('+item.PhotoPath+');'" v-if="item.PhotoPath && item.PhotoPath != ''"></div>
+                <div alt="{{ page_title }}" style="width:100%; background-size: cover; border-radius: 50%; aspect-ratio: 1 / 1; background-image: url({% static 'images/user.avif' %});" v-else></div>
             </div>
             <div class="col my-0 ms-2">
                 <h2 class="lighter">
