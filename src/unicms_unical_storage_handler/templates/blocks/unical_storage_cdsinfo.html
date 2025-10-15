@@ -3,6 +3,8 @@
 {% load unicms_storage_handler %}
 {% load unicms_templates %}
 
+{% load unicms_template_italia %}
+
 {% get_allowed_website request.get_host as host %}
 {% get_cdsid_from_url url as cdsid %}
 {% get_current_language as LANGUAGE_CODE %}
@@ -21,6 +23,9 @@
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_BASE_PATH" as cds_websites_basepath %}
 {% storage_settings_value "CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH" as cds_websites_redirect_path %}
+
+{% settings_value "EXTERNAL_SOURCES_COOKIE_POLICY_URL" as external_sources_cookie_policy_url %}
+
 
 {% include "includes/unical_storage_loading.html" %}
 
@@ -232,6 +237,8 @@
                     </div>
                 </div>
 
+
+                {% comment %}
                 <div class="mt-4" v-if="item.CdSVideo">
                     <div class="ratio ratio-16x9">
                         <iframe :title="item.CdSVideo"
@@ -240,7 +247,45 @@
                         </iframe>
                     </div>
                 </div>
+                {% endcomment %}
+                
+                <div class="mt-4" v-if="item.CdSVideo">
+                    <div class="ratio ratio-16x9" v-if="has_consent">
+                        <iframe :title="item.CdSVideo"
+                                :src="youtubeNoCookie(item.CdSVideo)"
+                                allowfullscreen
+                                loading="lazy"
+                                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation">
+                        </iframe>
+                    </div>
+                    <div v-else>
+                        <div class="alert alert-info" role="alert">
+                            <h4 class="alert-heading">{% trans "Third Party Content" %}</h4>
+                            <hr>
+                            <p>
+                                {% trans "To view content from the external source" %} <b>[[ host ]]</b>
+                                (<a :href="item.CdSVideo" target="_blank" rel="nofollow">{% trans "link" %}</a>) {% trans "explicit consent is required" %}.
+                            </p>
+                            <p>
+                                {% trans "Accept cookies from" %} <b>[[ host ]]</b> {% trans "to access the resource" %}.
+                            </p>
+                            <p>
+                                {% trans "You can manage your preferences in the" %} <a href="{{ external_sources_cookie_policy_url }}" target="_blank">cookie policy</a>.
+                            </p>
+                            <div class="form-check">
+                                <input id="{{ id }}_permanent" type="checkbox" v-model="permanent">
+                                <label for="{{ id }}_permanent">
+                                    {% trans "Remember my choice" %}
+                                </label>
+                            </div>
+                            <button type="button" class="btn btn-secondary btn-xs mt-2" @click="addConsent()">
+                                {% trans "Allow" %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
+                
                 <div class="my-4">
                     <span v-if="containsHTML(item.CdSIntro)" v-html="item.CdSIntro"></span>
                     <span v-else style="white-space: pre-line">[[ item.CdSIntro ]]</span>
@@ -626,7 +671,11 @@ var {{ id }} = new Vue({
             fields_to_show: {{ fields_to_show|safe }},
             is_loading: true,
             loader_source: '{{ url }}',
-            joint_degree_filter: {{ allowed_joint_degrees|safe }}
+            joint_degree_filter: {{ allowed_joint_degrees|safe }},
+
+            has_consent: false,
+            host: "",
+            permanent: false
         }
     },
     mounted() {
@@ -644,7 +693,7 @@ var {{ id }} = new Vue({
                     this.item = response.data.results;
                     this.labels = response.data.labels;
                     this.is_loading = false
-
+                    
                     {{ id }}_contacts.item = response.data.results;
                     {{ id }}_contacts.labels = response.data.labels;
 
@@ -664,11 +713,19 @@ var {{ id }} = new Vue({
                     {{ id }}_2.cds_cod = response.data.results.CdSCod
                     {{ id }}_2.academic_year = response.data.results.AcademicYear
                     document.getElementById("{{ id }}_cds_year").innerHTML = response.data.results.AcademicYear + "/" + (response.data.results.AcademicYear+1)
+
+                    this.host = normalizeHost(response.data.results.CdSVideo)
+                    this.has_consent = hasConsent(normalizeHost(response.data.results.CdSVideo))
                 });
         },
         youtubeNoCookie(value) {
             return value.replace("youtube.com", "youtube-nocookie.com")
-        }
+        },
+
+        addConsent() {
+            this.has_consent = true
+            if(this.permanent) editConsent(host=this.host)
+        },
     }
 })
 

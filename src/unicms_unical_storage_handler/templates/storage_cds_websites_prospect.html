@@ -7,7 +7,13 @@
 {% load unicms_storage_handler %}
 {% load unicms_templates %}
 
+{% load unicms_template_italia %}
+
+{% settings_value "EXTERNAL_SOURCES_COOKIE_POLICY_URL" as external_sources_cookie_policy_url %}
+
+
 {% include "includes/unical_storage_loading.html" %}
+
 
 {% block extra_head %}
 {{ block.super }}
@@ -86,12 +92,51 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
 
                     <div>
                         <div class="row mb-lg-3">
+
+                            {% comment %}
                             <div class="col-12 col-lg-8" v-if="_cds_data.cds.CdSVideo">
                                 <div class="ratio ratio-16x9">
                                     <iframe :title="_cds_data.cds.CdSVideo"
                                             :src="youtubeNoCookie(_cds_data.cds.CdSVideo)"
                                             allowfullscreen>
                                     </iframe>
+                                </div>
+                            </div>
+                            {% endcomment %}
+
+                            <div class="col-12 col-lg-8" v-if="_cds_data.cds.CdSVideo">
+                                <div class="ratio ratio-16x9" v-if="has_consent || hasConsent(normalizeHost(_cds_data.cds.CdSVideo))">
+                                    <iframe :title="_cds_data.cds.CdSVideo"
+                                            :src="youtubeNoCookie(_cds_data.cds.CdSVideo)"
+                                            allowfullscreen
+                                            loading="lazy"
+                                            sandbox="allow-scripts allow-same-origin allow-popups allow-presentation">
+                                    </iframe>
+                                </div>
+                                <div v-else>
+                                    <div class="alert alert-info" role="alert">
+                                        <h4 class="alert-heading">{% trans "Third Party Content" %}</h4>
+                                        <hr>
+                                        <p>
+                                            {% trans "To view content from the external source" %} <b>[[ normalizeHost(_cds_data.cds.CdSVideo) ]]</b>
+                                            (<a :href="_cds_data.cds.CdSVideo" target="_blank" rel="nofollow">{% trans "link" %}</a>) {% trans "explicit consent is required" %}.
+                                        </p>
+                                        <p>
+                                            {% trans "Accept cookies from" %} <b>[[ normalizeHost(_cds_data.cds.CdSVideo) ]]</b> {% trans "to access the resource" %}.
+                                        </p>
+                                        <p>
+                                            {% trans "You can manage your preferences in the" %} <a href="{{ external_sources_cookie_policy_url }}" target="_blank">cookie policy</a>.
+                                        </p>
+                                        <div class="form-check">
+                                            <input id="{{ id }}_permanent" type="checkbox" v-model="permanent">
+                                            <label for="{{ id }}_permanent">
+                                                {% trans "Remember my choice" %}
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary btn-xs mt-2" @click="addConsent()">
+                                            {% trans "Allow" %}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-8" v-else>
@@ -962,7 +1007,10 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                 website_labels: {},
                 collapse_fields: {{ collapse_fields|safe }},
                 collapse_fields_2: {{ collapse_fields_2|safe }},
-                regdidid: null
+                regdidid: null,
+
+                has_consent: false,
+                permanent: false
             }
         },
         mounted() {
@@ -1050,7 +1098,12 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
             },
             youtubeNoCookie(value) {
                 return value.replace("youtube.com", "youtube-nocookie.com")
-            }
+            },
+
+            addConsent() {
+                this.has_consent = true
+                if(this.permanent) editConsent(host=normalizeHost(_cds_data.cds.CdSVideo))
+            },
         },
     })
 </script>
