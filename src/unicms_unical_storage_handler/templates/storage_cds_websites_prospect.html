@@ -105,7 +105,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                             {% endcomment %}
 
                             <div class="col-12 col-lg-8" v-if="_cds_data.cds.CdSVideo">
-                                <div class="ratio ratio-16x9" v-if="has_consent || hasConsent(normalizeHost(_cds_data.cds.CdSVideo))">
+                                <div class="ratio ratio-16x9" v-if="has_consent || hasConsent(_cds_data.cds.CdSVideo)">
                                     <iframe :title="_cds_data.cds.CdSVideo"
                                             :src="youtubeNoCookie(_cds_data.cds.CdSVideo)"
                                             allowfullscreen
@@ -1102,7 +1102,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
 
             addConsent() {
                 this.has_consent = true
-                if(this.permanent) editConsent(host=normalizeHost(_cds_data.cds.CdSVideo))
+                if(this.permanent) editConsent(_cds_data.cds.CdSVideo)
             },
         },
     })

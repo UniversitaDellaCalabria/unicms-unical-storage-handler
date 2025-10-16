@@ -191,7 +191,7 @@ var {{ id }} = new Vue({
                     this.is_loading = false,
 
                     this.host = normalizeHost(response.data.results.CdSVideo)
-                    this.has_consent = hasConsent(normalizeHost(response.data.results.CdSVideo))
+                    this.has_consent = hasConsent(response.data.results.CdSVideo)
                 });
         },
         youtubeNoCookie(value) {
@@ -200,7 +200,7 @@ var {{ id }} = new Vue({
 
         addConsent() {
             this.has_consent = true
-            if(this.permanent) editConsent(host=this.host)
+            if(this.permanent) editConsent(this.host)
         },
     }
 })
