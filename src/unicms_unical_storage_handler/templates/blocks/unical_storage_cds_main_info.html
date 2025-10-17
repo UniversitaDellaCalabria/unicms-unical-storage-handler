@@ -70,7 +70,10 @@
                             {% trans "Accept cookies from" %} <b>[[ host ]]</b> {% trans "to access the resource" %}.
                         </p>
                         <p>
-                            {% trans "You can manage your preferences in the" %} <a href="{{ external_sources_cookie_policy_url }}" target="_blank">cookie policy</a>.
+                            {% trans "You can manage your preferences" %}
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modalCookie">{% trans "here" %}</a>
+                            {% trans "or in the" %}
+                            <a href="{{ external_sources_cookie_policy_url }}" target="_blank">cookie policy</a>.
                         </p>
                         <div class="form-check">
                             <input id="{{ id }}_permanent" type="checkbox" v-model="permanent">
