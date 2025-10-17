@@ -23,6 +23,7 @@
             <div class="col-12">
 
                 {% block academic_year_select %}
+                {% comment %}
                 <div class="form-group mb-3 row">
                     <div class="col">
                         <label for="{{ id }}_academic_year_input">
@@ -46,8 +47,8 @@
                         </div>
                     </div>
                 </div>
+                {% endcomment %}
                 {% endblock academic_year_select %}
-
             </div>
         </div>
 
@@ -151,9 +152,11 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
     if (coursetype && coursetype.value) dict['coursetype'] = coursetype.value
 
     // academic year
+    {% comment %}
     let academic_year = document.getElementById('{{ id }}_academic_year_input')
     if (academic_year && academic_year.value) dict['academicyear'] = academic_year.value
-
+    {% endcomment %}
+    
     // department name
     let department = document.getElementById('{{ id }}_department_input')
     if (department && department.value) dict['departmentcod'] = department.value
@@ -191,11 +194,18 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
 
 {% block current_year %}
 {% storage_settings_value "CURRENT_YEAR" as current_year %}
+{% comment %}
 initial_academic_year: {{ id }}_get_param('academicyear') || '{{ current_year }}',
+{% endcomment %}
+initial_academic_year: '{{ current_year }}',
 {% endblock current_year %}
 
 selected_coursetype: this.getItemFromSession("{{ id }}", 'coursetype'),
+
+{% comment %}
 selected_academic_year: this.getItemFromSession("{{ id }}", 'academicyear') || {{ id }}_get_param('academicyear'),
+{% endcomment %}
+
 selected_department_id: this.getItemFromSession("{{ id }}", 'departmentcod'),
 selected_language: this.getItemFromSession("{{ id }}", 'cdslanguage'),
 selected_jointdegree: this.getItemFromSession("{{ id }}", 'jointdegree'),
@@ -254,8 +264,14 @@ CallURL(url, initial=false) {
     let signal = this.controller.signal
     this.is_loading = true
     this.loader_source = url
+    
+    {% comment %}
     if (!url.includes("academicyear") && this.initial_academic_year)
         url = url + '&academicyear=' + this.initial_academic_year
+    {% endcomment %}
+
+    url = url + '&academicyear=' + this.initial_academic_year
+    
     if (!url.includes("coursetype") && this.allowed_course_types.length > 0)
         url = url + '&coursetype=' + this.allowed_course_types.toString()
     axios
