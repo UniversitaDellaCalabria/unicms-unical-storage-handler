@@ -58,6 +58,13 @@
                 </p>
             </div>
         </div>
+        
+        {% if teacher_data %}
+        <div class="text-end">
+            {% include "includes/social_share.html" with share_title=teacher_name share_url=request.build_absolute_uri %}
+        </div>
+        {% endif %}
+        
         <hr v-if="Object.keys(item).length">
     </div>
     {% if not teacher_data %}
