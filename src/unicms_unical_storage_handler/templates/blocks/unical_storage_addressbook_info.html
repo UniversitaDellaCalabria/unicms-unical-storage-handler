@@ -54,6 +54,11 @@
                 </h3>
             </div>
         </div>
+        {% if page_title %}
+        <div class="text-end">
+            {% include "includes/social_share.html" with share_title=page_title share_url=request.build_absolute_uri %}
+        </div>
+        {% endif %}
         <hr class="my-4 bordeaux-unical-bg">
         <div class="table-responsive">
             <table class="table table-sm table-hover table-striped">
