@@ -717,8 +717,10 @@ var {{ id }} = new Vue({
                     {{ id }}_2.academic_year = response.data.results.AcademicYear
                     document.getElementById("{{ id }}_cds_year").innerHTML = response.data.results.AcademicYear + "/" + (response.data.results.AcademicYear+1)
 
+                    // cookie consent
                     this.host = normalizeHost(response.data.results.CdSVideo)
                     this.has_consent = hasConsent(response.data.results.CdSVideo)
+                    editConsent(host=this.host, revoke=false, explicit=false)
                 });
         },
         youtubeNoCookie(value) {

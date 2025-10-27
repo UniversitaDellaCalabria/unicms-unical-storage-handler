@@ -1018,6 +1018,7 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
         },
         mounted() {
             this.callWebsite()
+            editConsent(host=_cds_data.cds.CdSVideo, revoke=false, explicit=false)
         },
         updated() {
             this.setSloganSlider()

@@ -193,8 +193,10 @@ var {{ id }} = new Vue({
                     this.labels = response.data.labels;
                     this.is_loading = false,
 
+                    // cookie consent
                     this.host = normalizeHost(response.data.results.CdSVideo)
                     this.has_consent = hasConsent(response.data.results.CdSVideo)
+                    editConsent(host=this.host, revoke=false, explicit=false)
                 });
         },
         youtubeNoCookie(value) {
