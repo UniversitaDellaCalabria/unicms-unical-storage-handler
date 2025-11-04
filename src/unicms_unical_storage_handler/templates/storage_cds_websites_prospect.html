@@ -92,25 +92,15 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
 
                     <div>
                         <div class="row mb-lg-3">
-
-                            {% comment %}
-                            <div class="col-12 col-lg-8" v-if="_cds_data.cds.CdSVideo">
-                                <div class="ratio ratio-16x9">
-                                    <iframe :title="_cds_data.cds.CdSVideo"
-                                            :src="youtubeNoCookie(_cds_data.cds.CdSVideo)"
-                                            allowfullscreen>
-                                    </iframe>
-                                </div>
-                            </div>
-                            {% endcomment %}
-
                             <div class="col-12 col-lg-8" v-if="_cds_data.cds.CdSVideo">
                                 <div class="ratio ratio-16x9" v-if="has_consent || hasConsent(_cds_data.cds.CdSVideo)">
                                     <iframe :title="_cds_data.cds.CdSVideo"
                                             :src="youtubeNoCookie(_cds_data.cds.CdSVideo)"
                                             allowfullscreen
                                             loading="lazy"
-                                            sandbox="allow-scripts allow-same-origin allow-popups allow-presentation">
+                                            :sandbox="_cds_data.cds.CdSVideo.slice(-4) === '.pdf' 
+                                                      ? null 
+                                                      : 'allow-scripts allow-same-origin allow-popups allow-presentation'">
                                     </iframe>
                                 </div>
                                 <div v-else>

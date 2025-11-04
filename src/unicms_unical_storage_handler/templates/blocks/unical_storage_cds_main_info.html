@@ -38,24 +38,15 @@
     <div v-else-if="Object.keys(item).length">
 
         <div class="container">
-            {% comment %}
-            <div class="mt-4 mb-3" v-if="item.CdSVideo">
-                <div class="ratio ratio-16x9">
-                    <iframe :title="item.CdSVideo"
-                            :src="youtubeNoCookie(item.CdSVideo)"
-                            allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-            {% endcomment %}
-
             <div class="mt-4 mb-3" v-if="item.CdSVideo">
                 <div class="ratio ratio-16x9" v-if="has_consent">
                     <iframe :title="item.CdSVideo"
                             :src="youtubeNoCookie(item.CdSVideo)"
                             allowfullscreen
                             loading="lazy"
-                            sandbox="allow-scripts allow-same-origin allow-popups allow-presentation">
+                            :sandbox="_cds_data.cds.CdSVideo.slice(-4) === '.pdf' 
+                                      ? null 
+                                      : 'allow-scripts allow-same-origin allow-popups allow-presentation'">
                     </iframe>
                 </div>
                 <div v-else>

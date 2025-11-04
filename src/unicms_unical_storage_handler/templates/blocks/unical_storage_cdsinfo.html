@@ -237,25 +237,15 @@
                     </div>
                 </div>
 
-
-                {% comment %}
-                <div class="mt-4" v-if="item.CdSVideo">
-                    <div class="ratio ratio-16x9">
-                        <iframe :title="item.CdSVideo"
-                                :src="youtubeNoCookie(item.CdSVideo)"
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-                {% endcomment %}
-                
                 <div class="mt-4" v-if="item.CdSVideo">
                     <div class="ratio ratio-16x9" v-if="has_consent">
                         <iframe :title="item.CdSVideo"
                                 :src="youtubeNoCookie(item.CdSVideo)"
                                 allowfullscreen
                                 loading="lazy"
-                                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation">
+                                :sandbox="item.CdSVideo.slice(-4) === '.pdf' 
+                                          ? null 
+                                          : 'allow-scripts allow-same-origin allow-popups allow-presentation'">
                         </iframe>
                     </div>
                     <div v-else>
@@ -726,7 +716,6 @@ var {{ id }} = new Vue({
         youtubeNoCookie(value) {
             return value.replace("youtube.com", "youtube-nocookie.com")
         },
-
         addConsent() {
             this.has_consent = true
             if(this.permanent) editConsent(this.host)
