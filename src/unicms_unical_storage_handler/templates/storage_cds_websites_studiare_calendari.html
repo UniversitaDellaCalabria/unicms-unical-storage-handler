@@ -201,6 +201,12 @@
                                                     <span class="badge bg-warning" v-else>
                                                         {% trans "To be confirmed" %}
                                                     </span>
+                                                    <span class="badge bg-info" v-if="event.codice=='ESSE3_ES'">
+                                                        {% trans "Esse3" %}
+                                                    </span>
+                                                    <span class="badge bg-info" v-else>
+                                                        {% trans "University Planner" %}
+                                                    </span>
                                                     <span v-if="event.insegnamento != chosen_af_name">
                                                         <br>
                                                         <svg class="icon icon-xs me-2" aria-labelledby="event_insegnamento">
