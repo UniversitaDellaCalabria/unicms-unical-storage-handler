@@ -293,7 +293,7 @@ class TeacherInfoViewHandler(BaseStorageHandler):
         self.data['url'] = url
         teacher_data = requests.get(f'{url}').json()
         self.data['teacher_name'] = f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']}"
-        self.data['teacher_role'] = f"{teacher_data['results']['TeacherRoleDescription']}"
+        self.data['teacher_role'] = f"{teacher_data['results']['ProfileDescription'] or teacher_data['results']['TeacherRoleDescription']}"
         self.data['page_title'] = f"{self.data['teacher_name']} - {self.data['teacher_role']}"
         self.data['page_meta_description'] = f"{teacher_data['results']['TeacherDepartmentName']} - {teacher_data['results']['TeacherSSDCod']} {teacher_data['results']['TeacherSSDDescription']}"
         self.data['teacher_data'] = json.dumps(teacher_data)
