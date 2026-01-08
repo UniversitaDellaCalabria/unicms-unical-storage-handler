@@ -51,7 +51,7 @@
                     {% if teacher_data %}{{ teacher_name }}{% else %}[[ item.TeacherFirstName ]] [[ item.TeacherLastName ]]{% endif %}
                 </h2>
                 <h3 class="lighter">
-                    {% if teacher_data %}{{ teacher_role }}{% else %}[[ item.TeacherRoleDescription ]]{% endif %}
+                    {% if teacher_data %}{{ teacher_role }}{% else %}[[ item.ProfileDescription || item.TeacherRoleDescription ]]{% endif %}
                 </h3>
                 <p v-if="!item.TeacherSSDCod.includes('0000')">
                     [[ item.TeacherSSDDescription ]] ([[ item.TeacherSSDCod ]])
