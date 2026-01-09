@@ -289,11 +289,12 @@ class TeacherInfoViewHandler(BaseStorageHandler):
         self.code = self.match_dict.get('code', '')
 
     def as_view(self):
+        special_roles = getattr(settings, "ADDRESSBOOK_SPECIAL_ROLES", ADDRESSBOOK_SPECIAL_ROLES)
         url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/?lang={self.request.LANGUAGE_CODE}'
         self.data['url'] = url
         teacher_data = requests.get(f'{url}').json()
         self.data['teacher_name'] = f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']}"
-        self.data['teacher_role'] = f"{teacher_data['results']['ProfileDescription'] or teacher_data['results']['TeacherRoleDescription']}"
+        self.data['teacher_role'] = f"{teacher_data['results']['ProfileDescription'] if teacher_data['results']['ProfileId'] in special_roles else teacher_data['results']['TeacherRoleDescription']}"
         self.data['page_title'] = f"{self.data['teacher_name']} - {self.data['teacher_role']}"
         self.data['page_meta_description'] = f"{teacher_data['results']['TeacherDepartmentName']} - {teacher_data['results']['TeacherSSDCod']} {teacher_data['results']['TeacherSSDDescription']}"
         self.data['teacher_data'] = json.dumps(teacher_data)
