@@ -345,12 +345,12 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                                 <b>[[ _cds_data.cds.CourseInterClassDes ]] / [[ _cds_data.cds.CourseInterClassCod ]]</b>
                                             </div>
                                         </div>
-                                        <div class="row" v-if="website.tolc_label">
-                                            <div class="col-12 col-lg-3" v-if="website.CDSSeatsNumber">
+                                        <div class="row" v-if="website.CDSAccessTest">
+                                            <div class="col-12 col-lg-auto" v-if="website.CDSSeatsNumber">
                                                 [[ website_labels['CDSSeatsNumber'] ]]
                                                 <b class="h2 lighter ms-3 mb-0">[[ website.CDSSeatsNumber ]]</b>
                                             </div>
-                                            <div class="col-12 col-lg-3">
+                                            <div class="col-12 col-lg-auto">
                                                 [[ website_labels['CDSLanguage'] ]]
                                                 <b class="h2 lighter ms-3 mb-0">
                                                     <span v-for="(lang, index)  in website.CDSLanguage">
@@ -359,17 +359,17 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                                                     </span>
                                                 </b>
                                             </div>
-                                            <div class="col-12 col-lg-3">
+                                            <div class="col-12 col-lg-auto">
                                                 [[ website_labels['CDSDuration'] ]]
                                                 <b class="h2 lighter ms-3 mb-0">[[ website.CDSDuration ]] {% trans "years" %}</b>
                                             </div>
-                                            <div class="col-12 col-lg-3">
+                                            <div class="col-12 col-lg-auto">
                                                 {% trans "Access test" %}
                                                 <b class="h2 lighter ms-3 mb-0">
-                                                    <a :href="website.tolc_url" target="_blank" v-if="website.tolc_url">
-                                                        [[ website.tolc_label ]]
+                                                    <a :href="website.CDSAccessTestUrl" target="_blank" v-if="website.CDSAccessTestUrl">
+                                                        [[ website.CDSAccessTest ]]
                                                     </a>
-                                                    <span v-else>[[ website.tolc_label ]]</span>
+                                                    <span v-else>[[ website.CDSAccessTest ]]</span>
                                                 </b>
                                             </div>
                                         </div>
