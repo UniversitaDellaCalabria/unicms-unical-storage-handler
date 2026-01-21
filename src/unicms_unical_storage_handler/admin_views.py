@@ -11,7 +11,6 @@ from django.shortcuts import redirect, reverse
 from django.urls import path
 from django.utils import timezone
 from django.utils.text import slugify
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from cms.contexts.models import WebPath
