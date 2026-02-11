@@ -7,13 +7,6 @@
 
 {% block content %}
 
-{% get_allowed_website request.get_host as host %}
-
-{% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
-{% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
-{% storage_settings_value "CMS_STORAGE_PATENTS_VIEW_PREFIX_PATH" as patents_prefix %}
-{% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
-
 {% block storage_block_top %}
 {% include "blocks/includes/unical_storage_check.html" %}
 {% endblock storage_block_top %}
@@ -167,7 +160,7 @@ structures: [],
 
 is_loading_structures: true,
 
-loader_source_structures: '{{ structures_api }}?lang={{ LANGUAGE_CODE }}',
+loader_source_structures: '{{ structures_api }}?lang={{ LANGUAGE_CODE }}&page_size=200',
 
 selected_search: this.getItemFromSession("{{ id }}", 'search'),
 selected_year: this.getItemFromSession("{{ id }}", 'start__year'),
