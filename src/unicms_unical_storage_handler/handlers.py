@@ -272,19 +272,20 @@ class BaseStorageHandler(BaseContentHandler):
     def __init__(self, **kwargs):
         super(BaseStorageHandler, self).__init__(**kwargs)
         self.match_dict = self.match.groupdict()
-        self.webpath = WebPath.objects.filter(
-            site=self.website, parent=None, is_active=True
-        ).first()
+        self.webpath = WebPath.objects.filter(site=self.website, is_active=True)
+        if kwargs.get("free_nesting"):
+            self.webpath = self.webpath.filter(
+                fullpath=self.match_dict["webpath"]
+            ).first()
+        else:
+            self.webpath = self.webpath.filter(fullpath="/").first()
         allowed_sites = settings.ALLOWED_UNICMS_SITES
 
         if "*" not in allowed_sites and self.webpath.site.pk not in allowed_sites:
             raise Http404("Website not allowed to show this webpath")
 
         # only home page of allowed websites
-        if (
-            not self.webpath
-            or self.match_dict.get("webpath", "/") != self.webpath.fullpath
-        ):  # pragma: no cover
+        if not self.webpath:  # pragma: no cover
             raise Http404("Unknown WebPath")
 
         self.page = Page.objects.filter(is_active=True, webpath=self.webpath).first()
@@ -1446,7 +1447,7 @@ class PublicEngagementEventHandler(BaseStorageHandler):
     template = "storage_pe_event.html"
 
     def __init__(self, **kwargs):
-        super(PublicEngagementEventHandler, self).__init__(**kwargs)
+        super(PublicEngagementEventHandler, self).__init__(free_nesting=True, **kwargs)
         self.code = self.match_dict.get("code", "")
 
     def as_view(self):
@@ -1455,6 +1456,5 @@ class PublicEngagementEventHandler(BaseStorageHandler):
 
     @property
     def breadcrumbs(self):
-        # corso = (self.pe_event_url, CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
         leaf = ("#", self.code)
         return (leaf,)
