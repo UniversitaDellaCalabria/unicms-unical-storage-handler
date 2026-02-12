@@ -1,111 +1,269 @@
 import json
 import logging
-import requests
 import urllib
 
-from datetime import datetime, timezone
-
-from django.conf import settings
-from django.contrib import messages
-from django.core.mail import EmailMultiAlternatives
-from django.http import (HttpResponse,
-                         HttpResponseRedirect,
-                         Http404)
-from django.middleware.csrf import get_token
-from django.shortcuts import get_object_or_404, redirect
-from django.template import Template, Context
-from django.utils import timezone
-from django.utils.text import slugify
-from django.utils.translation import gettext_lazy as _
-from django.views.decorators.csrf import get_token
-
+import requests
 from cms.contexts.handlers import BaseContentHandler
 from cms.contexts.models import WebPath
 from cms.contexts.utils import contextualize_template, sanitize_path
 from cms.pages.models import Page
+from django.conf import settings
+from django.contrib import messages
+from django.core.mail import EmailMultiAlternatives
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.middleware.csrf import get_token
+from django.shortcuts import get_object_or_404, redirect
+from django.template import Context, Template
+from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
-from . forms import CdsWebsiteContactForm, DynCdsWebsiteContactForm
-from . models import WebPathCdsCod
-from . settings import *
-
+from .forms import DynCdsWebsiteContactForm
+from .models import WebPathCdsCod
+from .settings import *
 
 logger = logging.getLogger(__name__)
 
 
 # local or global settings
-CMS_STORAGE_BASE_API = getattr(settings, 'CMS_STORAGE_BASE_API', CMS_STORAGE_BASE_API)
+CMS_STORAGE_BASE_API = getattr(settings, "CMS_STORAGE_BASE_API", CMS_STORAGE_BASE_API)
 
-ALLOWED_ADDRESSBOOK_ROLES = getattr(settings, 'ALLOWED_ADDRESSBOOK_ROLES', ALLOWED_ADDRESSBOOK_ROLES)
-ALLOWED_ADDRESSBOOK_STRUCTURE_ID = getattr(settings, 'ALLOWED_ADDRESSBOOK_STRUCTURE_ID', ALLOWED_ADDRESSBOOK_STRUCTURE_ID)
-ALLOWED_STRUCTURE_TYPES = getattr(settings, 'ALLOWED_STRUCTURE_TYPES', ALLOWED_STRUCTURE_TYPES)
-ALLOWED_CDS_COURSETYPES = getattr(settings, 'ALLOWED_CDS_COURSETYPES', ALLOWED_CDS_COURSETYPES)
-ALLOWED_TEACHER_ROLES = getattr(settings, 'ALLOWED_TEACHER_ROLES', ALLOWED_TEACHER_ROLES)
-CMS_STORAGE_ACTIVITY_API = getattr(settings, 'CMS_STORAGE_ACTIVITY_API', CMS_STORAGE_ACTIVITY_API)
-CMS_STORAGE_ACTIVITIES_LABEL = getattr(settings, 'CMS_STORAGE_ACTIVITIES_LABEL', CMS_STORAGE_ACTIVITIES_LABEL)
-CMS_STORAGE_ADDRESSBOOK_API = getattr(settings, 'CMS_STORAGE_ADDRESSBOOK_API', CMS_STORAGE_ADDRESSBOOK_API)
-CMS_STORAGE_ADDRESSBOOK_LABEL = getattr(settings, 'CMS_STORAGE_ADDRESSBOOK_LABEL', CMS_STORAGE_ADDRESSBOOK_LABEL)
-CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH', CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH)
-CMS_STORAGE_APPLIED_RESEARCH_LINE_API = getattr(settings, 'CMS_STORAGE_APPLIED_RESEARCH_LINE_API', CMS_STORAGE_APPLIED_RESEARCH_LINE_API)
-CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL = getattr(settings, 'CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL', CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL)
-CMS_STORAGE_BASE_PATH = getattr(settings, 'CMS_STORAGE_BASE_PATH', CMS_STORAGE_BASE_PATH)
-CMS_STORAGE_BASE_RESEARCH_LINE_API = getattr(settings, 'CMS_STORAGE_BASE_RESEARCH_LINE_API', CMS_STORAGE_BASE_RESEARCH_LINE_API)
-CMS_STORAGE_BASE_RESEARCH_LINE_LABEL = getattr(settings, 'CMS_STORAGE_BASE_RESEARCH_LINE_LABEL', CMS_STORAGE_BASE_RESEARCH_LINE_LABEL)
-CMS_STORAGE_CDS_API = getattr(settings, 'CMS_STORAGE_CDS_API', CMS_STORAGE_CDS_API)
-CMS_STORAGE_CDS_EXPIRED_API = getattr(settings, 'CMS_STORAGE_CDS_EXPIRED_API', CMS_STORAGE_CDS_EXPIRED_API)
-CMS_STORAGE_CDS_LIST_LABEL = getattr(settings, 'CMS_STORAGE_CDS_LIST_LABEL', CMS_STORAGE_CDS_LIST_LABEL)
-CMS_STORAGE_CDS_MORPH_DETAIL_API = getattr(settings, 'CMS_STORAGE_CDS_MORPH_DETAIL_API', CMS_STORAGE_CDS_MORPH_DETAIL_API)
-CMS_STORAGE_CDS_MORPH_LIST_API = getattr(settings, 'CMS_STORAGE_CDS_MORPH_LIST_API', CMS_STORAGE_CDS_MORPH_LIST_API)
-CMS_STORAGE_CDS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_CDS_VIEW_PREFIX_PATH', CMS_STORAGE_CDS_VIEW_PREFIX_PATH)
-CMS_STORAGE_HIGH_FORMATION_MASTERS_API = getattr(settings, 'CMS_STORAGE_HIGH_FORMATION_MASTERS_API', CMS_STORAGE_HIGH_FORMATION_MASTERS_API)
-CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL = getattr(settings, 'CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL', CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
-CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH', CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH)
-CMS_STORAGE_LABORATORY_API = getattr(settings, 'CMS_STORAGE_LABORATORY_API', CMS_STORAGE_LABORATORY_API)
-CMS_STORAGE_LABORATORY_LABEL = getattr(settings, 'CMS_STORAGE_LABORATORY_LABEL', CMS_STORAGE_LABORATORY_LABEL)
-CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH', CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH)
-CMS_STORAGE_PATENTS_API = getattr(settings, 'CMS_STORAGE_PATENTS_API', CMS_STORAGE_PATENTS_API)
-CMS_STORAGE_PATENTS_LABEL = getattr(settings, 'CMS_STORAGE_PATENTS_LABEL', CMS_STORAGE_PATENTS_LABEL)
-CMS_STORAGE_PHD_ACTIVITIES_API = getattr(settings, 'CMS_STORAGE_PHD_ACTIVITIES_API', CMS_STORAGE_PHD_ACTIVITIES_API)
-CMS_STORAGE_PHD_ACTIVITIES_LABEL = getattr(settings, 'CMS_STORAGE_PHD_ACTIVITIES_LABEL', CMS_STORAGE_PHD_ACTIVITIES_LABEL)
-CMS_STORAGE_PROJECTS_API = getattr(settings, 'CMS_STORAGE_PROJECTS_API', CMS_STORAGE_PROJECTS_API)
-CMS_STORAGE_PROJECTS_LABEL = getattr(settings, 'CMS_STORAGE_PROJECTS_LABEL', CMS_STORAGE_PROJECTS_LABEL)
-CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH', CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH)
-CMS_STORAGE_PUBLICATIONS_API = getattr(settings, 'CMS_STORAGE_PUBLICATIONS_API', CMS_STORAGE_PUBLICATIONS_API)
-CMS_STORAGE_PUBLICATIONS_LABEL = getattr(settings, 'CMS_STORAGE_PUBLICATIONS_LABEL', CMS_STORAGE_PUBLICATIONS_LABEL)
-CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH', CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH)
-CMS_STORAGE_RESEARCH_GROUP_API = getattr(settings, 'CMS_STORAGE_RESEARCH_GROUP_API', CMS_STORAGE_RESEARCH_GROUP_API)
-CMS_STORAGE_RESEARCH_GROUP_LABEL = getattr(settings, 'CMS_STORAGE_RESEARCH_GROUP_LABEL', CMS_STORAGE_RESEARCH_GROUP_LABEL)
-CMS_STORAGE_RESEARCH_LINE_API = getattr(settings, 'CMS_STORAGE_RESEARCH_LINE_API', CMS_STORAGE_RESEARCH_LINE_API)
-CMS_STORAGE_RESEARCH_LINE_LABEL = getattr(settings, 'CMS_STORAGE_RESEARCH_LINE_LABEL', CMS_STORAGE_RESEARCH_LINE_LABEL)
-CMS_STORAGE_ROOT_LABEL = getattr(settings, 'CMS_STORAGE_ROOT_LABEL', CMS_STORAGE_ROOT_LABEL)
-CMS_STORAGE_SPINOFF_API = getattr(settings, 'CMS_STORAGE_SPINOFF_API', CMS_STORAGE_SPINOFF_API)
-CMS_STORAGE_SPINOFF_LABEL = getattr(settings, 'CMS_STORAGE_SPINOFF_LABEL', CMS_STORAGE_SPINOFF_LABEL)
-CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH', CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH)
-CMS_STORAGE_STRUCTURE_API = getattr(settings, 'CMS_STORAGE_STRUCTURE_API', CMS_STORAGE_STRUCTURE_API)
-CMS_STORAGE_STRUCTURE_LABEL = getattr(settings, 'CMS_STORAGE_STRUCTURE_LABEL', CMS_STORAGE_STRUCTURE_LABEL)
-CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH', CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH)
-CMS_STORAGE_TEACHER_API = getattr(settings, 'CMS_STORAGE_TEACHER_API', CMS_STORAGE_TEACHER_API)
-CMS_STORAGE_TEACHERS_LABEL = getattr(settings, 'CMS_STORAGE_TEACHERS_LABEL', CMS_STORAGE_TEACHERS_LABEL)
-CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = getattr(settings, 'CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH', CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH)
-INITIAL_STRUCTURE_FATHER = getattr(settings, 'INITIAL_STRUCTURE_FATHER', INITIAL_STRUCTURE_FATHER)
+ALLOWED_ADDRESSBOOK_ROLES = getattr(
+    settings, "ALLOWED_ADDRESSBOOK_ROLES", ALLOWED_ADDRESSBOOK_ROLES
+)
+ALLOWED_ADDRESSBOOK_STRUCTURE_ID = getattr(
+    settings, "ALLOWED_ADDRESSBOOK_STRUCTURE_ID", ALLOWED_ADDRESSBOOK_STRUCTURE_ID
+)
+ALLOWED_STRUCTURE_TYPES = getattr(
+    settings, "ALLOWED_STRUCTURE_TYPES", ALLOWED_STRUCTURE_TYPES
+)
+ALLOWED_CDS_COURSETYPES = getattr(
+    settings, "ALLOWED_CDS_COURSETYPES", ALLOWED_CDS_COURSETYPES
+)
+ALLOWED_TEACHER_ROLES = getattr(
+    settings, "ALLOWED_TEACHER_ROLES", ALLOWED_TEACHER_ROLES
+)
+CMS_STORAGE_ACTIVITY_API = getattr(
+    settings, "CMS_STORAGE_ACTIVITY_API", CMS_STORAGE_ACTIVITY_API
+)
+CMS_STORAGE_ACTIVITIES_LABEL = getattr(
+    settings, "CMS_STORAGE_ACTIVITIES_LABEL", CMS_STORAGE_ACTIVITIES_LABEL
+)
+CMS_STORAGE_ADDRESSBOOK_API = getattr(
+    settings, "CMS_STORAGE_ADDRESSBOOK_API", CMS_STORAGE_ADDRESSBOOK_API
+)
+CMS_STORAGE_ADDRESSBOOK_LABEL = getattr(
+    settings, "CMS_STORAGE_ADDRESSBOOK_LABEL", CMS_STORAGE_ADDRESSBOOK_LABEL
+)
+CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH = getattr(
+    settings,
+    "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH",
+    CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH,
+)
+CMS_STORAGE_APPLIED_RESEARCH_LINE_API = getattr(
+    settings,
+    "CMS_STORAGE_APPLIED_RESEARCH_LINE_API",
+    CMS_STORAGE_APPLIED_RESEARCH_LINE_API,
+)
+CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL",
+    CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL,
+)
+CMS_STORAGE_BASE_PATH = getattr(
+    settings, "CMS_STORAGE_BASE_PATH", CMS_STORAGE_BASE_PATH
+)
+CMS_STORAGE_BASE_RESEARCH_LINE_API = getattr(
+    settings, "CMS_STORAGE_BASE_RESEARCH_LINE_API", CMS_STORAGE_BASE_RESEARCH_LINE_API
+)
+CMS_STORAGE_BASE_RESEARCH_LINE_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_BASE_RESEARCH_LINE_LABEL",
+    CMS_STORAGE_BASE_RESEARCH_LINE_LABEL,
+)
+CMS_STORAGE_CDS_API = getattr(settings, "CMS_STORAGE_CDS_API", CMS_STORAGE_CDS_API)
+CMS_STORAGE_CDS_EXPIRED_API = getattr(
+    settings, "CMS_STORAGE_CDS_EXPIRED_API", CMS_STORAGE_CDS_EXPIRED_API
+)
+CMS_STORAGE_CDS_LIST_LABEL = getattr(
+    settings, "CMS_STORAGE_CDS_LIST_LABEL", CMS_STORAGE_CDS_LIST_LABEL
+)
+CMS_STORAGE_CDS_MORPH_DETAIL_API = getattr(
+    settings, "CMS_STORAGE_CDS_MORPH_DETAIL_API", CMS_STORAGE_CDS_MORPH_DETAIL_API
+)
+CMS_STORAGE_CDS_MORPH_LIST_API = getattr(
+    settings, "CMS_STORAGE_CDS_MORPH_LIST_API", CMS_STORAGE_CDS_MORPH_LIST_API
+)
+CMS_STORAGE_CDS_VIEW_PREFIX_PATH = getattr(
+    settings, "CMS_STORAGE_CDS_VIEW_PREFIX_PATH", CMS_STORAGE_CDS_VIEW_PREFIX_PATH
+)
+CMS_STORAGE_HIGH_FORMATION_MASTERS_API = getattr(
+    settings,
+    "CMS_STORAGE_HIGH_FORMATION_MASTERS_API",
+    CMS_STORAGE_HIGH_FORMATION_MASTERS_API,
+)
+CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL",
+    CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL,
+)
+CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH = getattr(
+    settings,
+    "CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH",
+    CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH,
+)
+CMS_STORAGE_LABORATORY_API = getattr(
+    settings, "CMS_STORAGE_LABORATORY_API", CMS_STORAGE_LABORATORY_API
+)
+CMS_STORAGE_LABORATORY_LABEL = getattr(
+    settings, "CMS_STORAGE_LABORATORY_LABEL", CMS_STORAGE_LABORATORY_LABEL
+)
+CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH = getattr(
+    settings,
+    "CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH",
+    CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH,
+)
+CMS_STORAGE_PATENTS_API = getattr(
+    settings, "CMS_STORAGE_PATENTS_API", CMS_STORAGE_PATENTS_API
+)
+CMS_STORAGE_PATENTS_LABEL = getattr(
+    settings, "CMS_STORAGE_PATENTS_LABEL", CMS_STORAGE_PATENTS_LABEL
+)
+CMS_STORAGE_PHD_ACTIVITIES_API = getattr(
+    settings, "CMS_STORAGE_PHD_ACTIVITIES_API", CMS_STORAGE_PHD_ACTIVITIES_API
+)
+CMS_STORAGE_PHD_ACTIVITIES_LABEL = getattr(
+    settings, "CMS_STORAGE_PHD_ACTIVITIES_LABEL", CMS_STORAGE_PHD_ACTIVITIES_LABEL
+)
+CMS_STORAGE_PROJECTS_API = getattr(
+    settings, "CMS_STORAGE_PROJECTS_API", CMS_STORAGE_PROJECTS_API
+)
+CMS_STORAGE_PROJECTS_LABEL = getattr(
+    settings, "CMS_STORAGE_PROJECTS_LABEL", CMS_STORAGE_PROJECTS_LABEL
+)
+CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH = getattr(
+    settings,
+    "CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH",
+    CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH,
+)
+CMS_STORAGE_PUBLICATIONS_API = getattr(
+    settings, "CMS_STORAGE_PUBLICATIONS_API", CMS_STORAGE_PUBLICATIONS_API
+)
+CMS_STORAGE_PUBLICATIONS_LABEL = getattr(
+    settings, "CMS_STORAGE_PUBLICATIONS_LABEL", CMS_STORAGE_PUBLICATIONS_LABEL
+)
+CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH = getattr(
+    settings,
+    "CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH",
+    CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH,
+)
+CMS_STORAGE_RESEARCH_GROUP_API = getattr(
+    settings, "CMS_STORAGE_RESEARCH_GROUP_API", CMS_STORAGE_RESEARCH_GROUP_API
+)
+CMS_STORAGE_RESEARCH_GROUP_LABEL = getattr(
+    settings, "CMS_STORAGE_RESEARCH_GROUP_LABEL", CMS_STORAGE_RESEARCH_GROUP_LABEL
+)
+CMS_STORAGE_RESEARCH_LINE_API = getattr(
+    settings, "CMS_STORAGE_RESEARCH_LINE_API", CMS_STORAGE_RESEARCH_LINE_API
+)
+CMS_STORAGE_RESEARCH_LINE_LABEL = getattr(
+    settings, "CMS_STORAGE_RESEARCH_LINE_LABEL", CMS_STORAGE_RESEARCH_LINE_LABEL
+)
+CMS_STORAGE_ROOT_LABEL = getattr(
+    settings, "CMS_STORAGE_ROOT_LABEL", CMS_STORAGE_ROOT_LABEL
+)
+CMS_STORAGE_SPINOFF_API = getattr(
+    settings, "CMS_STORAGE_SPINOFF_API", CMS_STORAGE_SPINOFF_API
+)
+CMS_STORAGE_SPINOFF_LABEL = getattr(
+    settings, "CMS_STORAGE_SPINOFF_LABEL", CMS_STORAGE_SPINOFF_LABEL
+)
+CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH = getattr(
+    settings,
+    "CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH",
+    CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH,
+)
+CMS_STORAGE_STRUCTURE_API = getattr(
+    settings, "CMS_STORAGE_STRUCTURE_API", CMS_STORAGE_STRUCTURE_API
+)
+CMS_STORAGE_STRUCTURE_LABEL = getattr(
+    settings, "CMS_STORAGE_STRUCTURE_LABEL", CMS_STORAGE_STRUCTURE_LABEL
+)
+CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH = getattr(
+    settings,
+    "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH",
+    CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH,
+)
+CMS_STORAGE_TEACHER_API = getattr(
+    settings, "CMS_STORAGE_TEACHER_API", CMS_STORAGE_TEACHER_API
+)
+CMS_STORAGE_TEACHERS_LABEL = getattr(
+    settings, "CMS_STORAGE_TEACHERS_LABEL", CMS_STORAGE_TEACHERS_LABEL
+)
+CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH = getattr(
+    settings,
+    "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH",
+    CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH,
+)
+INITIAL_STRUCTURE_FATHER = getattr(
+    settings, "INITIAL_STRUCTURE_FATHER", INITIAL_STRUCTURE_FATHER
+)
 
 # CMS_WEBPATH_CDS = getattr(settings, 'CMS_WEBPATH_CDS', CMS_WEBPATH_CDS)
 # CMS_WEBPATH_CDS_OLD = getattr(settings, 'CMS_WEBPATH_CDS_OLD', CMS_WEBPATH_CDS_OLD)
 # CMS_WEBPATH_CDS_MORPH = getattr(settings, 'CMS_WEBPATH_CDS_MORPH', CMS_WEBPATH_CDS_MORPH)
-CMS_WEBPATH_PROSPECT = getattr(settings, 'CMS_WEBPATH_PROSPECT', CMS_WEBPATH_PROSPECT)
-CMS_WEBPATH_PROSPECT_DEFAULT = getattr(settings, 'CMS_WEBPATH_PROSPECT_DEFAULT', CMS_WEBPATH_PROSPECT_DEFAULT)
-CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
-CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL', CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL)
-CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)
-CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)
-CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)
-CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL = getattr(settings, 'CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL', CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL)
-CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS', CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS)
-CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS = getattr(settings, 'CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS', CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS)
+CMS_WEBPATH_PROSPECT = getattr(settings, "CMS_WEBPATH_PROSPECT", CMS_WEBPATH_PROSPECT)
+CMS_WEBPATH_PROSPECT_DEFAULT = getattr(
+    settings, "CMS_WEBPATH_PROSPECT_DEFAULT", CMS_WEBPATH_PROSPECT_DEFAULT
+)
+CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL",
+    CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL,
+)
+CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL",
+    CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL,
+)
+CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL",
+    CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL,
+)
+CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL",
+    CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL,
+)
+CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL",
+    CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL,
+)
+CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL = getattr(
+    settings,
+    "CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL",
+    CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL,
+)
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS = getattr(
+    settings,
+    "CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS",
+    CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS,
+)
+CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS = getattr(
+    settings,
+    "CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS",
+    CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS,
+)
 
-CURRENT_YEAR = getattr(settings, 'CURRENT_YEAR', CURRENT_YEAR)
-CDS_WEBSITE_CURRENT_YEAR = getattr(settings, 'CDS_WEBSITE_CURRENT_YEAR', CDS_WEBSITE_CURRENT_YEAR)
-CDS_WEBSITE_PROSPECT_CURRENT_YEAR = getattr(settings, 'CDS_WEBSITE_PROSPECT_CURRENT_YEAR', CDS_WEBSITE_PROSPECT_CURRENT_YEAR)
-HIGH_FORMATION_YEAR = getattr(settings, 'HIGH_FORMATION_YEAR', HIGH_FORMATION_YEAR)
+CURRENT_YEAR = getattr(settings, "CURRENT_YEAR", CURRENT_YEAR)
+CDS_WEBSITE_CURRENT_YEAR = getattr(
+    settings, "CDS_WEBSITE_CURRENT_YEAR", CDS_WEBSITE_CURRENT_YEAR
+)
+CDS_WEBSITE_PROSPECT_CURRENT_YEAR = getattr(
+    settings, "CDS_WEBSITE_PROSPECT_CURRENT_YEAR", CDS_WEBSITE_PROSPECT_CURRENT_YEAR
+)
+HIGH_FORMATION_YEAR = getattr(settings, "HIGH_FORMATION_YEAR", HIGH_FORMATION_YEAR)
 
 
 class BaseStorageHandler(BaseContentHandler):
@@ -114,44 +272,45 @@ class BaseStorageHandler(BaseContentHandler):
     def __init__(self, **kwargs):
         super(BaseStorageHandler, self).__init__(**kwargs)
         self.match_dict = self.match.groupdict()
-        self.webpath = WebPath.objects.filter(site=self.website,
-                                              parent=None,
-                                              is_active=True)\
-                                      .first()
+        self.webpath = WebPath.objects.filter(
+            site=self.website, parent=None, is_active=True
+        ).first()
         allowed_sites = settings.ALLOWED_UNICMS_SITES
 
-        if '*' not in allowed_sites and self.webpath.site.pk not in allowed_sites:
-            raise Http404('Website not allowed to show this webpath')
+        if "*" not in allowed_sites and self.webpath.site.pk not in allowed_sites:
+            raise Http404("Website not allowed to show this webpath")
 
         # only home page of allowed websites
-        if not self.webpath or self.match_dict.get('webpath', '/') != self.webpath.fullpath: # pragma: no cover
-            raise Http404('Unknown WebPath')
+        if (
+            not self.webpath
+            or self.match_dict.get("webpath", "/") != self.webpath.fullpath
+        ):  # pragma: no cover
+            raise Http404("Unknown WebPath")
 
-        self.page = Page.objects.filter(is_active=True,
-                                        webpath=self.webpath).first()
-        self.data = {'request': self.request,
-                     'webpath': self.webpath,
-                     'website': self.website,
-                     'page': self.page,
-                     'path': self.match_dict.get('webpath', '/'),
-                     'handler': self
+        self.page = Page.objects.filter(is_active=True, webpath=self.webpath).first()
+        self.data = {
+            "request": self.request,
+            "webpath": self.webpath,
+            "website": self.website,
+            "page": self.page,
+            "path": self.match_dict.get("webpath", "/"),
+            "handler": self,
         }
 
     def as_view(self):
-        ext_template_sources = contextualize_template(self.template,
-                                                      self.page)
+        ext_template_sources = contextualize_template(self.template, self.page)
         template = Template(ext_template_sources)
         context = Context(self.data)
         return HttpResponse(template.render(context), status=200)
 
     @property
     def get_base_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
-        leaf = ('#', CMS_STORAGE_ROOT_LABEL)
+        leaf = ("#", CMS_STORAGE_ROOT_LABEL)
         return (leaf,)
 
 
@@ -163,19 +322,19 @@ class CdSListViewHandler(BaseStorageHandler):
         # url_data = {}
 
         # if ALLOWED_CDS_COURSETYPES:
-            # url_data['coursetype'] = ",".join(ALLOWED_CDS_COURSETYPES)
+        # url_data['coursetype'] = ",".join(ALLOWED_CDS_COURSETYPES)
         # if CURRENT_YEAR:
-            # url_data['academicyear'] = CURRENT_YEAR
+        # url_data['academicyear'] = CURRENT_YEAR
 
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_API}"
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         # leaf = (self.pub_context.url, getattr(self.pub_context.publication, 'title'))
-        leaf = ('#', CMS_STORAGE_CDS_LIST_LABEL)
+        leaf = ("#", CMS_STORAGE_CDS_LIST_LABEL)
         parent = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         return (parent, leaf)
 
@@ -185,15 +344,15 @@ class CdSInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(CdSInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_API}{self.code}/'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_API}{self.code}/"
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
@@ -201,7 +360,7 @@ class CdSInfoViewHandler(BaseStorageHandler):
         # leaf = (self.pub_context.url, getattr(self.pub_context.publication, 'title'))
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_CDS_LIST_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -210,21 +369,23 @@ class ActivityViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(ActivityViewHandler, self).__init__(**kwargs)
-        self.cdsid = self.match_dict.get('cdsid', '')
-        self.code = self.match_dict.get('code', '')
+        self.cdsid = self.match_dict.get("cdsid", "")
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def cdslist_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/'
+        url = f"{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def cdsid_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/{self.cdsid}/'
+        url = f"{self.webpath.get_full_path()}/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/{self.cdsid}/"
         return sanitize_path(url)
 
     @property
@@ -233,7 +394,7 @@ class ActivityViewHandler(BaseStorageHandler):
         cdslist = (self.cdslist_url, CMS_STORAGE_CDS_LIST_LABEL)
         cdsid = (self.cdsid_url, self.cdsid)
         activities = (self.cdsid_url, CMS_STORAGE_ACTIVITIES_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, cdslist, cdsid, activities, leaf)
 
 
@@ -242,17 +403,19 @@ class SingleActivityViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(SingleActivityViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        activities = ('#', CMS_STORAGE_ACTIVITIES_LABEL)
-        leaf = ('#', self.code)
+        activities = ("#", CMS_STORAGE_ACTIVITIES_LABEL)
+        leaf = ("#", self.code)
         return (root, activities, leaf)
 
 
@@ -267,17 +430,17 @@ class TeacherListViewHandler(BaseStorageHandler):
         # url_data = {}
 
         # if ALLOWED_TEACHER_ROLES:
-            # url_data['role'] = ",".join(ALLOWED_TEACHER_ROLES)
+        # url_data['role'] = ",".join(ALLOWED_TEACHER_ROLES)
 
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}"
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_TEACHERS_LABEL)
+        leaf = ("#", CMS_STORAGE_TEACHERS_LABEL)
         return (root, leaf)
 
 
@@ -286,31 +449,41 @@ class TeacherInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(TeacherInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        special_roles = getattr(settings, "ADDRESSBOOK_SPECIAL_ROLES", ADDRESSBOOK_SPECIAL_ROLES)
-        url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/?lang={self.request.LANGUAGE_CODE}'
-        self.data['url'] = url
-        teacher_data = requests.get(f'{url}').json()
-        self.data['teacher_name'] = f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']}"
-        self.data['teacher_role'] = f"{teacher_data['results']['ProfileDescription'] if teacher_data['results']['ProfileId'] in special_roles else teacher_data['results']['TeacherRoleDescription']}"
-        self.data['page_title'] = f"{self.data['teacher_name']} - {self.data['teacher_role']}"
-        self.data['page_meta_description'] = f"{teacher_data['results']['TeacherDepartmentName']} - {teacher_data['results']['TeacherSSDCod']} {teacher_data['results']['TeacherSSDDescription']}"
-        self.data['teacher_data'] = json.dumps(teacher_data)
-        self.data['code'] = self.code
+        special_roles = getattr(
+            settings, "ADDRESSBOOK_SPECIAL_ROLES", ADDRESSBOOK_SPECIAL_ROLES
+        )
+        url = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/?lang={self.request.LANGUAGE_CODE}"
+        self.data["url"] = url
+        teacher_data = requests.get(f"{url}").json()
+        self.data["teacher_name"] = (
+            f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']}"
+        )
+        self.data["teacher_role"] = (
+            f"{teacher_data['results']['ProfileDescription'] if teacher_data['results']['ProfileId'] in special_roles else teacher_data['results']['TeacherRoleDescription']}"
+        )
+        self.data["page_title"] = (
+            f"{self.data['teacher_name']} - {self.data['teacher_role']}"
+        )
+        self.data["page_meta_description"] = (
+            f"{teacher_data['results']['TeacherDepartmentName']} - {teacher_data['results']['TeacherSSDCod']} {teacher_data['results']['TeacherSSDDescription']}"
+        )
+        self.data["teacher_data"] = json.dumps(teacher_data)
+        self.data["code"] = self.code
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_TEACHERS_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -325,23 +498,23 @@ class AddressbookListViewHandler(BaseStorageHandler):
         # url_data = {}
 
         # if ALLOWED_ADDRESSBOOK_ROLES:
-            # url_data['role'] = ",".join(ALLOWED_ADDRESSBOOK_ROLES)
+        # url_data['role'] = ",".join(ALLOWED_ADDRESSBOOK_ROLES)
         # if ALLOWED_ADDRESSBOOK_STRUCTURE_ID:
-            # url_data['structure'] = ",".join(ALLOWED_ADDRESSBOOK_STRUCTURE_ID)
+        # url_data['structure'] = ",".join(ALLOWED_ADDRESSBOOK_STRUCTURE_ID)
         # if ALLOWED_STRUCTURE_TYPES:
-            # url_data['structuretypes'] = ",".join(ALLOWED_STRUCTURE_TYPES)
-            # #000 = Non assegnato
-            # url_data['structuretypes'] += ",000"
+        # url_data['structuretypes'] = ",".join(ALLOWED_STRUCTURE_TYPES)
+        # #000 = Non assegnato
+        # url_data['structuretypes'] += ",000"
 
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}"
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_ADDRESSBOOK_LABEL)
+        leaf = ("#", CMS_STORAGE_ADDRESSBOOK_LABEL)
         return (root, leaf)
 
 
@@ -350,31 +523,31 @@ class AddressbookInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(AddressbookInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        url = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}{self.code}/?lang={self.request.LANGUAGE_CODE}'
-        self.data['url'] = url
-        person_data = requests.get(f'{url}').json()
-        self.data['page_title'] = person_data['results']['Name']
+        url = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}{self.code}/?lang={self.request.LANGUAGE_CODE}"
+        self.data["url"] = url
+        person_data = requests.get(f"{url}").json()
+        self.data["page_title"] = person_data["results"]["Name"]
         office = f"{person_data['results']['OfficeReference'][0] if person_data['results']['OfficeReference'] else ''}"
         email = f"{person_data['results']['Email'][0] if person_data['results']['Email'] else ''}"
         phone = f"{person_data['results']['TelOffice'][0] if person_data['results']['TelOffice'] else ''}"
-        data = ' - '.join([i for i in [office, email, phone] if i])
-        self.data['page_meta_description'] = data
-        self.data['person_data'] = json.dumps(person_data)
+        data = " - ".join([i for i in [office, email, phone] if i])
+        self.data["page_meta_description"] = data
+        self.data["person_data"] = json.dumps(person_data)
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_ADDRESSBOOK_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -387,20 +560,21 @@ class StructureListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
 
-        if INITIAL_STRUCTURE_FATHER != '':
-            url_data['father'] = INITIAL_STRUCTURE_FATHER
+        if INITIAL_STRUCTURE_FATHER != "":
+            url_data["father"] = INITIAL_STRUCTURE_FATHER
         if ALLOWED_STRUCTURE_TYPES:
-            url_data['type'] = ",".join(ALLOWED_STRUCTURE_TYPES)
+            url_data["type"] = ",".join(ALLOWED_STRUCTURE_TYPES)
 
         params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_STRUCTURE_API}'
-        if params: self.data['url'] = f"{self.data['url']}?{params}"
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_STRUCTURE_API}"
+        if params:
+            self.data["url"] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_STRUCTURE_LABEL)
+        leaf = ("#", CMS_STORAGE_STRUCTURE_LABEL)
         return (root, leaf)
 
 
@@ -409,23 +583,25 @@ class StructureInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(StructureInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['code'] = self.code
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_STRUCTURE_API}{self.code}/'
+        self.data["code"] = self.code
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_STRUCTURE_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_STRUCTURE_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -436,13 +612,13 @@ class LaboratoryListViewHandler(BaseStorageHandler):
         super(LaboratoryListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_LABORATORY_LABEL)
+        leaf = ("#", CMS_STORAGE_LABORATORY_LABEL)
         return (root, leaf)
 
 
@@ -451,22 +627,24 @@ class LaboratoryInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(LaboratoryInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_LABORATORY_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_LABORATORY_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_LABORATORY_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -477,13 +655,13 @@ class ResearchGroupListViewHandler(BaseStorageHandler):
         super(ResearchGroupListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_RESEARCH_GROUP_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_RESEARCH_GROUP_API}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_RESEARCH_GROUP_LABEL)
+        leaf = ("#", CMS_STORAGE_RESEARCH_GROUP_LABEL)
         return (root, leaf)
 
 
@@ -494,13 +672,13 @@ class BaseResearchLineListViewHandler(BaseStorageHandler):
         super(BaseResearchLineListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_BASE_RESEARCH_LINE_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_BASE_RESEARCH_LINE_API}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_BASE_RESEARCH_LINE_LABEL)
+        leaf = ("#", CMS_STORAGE_BASE_RESEARCH_LINE_LABEL)
         return (root, leaf)
 
 
@@ -511,13 +689,13 @@ class ResearchLineListViewHandler(BaseStorageHandler):
         super(ResearchLineListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_RESEARCH_LINE_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_RESEARCH_LINE_API}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_RESEARCH_LINE_LABEL)
+        leaf = ("#", CMS_STORAGE_RESEARCH_LINE_LABEL)
         return (root, leaf)
 
 
@@ -528,13 +706,15 @@ class AppliedResearchLineListViewHandler(BaseStorageHandler):
         super(AppliedResearchLineListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_APPLIED_RESEARCH_LINE_API}'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_APPLIED_RESEARCH_LINE_API}"
+        )
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL)
+        leaf = ("#", CMS_STORAGE_APPLIED_RESEARCH_LINE_LABEL)
         return (root, leaf)
 
 
@@ -547,14 +727,14 @@ class PublicationsListViewHandler(BaseStorageHandler):
     def as_view(self):
         # url_data = {}
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PUBLICATIONS_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_PUBLICATIONS_API}"
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', f'{CMS_STORAGE_PUBLICATIONS_LABEL}')
+        leaf = ("#", f"{CMS_STORAGE_PUBLICATIONS_LABEL}")
         return (root, leaf)
 
 
@@ -563,22 +743,24 @@ class PublicationsInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(PublicationsInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PUBLICATIONS_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_PUBLICATIONS_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PUBLICATIONS_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_PUBLICATIONS_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -589,13 +771,13 @@ class PatentsListViewHandler(BaseStorageHandler):
         super(PatentsListViewHandler, self).__init__(**kwargs)
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PATENTS_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_PATENTS_API}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_PATENTS_LABEL)
+        leaf = ("#", CMS_STORAGE_PATENTS_LABEL)
         return (root, leaf)
 
 
@@ -608,14 +790,14 @@ class SpinoffListViewHandler(BaseStorageHandler):
     def as_view(self):
         # url_data = {}
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_SPINOFF_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_SPINOFF_API}"
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_SPINOFF_LABEL)
+        leaf = ("#", CMS_STORAGE_SPINOFF_LABEL)
         return (root, leaf)
 
 
@@ -624,23 +806,25 @@ class SpinoffInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(SpinoffInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['code'] = self.code
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_SPINOFF_API}{self.code}/'
+        self.data["code"] = self.code
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_SPINOFF_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_SPINOFF_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_SPINOFF_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -653,14 +837,14 @@ class ProjectsListViewHandler(BaseStorageHandler):
     def as_view(self):
         # url_data = {}
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PROJECTS_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_PROJECTS_API}"
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_PROJECTS_LABEL)
+        leaf = ("#", CMS_STORAGE_PROJECTS_LABEL)
         return (root, leaf)
 
 
@@ -669,22 +853,24 @@ class ProjectsInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(ProjectsInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PROJECTS_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_PROJECTS_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PROJECTS_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_PROJECTS_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -697,16 +883,18 @@ class HighFormationMastersListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
         # if HIGH_FORMATION_YEAR:
-            # url_data['year'] = HIGH_FORMATION_YEAR
+        # url_data['year'] = HIGH_FORMATION_YEAR
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}"
+        )
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
+        leaf = ("#", CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
         return (root, leaf)
 
 
@@ -715,22 +903,24 @@ class HighFormationMastersInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(HighFormationMastersInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_HIGH_FORMATION_MASTERS_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_HIGH_FORMATION_MASTERS_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_HIGH_FORMATION_MASTERS_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
 
 
@@ -744,17 +934,17 @@ class PhdActivitiesListViewHandler(BaseStorageHandler):
         # url_data = {}
 
         # if CURRENT_YEAR:
-            # url_data['year'] = CURRENT_YEAR
+        # url_data['year'] = CURRENT_YEAR
 
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PHD_ACTIVITIES_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_PHD_ACTIVITIES_API}"
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_PHD_ACTIVITIES_LABEL)
+        leaf = ("#", CMS_STORAGE_PHD_ACTIVITIES_LABEL)
         return (root, leaf)
 
 
@@ -763,24 +953,25 @@ class PhdActivitiesInfoViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(PhdActivitiesInfoViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_PHD_ACTIVITIES_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_PHD_ACTIVITIES_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def parent_url(self):
-        url = f'/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PHD_ACTIVITIES_VIEW_PREFIX_PATH}/'
+        url = f"/{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_PHD_ACTIVITIES_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
         parent = (self.parent_url, CMS_STORAGE_PHD_ACTIVITIES_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (root, parent, leaf)
-
 
 
 class TeacherNewsListViewHandler(BaseStorageHandler):
@@ -788,23 +979,25 @@ class TeacherNewsListViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(TeacherNewsListViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
         # url_data = {}
 
         # if CURRENT_YEAR:
-            # url_data['year'] = CURRENT_YEAR
+        # url_data['year'] = CURRENT_YEAR
 
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/{CMS_STORAGE_TEACHER_NEWS_API}'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/{CMS_STORAGE_TEACHER_NEWS_API}"
+        )
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_TEACHER_NEWS_LABEL)
+        leaf = ("#", CMS_STORAGE_TEACHER_NEWS_LABEL)
         return (root, leaf)
 
 
@@ -817,16 +1010,16 @@ class ActivitiesListViewHandler(BaseStorageHandler):
     def as_view(self):
         url_data = {}
         # if HIGH_FORMATION_YEAR:
-            # url_data['year'] = HIGH_FORMATION_YEAR
+        # url_data['year'] = HIGH_FORMATION_YEAR
         # params = urllib.parse.urlencode(url_data)
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}'
+        self.data["url"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}"
         # if params: self.data['url'] = f"{self.data['url']}?{params}"
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        leaf = ('#', CMS_STORAGE_ACTIVITIES_LABEL)
+        leaf = ("#", CMS_STORAGE_ACTIVITIES_LABEL)
         return (root, leaf)
 
 
@@ -835,59 +1028,64 @@ class SingleActivityViewHandler(BaseStorageHandler):
 
     def __init__(self, **kwargs):
         super(SingleActivityViewHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def breadcrumbs(self):
         root = (self.get_base_url, CMS_STORAGE_ROOT_LABEL)
-        activities = ('#', CMS_STORAGE_ACTIVITIES_LABEL)
-        leaf = ('#', self.code)
+        activities = ("#", CMS_STORAGE_ACTIVITIES_LABEL)
+        leaf = ("#", self.code)
         return (root, activities, leaf)
 
 
 ####### CDS WEBSITES #######
 
+
 class CdsWebsiteBaseHandler(BaseContentHandler):
     def check_webpath(self):
-        webpath_cds = WebPathCdsCod.objects.filter(webpath=self.webpath,
-                                                   webpath__is_active=True).first()
+        webpath_cds = WebPathCdsCod.objects.filter(
+            webpath=self.webpath, webpath__is_active=True
+        ).first()
         if not webpath_cds:
-            raise Http404('No degree course linked to this webpath')
+            raise Http404("No degree course linked to this webpath")
 
-        self.page = Page.objects.filter(is_active=True,
-                                        webpath=self.webpath).first()
+        self.page = Page.objects.filter(is_active=True, webpath=self.webpath).first()
         self.cds_cod = webpath_cds.cds_cod
 
     def __init__(self, **kwargs):
         super(CdsWebsiteBaseHandler, self).__init__(**kwargs)
         self.match_dict = self.match.groupdict()
-        self.webpath = WebPath.objects.filter(site=self.website,
-                                              fullpath=self.match_dict.get('webpath', ''),
-                                              is_active=True)\
-                                      .first()
+        self.webpath = WebPath.objects.filter(
+            site=self.website,
+            fullpath=self.match_dict.get("webpath", ""),
+            is_active=True,
+        ).first()
         if not self.webpath:
-            raise Http404('Unknown WebPath')
+            raise Http404("Unknown WebPath")
 
         self.check_webpath()
 
-        self.data = {'request': self.request,
-                     'webpath': self.webpath,
-                     'website': self.website,
-                     'page': self.page,
-                     'path': self.match_dict.get('webpath', '/'),
-                     'handler': self,
-                     'cds_cod': self.cds_cod,
-                     'csrf': get_token(self.request)
+        self.data = {
+            "request": self.request,
+            "webpath": self.webpath,
+            "website": self.website,
+            "page": self.page,
+            "path": self.match_dict.get("webpath", "/"),
+            "handler": self,
+            "cds_cod": self.cds_cod,
+            "csrf": get_token(self.request),
         }
 
     def as_view(self):
-        if not self.template: return
-        ext_template_sources = contextualize_template(self.template,
-                                                      self.page)
+        if not self.template:
+            return
+        ext_template_sources = contextualize_template(self.template, self.page)
         template = Template(ext_template_sources)
         context = Context(self.data)
 
@@ -899,41 +1097,52 @@ class CdsWebsiteBaseHandler(BaseContentHandler):
 
 
 class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
-
     template = "storage_cds_websites_prospect.html"
 
     def check_webpath(self):
-        course_type = self.cds_json['CourseType']
-        if self.webpath.pk != CMS_WEBPATH_PROSPECT.get(course_type, CMS_WEBPATH_PROSPECT_DEFAULT):
-            raise Http404('No study course linked to this webpath')
+        course_type = self.cds_json["CourseType"]
+        if self.webpath.pk != CMS_WEBPATH_PROSPECT.get(
+            course_type, CMS_WEBPATH_PROSPECT_DEFAULT
+        ):
+            raise Http404("No study course linked to this webpath")
 
-        self.page = Page.objects.filter(is_active=True,
-                                        webpath=self.webpath).first()
+        self.page = Page.objects.filter(is_active=True, webpath=self.webpath).first()
 
     def __init__(self, **kwargs):
         self.redirect = False
-        self.redirect_url = ''
-        self.cds_cod = kwargs['cds_cod']
+        self.redirect_url = ""
+        self.cds_cod = kwargs["cds_cod"]
 
         # old study course!
-        cds_expired = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_EXPIRED_API}?page_size=200').json()['results']
+        cds_expired = requests.get(
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_EXPIRED_API}?page_size=200"
+        ).json()["results"]
         for ce in cds_expired:
-            if ce['CdsCod'] == self.cds_cod:
+            if ce["CdsCod"] == self.cds_cod:
                 raise Http404
 
         # morphed study course!
-        cds_morphed = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}?page_size=200').json()
+        cds_morphed = requests.get(
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}?page_size=200"
+        ).json()
         for cm in cds_morphed:
             if self.cds_cod in cds_morphed[cm]:
                 self.redirect = True
-                self.redirect_url =  f'/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cm}/{CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'
+                self.redirect_url = f"/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cm}/{CMS_STORAGE_CDS_WEBSITES_REDIRECT_VIEW_PREFIX_PATH}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/"
 
         if not self.redirect:
-            cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
-            if not cds_data or not cds_data.json()['results'] or cds_data.status_code != 200:
+            cds_data = requests.get(
+                f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json",
+                timeout=5,
+            )
+            if (
+                not cds_data
+                or not cds_data.json()["results"]
+                or cds_data.status_code != 200
+            ):
                 raise Http404
 
-            self.cds_json = cds_data.json()['results'][0]
+            self.cds_json = cds_data.json()["results"][0]
 
             super(CdsWebsitesProspectHandler, self).__init__(**kwargs)
 
@@ -943,20 +1152,22 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
                     name = f"{form.cleaned_data['first_name']} {form.cleaned_data['last_name']}"
                     course = f"{self.cds_json['CdSCod']} - {self.cds_json['CdSName']}"
                     try:
-                        subject=f"Richiesta informazioni: {course} - {name}"
-                        plain_text=f"{form.cleaned_data['message']} Email: {form.cleaned_data['email']}"
-                        html_text=f"<b>Utente:</b> {name}<br><b>Email:</b> {form.cleaned_data['email']}<br><b>Telefono:</b> {form.cleaned_data['phone']}<br><br><b>Messaggio:</b><p>{form.cleaned_data['message']}</p><br>"
-                        from_email=settings.EMAIL_SENDER
-                        to=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS
-                        bcc=CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS
-                        reply_to=[form.cleaned_data['email']]
+                        subject = f"Richiesta informazioni: {course} - {name}"
+                        plain_text = f"{form.cleaned_data['message']} Email: {form.cleaned_data['email']}"
+                        html_text = f"<b>Utente:</b> {name}<br><b>Email:</b> {form.cleaned_data['email']}<br><b>Telefono:</b> {form.cleaned_data['phone']}<br><br><b>Messaggio:</b><p>{form.cleaned_data['message']}</p><br>"
+                        from_email = settings.EMAIL_SENDER
+                        to = CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_RECIPIENTS
+                        bcc = CMS_STORAGE_CDS_WEBSITE_PROSPECT_EMAIL_BCC_RECIPIENTS
+                        reply_to = [form.cleaned_data["email"]]
 
-                        msg = EmailMultiAlternatives(subject=subject,
-                                                     body=plain_text,
-                                                     from_email=from_email,
-                                                     to=to,
-                                                     bcc=bcc,
-                                                     reply_to=reply_to)
+                        msg = EmailMultiAlternatives(
+                            subject=subject,
+                            body=plain_text,
+                            from_email=from_email,
+                            to=to,
+                            bcc=bcc,
+                            reply_to=reply_to,
+                        )
                         msg.attach_alternative(html_text, "text/html")
                         msg.send()
 
@@ -971,32 +1182,34 @@ class CdsWebsitesProspectHandler(CdsWebsiteBaseHandler):
                         messages.add_message(
                             self.request,
                             messages.ERROR,
-                            _("Your message was not sent due to a technical problem. Try later"),
+                            _(
+                                "Your message was not sent due to a technical problem. Try later"
+                            ),
                         )
                 else:
                     for k, v in form.errors.items():
-                        messages.add_message(
-                            self.request,
-                            messages.ERROR,
-                            f"{k}: {v}"
-                        )
+                        messages.add_message(self.request, messages.ERROR, f"{k}: {v}")
             else:
                 form = DynCdsWebsiteContactForm()
 
-            self.data['messages'] = messages.get_messages(self.request)
-            self.data['form'] = form
-            self.data['hide_cds_auto_menu'] = 1
-            self.data['title'] = self.cds_json['CdSName']
-            self.data['meta_description'] = f"{self.cds_json['CourseTypeDescription']} - {self.cds_json['CourseClassName']} - {self.cds_json['DepartmentName']}"
+            self.data["messages"] = messages.get_messages(self.request)
+            self.data["form"] = form
+            self.data["hide_cds_auto_menu"] = 1
+            self.data["title"] = self.cds_json["CdSName"]
+            self.data["meta_description"] = (
+                f"{self.cds_json['CourseTypeDescription']} - {self.cds_json['CourseClassName']} - {self.cds_json['DepartmentName']}"
+            )
 
     def as_view(self):
-        if not self.redirect: return super(CdsWebsitesProspectHandler, self).as_view()
-        if self.redirect_url: return redirect(self.redirect_url)
+        if not self.redirect:
+            return super(CdsWebsitesProspectHandler, self).as_view()
+        if self.redirect_url:
+            return redirect(self.redirect_url)
         return HttpResponseRedirect(self.request.path_info)
 
     @property
     def breadcrumbs(self):
-        return [('#', self.cds_json['CdSName'])]
+        return [("#", self.cds_json["CdSName"])]
 
 
 class CdsWebsitesCorsoHandler(CdsWebsiteBaseHandler):
@@ -1004,7 +1217,7 @@ class CdsWebsitesCorsoHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        return [('#', CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)]
+        return [("#", CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)]
 
 
 class CdsWebsitesCorsoActivityHandler(CdsWebsiteBaseHandler):
@@ -1012,21 +1225,23 @@ class CdsWebsitesCorsoActivityHandler(CdsWebsiteBaseHandler):
 
     def __init__(self, **kwargs):
         super(CdsWebsitesCorsoActivityHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def corso_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH}/'
+        url = f"{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_CORSO_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         corso = (self.corso_url, CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (corso, leaf)
 
 
@@ -1035,7 +1250,7 @@ class CdsWebsitesIscriversiHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        return [('#', CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL)]
+        return [("#", CMS_STORAGE_CDS_WEBSITES_ISCRIVERSI_LABEL)]
 
 
 class CdsWebsitesStudiareHandler(CdsWebsiteBaseHandler):
@@ -1043,7 +1258,7 @@ class CdsWebsitesStudiareHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        return [('#', CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)]
+        return [("#", CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)]
 
 
 class CdsWebsitesStudiareActivityHandler(CdsWebsiteBaseHandler):
@@ -1051,21 +1266,23 @@ class CdsWebsitesStudiareActivityHandler(CdsWebsiteBaseHandler):
 
     def __init__(self, **kwargs):
         super(CdsWebsitesStudiareActivityHandler, self).__init__(**kwargs)
-        self.code = self.match_dict.get('code', '')
+        self.code = self.match_dict.get("code", "")
 
     def as_view(self):
-        self.data['url'] = f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/'
+        self.data["url"] = (
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}{self.code}/"
+        )
         return super().as_view()
 
     @property
     def studiare_url(self):
-        url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/'
+        url = f"{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/"
         return sanitize_path(url)
 
     @property
     def breadcrumbs(self):
         studiare = (self.studiare_url, CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL)
-        leaf = ('#', self.code)
+        leaf = ("#", self.code)
         return (studiare, leaf)
 
 
@@ -1074,9 +1291,11 @@ class CdsWebsitesStudiareCalendarHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        studiare_url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/'
-        return [(sanitize_path(studiare_url), CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL),
-                ('#', CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_LABEL)]
+        studiare_url = f"{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/"
+        return [
+            (sanitize_path(studiare_url), CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL),
+            ("#", CMS_STORAGE_CDS_WEBSITES_STUDIARE_CALENDAR_LABEL),
+        ]
 
 
 class CdsWebsitesStudiareScheduleHandler(CdsWebsiteBaseHandler):
@@ -1084,9 +1303,11 @@ class CdsWebsitesStudiareScheduleHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        studiare_url = f'{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/'
-        return [(sanitize_path(studiare_url), CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL),
-                ('#', CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL)]
+        studiare_url = f"{self.webpath.get_full_path()}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{CMS_STORAGE_CDS_WEBSITES_STUDIARE_VIEW_PREFIX_PATH}/"
+        return [
+            (sanitize_path(studiare_url), CMS_STORAGE_CDS_WEBSITES_STUDIARE_LABEL),
+            ("#", CMS_STORAGE_CDS_WEBSITES_STUDIARE_SCHEDULE_LABEL),
+        ]
 
 
 class CdsWebsitesOpportunitaHandler(CdsWebsiteBaseHandler):
@@ -1094,7 +1315,7 @@ class CdsWebsitesOpportunitaHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        return [('#', CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)]
+        return [("#", CMS_STORAGE_CDS_WEBSITES_OPPORTUNITA_LABEL)]
 
 
 class CdsWebsitesOrganizzazioneHandler(CdsWebsiteBaseHandler):
@@ -1102,7 +1323,7 @@ class CdsWebsitesOrganizzazioneHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        return [('#', CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)]
+        return [("#", CMS_STORAGE_CDS_WEBSITES_ORGANIZZAZIONE_LABEL)]
 
 
 class CdsWebsitesIsodidHandler(CdsWebsiteBaseHandler):
@@ -1110,81 +1331,130 @@ class CdsWebsitesIsodidHandler(CdsWebsiteBaseHandler):
 
     @property
     def breadcrumbs(self):
-        return [('#', CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL)]
+        return [("#", CMS_STORAGE_CDS_WEBSITES_ISODID_LABEL)]
 
 
 class CdsWebsitesRedirectHandler(BaseContentHandler):
     def __init__(self, **kwargs):
         super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
         webpath_cds = WebPathCdsCod.objects.filter(
-            webpath__is_active=True,
-            cds_cod=kwargs['cds_cod']
+            webpath__is_active=True, cds_cod=kwargs["cds_cod"]
         ).first()
         if webpath_cds:
             self.webpath = webpath_cds.webpath
         else:
-            cds_morph_list = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}').json()
+            cds_morph_list = requests.get(
+                f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}"
+            ).json()
             for new_cds in cds_morph_list:
-                if kwargs['cds_cod'] in cds_morph_list[new_cds]:
-                    webpath_cds = get_object_or_404(WebPathCdsCod,
-                        webpath__is_active=True,
-                        cds_cod=new_cds
+                if kwargs["cds_cod"] in cds_morph_list[new_cds]:
+                    webpath_cds = get_object_or_404(
+                        WebPathCdsCod, webpath__is_active=True, cds_cod=new_cds
                     )
                     self.webpath = webpath_cds.webpath
                     break
 
     def as_view(self):
-        if not self.webpath: raise Http404()
+        if not self.webpath:
+            raise Http404()
         return redirect(self.webpath.get_site_path())
 
 
 class CdsWebsitesRedirectProspectHandler(CdsWebsitesRedirectHandler):
     def __init__(self, **kwargs):
-        self.cds_cod = kwargs['cds_cod']
-
+        self.cds_cod = kwargs["cds_cod"]
         # old study course!
-        cds_expired = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_EXPIRED_API}?page_size=200').json()['results']
+        cds_expired = requests.get(
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_EXPIRED_API}?page_size=200"
+        ).json()["results"]
         for ce in cds_expired:
-            if ce['CdsCod'] == self.cds_cod:
+            if ce["CdsCod"] == self.cds_cod:
                 raise Http404
 
-        cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
+        cds_data = requests.get(
+            f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={self.cds_cod}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json",
+            timeout=5,
+        )
 
-        if not cds_data or cds_data.status_code != 200 or not cds_data.json()['results']:
-            cds_morph_list = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}').json()
+        if (
+            not cds_data
+            or cds_data.status_code != 200
+            or not cds_data.json()["results"]
+        ):
+            cds_morph_list = requests.get(
+                f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_MORPH_LIST_API}"
+            ).json()
             for new_cds in cds_morph_list:
                 if self.cds_cod in cds_morph_list[new_cds]:
-                    cds_data = requests.get(f'{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={new_cds}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json', timeout=5)
+                    cds_data = requests.get(
+                        f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/?cdscod={new_cds}&academicyear={CDS_WEBSITE_PROSPECT_CURRENT_YEAR}&format=json",
+                        timeout=5,
+                    )
                     break
-            if not cds_data or cds_data.status_code != 200 or not cds_data.json()['results']:
+            if (
+                not cds_data
+                or cds_data.status_code != 200
+                or not cds_data.json()["results"]
+            ):
                 raise Http404
 
-        self.cds_json = cds_data.json()['results'][0]
+        self.cds_json = cds_data.json()["results"][0]
 
         super(CdsWebsitesRedirectHandler, self).__init__(**kwargs)
 
-        cds_type = self.cds_json['CourseType']
-        self.webpath = get_object_or_404(WebPath,
-                                         pk=CMS_WEBPATH_PROSPECT.get(cds_type, CMS_WEBPATH_PROSPECT_DEFAULT),
-                                         is_active=True)
+        cds_type = self.cds_json["CourseType"]
+        self.webpath = get_object_or_404(
+            WebPath,
+            pk=CMS_WEBPATH_PROSPECT.get(cds_type, CMS_WEBPATH_PROSPECT_DEFAULT),
+            is_active=True,
+        )
 
     def as_view(self):
-        if not self.webpath: raise Http404()
+        if not self.webpath:
+            raise Http404()
         root = WebPath.objects.filter(pk=settings.CMS_WEBPATH_PROSPECT_DEFAULT).first()
-        if not root: raise Http404()
+        if not root:
+            raise Http404()
 
-        cds_name =  self.cds_json['CdSName']
-        cds_cod =  self.cds_json['CdSCod']
-        return redirect('//' + sanitize_path(f'{root.site.domain}/{settings.CMS_PATH_PREFIX}/{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/'))
+        cds_name = self.cds_json["CdSName"]
+        cds_cod = self.cds_json["CdSCod"]
+        return redirect(
+            "//"
+            + sanitize_path(
+                f"{root.site.domain}/{settings.CMS_PATH_PREFIX}/{self.webpath.fullpath}/{CMS_STORAGE_CDS_WEBSITES_BASE_PATH}/{cds_cod}-{slugify(cds_name)}/{CMS_STORAGE_CDS_WEBSITES_PROSPECT_VIEW_PREFIX_PATH}/"
+            )
+        )
 
 
 class CdsWebsitesStudyActivityRedirectHandler(CdsWebsitesRedirectHandler):
     def __init__(self, **kwargs):
         super(CdsWebsitesStudyActivityRedirectHandler, self).__init__(**kwargs)
-        self.sub_path = kwargs['sub_path']
-        self.activity_id = kwargs['code']
+        self.sub_path = kwargs["sub_path"]
+        self.activity_id = kwargs["code"]
 
     def as_view(self):
         if self.webpath:
-            return redirect(sanitize_path(f'/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/{self.sub_path}/{CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH}/{self.activity_id}/'))
+            return redirect(
+                sanitize_path(
+                    f"/{settings.CMS_PATH_PREFIX}{self.webpath.fullpath}/{CMS_STORAGE_CDS_VIEW_PREFIX_PATH}/{self.sub_path}/{CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH}/{self.activity_id}/"
+                )
+            )
         raise Http404()
+
+
+class PublicEngagementEventHandler(BaseStorageHandler):
+    template = "storage_pe_event.html"
+
+    def __init__(self, **kwargs):
+        super(PublicEngagementEventHandler, self).__init__(**kwargs)
+        self.code = self.match_dict.get("code", "")
+
+    def as_view(self):
+        self.data["url"] = f"{CMS_PE_BASE_API}{CMS_PE_EVENT_API}{self.code}/"
+        return super().as_view()
+
+    @property
+    def breadcrumbs(self):
+        # corso = (self.pe_event_url, CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL)
+        leaf = ("#", self.code)
+        return (leaf,)

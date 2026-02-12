@@ -638,8 +638,20 @@ CDS_STORAGE_CDS_WEBSITE_DEFAULT_IMAGE = None
 PENTAHO_ISODID_REPORT_START_YEAR = ""
 PENTAHO_ISODID_REPORT_END_YEAR = ""
 
-# Public Engagement API
+############# PUBLIC ENGAGEMENT ###################
 CMS_PE_ROOT_API = "https://pe.unical.it"
 CMS_PE_BASE_API = f"{CMS_PE_ROOT_API}/pe-management/api/"
+CMS_PE_EVENT_API = "events/"
 
 CMS_PE_STRUCTURES_API = "structures/"
+
+CMS_PE_BASE_PATH = "pe"
+CMS_PE_EVENT_VIEW_PREFIX_PATH = "event"
+
+CMS_PE_EVENT_URL_VIEW_REGEXP = f"^(?P<webpath>[\/a-zA-Z0-9\.\-\_]*)({CMS_PE_BASE_PATH})/({CMS_PE_EVENT_VIEW_PREFIX_PATH})/(?P<code>[a-z0-9\-]*)(/)?$"  # noqa
+
+CMS_STORAGE_HANDLERS_PATHS += [CMS_PE_EVENT_URL_VIEW_REGEXP]
+
+CMS_STORAGE_APP_REGEXP_URLPATHS[
+    "unicms_unical_storage_handler.handlers.PublicEngagementEventHandler"
+] = CMS_PE_EVENT_URL_VIEW_REGEXP
