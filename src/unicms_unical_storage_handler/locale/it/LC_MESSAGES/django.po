@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-12 12:56+0100\n"
+"POT-Creation-Date: 2026-04-24 16:53+0200\n"
 "PO-Revision-Date: 2026-02-12 12:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -81,11 +81,11 @@ msgstr ""
 msgid "Verification code"
 msgstr "Codice di verifica"
 
-#: handlers.py:1177
+#: handlers.py:1178
 msgid "Your message has been successfully sent"
 msgstr "Il tuo messaggio è stato inviato correttamente"
 
-#: handlers.py:1186
+#: handlers.py:1187
 msgid "Your message was not sent due to a technical problem. Try later"
 msgstr ""
 "Il tuo messaggio non è stato inviato a causa di un problema tecnico. Riprova "
@@ -1307,6 +1307,7 @@ msgstr "CV caricato (it)"
 #: templates/storage_cds_websites_studiare.html:216
 #: templates/storage_cds_websites_studiare.html:420
 #: templates/storage_cds_websites_studiare.html:479
+#: templates/storage_pe_event.html:130
 msgid "Download"
 msgstr "Scarica"
 
@@ -2029,6 +2030,10 @@ msgstr "Personale coinvolto"
 #: templates/storage_pe_event.html:116
 msgid "Involved structures"
 msgstr "Strutture coinvolte"
+
+#: templates/storage_pe_event.html:126
+msgid "Poster"
+msgstr "Locandina"
 
 #: templates/storage_phd_activities_info.html:10
 msgid "PhD Activity"
