@@ -15,6 +15,7 @@
 {% random_id uid as id %}
 {% get_current_language as LANGUAGE_CODE %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
+{% storage_settings_value "CMS_PE_ROOT_API" as cms_pe_root %}
 {% breadcrumbs webpath=webpath leaf=handler %}
 {% split_string s=handler.breadcrumbs.0.0 c='/' as sub_path %}
 
@@ -119,6 +120,14 @@
                                                 [[ structure ]]
                                             </li>
                                         </ul>
+                                    </td>
+                                </tr>
+                                <tr v-if="item.poster.length">
+                                    <td>{% trans "Poster" %}</td>
+                                    <td>
+                                        <svg class="icon icon-sm icon-muted me-2">
+                                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-file"></use>
+                                        </svg> <a :href="'{{ cms_pe_root }}' + item.poster">{% trans "Download" %}</a>
                                     </td>
                                 </tr>
                             </tbody>
