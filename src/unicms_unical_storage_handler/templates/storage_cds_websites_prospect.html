@@ -1132,6 +1132,11 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                 });
 
                 exStudentsSplide.mount();
+
+                // FORZA L'AVVIO MANUALE
+                if (exStudentsSplide.Components.Autoplay) {
+                    exStudentsSplide.Components.Autoplay.play();
+                }
             },
             
             youtubeNoCookie(value) {
