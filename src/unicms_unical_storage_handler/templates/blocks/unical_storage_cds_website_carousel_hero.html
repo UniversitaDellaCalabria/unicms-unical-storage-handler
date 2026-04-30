@@ -202,6 +202,9 @@ var _{{ cds_cod }}_hero_slider = new Vue({
 
             splide.mount();
 
+            document.querySelector('.splide__arrow--next').setAttribute('data-hover', "{% trans 'Next' %}");
+            document.querySelector('.splide__arrow--prev').setAttribute('data-hover', "{% trans 'Previous' %}");
+        
             // FORZA L'AVVIO MANUALE
             if (splide.Components.Autoplay) {
                 splide.Components.Autoplay.play();
