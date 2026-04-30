@@ -467,11 +467,19 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-8">
-                        <div id="CdsSlider" class="owl-carousel owl-theme">
-                            <div class="item" v-for="slide in website.CDSSliders">
-                                <p class="h1 lighter" style="color: var(--bordeaux_unical); font-family: Lora; font-style: italic;">
-                                    [[ slide.SliderDescription ]]
-                                </p>
+                        <div id="CdsSlider" class="splide">
+                            <div class="splide__track">
+                                <ul class="splide__list">
+                                    <li class="splide__slide" v-for="slide in website.CDSSliders">
+                                        <div class="it-single-slide-wrapper h-100">
+                                            <div class="item h-100">
+                                                <p class="h1 lighter" style="color: var(--bordeaux_unical); font-family: Lora; font-style: italic;">
+                                                    [[ slide.SliderDescription ]]
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -832,21 +840,29 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                 </div>
                 <div class="row mt-4">
                     <div class="col-12">
-                        <div id="CdsExStudents" class="owl-carousel owl-theme">
-                            <div class="item text-center" v-for="slide in website.CDSExStudents">
-                                <img v-if="slide.StudentPhoto" :src="slide.StudentPhoto" class="w-50 m-auto" style="height: fit-content; border:2px solid #b71918; border-radius: 50%; aspect-ratio: 1/1;" />
-                                <img v-else src="{% static 'images/user.avif' %}" class="w-50 m-auto" style="height: fit-content; border:2px solid #b71918; border-radius: 50%" />
-                                <p class="h3 lighter mt-2" style="color: var(--bordeaux_unical); font-family: Lora; font-style: italic;">
-                                    [[ slide.StudentName ]]
-                                </p>
-                                <p>
-                                    [[ slide.StudentProfile ]]
-                                </p>
-                                <p>
-                                    <a :href="slide.StudentLink" target="_blank" rel="noreferrer noopener">
-                                        {% trans "Click here" %}
-                                    </a>
-                                </p>
+                        <div id="CdsExStudents" class="splide">
+                            <div class="splide__track">
+                                <ul class="splide__list">
+                                    <li class="splide__slide" v-for="slide in website.CDSExStudents">
+                                        <div class="it-single-slide-wrapper h-100">
+                                            <div class="item h-100 text-center">
+                                                <img v-if="slide.StudentPhoto" :src="slide.StudentPhoto" class="w-50 m-auto" style="height: fit-content; border:2px solid #b71918; border-radius: 50%; aspect-ratio: 1/1;" />
+                                                <img v-else src="{% static 'images/user.avif' %}" class="w-50 m-auto" style="height: fit-content; border:2px solid #b71918; border-radius: 50%" />
+                                                <p class="h3 lighter mt-2" style="color: var(--bordeaux_unical); font-family: Lora; font-style: italic;">
+                                                    [[ slide.StudentName ]]
+                                                </p>
+                                                <p>
+                                                    [[ slide.StudentProfile ]]
+                                                </p>
+                                                <p>
+                                                    <a :href="slide.StudentLink" target="_blank" rel="noreferrer noopener">
+                                                        {% trans "Click here" %}
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -1054,70 +1070,70 @@ if(!year)year = "{{ cds_website_prospect_current_year }}"
                 )
             },
             setSloganSlider(){
-                $('#CdsSlider').owlCarousel({
-                    nav : true, // Show next and prev buttons
-                    //rewind: true,
-                    loop: true,
-                    //slideSpeed : 300,
-                    //paginationSpeed : 400,
-                    autoplay: true,
-                    autoplayTimeout: {{ carousel_timeout|default:5000 }},
-                    dots: false,
-                    margin: 12,
-                    //dotsEach: false,
-                    stagePadding: 0,
-
-                    responsive : {
-                        // breakpoint from 0 up
-                        0 : {
-                            items: 1
-                        },
-                        // breakpoint from 481 up
-                        481 : {
-                            items: 1
-                        },
-                        // breakpoint from 1024 up
-                        1024 : {
-                            items: 1
-                        }
-                    }
-                  //lazyLoad : true,
+                var sloganSplide = new Splide('#CdsSlider', {
+                    type   : 'loop',
+                    perPage: 1,
+                    arrows     : false, // Nasconde le frecce (prev/next)
+                    pagination : false, // Nasconde i puntini (bullets)
+                    lazyLoad: 'nearby',
+                    autoplay    : true,      // Attiva lo scorrimento automatico
+                    interval    : {{ carousel_timeout|default:5000 }},      // Tempo di attesa in millisecondi (3000 = 3 secondi)
+                    pauseOnHover: true,      // Consigliato: si ferma se l'utente passa il mouse sopra
+                    pauseOnFocus: true,      // Si ferma se l'utente clicca/seleziona la slide
+                    resetProgress: false,
+                    // Classi per integrare lo stile Bootstrap Italia se necessario
+                    classes: {
+                        arrows: 'splide__arrows it-test-class', 
+                        arrow : 'splide__arrow it-arrow-custom',
+                    },
                 });
-                $("#slider_arrow").click(function(){
-                    $('#CdsSlider').trigger('next.owl.carousel');
+
+                sloganSplide.mount();
+
+                // FORZA L'AVVIO MANUALE
+                if (sloganSplide.Components.Autoplay) {
+                    sloganSplide.Components.Autoplay.play();
+                }
+                
+                // Collega i tasti custom
+                const nextBtn = document.getElementById('slider_arrow');
+
+                nextBtn.addEventListener('click', function () {
+                    sloganSplide.go('>'); // Va alla slide successiva
                 });
             },
+            
             setExStudentsSlider() {
-                $('#CdsExStudents').owlCarousel({
-                    nav : true, // Show next and prev buttons
-                    rewind: true,
-                    //loop: loop,
-                    //slideSpeed : 300,
-                    //paginationSpeed : 400,
-                    autoplay: true,
-                    autoplayTimeout: {{ carousel_timeout|default:5000 }} + 2000,
-                    dots: false,
-                    margin: 12,
-                    //dotsEach: false,
-                    stagePadding: 0,
-
-                    responsive : {
-                        // breakpoint from 0 up
-                        0 : {
-                            items: 1
-                        },
-                        // breakpoint from 481 up
-                        481 : {
-                            items: 2
-                        },
-                        // breakpoint from 1024 up
-                        1024 : {
-                            items: 3
-                        }
-                    }
-                  //lazyLoad : true,
+                var exStudentsSplide = new Splide('#CdsExStudents', {
+                    type   : 'loop',
+                    perPage: 3,
+                    arrows     : false, // Nasconde le frecce (prev/next)
+                    pagination : false, // Nasconde i puntini (bullets)
+                    lazyLoad: 'nearby',
+                    autoplay    : true,      // Attiva lo scorrimento automatico
+                    interval    : {{ carousel_timeout|default:5000 }} + 2000,      // Tempo di attesa in millisecondi (3000 = 3 secondi)
+                    pauseOnHover: true,      // Consigliato: si ferma se l'utente passa il mouse sopra
+                    pauseOnFocus: true,      // Si ferma se l'utente clicca/seleziona la slide
+                    resetProgress: false,
+                    gap    : '12px', // Spaziatura tipica Bootstrap Italia
+                    breakpoints: {
+                      480: {
+                        perPage: 1,
+                      },
+                      1024: {
+                        perPage: 2,
+                      },
+                    },
+                    // Classi per integrare lo stile Bootstrap Italia se necessario
+                    classes: {
+                        arrows: 'splide__arrows it-test-class', 
+                        arrow : 'splide__arrow it-arrow-custom',
+                    },
                 });
+
+                exStudentsSplide.mount();
             },
+            
             youtubeNoCookie(value) {
                 return value.replace("youtube.com", "youtube-nocookie.com")
             },
