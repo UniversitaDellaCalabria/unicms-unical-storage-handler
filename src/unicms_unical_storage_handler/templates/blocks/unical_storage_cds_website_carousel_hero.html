@@ -19,7 +19,7 @@
 
 {% include "includes/unical_storage_loading.html" %}
 
-
+{% comment %}
 <div class="customNavigation" id="{{ cds_cod }}_customNavigation" style="position: absolute; display: none">
     <span id="{{ cds_cod }}_prev" style="cursor: pointer; position: relative; z-index: 10">
         <span class="text-white fw-bold">
@@ -38,6 +38,7 @@
         </span>
     </span>
 </div>
+{% endcomment %}
 
 <div id="_{{ cds_cod }}_hero_slider" class="splide bordeaux-unical-bg dark-brightness" :style="'background: url({% static 'images/corsi' %}/' + backgrounds[AreaCds] +') no-repeat center center / cover;'">
     <div class="splide__track">
@@ -184,7 +185,7 @@ var _{{ cds_cod }}_hero_slider = new Vue({
             var splide = new Splide(div_id, {
                 type   : (this.slides && this.slides.length > 0) ? 'loop' : 'slide',
                 perPage: 1,
-                arrows     : false, // Nasconde le frecce (prev/next)
+                arrows     : true, // Nasconde le frecce (prev/next)
                 pagination : false, // Nasconde i puntini (bullets)
                 lazyLoad: 'nearby',
                 autoplay    : true,      // Attiva lo scorrimento automatico
@@ -205,7 +206,8 @@ var _{{ cds_cod }}_hero_slider = new Vue({
             if (splide.Components.Autoplay) {
                 splide.Components.Autoplay.play();
             }
-            
+
+            {% comment %}
             // Collega i tasti custom
             const prevBtn = document.getElementById('{{ cds_cod }}_prev');
             const nextBtn = document.getElementById('{{ cds_cod }}_next');
@@ -225,6 +227,7 @@ var _{{ cds_cod }}_hero_slider = new Vue({
             document.getElementById("{{ cds_cod }}_customNavigation").style.top = banner_top + (banner_height/2)-24 + "px";
             document.getElementById("{{ cds_cod }}_customNavigation").style.width = banner_width + "px";
             document.getElementById("{{ cds_cod }}_customNavigation").style.display = "block"
+            {% endcomment %}
         },
     },
 })
