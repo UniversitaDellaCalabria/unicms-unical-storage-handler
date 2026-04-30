@@ -17,7 +17,7 @@ PKG_NAME = 'unicms_unical_storage_handler'
 
 setup(
     name=PKG_NAME,
-    version='0.8.3',
+    version='0.9.0',
 
     packages=[PKG_NAME],
     package_dir={PKG_NAME: f"{SRC_FOLDER}/{PKG_NAME}"},
