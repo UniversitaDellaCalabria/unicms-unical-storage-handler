@@ -127,7 +127,10 @@
                                     <td>
                                         <svg class="icon icon-sm icon-muted me-2">
                                             <use xlink:href="{% static 'svg/sprites.svg' %}#it-file"></use>
-                                        </svg> <a :href="'{{ cms_pe_root }}' + item.poster">{% trans "Download" %}</a>
+                                        </svg>
+                                        <a :href="'{{ cms_pe_root }}' + item.poster" target="_blank">
+                                            {% trans "Download" %}
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
