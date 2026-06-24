@@ -315,11 +315,13 @@
             },
             callStudyPlans(regdid=null) {
                 if(!regdid) regdid = this.regdidid
-                let teachings_url = "{{ base_api }}{{ cds_api }}" + regdid + "/studyplans/?lang={{ LANGUAGE_CODE }}"
+                let teachings_url = "{{ base_api }}{{ cds_api }}" + regdid + "/studyplans-activities/?lang={{ LANGUAGE_CODE }}"
                 axios
                     .get(teachings_url)
                     .then(response => {
-                        this.studyplans = response.data.results
+                        if(response.data.results && response.data.results.length > 0)
+                            this.studyplans = response.data.results[0].PlanTabs
+                        else this.studyplans = []
                     })
             },
             choseAF(af_string){

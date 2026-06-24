@@ -100,7 +100,7 @@
                     <thead>
                         <tr>
                             <th scope="col">[[ labels.StudyActivityName ]]</th>
-                            <th scope="col">[[ labels.StudyActivityAA ]]</th>
+                            <th scope="col">[[ labels.StudyActivityAcademicYear ]]</th>
                             <th scope="col">[[ labels.StudyActivityCdSName ]]</th>
                         </tr>
                     </thead>
@@ -117,7 +117,7 @@
                                     <span v-if="item.StudyActivityCompulsory == 1">*</span>
                                 </a>
                             </td>
-                            <td>[[ item.StudyActivityAA ]]</td>
+                            <td>[[ item.StudyActivityAcademicYear ]]</td>
                             <td>
                                 <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/'">
                                     [[ item.StudyActivityCdSName ]]

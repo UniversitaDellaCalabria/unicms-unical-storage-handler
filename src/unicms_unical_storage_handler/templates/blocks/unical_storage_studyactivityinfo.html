@@ -16,6 +16,7 @@
 {% storage_settings_value "CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH" as activity_prefix %}
 {% storage_settings_value "CMS_STORAGE_TEACHER_VIEW_PREFIX_PATH" as teacher_prefix %}
 {% storage_settings_value "STUDY_ACTIVITY_INFO_NOT_SHOW" as fields_to_hide %}
+{% storage_settings_value "STUDY_ACTIVITY_TEXTS_LABELS" as texts_labels %}
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "BREADCRUMB_ITEM" as breadcrumb_item %}
 {% storage_settings_value "BREADCRUMB_LAST" as breadcrumb_last %}
@@ -45,7 +46,7 @@
 
         </h3>
         <h5 class="lighter">
-            [[ item.StudyActivityCdSCod ]] - [[ item.StudyActivityCdSName ]] ([[ item.StudyActivityPdsDes ]])
+            [[ item.StudyActivityCdSCod ]] - [[ item.StudyActivityCdSName ]] ([[ item.StudyActivityStudyPlans.join(', ') ]])
         </h5>
         <p style="text-align: right" class="d-print-none">
             <a id="print" onclick="print_page()">
@@ -125,40 +126,48 @@
                             </ul>
                         </td>
 
+                        <!-- partitions -->
+                        <td v-else-if="name === 'StudyActivityPartitions' && item.StudyActivityPartitions">
+                            <ul>
+                                <li v-for="(valueProfile, nameProfile) in value">
+                                    {% if not is_cds_website %}
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + valueProfile.StudyActivityID +'/'">
+                                        [[ valueProfile.StudyActivityPartitionDes ]]
+                                    </a>
+                                    {% else %}
+                                    <a :href="replaceActivityCode(valueProfile.StudyActivityID)">
+                                        [[ valueProfile.StudyActivityPartitionDes ]]
+                                    </a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </td>
+                        
                         <!-- Modules activities -->
                         <td v-else-if="name === 'StudyActivitiesModules' && item.StudyActivitiesModules">
                             <ul>
                                 <li v-for="(valueProfile, nameProfile) in value">
                                     {% if not is_cds_website %}
-                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + valueProfile.StudyActivityID +'/'">
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + valueProfile.StudyActivityID +'/'" v-if="valueProfile.StudyActivityID">
                                         [[ valueProfile.StudyActivityName ]]
-                                        <span v-if="valueProfile.StudyActivityPartitionDescription">
-                                            ([[ valueProfile.StudyActivityPartitionDescription ]])
-                                        </span>
+                                    </a>
+                                    <span v-else>
+                                        [[ valueProfile.StudyActivityName ]]
                                     </a>
                                     {% else %}
                                     <a :href="replaceActivityCode(valueProfile.StudyActivityID)">
                                         [[ valueProfile.StudyActivityName ]]
-                                        <span v-if="valueProfile.StudyActivityPartitionDescription">
-                                            ([[ valueProfile.StudyActivityPartitionDescription ]])
-                                        </span>
                                     </a>
                                     {% endif %}
-                                    <ul v-if="valueProfile.StudyActivityGroups">
-                                        <li v-for="(subValueProfile, subNameProfile) in valueProfile.StudyActivityGroups">
+                                    <ul v-if="valueProfile.StudyActivityPartitions">
+                                        <li v-for="(subValueProfile, subNameProfile) in valueProfile.StudyActivityPartitions">
                                             {% if not is_cds_website %}
                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + subValueProfile.StudyActivityID +'/'">
-                                                [[ subValueProfile.StudyActivityName ]]
-                                                <span v-if="subValueProfile.StudyActivityPartitionDescription">
-                                                    ([[ subValueProfile.StudyActivityPartitionDescription ]])
-                                                </span>
+                                                [[ subValueProfile.StudyActivityPartitionDes ]]
                                             </a>
                                             {% else %}
                                             <a :href="replaceActivityCode(subValueProfile.StudyActivityID)">
-                                                [[ subValueProfile.StudyActivityName ]]
-                                                <span v-if="subValueProfile.StudyActivityPartitionDescription">
-                                                    ([[ subValueProfile.StudyActivityPartitionDescription ]])
-                                                </span>
+                                                [[ subValueProfile.StudyActivityPartitionDes ]]
                                             </a>
                                             {% endif %}
                                         </li>
@@ -168,22 +177,32 @@
                             </ul>
                         </td>
 
-                        <!-- StudyActivitiesBorrowedFromThis activity -->
+                        
+                        <!-- StudyActivitiesBorrowedFrom activity -->
                         {% if not is_cds_website %}
                         <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom">
                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityID +'/'">
                                 [[ item.StudyActivityBorrowedFrom.StudyActivityName ]] ([[ item.StudyActivityBorrowedFrom.StudyActivityCdSName ]])
+                                <span v-if="item.StudyActivityBorrowedFrom.StudyActivityStudyPlans">
+                                    ([[ item.StudyActivityBorrowedFrom.StudyActivityStudyPlans.join(', ') ]])
+                                </span>
                             </a>
                         </td>
                         {% else %}
                         <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom && _cds_data.cds.CdSCod == item.StudyActivityBorrowedFrom.StudyActivityCdSCod">
                             <a :href="replaceActivityCode(item.StudyActivityBorrowedFrom.StudyActivityID)">
                                 [[ item.StudyActivityBorrowedFrom.StudyActivityName ]] ([[ item.StudyActivityBorrowedFrom.StudyActivityCdSName ]])
+                                <span v-if="item.StudyActivityBorrowedFrom.StudyActivityStudyPlans">
+                                    ([[ item.StudyActivityBorrowedFrom.StudyActivityStudyPlans.join(', ') ]])
+                                </span>
                             </a>
                         </td>
                         <td v-else-if="name === 'StudyActivityBorrowedFrom' && item.StudyActivityBorrowedFrom && _cds_data.cds.CdSCod != item.StudyActivityBorrowedFrom.StudyActivityCdSCod">
                             <a target="_blank" :href="'//{{ host }}/{{ cds_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityCdSCod +'/{{ sub_path }}/{{ activity_prefix }}/' + item.StudyActivityBorrowedFrom.StudyActivityID +'/{{ redirect_prefix }}/'">
                                 [[ item.StudyActivityBorrowedFrom.StudyActivityName ]] ([[ item.StudyActivityBorrowedFrom.StudyActivityCdSName ]])
+                                <span v-if="item.StudyActivityBorrowedFrom.StudyActivityStudyPlans">
+                                    ([[ item.StudyActivityBorrowedFrom.StudyActivityStudyPlans.join(', ') ]])
+                                </span>
                             </a>
                         </td>
                         {% endif %}
@@ -258,44 +277,45 @@
                             </span>
                         </td>
 
-
+                        
                     </tr>
                 </tbody>
             </table>
 
             <div class="d-none d-print-block">
-                <div v-for="name in fields_to_collapse" v-if="item[name] != null" class="mt-4">
+                <div v-for="text in item.StudyActivityContents" class="mt-4">
                     <b>
-                        [[ labels[name] ]]
+                        [[ text.StudyActivityContentCod ]]
                     </b>
-                    <div style="white-space: pre-line" class="mt-2">
-                        <span>[[ item[name] ]]</span>
+                    <div class="mt-2">
+                        <span v-html="text.StudyActivityContentDes" />
                     </div>
                 </div>
             </div>
             <div id="collapseDiv1-lft" class="accordion accordion-left-icon d-print-none">
-                <div v-for="name in fields_to_collapse" v-if="item[name] != null">
+                <div v-for="(text, index) in item.StudyActivityContents">
                     <div class="accordion-item">
                         <div class="accordion-header"
-                             :id="'heading-' + name +'-lft'">
+                             :id="'heading-' + index +'-lft'">
                              <button class="accordion-button"
                                      type="button"
+                                     style="white-space: pre-line"
                                      data-bs-toggle="collapse"
-                                     :data-bs-target="'#collapse-' + name +'-lft'"
+                                     :data-bs-target="'#collapse-' + index +'-lft'"
                                      aria-expanded="false"
                                      role="tab"
-                                     :aria-controls="'collapse-' + name +'-lft'">
-                                [[ labels[name] ]]
+                                     :aria-controls="'collapse-' + index +'-lft'">
+                                [[ texts_labels[ text.StudyActivityContentCod ]["{{ LANGUAGE_CODE }}"] ]]
                             </button>
                         </div>
-                        <div :id="'collapse-' + name +'-lft'"
+                        <div :id="'collapse-' + index +'-lft'"
                              class="accordion-collapse collapse"
                              data-bs-parent="#collapseDiv1-lft"
                              role="region"
-                             :aria-labelledby="'heading-' + name +'-lft'">
+                             :aria-labelledby="'heading-' + index +'-lft'">
                             <div class="accordion-body">
                                 <span style="white-space: pre-line;">
-                                    <span>[[ item[name] ]]</span>
+                                    <span v-html="text.StudyActivityContentDes" />
                                 </span>
                             </div>
                         </div>
@@ -308,6 +328,7 @@
         {% include "includes/unical_storage_empty.html" with url=url %}
     </div>
 </div>
+{{ texts_labels|json_script:"texts_labels" }}
 <script>
     var {{ id }} = new Vue({
         el: '#{{ id }}',
@@ -316,16 +337,17 @@
                 item: {},
                 errors: {},
                 labels: {},
+                texts_labels: JSON.parse(document.getElementById('texts_labels').textContent),
                 url: '{{ url }}?lang={{ LANGUAGE_CODE }}',
                 is_loading: true,
                 loader_source: '{{ url }}',
-                fields_to_collapse: ['StudyActivityContent',
-                                     'StudyActivityProgram',
-                                     'StudyActivityLearningOutcomes',
-                                     'StudyActivityMethodology',
-                                     'StudyActivityEvaluation',
-                                     'StudyActivityTextbooks',
-                                     'StudyActivityWorkload'],
+                //~ fields_to_collapse: ['StudyActivityContent',
+                                     //~ 'StudyActivityProgram',
+                                     //~ 'StudyActivityLearningOutcomes',
+                                     //~ 'StudyActivityMethodology',
+                                     //~ 'StudyActivityEvaluation',
+                                     //~ 'StudyActivityTextbooks',
+                                     //~ 'StudyActivityWorkload'],
                 fields_to_not_show: {{ fields_to_hide|safe }},
                 cds_regdid: null,
                 cds: {}

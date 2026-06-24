@@ -91,10 +91,22 @@
 -->
                                                             <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'" style="text-transform: uppercase">
                                                                 [[ activity.StudyActivityName ]]
+                                                                {% comment %}
                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
+                                                                {% endcomment %}
                                                             </a>
                                                         </td>
-                                                        <td>[[ activity.StudyActivitySemester ]]</td>
+                                                        <td>
+                                                            <ul v-if="activity.StudyActivitySemester.length > 1">
+                                                                <li v-for="period in activity.StudyActivitySemester">
+                                                                    [[ period ]]
+                                                                </li>
+                                                            </ul>
+                                                            <span v-else-if="activity.StudyActivitySemester.length == 1">
+                                                                [[ activity.StudyActivitySemester[0] ]]
+                                                            </span>
+                                                            <span v-else>-</span>
+                                                        </td>
                                                         <td>[[ activity.StudyActivityECTS ]]</td>
                                                         <td v-if="degree_class">
                                                             [[ activity.StudyActivityTeachingUnitType || "-" ]]
@@ -156,7 +168,17 @@
                                                                             <span v-if="activity.StudyActivityCompulsory == 1">*</span>
                                                                         </a>
                                                                     </td>
-                                                                    <td>[[ activity.StudyActivitySemester ]]</td>
+                                                                    <td>
+                                                                        <ul v-if="activity.StudyActivitySemester.length > 1">
+                                                                            <li v-for="period in activity.StudyActivitySemester">
+                                                                                [[ period ]]
+                                                                            </li>
+                                                                        </ul>
+                                                                        <span v-else-if="activity.StudyActivitySemester.length == 1">
+                                                                            [[ activity.StudyActivitySemester[0] ]]
+                                                                        </span>
+                                                                        <span v-else>-</span>
+                                                                    </td>
                                                                     <td>[[ activity.StudyActivityECTS ]]</td>
                                                                     <td v-if="degree_class">
                                                                         [[ activity.StudyActivityTeachingUnitType || "-" ]]
@@ -220,11 +242,14 @@ old_cds_found: false
 {% get_current_language as LANGUAGE_CODE %}
 
 async setTeachingDictionary(regdidid, cdscod,index) {
-    let teachings_url = "{{ base_api }}{{ cds_api }}" + regdidid + "/studyplans/?lang={{ LANGUAGE_CODE }}"
+    let teachings_url = "{{ base_api }}{{ cds_api }}" + regdidid + "/studyplans-activities/?lang={{ LANGUAGE_CODE }}"
     await axios
         .get(teachings_url)
         .then(response => {
-            Vue.set(this.teachings_dictionary, index, {cdscod: cdscod, data: response.data.results})
+            let plans = []
+            if(response.data.results && response.data.results.length > 0)
+                plans = response.data.results[0].PlanTabs
+            Vue.set(this.teachings_dictionary, index, {cdscod: cdscod, data: plans})
         })
 },
 async getOldTeachings(year, index) {

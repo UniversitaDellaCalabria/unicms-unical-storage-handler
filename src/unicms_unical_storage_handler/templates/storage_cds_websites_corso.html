@@ -488,8 +488,9 @@ var _{{ cds_cod }}_studyplans = new Vue({
         callStudyPlans(year={{ cds_website_future_year }}) {
             this.is_loading = true
             axios
-                .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
+                .get('{{ base_api }}{{ cds_websites_studyplans_api }}{{ cds_cod }}/' + year + '/?lang={{ LANGUAGE_CODE }}')
                 .then(response => {
+                    console.log(response)
                     let curricula = []
                     if(response.data.results.length > 0) {
                         response.data.results[0].PlanTabs.forEach(
@@ -538,7 +539,7 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
                 //this.curricula = []
                 if(old_cds_found) break;
                 await axios
-                    .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod=' + this.old_cds_identifiers[i] + '&year=' + year)
+                    .get('{{ base_api }}{{ cds_websites_studyplans_api }}' + this.old_cds_identifiers[i] + '/' + year + '/?lang={{ LANGUAGE_CODE }}')
                     .then(response => {
                         let curricula = []
                         if(response.data.results.length > 0) {
@@ -563,7 +564,7 @@ var _{{ cds_cod }}_studyplans_others = new Vue({
         callStudyPlans(year={{ cds_website_future_year }}) {
             this.is_loading = true
             axios
-                .get('{{ base_api }}{{ cds_websites_studyplans_api }}?lang={{ LANGUAGE_CODE }}&cds_cod={{ cds_cod }}&year=' + year)
+                .get('{{ base_api }}{{ cds_websites_studyplans_api }}{{ cds_cod }}/' + year + '/?lang={{ LANGUAGE_CODE }}')
                 .then(response => {
                     let curricula = []
                     if(response.data.results.length > 0) {

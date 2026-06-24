@@ -137,7 +137,7 @@ CMS_STORAGE_APP_REGEXP_URLPATHS = {
 
 
 # cms_storage APIs (ref: https://storage.unical.it)
-CMS_STORAGE_ROOT_API = "https://pp.storage.unical.it"
+CMS_STORAGE_ROOT_API = "http://localhost:9000"
 CMS_STORAGE_BASE_API = f"{CMS_STORAGE_ROOT_API}/api/ricerca/"
 
 CMS_STORAGE_ACADEMICYEARS_API = "academicyears/"
@@ -246,6 +246,11 @@ CDS_WEBSITE_COURSE_INFO_FIELDS = [  #'CdSGoals',
 # FIELDS TO HIDE IN BLOCKS
 
 STUDY_ACTIVITY_INFO_NOT_SHOW = [
+    # ~ "StudyActivitiyBorrowedFrom",
+    # ~ "StudyActivityPartitions",
+    "StudyActivityContents",
+    "StudyActivityBorrows",
+    "StudyActivityStudyPlans",
     "StudyActivityName",
     "StudyActivityCdSID",
     "StudyActivityRegDidId",
@@ -274,6 +279,68 @@ STUDY_ACTIVITY_INFO_NOT_SHOW = [
     "StudyActivityPdsDes",
 ]
 
+STUDY_ACTIVITY_TEXTS_LABELS = {
+    "CONTENUTI": {
+        "it": "Contenuti",
+        "en": "Contents",
+    },
+    "LINGUA_INS": {
+        "it": "Lingua",
+        "en": "Language",
+    },
+    "METODI_DID": {
+        "it": "Metodi didattici",
+        "en": "Teaching methods",
+    },
+    "MOD_VER_APPR": {
+        "it": "Metodi di valutazione dell'apprendimento",
+        "en": "Learning assessment methods",
+    },
+    "OBIETT_FORM": {
+        "it": "Obiettivi formativi",
+        "en": "Educational objectives",
+    },
+    "PAG_WEB_DOC": {
+        "it": "Pagina web docente",
+        "en": "Teacher's web page",
+    },
+    "PREREQ": {
+        "it": "Prerequisiti",
+        "en": "Prerequisites",
+    },
+    "PROGR_EST": {
+        "it": "Programma",
+        "en": "Program",
+    },
+    "STIMA_CAR_LAV": {
+        "it": "Carico di lavoro",
+        "en": "Workload",
+    },
+    "TESTI_RIF": {
+        "it": "Testi di riferimento",
+        "en": "Reference texts",
+    },
+    "ALTRO": {
+        "it": "Altro",
+        "en": "Other",
+    },
+    "PROPEDE": {
+        "it": "Propedeuticità",
+        "en": "Propaedeutics",
+    },
+    "CODICE_TEAMS": {
+        "it": "Codice Teams",
+        "en": "MS Teams code",
+    },
+    "LINK_TEAMS": {
+        "it": "Link Teams",
+        "en": "MS Teams link",
+    },
+    "OB_SVIL_SOS": {
+        "it": "Obiettivi di sviluppo sostenibile",
+        "en": "Sustainable development goals",
+    },
+}
 ADDRESSBOOK_INFO_NOT_SHOW = [
     "ID",
     "Name",
@@ -543,7 +610,7 @@ CMS_STORAGE_CDS_BROCHURES_API = "cds-brochures/"
 CMS_STORAGE_CDS_WEBSITES_API = "cds-websites/"
 CMS_STORAGE_CDS_WEBSITES_TOPICS_API = "cds-websites-topic/"
 CMS_STORAGE_CDS_WEBSITES_TOPIC_ARTICLES_API = "cds-websites-topic-articles/"
-CMS_STORAGE_CDS_WEBSITES_STUDYPLANS_API = "cds-websites-studyplans/"
+CMS_STORAGE_CDS_WEBSITES_STUDYPLANS_API = "studyplans/"
 
 # labels (for breadcrumbs and page title)
 CMS_STORAGE_CDS_WEBSITES_CORSO_LABEL = _("The Course")

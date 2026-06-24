@@ -458,6 +458,7 @@ class TeacherInfoViewHandler(BaseStorageHandler):
         )
         url = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_TEACHER_API}{self.code}/?lang={self.request.LANGUAGE_CODE}"
         self.data["url"] = url
+        self.data["studyactivities_api"] = f"{CMS_STORAGE_BASE_API}{CMS_STORAGE_ACTIVITY_API}?teacher_matricola={self.code}&lang={self.request.LANGUAGE_CODE}"
         teacher_data = requests.get(f"{url}").json()
         self.data["teacher_name"] = (
             f"{teacher_data['results']['TeacherFirstName']} {teacher_data['results']['TeacherLastName']}"

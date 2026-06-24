@@ -397,7 +397,7 @@
         <!-- studyplans block import -->
 
         {% clean_url url as cleaned_url %}
-        {% with cleaned_url|add:"/studyplans/" as studyplans_url %}
+        {% with cleaned_url|add:"/studyplans-activities/" as studyplans_url %}
         {% include "blocks/unical_storage_cdsstudyplans_v3.html" with url=studyplans_url uid=id|add:"_1" father_uid=id full_page=full_page %}
         {% endwith %}
 
@@ -421,7 +421,7 @@
                      aria-labelledby="heading-studyplans-lft">
                     <div class="accordion-body mt-3">
                         {% clean_url url as cleaned_url %}
-                        {% with cleaned_url|add:"/studyplans/" as studyplans_url %}
+                        {% with cleaned_url|add:"/studyplans-activities/" as studyplans_url %}
                         {% include "blocks/unical_storage_cdsstudyplans_v3.html" with url=studyplans_url uid=id|add:"_1" change_breadcrumb={{ change_breadcrumb }} %}
                         {% endwith %}
                     </div>

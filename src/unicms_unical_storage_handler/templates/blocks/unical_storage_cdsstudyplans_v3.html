@@ -22,12 +22,12 @@
     </loading-icon>
 
     <div v-else-if="(initial_items && initial_items.length) || parameters">
-        <div v-if="items.results.length == 1">
+        <div v-if="items.results[0].PlanTabs.length == 1">
 
-            <h5 class="mt-4 mb-3">{% trans "Teachings" %}</h5>
+            <h5 class="mt-4 mb-3">{% trans "Teachings" %} </h5>
 
             <div :id="'accordionActivitiesDiv{{ id }}-lft'" class="accordion accordion-left-icon">
-                <div v-for="(value, label, index) in items.results[0].StudyActivities">
+                <div v-for="(value, label, index) in items.results[0].PlanTabs[0].StudyActivities">
                     <div class="accordion-item">
                         <div class="accordion-header" :id="'heading-{{ id }}-' + index + '-lft'">
                             <button class="accordion-button"
@@ -37,7 +37,6 @@
                                     aria-expanded="false"
                                     :aria-controls="'collapse-{{ id }}-' + index +'-lft'">
                                 [[ label ]] {% trans "year" %} ([[ academic_year + parseInt(label) - 1]]/[[ academic_year + parseInt(label)]])
-                              </button>
                             </button>
                         </div>
                         <div :id="'collapse-{{ id }}-' + index +'-lft'"
@@ -55,6 +54,9 @@
                                                         <th scope="col">{% trans "Teaching" %}</th>
                                                         <th scope="col">{% trans "Period" %}</th>
                                                         <th scope="col">{% trans "ETCS" %}</th>
+
+                                                        <th scope="col" v-else-if="degree_class"></th>
+                                                        {% comment %}
                                                         <th scope="col" v-if="interclass_degree_class && degree_class">
                                                             [[ degree_class ]]
                                                         </th>
@@ -62,24 +64,44 @@
                                                         <th scope="col" v-if="interclass_degree_class">
                                                             [[ interclass_degree_class ]]
                                                         </th>
+                                                        {% endcomment %}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
                                                         <td>
-                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.results[0].RegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                 [[ activity.StudyActivityName ]]
+                                                                
+                                                                {% comment %}
                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
+                                                                {% endcomment %}
                                                             </a>
                                                         </td>
-                                                        <td>[[ activity.StudyActivitySemester ]]</td>
+                                                        <td>
+                                                            <ul class="mb-0" v-if="activity.StudyActivitySemester.length > 1">
+                                                                <li v-for="period in activity.StudyActivitySemester">
+                                                                    [[ period ]]
+                                                                </li>
+                                                            </ul>
+                                                            <span v-else-if="activity.StudyActivitySemester.length == 1">
+                                                                [[ activity.StudyActivitySemester[0] ]]
+                                                            </span>
+                                                            <span v-else>-</span>
+                                                        </td>
                                                         <td>[[ activity.StudyActivityECTS ]]</td>
+
+                                                        <td>
+                                                            [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                        </td>
+                                                        {% comment %}
                                                         <td v-if="degree_class">
                                                             [[ activity.StudyActivityTeachingUnitType || "-" ]]
                                                         </td>
                                                         <td v-if="interclass_degree_class">
                                                             [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
                                                         </td>
+                                                        {% endcomment %}
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -96,7 +118,7 @@
         <div v-else>
             <h5 class="mt-4 mb-3">{% trans "Study paths" %}</h5>
             <div :id="'studyPlanAccordionDiv{{ id }}-lft'" class="accordion accordion-left-icon">
-                <div v-for="(item, index) in items.results" class="accordion-item">
+                <div v-for="(item, index) in items.results[0].PlanTabs" class="accordion-item">
                     <div class="accordion-header" :id="'studyPlanHeading-{{ id }}-' + index + '-lft'">
                         <button class="accordion-button"
                                 type="button"
@@ -142,31 +164,56 @@
                                                                         <th scope="col">{% trans "Teaching" %}</th>
                                                                         <th scope="col">{% trans "Period" %}</th>
                                                                         <th scope="col">{% trans "ETCS" %}</th>
+
+                                                                        <th scope="col" v-else-if="degree_class"></th>
+                                                                        {% comment %}
                                                                         <th scope="col" v-if="interclass_degree_class && degree_class">
                                                                             [[ degree_class ]]
                                                                         </th>
                                                                         <th scope="col" v-else-if="degree_class"></th>
-                                                                        <th scope="col" v-if="interclass_degree_class">
-                                                                            [[ interclass_degree_class ]]
-                                                                        </th>
+                                                                        <td v-if="interclass_degree_class">
+                                                                            [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
+                                                                        </td>
+                                                                        {% endcomment %}
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
                                                                         <td>
-                                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.results[0].RegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                                 [[ activity.StudyActivityName ]]
+
+                                                                                {% comment %}
                                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
+                                                                                {% endcomment %}
                                                                             </a>
                                                                         </td>
-                                                                        <td>[[ activity.StudyActivitySemester ]]</td>
+
+                                                                        <td>
+                                                                            <ul class="mb-0" v-if="activity.StudyActivitySemester.length > 1">
+                                                                                <li v-for="period in activity.StudyActivitySemester">
+                                                                                    [[ period ]]
+                                                                                </li>
+                                                                            </ul>
+                                                                            <span v-else-if="activity.StudyActivitySemester.length == 1">
+                                                                                [[ activity.StudyActivitySemester[0] ]]
+                                                                            </span>
+                                                                            <span v-else>-</span>
+                                                                        </td>
                                                                         <td>[[ activity.StudyActivityECTS ]]</td>
+
+                                                                        <td>
+                                                                            [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                                        </td>
+                                                                        
+                                                                        {% comment %}
                                                                         <td v-if="degree_class">
                                                                             [[ activity.StudyActivityTeachingUnitType || "-" ]]
                                                                         </td>
                                                                         <td v-if="interclass_degree_class">
                                                                             [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
                                                                         </td>
+                                                                        {% endcomment %}
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -226,7 +273,7 @@ watch: {
         this.academic_year = _cds_data.cds.AcademicYear
         this.degree_class = _cds_data.cds.CourseClassCod
         this.interclass_degree_class = _cds_data.cds.CourseInterClassCod
-        this.url = "{{ base_api }}{{ cds_api }}" + val + "/studyplans/"
+        this.url = "{{ base_api }}{{ cds_api }}" + val + "/studyplans-activities/"
         this.CallURL(this.url, initial=false)
     }
 }

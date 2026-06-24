@@ -146,12 +146,12 @@
                             <div class="row form-group">
                                 <div class="col-md">
                                     <div class="input-group">
-                                        <label for="{{ id }}_teaching"></label>
+                                        <label for="{{ id }}_name"></label>
                                         <input type="text"
                                                class="form-control"
-                                               id="{{ id }}_teaching"
-                                               name="{{ id }}_teaching"
-                                               v-model="selected_teaching"
+                                               id="{{ id }}_name"
+                                               name="{{ id }}_name"
+                                               v-model="selected_name"
                                                v-on:keyup.enter="{{ id }}.search({{ input_args }})">
                                         <div class="input-group-append">
                                             {% comment %}
@@ -298,15 +298,12 @@
                                     <span v-else>-</span>
                                 </td>
                                 <td>
-                                    <a v-if="item.StudyActivityID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/{{ activity_prefix }}/' + item.StudyActivityID +'/'">
-                                        [[ item.StudyActivityName ]]
-                                    </a>
-                                    <span v-else>
+                                    <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/{{ activity_prefix }}/' + item.StudyActivityID +'/'">
                                         [[ item.StudyActivityName ]]
                                         <span v-if="item.StudyActivityPartitionDes">
                                             ([[ item.StudyActivityPartitionDes ]])
                                         </span>
-                                    </span>
+                                    </a>
                                 </td>
                                 <td>
                                     <span v-if="item.StudyActivitySSDCod">
@@ -315,9 +312,13 @@
                                     <span v-else>-</span>
                                 </td>
                                 <td>
-                                    <a v-if="item.StudyActivityFatherCode && item.StudyActivityFatherCode != item.StudyActivityID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/{{ activity_prefix }}/' + item.StudyActivityFatherCode +'/'">
-                                        [[ item.StudyActivityFatherName ]]
-                                    </a>
+                                    <ul v-if="item.StudyActivityFathers.length > 0">
+                                        <li v-for="father in item.StudyActivityFathers">
+                                            <a  :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + father.RegdidId + '/{{ activity_prefix }}/' + father.FatherID +'/'">
+                                                [[ father.FatherName ]]
+                                            </a>
+                                        </li>
+                                    </ul>
                                     <span v-else>
                                         -
                                     </span>
@@ -328,9 +329,11 @@
                                     <span v-else>-</span>
                                 </td>
                                 <td>
-                                    <span v-if="item.StudyPlanDes">
-                                        [[ item.StudyPlanDes ]]
-                                    </span>
+                                    <ul v-if="item.StudyActivityStudyPlans.length > 0">
+                                        <li v-for="plan in item.StudyActivityStudyPlans">
+                                            [[ plan ]]
+                                        </li>
+                                    </ul>
                                     <span v-else>-</span>
                                 </td>
                                 <td>
@@ -390,9 +393,9 @@ function {{ id }}_get_form_paramenters(keyword=null, value=null) {
     let period = document.getElementById('{{ id }}_period_input')
     if (period && period.value) dict['period'] = period.value
 
-    // teaching
-    let teaching = document.getElementById('{{ id }}_teaching')
-    if (teaching && teaching.value) dict['teaching'] = teaching.value
+    // name
+    let name = document.getElementById('{{ id }}_name')
+    if (name && name.value) dict['name'] = name.value
 
     // teacher
     let teacher = document.getElementById('{{ id }}_teacher')
@@ -427,7 +430,7 @@ selected_academic_year: this.getItemFromSession("{{ id }}", 'academic_year') || 
 selected_department: this.getItemFromSession("{{ id }}", 'department'),
 selected_course_year: this.getItemFromSession("{{ id }}", 'course_year'),
 selected_period: this.getItemFromSession("{{ id }}", 'period'),
-selected_teaching: this.getItemFromSession("{{ id }}", 'teaching'),
+selected_name: this.getItemFromSession("{{ id }}", 'name'),
 selected_teacher: this.getItemFromSession("{{ id }}", 'teacher'),
 selected_ssd: this.getItemFromSession("{{ id }}", 'ssd'),
 selected_cds: this.getItemFromSession("{{ id }}", 'cds'),
