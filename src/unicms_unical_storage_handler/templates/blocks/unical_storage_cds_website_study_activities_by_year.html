@@ -165,7 +165,9 @@
             -->
                                                                         <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'" style="text-transform: uppercase">
                                                                             [[ activity.StudyActivityName ]]
+                                                                            {% comment %}
                                                                             <span v-if="activity.StudyActivityCompulsory == 1">*</span>
+                                                                            {% endcomment %}
                                                                         </a>
                                                                     </td>
                                                                     <td>

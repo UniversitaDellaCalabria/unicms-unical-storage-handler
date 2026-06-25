@@ -81,7 +81,9 @@
                                                         <td>
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                 [[ activity.StudyActivityName ]]
+                                                                {% comment %}
                                                                 <span v-if="items.StudyActivityCompulsory == 1">*</span>
+                                                                {% endcomment %}
                                                             </a>
                                                         </td>
                                                         <td>[[ activity.StudyActivitySemester ]]</td>
