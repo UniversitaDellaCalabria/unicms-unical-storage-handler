@@ -150,8 +150,8 @@ function {{ id }}_get_form_paramenters() {
     let dict = {};
 
     // year
-    let year = document.getElementById('{{ id }}_year_input')
-    if (year && year.value) dict['year'] = year.value
+    let academic_year = document.getElementById('{{ id }}_year_input')
+    if (academic_year && academic_year.value) dict['academic_year'] = academic_year.value
 
     {% comment %}
     // year_to
@@ -172,7 +172,7 @@ function {{ id }}_get_form_paramenters() {
 
 {% block extra_data %}
 
-selected_year: this.getItemFromSession("{{ id }}", 'year') || {{ id }}_get_param('year'),
+selected_year: this.getItemFromSession("{{ id }}", 'academic_year') || {{ id }}_get_param('academic_year'),
 
 {% comment %}
 selected_year_from: this.getItemFromSession("{{ id }}", 'yearFrom'),
