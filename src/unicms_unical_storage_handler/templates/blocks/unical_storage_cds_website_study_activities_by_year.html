@@ -88,13 +88,16 @@
                                                         <td>
 <!--
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
--->
+--> 
+                                                            {% comment %}
                                                             <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'" style="text-transform: uppercase">
                                                                 [[ activity.StudyActivityName ]]
-                                                                {% comment %}
+<!--
                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
-                                                                {% endcomment %}
+-->
                                                             </a>
+                                                            {% endcomment %}
+                                                            [[ activity.StudyActivityName ]]
                                                         </td>
                                                         <td>
                                                             <ul v-if="activity.StudyActivitySemester.length > 1">
@@ -163,12 +166,15 @@
             <!--
                                                                         <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
             -->
+                                                                        {% comment %}
                                                                         <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'" style="text-transform: uppercase">
                                                                             [[ activity.StudyActivityName ]]
-                                                                            {% comment %}
+<!--
                                                                             <span v-if="activity.StudyActivityCompulsory == 1">*</span>
-                                                                            {% endcomment %}
+-->
                                                                         </a>
+                                                                        {% endcomment %}
+                                                                        [[ activity.StudyActivityName ]]
                                                                     </td>
                                                                     <td>
                                                                         <ul v-if="activity.StudyActivitySemester.length > 1">
