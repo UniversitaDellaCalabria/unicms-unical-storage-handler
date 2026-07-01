@@ -70,13 +70,15 @@
                                                 <tbody>
                                                     <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
                                                         <td>
+                                                            {% comment %}
                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.results[0].RegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                 [[ activity.StudyActivityName ]]
-                                                                
-                                                                {% comment %}
+<!--
                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
-                                                                {% endcomment %}
+-->
                                                             </a>
+                                                            {% endcomment %}
+                                                            [[ activity.StudyActivityName ]]
                                                         </td>
                                                         <td>
                                                             <ul class="mb-0" v-if="activity.StudyActivitySemester.length > 1">
@@ -180,13 +182,15 @@
                                                                 <tbody>
                                                                     <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
                                                                         <td>
+                                                                            {% comment %}
                                                                             <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.results[0].RegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
                                                                                 [[ activity.StudyActivityName ]]
-
-                                                                                {% comment %}
+<!--
                                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
-                                                                                {% endcomment %}
+-->
                                                                             </a>
+                                                                            {% endcomment %}
+                                                                            StudyActivityName
                                                                         </td>
 
                                                                         <td>
