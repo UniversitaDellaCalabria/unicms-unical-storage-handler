@@ -100,6 +100,8 @@
 
                         <!-- Root activity -->
                         <td v-else-if="name === 'StudyActivityRoot' && item.StudyActivityRoot">
+                            [[ item.StudyActivityRoot.StudyActivityName ]]
+                            {% comment %}
                             {% if not is_cds_website %}
                             <a v-if="item.StudyActivityRoot.StudyActivityID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId +'/{{ activity_prefix }}/' + item.StudyActivityRoot.StudyActivityID +'/'">
                                 [[ item.StudyActivityRoot.StudyActivityName ]]
@@ -109,7 +111,7 @@
                                 [[ item.StudyActivityRoot.StudyActivityName ]]
                             </a>
                             {% endif %}
-
+                            {% endcomment %}
                             <!-- Father activity -->
                             <ul v-if="item.StudyActivityFather">
                                 <li>

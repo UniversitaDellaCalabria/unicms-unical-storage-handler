@@ -314,9 +314,12 @@
                                 <td>
                                     <ul v-if="item.StudyActivityFathers.length > 0">
                                         <li v-for="father in item.StudyActivityFathers">
+                                            {% comment %}
                                             <a  :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + father.RegdidId + '/{{ activity_prefix }}/' + father.FatherID +'/'">
                                                 [[ father.FatherName ]]
                                             </a>
+                                            {% endcomment %}
+                                            [[ father.FatherName ]]
                                         </li>
                                     </ul>
                                     <span v-else>
