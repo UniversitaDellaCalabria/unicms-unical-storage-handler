@@ -340,11 +340,14 @@
                                     <span v-else>-</span>
                                 </td>
                                 <td>
-                                    <a v-if="item.StudyActivityTeacherID" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + item.StudyActivityTeacherID + '/'">
+                                    <a v-if="item.StudyActivityTeacherID && item.StudyActivityTeacherName" :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ teacher_prefix }}/' + item.StudyActivityTeacherID + '/'">
                                         [[ item.StudyActivityTeacherName ]]
                                     </a>
-                                    <span v-else>
+                                    <span v-else-if="item.StudyActivityTeacherName">
                                         [[ item.StudyActivityTeacherName ]]
+                                    </span>
+                                    <span v-else>
+                                        -
                                     </span>
                                 </td>
                             </tr>
