@@ -48,7 +48,7 @@
                                 <div class="it-list-wrapper">
                                     <div class="table-responsive">
                                         <span>
-                                            <table class="table table-sm table-hover table-striped">
+                                            <table class="table table-sm table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">{% trans "Teaching" %}</th>
@@ -67,43 +67,59 @@
                                                         {% endcomment %}
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
+                                                <tbody v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
+                                                    <tr>
                                                         <td>
-                                                            {% comment %}
-                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.results[0].RegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+<!--
+                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+--> 
+                                                            <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'" style="text-transform: uppercase" v-if="activity.StudyActivityID">
                                                                 [[ activity.StudyActivityName ]]
 <!--
                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
 -->
                                                             </a>
-                                                            {% endcomment %}
-                                                            [[ activity.StudyActivityName ]]
+                                                            <span v-else>[[ activity.StudyActivityName ]]</span>
                                                         </td>
                                                         <td>
-                                                            <ul class="mb-0" v-if="activity.StudyActivitySemester.length > 1">
-                                                                <li v-for="period in activity.StudyActivitySemester">
-                                                                    [[ period ]]
-                                                                </li>
-                                                            </ul>
-                                                            <span v-else-if="activity.StudyActivitySemester.length == 1">
+                                                            <span v-if="(!activity.AfSubModules || activity.AfSubModules.length == 0) && activity.StudyActivitySemester && activity.StudyActivitySemester.length > 0">
                                                                 [[ activity.StudyActivitySemester[0] ]]
                                                             </span>
                                                             <span v-else>-</span>
                                                         </td>
-                                                        <td>[[ activity.StudyActivityECTS ]]</td>
-
                                                         <td>
-                                                            [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                            [[ activity.StudyActivityECTS || "-" ]]
                                                         </td>
-                                                        {% comment %}
                                                         <td v-if="degree_class">
                                                             [[ activity.StudyActivityTeachingUnitType || "-" ]]
                                                         </td>
                                                         <td v-if="interclass_degree_class">
                                                             [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
                                                         </td>
-                                                        {% endcomment %}
+                                                    </tr>
+                                                    <tr v-for="(module, mIndex) in activity.AfSubModules" :key="'mod-' + index + '-' + mIndex" style="font-size: 0.9rem">
+                                                        <td style="padding-left: 20px; color: #555;">
+                                                            <li class="ms-3">
+                                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID" style="text-transform: uppercase">
+                                                                [[ module.StudyActivityName ]]
+                                                                </a>
+                                                                <span v-else style="text-transform: uppercase">
+                                                                    [[ module.StudyActivityName ]] 
+                                                                </span>
+                                                                <span v-if="module.studyActivityPartitionCod" style="text-transform: uppercase">
+                                                                     ([[ module.studyActivityPartitionCod ]])
+                                                                </span>
+                                                            </li>
+                                                        </td>
+                                                        <td class="text-nowrap">
+                                                            [[ module.StudyActivitySemester || "-" ]]
+                                                        </td>
+                                                        <td>
+                                                            [[ module.StudyActivityCreditValue || "-" ]]
+                                                        </td>
+                                                        <td>
+                                                            [[ module.StudyActivityType || "-" ]]
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -160,7 +176,7 @@
                                                 <div class="it-list-wrapper">
                                                     <div class="table-responsive">
                                                         <span>
-                                                            <table class="table table-sm table-hover table-striped">
+                                                            <table class="table table-sm table-hover">
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">{% trans "Teaching" %}</th>
@@ -179,45 +195,59 @@
                                                                         {% endcomment %}
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                    <tr v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
+                                                                <tbody v-for="activity in value" v-if="!exclude_studyactivity_codes.includes(activity.StudyActivityCod) && !exclude_studyactivity_id.includes(activity.StudyActivityID)">
+                                                                    <tr>
                                                                         <td>
-                                                                            {% comment %}
-                                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + items.results[0].RegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                <!--
+                                                                            <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + activity.StudyActivityRegDidId + '/{{ activity_prefix }}/' + activity.StudyActivityID +'/'">
+                --> 
+                                                                            <a :href="'{{ activity_prefix }}/' + activity.StudyActivityID +'/'" style="text-transform: uppercase" v-if="activity.StudyActivityID">
                                                                                 [[ activity.StudyActivityName ]]
-<!--
+                <!--
                                                                                 <span v-if="activity.StudyActivityCompulsory == 1">*</span>
--->
+                -->
                                                                             </a>
-                                                                            {% endcomment %}
-                                                                            [[ activity.StudyActivityName ]]
+                                                                            <span v-else>[[ activity.StudyActivityName ]]</span>
                                                                         </td>
-
                                                                         <td>
-                                                                            <ul class="mb-0" v-if="activity.StudyActivitySemester.length > 1">
-                                                                                <li v-for="period in activity.StudyActivitySemester">
-                                                                                    [[ period ]]
-                                                                                </li>
-                                                                            </ul>
-                                                                            <span v-else-if="activity.StudyActivitySemester.length == 1">
+                                                                            <span v-if="(!activity.AfSubModules || activity.AfSubModules.length == 0) && activity.StudyActivitySemester && activity.StudyActivitySemester.length > 0">
                                                                                 [[ activity.StudyActivitySemester[0] ]]
                                                                             </span>
                                                                             <span v-else>-</span>
                                                                         </td>
-                                                                        <td>[[ activity.StudyActivityECTS ]]</td>
-
                                                                         <td>
-                                                                            [[ activity.StudyActivityTeachingUnitType || "-" ]]
+                                                                            [[ activity.StudyActivityECTS || "-" ]]
                                                                         </td>
-                                                                        
-                                                                        {% comment %}
                                                                         <td v-if="degree_class">
                                                                             [[ activity.StudyActivityTeachingUnitType || "-" ]]
                                                                         </td>
                                                                         <td v-if="interclass_degree_class">
                                                                             [[ activity.StudyActivityInterclassTeachingUnitType || "-" ]]
                                                                         </td>
-                                                                        {% endcomment %}
+                                                                    </tr>
+                                                                    <tr v-for="(module, mIndex) in activity.AfSubModules" :key="'mod-' + index + '-' + mIndex" style="font-size: 0.9rem">
+                                                                        <td style="padding-left: 20px; color: #555;">
+                                                                            <li class="ms-3">
+                                                                                <a :href="'{{ activity_prefix }}/' + module.StudyActivityID +'/'" v-if="module.StudyActivityID" style="text-transform: uppercase">
+                                                                                [[ module.StudyActivityName ]]
+                                                                                </a>
+                                                                                <span v-else style="text-transform: uppercase">
+                                                                                    [[ module.StudyActivityName ]] 
+                                                                                </span>
+                                                                                <span v-if="module.studyActivityPartitionCod" style="text-transform: uppercase">
+                                                                                     ([[ module.studyActivityPartitionCod ]])
+                                                                                </span>
+                                                                            </li>
+                                                                        </td>
+                                                                        <td class="text-nowrap">
+                                                                            [[ module.StudyActivitySemester || "-" ]]
+                                                                        </td>
+                                                                        <td>
+                                                                            [[ module.StudyActivityCreditValue || "-" ]]
+                                                                        </td>
+                                                                        <td>
+                                                                            [[ module.StudyActivityType || "-" ]]
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
