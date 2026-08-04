@@ -47,9 +47,8 @@
             </div>
         </div>
         <hr class="my-4 bordeaux-unical-bg">
-        <div>
-            <span v-html="item.ProjectAbstract"></span>
-        </div>
+        <span v-html="item.ProjectAbstract"></span>
+        <hr class="my-4 bordeaux-unical-bg" v-if="item.ProjectAbstract">
         <div class="table-responsive">
             <table class="table table-sm table-hover table-striped">
                 <tbody>
