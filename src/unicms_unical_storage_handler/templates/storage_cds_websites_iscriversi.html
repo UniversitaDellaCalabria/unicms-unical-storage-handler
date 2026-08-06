@@ -108,6 +108,19 @@
                                                      role="region"
                                                      :aria-labelledby="'heading-' + article.ID +'-lft'">
                                                     <div class="accordion-body">
+
+                                                        {% if request.user.is_authenticated %}
+                                                        {% settings_value "EDITORIAL_BOARD_REGDID_PUBLICATION_EDIT_URL_JS" as editorial_board_url %}
+                                                        <span class="float-end" v-if="article.Type == 'Object' && article.Content && article.Content.Object && article.Content.ClassObjectId == 'Publication'">
+                                                            <a :href="{{ editorial_board_url|safe }}" target="_blank" title="{% trans 'Edit' %}">
+                                                                <svg class="icon icon-xs">
+                                                                    <use xlink:href="{% static '/svg/sprites.svg' %}#it-settings"></use>
+                                                                </svg>
+                                                            </a>
+                                                        </span>
+                                                        {% endif %}
+
+
                                                         <span v-if="article.Type == 'Article' && article.Content">
                                                             <span v-html="article.Content.Text"></span>
                                                             <div v-if="article.SubArticles.length > 0" :id="'accordionDiv-' + article.ID +'-lft'" class="accordion accordion-left-icon">
