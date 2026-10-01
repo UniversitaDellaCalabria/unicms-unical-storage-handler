@@ -449,6 +449,9 @@ PROJECTS_INFO_NOT_SHOW = [
 PROJECTS_PRIN_BANNER_URL = (
     "https://www.unical.it/media/medias/2024/TESTATA_PNRR_PER_UNICAL_ok.webp"
 )
+PROJECTS_PR_2021_2027_URL = (
+    "https://www.unical.it/media/medias/2026/Logo_PR_Calabria_21-27.webp"
+)
 
 INITIAL_STRUCTURE_FATHER = ""
 

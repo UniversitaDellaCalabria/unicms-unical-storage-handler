@@ -13,6 +13,7 @@
 {% storage_settings_value "PROJECTS_INFO_NOT_SHOW" as fields_to_hide %}
 {% settings_value "CMS_PATH_PREFIX" as cms_path_prefix %}
 {% storage_settings_value "PROJECTS_PRIN_BANNER_URL" as prin_banner_url %}
+{% storage_settings_value "PROJECTS_PR_2021_2027_URL" as pr_2021_2027_banner_url %}
 {% storage_settings_value "CMS_STORAGE_BASE_PATH" as base_prefix %}
 {% storage_settings_value "CMS_STORAGE_ADDRESSBOOK_VIEW_PREFIX_PATH" as addressbook_prefix %}
 {% storage_settings_value "CMS_STORAGE_STRUCTURE_VIEW_PREFIX_PATH" as structure_prefix %}
@@ -28,6 +29,7 @@
     <div v-else-if="Object.keys(item).length">
 
         <img class="w-100 mb-5" loading="lazy" src="{{ prin_banner_url }}" alt="NextGenerationEU" role="presentation" v-if="item.TypeProgramDescription && item.TypeProgramDescription.includes('PRIN')">
+        <img class="w-100 mb-5" loading="lazy" src="{{ pr_2021_2027_banner_url }}" alt="NextGenerationEU" role="presentation" v-if="item.TypeProgramDescription && item.TypeProgramDescription == 'Programma Regionale 2021-2027'">
 
         <div class="row">
             <div class="col-12 col-lg-3" v-if="item.ProjectImage">
