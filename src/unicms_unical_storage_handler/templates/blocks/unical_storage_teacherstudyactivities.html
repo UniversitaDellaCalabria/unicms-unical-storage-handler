@@ -99,6 +99,7 @@
                 <table class="table table-sm table-hover table-striped">
                     <thead>
                         <tr>
+                            <th scope="col">[[ labels.StudyActivityCod ]]</th>
                             <th scope="col">[[ labels.StudyActivityName ]]</th>
                             <th scope="col">[[ labels.StudyActivityAcademicYear ]]</th>
                             <th scope="col">[[ labels.StudyActivityCdSName ]]</th>
@@ -111,9 +112,10 @@
                         {% storage_settings_value "CMS_STORAGE_CDS_VIEW_PREFIX_PATH" as cds_prefix %}
                         {% storage_settings_value "CMS_STORAGE_ACTIVITY_VIEW_PREFIX_PATH" as activity_prefix %}
                         <tr v-for="item in items.results">
+                            <td>[[ item.StudyActivityCod ]]</td>
                             <td>
                                 <a :href="'//{{ host }}/{{ cms_path_prefix }}{{ base_prefix }}/{{ cds_prefix }}/' + item.StudyActivityRegDidId + '/{{ activity_prefix }}/' + item.StudyActivityID +'/'">
-                                    [[ item.StudyActivityCod ]] - [[ item.StudyActivityName ]]
+                                    [[ item.StudyActivityName ]]
                                     <span v-if="item.StudyActivityPartitionDes">([[ item.StudyActivityPartitionDes ]])</span>
                                     {% comment %}
                                     <span v-if="item.StudyActivityCompulsory == 1">*</span>
