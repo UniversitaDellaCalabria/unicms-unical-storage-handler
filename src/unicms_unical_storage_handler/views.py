@@ -15,11 +15,25 @@ from . settings import *
 
 class AddressbookSitemap(uniCMSSiteMap):
     def items(self):
-        addressbook_response = requests.get(f"{settings.CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}?role={','.join(settings.ALLOWED_ADDRESSBOOK_ROLES)}&page_size=3000")
-        if addressbook_response.status_code == 200:
-            return addressbook_response.json()['results']
-        return {}
+        all_results = []
+        roles = ','.join(settings.ALLOWED_ADDRESSBOOK_ROLES)
+        next_url = f"{settings.CMS_STORAGE_BASE_API}{CMS_STORAGE_ADDRESSBOOK_API}?role={roles}&page_size=500"
 
+        while next_url:
+            response = requests.get(next_url)
+
+            if response.status_code != 200:
+                break
+
+            data = response.json()
+            all_results.extend(data.get('results', []))
+
+            next_url = data.get('next')
+            if next_url and next_url.startswith('//'):
+                next_url = f"https:{next_url}"
+
+        return all_results
+    
     def location(self, obj):
         return f"/{settings.CMS_PATH_PREFIX}{CMS_STORAGE_BASE_PATH}/{CMS_STORAGE_ADDRESSBOOK_API}{obj.get('ID')}/"
 
